@@ -1,0 +1,58 @@
+<?php 
+require_once('../inc/encabezado.inc.php'); ?>
+<!--  <tr>
+    <td><?php //require('../inc/menu.inc.php'); ?>&nbsp;</td>
+  </tr> -->
+  <tr>
+    <td><?php require_once('../inc/menu1.inc.php'); ?>&nbsp;</td>
+  </tr>
+   <tr>
+    <td><?php 
+    
+    if ($_GET['mod']<>'def')
+    require_once('../inc/menu_usr.inc.php'); 
+    
+    ?></td>
+  </tr>
+
+<tr><td></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    
+<tr>
+    <td><?php 
+		
+		if (!isset($_GET['mod']) || $_GET['mod']=='def')
+		include_once("../inc/inicio.inc.php");
+		else if ($_GET['mod']=='ced')
+		include_once("cedula.html.php");
+		else if ($_GET['mod']=='eq')
+		include_once("equipamiento.html.php");
+		else if ($_GET['mod']=='manp')
+		include_once("mantenimiento.html.php");
+		else if ($_GET['mod']=='manc')
+		include_once("terms.php");
+		else if ($_GET['mod']=='bit')
+		include_once("bitacora.inc.php");
+		else if ($_GET['mod']=='pro')
+		include_once("formularioed.php");
+		else if ($_GET['mod']=='inv')
+		include_once("formularioed.php");
+		else if ($_GET['mod']=='cot')
+		include_once("formularioed.php");
+		else if ($_GET['mod']=='nor')
+		include_once("formularioed.php");
+		else if ($_GET['mod']=='adm'){
+		include_once("formularioed.php");
+		}else
+//		header("Location: ./");
+		header("Location: inicio.html.php");
+		
+		
+	?></td>
+</tr>
+
+
+
+
+
+
+<?php require('../inc/pie.inc.php'); ?>

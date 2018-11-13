@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<?php  
+require_once('../clases/inventario.class.php');
+$combo = new inventario();
+$radial = new inventario();
+$verifica = new inventario();
+
+if ($_POST['accion']=='editar'){  
+
+//echo 'Valores a editar con REquest';
+//print_r($_REQUEST);
+
+?>
+
+<form action="../inc/procesainventario.inc.php" method="post" name="form_nuevo" class="formul">
+
+
+<table cellpadding="5" class="formulario">
+  <tr align="center" >Equipo de cómputo -Por dispositivo</tr>
+   <tr>
+   <td  align="right" >Dispositivo</td>
+     <!--<td><input type="text" name="nombre_dispositivo" size="30" value="<?php // echo $_POST['nombre_dispositivo'];?>" disabled="disabled"></td>-->
+    <td ><?php $combo->combodispositivo($_POST['nombre_dispositivo'])?></td>
+    <td  align="right" >Usuario Final</td>
+      <td><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></td>
+      <tr>
+      <td  align="right" >Descripción Extensa</td>
+     <td><input type="text" name="descextensa" size="60" value="<?php  echo $_POST['descextensa'];?>"></td>
+      </tr
+   ></tr>
+   
+    </table>
+  
+ <table cellpadding="5" class="formulario">
+  <tr align="center" >Resguardo</tr>
+   <tr>
+   <td  align="right" >Nombre</td>
+     <td><input type="text" name="usuario_nombre" size="30" value="<?php echo $_POST['usuario_nombre'];?>" ></td>
+  <td  align="right" >Número de empleado</td>
+     <td><input type="text" name="resguardo_no_empleado" size="10" value="<?php echo $_POST['resguardo_no_empleado'];?>" ></td>
+    </tr>
+   
+  </table>
+  
+
+ <table cellpadding="5" class="formulario">
+  <tr align="center" >Datos del usuario</tr>
+   <tr>
+   <td  align="right" >Nombre</td>
+     <td><input type="text" name="usuario_nombre" size="30" value="<?php echo $_POST['usuario_nombre'];?>" ></td>
+  <td  align="right" >Ubicación</td>
+     <td><input type="text" name="usuario_ubicacion" size="10" value="<?php echo $_POST['usuario_ubicacion'];?>" ></td>
+    </tr>
+  <td  align="right" >Perfil</td>
+      <td><?php $combo->combousuarioperfil($_POST['usuario_perfil'])?></td>
+     
+    <td  align="right" >Sector</td>
+      <td><?php $combo->combousuariosector($_POST['usuario_sector'])?></td>
+    </tr>   
+ </table>
+  
+  
+ <table cellpadding="5" class="formulario">
+  <tr align="center" >Información de patronato</tr>
+  <tr>
+     <td align="right" >No.de serie/etiqueta de servicio</td>
+     <td  ><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" ></td>
+  
+  <td  >No.Inventario UNAM</td>
+     <td ><input type="text" name="bn_clave" size="14" value="<?php echo $_REQUEST['bn_clave']; ?>" disabled="disabled" ></td>
+     
+     <td  align="right">No.Inventario del Área</td>
+     <td ><input type="text" name="inventario" size="14" value="<?php echo $REQUEST['inventario'];  ?>" disabled="disabled"></td>
+  
+ </tr>
+  <tr>
+     <td  align="right" >Marca (Registrada)</td>
+     <td   ><input type="text" name="descmarca" size="13" value="<?php echo $_POST['descmarca'];  ?>" disabled="disabled"></td>
+      <td  align="right" >Marca </td>
+     <td><?php $combo->combomarca($_POST['descmarca'])?></td>
+     <td  align="right" >Modelo</td>
+     <td ><input type="text" name="modelo_p" size="25" value="<?php echo $_POST['modelo_p'];  ?>"></td>
+  
+  </tr>
+   <tr>
+     <td  align="right" >Factura</td>
+     <td   ><input type="text" name="no_factura" size="40" value="<?php echo $_POST['no_factura'];  ?>"></td>
+     <td  align="right" >Proveedor</td>
+     <td ><input type="text" name="proveedor_p" size="25" value="<?php echo $_POST['proveedor_p'];  ?>" ></td>
+  
+  </tr>
+
+  <tr>
+     <td  align="right" >Años de garantía</td>
+     <td   ><input type="text" name="anos_garantia" size="20" value="<?php echo $_POST['anos_garantia'];  ?>"></td>
+     <td  align="right" >Fecha Factura</td>
+     
+     <td  ><input name="fecha_factura" type="date" id="fecha_factura" step="1" min="01-01-2000" max="31-12-2030"  value="<?php echo $_POST['fecha_factura']; ?>" > </td>
+  </tr>
+   </table>
+  
+  
+   <?php  if ($verifica->verificaTipoEquipo($_POST['dispositivo_clave'])==1 ) {?>
+ 
+   <table cellpadding="5" class="formulario">
+  <tr align="center" >Información del procesador</tr>
+  <tr>
+  
+      <td align="right">Familia</td>
+       <td><?php $combo->combofamilia($_POST['nombre_familia'])?></td>
+     <td  align="right" >Especificar otro</td>
+     <td   ><input type="text" name="familia_especificar" size="13" value="<?php echo $_POST['familia_especificar'];  ?>" ></td>
+     
+     </tr>
+     <tr>
+     
+     <td  align="right" >Modelo</td>
+     <td ><input type="text" name="modelo_procesador" size="25" value="<?php echo $_POST['modelo_procesador'];  ?>" ></td>
+  
+  </tr>
+  <tr>
+  <td  align="right" >Cantidad (Registrado)</td>
+    <td  ><input name="cantidad_procesador" type="text" id="cantidad_procesador" tabindex="1" size="25" value="<?php echo $_POST['cantidad_procesador']; ?>" disabled="disabled"  > </td>
+    
+   
+     <td  align="right" >Núcleos Totales</td>
+    <td  ><input name="nucleos_totales" type="text" id="nucleos_totales" tabindex="1" size="25" value="<?php echo $_POST['nucleos_totales']; ?>" > </td>
+    
+    </tr>
+</table>
+  
+ <table cellpadding="5" class="formulario">
+  <tr align="center" >Núcleos GPU</tr>
+    <td  align="right" >Cantitad Total</td>
+    <td  ><input name="nucleos_gpu" type="text" id="nucleos_gpu" tabindex="1" size="25" value="<?php echo $_POST['nucleos_gpu']; ?>" > </td>
+    <!--</table>-->
+  
+  
+   <table cellpadding="5" class="formulario">
+  <tr align="center" >Memoria RAM</tr>
+    <td  align="right" >Memoria RAM [GB]</td>
+    <td  ><input name="memoria_ram" type="text" id="memoria_ram" tabindex="1" size="7" value="<?php echo $_POST['memoria_ram']; ?>" > 
+    </td>
+    
+       </td>
+      
+       <td  align="right" >Tipo</td>
+       <td ><?php $combo->combotipomemoria($_POST['nombre_tipo_ram'])?></td>
+     
+       <td align="right" >Especificar otro</td>
+    
+       <td ><input type="text" name="ram_especificar" size="7" value="<?php echo $_POST['ram_especificar'];  ?>">
+       </td>
+       
+     
+  <tr align="center" >Almacenamiento</tr>
+  <tr>
+  <td  >Almacenamiento estándar</td>
+  </tr>
+    <td  align="right" >Número de elementos</td>
+    
+    <td ><?php $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+   
+    <td ><?php $combo->combotecnologia($_POST['nombre_tecnologia'],0)?></td>
+   <td align="right" >Capacidad Total [GB]</td>
+    <td ><input name="total_almac" type="text" id="total_almac" tabindex="1" size="7" value="<?php echo $_POST['total_almac']; ?>" > </td>
+  <tr>
+  <td align="center" >Almacenamiento con arreglos de discos duros</td>
+  </tr>
+  <tr> 
+      
+      
+     <td  align="right" >Arreglos</td>
+     <td ><?php $combo->comboarreglo($_POST['num_arreglos'])?></td>
+  </tr>
+   
+   <?php   if ($_POST['num_arreglos']==1) { ?>
+   <tr>
+         <td  align="right" >Esquema</td>
+    <td  ><input name="esquema_uno" type="text" id="esquema_uno" tabindex="1" size="7" value="<?php echo $_POST['esquema_uno']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    
+          <td align="right" >Tecnología</td>
+          <td ><?php $combo->combotecnologia($_POST['tec_uno'],1)?></td>
+          <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_uno" type="text" id="subtotal_uno" tabindex="1" size="7" value="<?php echo $_POST['subtotal_uno']; ?>" > </td>
+    </tr>
+    <?php  } ?>
+    <?php if ($_POST['num_arreglos']==2 ) { ?>
+    <tr>
+         <td  align="right" >Esquema</td>
+    <td  ><input name="esquema_uno" type="text" id="esquema_uno" tabindex="1" size="7" value="<?php echo $_POST['esquema_uno']; ?>"  > </td>  
+     <td align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_uno'],1)?></td>
+   
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_uno" type="text" id="subtotal_uno" tabindex="1" size="7" value="<?php echo $_POST['subtotal_uno']; ?>" > </td>
+    </tr>
+    
+    <tr>
+     <td  align="right" >Esquema</td>
+         
+    <td  ><input name="esquema_dos" type="text" id="esquema_dos" tabindex="1" size="7" value="<?php echo $_POST['esquema_dos']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    <td  align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_dos'],2)?></td>
+  
+   <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_dos" type="text" id="subtotal_dos" tabindex="1" size="7" value="<?php echo $_POST['subtotal_dos']; ?>" > </td>
+    </tr>
+   
+    <?php  } ?>
+   <?php if ($_POST['num_arreglos']==3 ) { ?>
+   <tr>
+         <td  align="right" >Esquema</td>
+    <td  ><input name="esquema_uno" type="text" id="esquema_uno" tabindex="1" size="7" value="<?php echo $_POST['esquema_uno']; ?>"  > </td>  
+     <td align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_uno'],1)?></td>
+    
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_uno" type="text" id="subtotal_uno" tabindex="1" size="7" value="<?php echo $_POST['subtotal_uno']; ?>" > </td>
+    </tr>
+    <tr>
+     <td  align="right" >Esquema</td>
+         
+    <td  ><input name="esquema_dos" type="text" id="esquema_dos" tabindex="1" size="7" value="<?php echo $_POST['esquema_dos']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    <td  align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_dos'],2)?></td>
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_dos" type="text" id="subtotal_dos" tabindex="1" size="7" value="<?php echo $_POST['subtotal_dos']; ?>" > </td>
+   </tr>
+   <td  align="right" >Esquema</td>
+   <td  ><input name="esquema_tres" type="text" id="esquema_tres" tabindex="1" size="7" value="<?php echo $_POST['esquema_tres']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    <td  align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_tres'],3)?></td>
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_tres" type="text" id="subtotal_tres" tabindex="1" size="7" value="<?php echo $_POST['subtotal_tres']; ?>" > </td>
+   </tr>
+   
+   <?php  } ?>
+   
+    <?php if ($_POST['num_arreglos']==4 ) { ?>
+    <tr>
+         <td  align="right" >Esquema</td>
+    <td  ><input name="esquema_uno" type="text" id="esquema_uno" tabindex="1" size="7" value="<?php echo $_POST['esquema_uno']; ?>"  > </td>  
+     <td align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_uno'],1)?></td>
+   
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_uno" type="text" id="subtotal_uno" tabindex="1" size="7" value="<?php echo $_POST['subtotal_uno']; ?>" > </td>
+    </tr>
+    <tr>
+         <td  align="right" >Esquema</td>
+         
+    <td  ><input name="esquema_dos" type="text" id="esquema_dos" tabindex="1" size="7" value="<?php echo $_POST['esquema_dos']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    <td  align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_dos'],2)?></td>
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_dos" type="text" id="subtotal_dos" tabindex="1" size="7" value="<?php echo $_POST['subtotal_dos']; ?>" > </td>
+   </tr>
+   <tr>
+   <td  align="right" >Esquema</td>
+   <td  ><input name="esquema_tres" type="text" id="esquema_tres" tabindex="1" size="7" value="<?php echo $_POST['esquema_tres']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    <td  align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_tres'],3)?></td>
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_tres" type="text" id="subtotal_tres" tabindex="1" size="7" value="<?php echo $_POST['subtotal_tres']; ?>" > </td>
+   </tr>
+   <tr>
+   <td  align="right" >Esquema</td>
+   <td  ><input name="esquema_cuatro" type="text" id="esquema_cuatro" tabindex="1" size="7" value="<?php echo $_POST['esquema_cuatro']; ?>"  > </td>
+    <td ><?php // $combo->comboelementos($_POST['num_elementos_almac'])?></td>
+    <td  align="right" >Tecnología</td>
+     <td ><?php $combo->combotecnologia($_POST['tec_cuatro'],4)?></td>
+     <td align="right" >Subtotal [GB]</td>
+    <td ><input name="subtotal_cuatro" type="text" id="subtotal_cuatro" tabindex="1" size="7" value="<?php echo $_POST['subtotal_cuatro']; ?>" > </td>
+   </tr>
+   <?php  } ?>
+   <?php $arregloTotal=$_POST['subtotal_uno']+$_POST['subtotal_dos']+$_POST['subtotal_tres']+$_POST['subtotal_cuatro']?>
+   <td  >Capacidad TOTAL [GB]</td>
+    <td ><input name="arreglo_total" type="text" id="arreglo_total" tabindex="1" size="7" value="<?php echo $arregloTotal; ?>" disabled="disabled" > </td>
+ </table>
+  <table cellpadding="5" class="formulario">
+  <tr align="center" >Conectividad</tr>
+    
+    
+    <td  align="right" >Tecnología de comunicación </td>
+    <td ><?php $combo->combotecom($_POST['tec_com'])?></td>
+    <td  align="right" >Otro </td>
+    <td ><input name="tec_com_otro" type="text" id="tec_com_otro" tabindex="1" size="15" value="<?php echo $_POST['tec_com_otro']; ?>" > </td>
+</table>
+  
+ <table cellpadding="5" class="formulario">
+ 
+ <tr align="center" >Plataforma</tr>
+   <td  align="right" >Sistema Operativo </td>
+    <td ><?php $combo->combosistemao($_POST['nombre_so'])?></td>
+    <td  align="right" >Versión </td>
+     <?php if ($_POST['version_sist_oper']=='' ) { ?>
+    <td  ><input name="version_sist_oper" type="text" id="version_sist_oper" tabindex="1" size="40" value="<?php echo $_POST['so']; ?>" > 
+     <?php } else {?>
+    <td  ><input name="version_sist_oper" type="text" id="version_sist_oper" tabindex="1" size="40" value="<?php echo $_POST['version_sist_oper']; ?>" > </td>
+   <?php } ?>
+    <tr>
+    <td  align="right" >Licencia </td>
+     <td ><?php $combo->checklicencia($_POST['licencia'])?></td> 
+   
+    
+    <?php 
+     if(isset($_REQUEST['licencia'] ) )
+    { 
+    
+    ?>
+    <td  align="right" >Inicia </td>
+    <td><input name="licencia_ini" type="date" id="licencia_ini" step="1" min="01-01-2000" max="31-12-2030" value="<?php echo $_POST['licencia_ini']; ?>" > </td>
+   
+    <td  align="right" >Final </td>
+     <td><input name="licencia_fin" type="date" id="licencia_fin" step="1" min="01-01-2000" max="31-12-2030"  value="<?php echo $_POST['licencia_fin']; ?>" > </td>
+    </tr>
+     <?php } else {?>
+     
+     <td  align="right" >Inicia </td>
+    <td><input name="licencia_ini" type="date" id="licencia_ini" step="1" min="01-01-2000" max="31-12-2030" value="<?php echo $_POST['licencia_ini']; ?>" disabled="disabled"> </td>
+   
+    <td  align="right" >Final </td>
+     <td><input name="licencia_fin" type="date" id="licencia_fin" step="1" min="01-01-2000" max="31-12-2030"  value="<?php echo $_POST['licencia_fin']; ?>" disabled="disabled"> </td>
+    </tr>
+     <?php } ?>
+     
+<tr>  
+
+   <td  align="right" >Equipo alto rendimiento</td>
+   <td ><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
+   
+    <td  align="right" >Arquitectura</td>
+   
+    <td><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
+  
+    <td  align="right" ><font color="blue">Servidor</font></td>
+    
+    <td><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font></td>
+
+  </tr>
+ 
+ 
+  <?php } ?>
+   
+  
+  <!--<div id="botonblu" >--> 
+  <tr>
+  
+    <td colspan="3" align="right">
+    
+ <br/>
+ <br/>
+ <br/>
+ 
+    <input type="submit" name="accione" value="Guardar" />
+    <input type="reset" name="accione"  value="Limpiar" />
+	<input type="submit" name="accione" value="Cancelar" />
+    
+    </td>
+    </tr>    
+
+<br/>
+<br/>
+<br/>
+
+<input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
+<input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
+<input name="bn_id" type="hidden" value="<?php echo $_POST['bn_id']; ?>" />
+<input name="id_equipo" type="hidden" value="<?php echo $_POST['id_equipo']; ?>" />
+<input name="id_dispositivo" type="hidden" value="<?php echo $_POST['id_dispositivo']; ?>" />
+<input name="bien" type="hidden" value="<?php echo $_POST['bien']; ?>" />
+
+</table>
+
+
+</form>
+
+
+
+<?php 
+}
+?>

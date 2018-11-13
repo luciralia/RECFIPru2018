@@ -1,0 +1,97 @@
+* {
+padding:0px;
+margin:0px; 
+}
+
+#header {
+/*margin: auto;*/
+ width:1024px;
+ font-family:arial;
+
+}
+
+ul {
+ list-style-type: none;
+
+}
+
+.navu li a {
+/* background-color:#069;
+ color:#FFFFFF;
+ text-decoration:none;
+ padding: 10px 15px;
+ display:block;*/
+list-style-type: none;
+display:block;
+font:12px arial,sans-serif;
+font-weight:bold;
+color:#FFFFFF;
+text-shadow:1px 1px #000000;
+background-image: url('../images/fondo_boton_az_25.jpg');
+height: 15px;
+/*text-align:center;*/
+text-decoration:none;
+
+cursor:pointer;
+padding: 5px 5px; 
+}
+
+.navu li a:hover {
+ /*background-color:#FF3300;*/
+ 
+/* background-image: url('../images/fondo_boton_30_on.jpg');*/
+background-image: url('../images/fondo_boton_az_25_on.jpg');
+border-bottom-style:none;
+}
+
+.navu li a.actual {
+ /*background-color:#FF3300;*/
+ 
+/* background-image: url('../images/fondo_boton_30_on.jpg');*/
+padding: 5px 5px;
+height: 15px;
+background-image: url('../images/fondo_boton_az_25_on.jpg');
+border-bottom-style:none;
+}
+
+.navu > li {
+ float:left;
+
+}
+
+.navu li ul {
+ display:none;
+ position:absolute;
+ min-width:100px;
+
+}
+
+.navu li:hover > ul {
+ display:block;
+
+}
+
+.navu li ul li {
+ position:relative;
+ z-index:100;
+}
+
+.navu li ul li a {
+background-image: url('../images/fondo_boton_az_25_onx.jpg');
+background-color: #0e84e4;
+}
+.navu li ul li a:hover {
+position:relative;
+/*position:absolute;*/
+border-bottom-style:none;
+background-color: #0f8df1;
+background-image: url('../images/fondo_boton_az_25.jpg');
+height: 15px;
+z-index:100;
+}
+
+.navu li ul li ul {
+ right:-140px;
+ top:0px;
+ z-index:100;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="perf-postgres.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-oci8.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-mysql.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-mssqlnative.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-mssql.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-informix.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-db2.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="129613009500000000" remote="130260117580000000" Dst="-1" />
+<file name="perf-db2.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+<file name="perf-informix.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+<file name="perf-mssql.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+<file name="perf-mssqlnative.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+<file name="perf-mysql.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+<file name="perf-oci8.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+<file name="perf-postgres.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="129613009500000000" remote="131790350450000000" Dst="2" />
+</dwsync>

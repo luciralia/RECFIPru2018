@@ -1,0 +1,13 @@
+<?php
+session_start();
+if(isset($_SESSION)){
+//unset($_SESSION['nombre']);
+session_destroy();
+pg_close();
+header("Location:../");
+}else{
+session_destroy();}
+//sleep(20);
+pg_close();
+header("Location:../");
+ ?>

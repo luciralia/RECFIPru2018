@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name=".gitignore" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350470000000" Dst="2" />
+<file name=".travis.yml" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350470000000" Dst="2" />
+<file name="CHANGELOG.txt" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350470000000" Dst="2" />
+<file name="composer.json" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350510000000" Dst="2" />
+<file name="compress.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350510000000" Dst="2" />
+<file name="config.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350510000000" Dst="2" />
+<file name="config_fonts-distr-without-OTL.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350510000000" Dst="2" />
+<file name="config_fonts.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350510000000" Dst="2" />
+<file name="config_lang2fonts.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350520000000" Dst="2" />
+<file name="config_script2lang.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350520000000" Dst="2" />
+<file name="CREDITS.txt" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350520000000" Dst="2" />
+<file name="graph.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350520000000" Dst="2" />
+<file name="lang2fonts.css" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350530000000" Dst="2" />
+<file name="LICENSE.txt" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350530000000" Dst="2" />
+<file name="mpdf.css" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350530000000" Dst="2" />
+<file name="mpdf.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350540000000" Dst="2" />
+<file name="MpdfException.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350540000000" Dst="2" />
+<file name="phpunit.xml" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350540000000" Dst="2" />
+<file name="progbar.css" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350540000000" Dst="2" />
+<file name="README.md" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350670000000" Dst="2" />
+<file name="Tag.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131440851720000000" remote="131790350670000000" Dst="2" />
+</dwsync>

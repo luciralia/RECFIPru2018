@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="select usuario_division_dpto.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130235069380000000" remote="130235069380000000" Dst="-1" />
+<file name="select carga cedula.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130253093170000000" remote="130253093170000000" Dst="-1" />
+<file name="select multiple necesidades labs con deps y divs.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130258504210000000" remote="130258504210000000" Dst="-1" />
+<file name="select multiple responsalbles por lab y div.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130260153630000000" remote="130260153630000000" Dst="-1" />
+<file name="select eventos manteniemiento.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130269524530000000" remote="130269524530000000" Dst="-1" />
+<file name="select multiple necesidades materiales mantenimiento.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130270604550000000" remote="130270604550000000" Dst="-1" />
+<file name="select multiple materiales mantenimiento.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130270543700000000" remote="130270543700000000" Dst="-1" />
+<file name="select proyectos por lab.txt.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130271456080000000" remote="130271456080000000" Dst="-1" />
+<file name="select proyectos por lab.txt" server="132.248.52.241//var/www/SIELDIv2/" local="130271492080000000" remote="130915658260000000" Dst="-1" />
+<file name="select inventario en lab.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130274667897091562" remote="130275524970000000" Dst="-1" />
+<file name="create table cat_just_mat.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130282348868634239" remote="130282453780000000" Dst="-1" />
+<file name="consulta de equipos asignados a su lab.sql" server="132.248.52.241//var/www/SIELDIv2/" local="130286988310627789" remote="130287617550000000" Dst="-1" />
+<file name="consulta de equipos asignados a su lab.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130286988310627789" remote="131790350370000000" Dst="2" />
+<file name="create table cat_just_mat.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130282348868634239" remote="131790350370000000" Dst="2" />
+<file name="select carga cedula.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130253093170000000" remote="131790350370000000" Dst="2" />
+<file name="select eventos manteniemiento.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130269524530000000" remote="131790350370000000" Dst="2" />
+<file name="select inventario en lab.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130274667897091562" remote="131790350370000000" Dst="2" />
+<file name="select multiple materiales mantenimiento.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130270543700000000" remote="131790350370000000" Dst="2" />
+<file name="select multiple necesidades labs con deps y divs.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130258504210000000" remote="131790350370000000" Dst="2" />
+<file name="select multiple necesidades materiales mantenimiento.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130270604550000000" remote="131790350380000000" Dst="2" />
+<file name="select multiple responsalbles por lab y div.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130260153630000000" remote="131790350380000000" Dst="2" />
+<file name="select proyectos por lab.txt" server="132.248.52.241//var/www/RECFIPru2018/" local="130271492080000000" remote="131790350380000000" Dst="2" />
+<file name="select proyectos por lab.txt.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130271456080000000" remote="131790350380000000" Dst="2" />
+<file name="select usuario_division_dpto.sql" server="132.248.52.241//var/www/RECFIPru2018/" local="130235069380000000" remote="131790350380000000" Dst="2" />
+</dwsync>

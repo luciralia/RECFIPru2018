@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="cotiza.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427786680000000" remote="130915658270000000" Dst="-1" />
+<file name="laboratorios.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427574660000000" remote="130915658270000000" Dst="-1" />
+<file name="divisiones.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130900139940000000" remote="130915658220000000" Dst="-1" />
+<file name="departamentos.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130260189540000000" remote="130915658220000000" Dst="-1" />
+<file name="class.conexion_db.php" server="132.248.52.241//var/www/SIELDIv2/" local="130260189540000000" remote="130915658220000000" Dst="-1" />
+<file name="proyectos.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130271508340000000" remote="130915658220000000" Dst="-1" />
+<file name="Working Copy of divisiones.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130260258960000000" remote="130915658230000000" Dst="-1" />
+<file name="inventario.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130891497280000000" remote="130915658270000000" Dst="-1" />
+<file name="requerimientos.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130284322920000000" remote="130915658220000000" Dst="-1" />
+<file name="log.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427731720000000" remote="130915658270000000" Dst="-1" />
+<file name="infra.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427812540000000" remote="130915658270000000" Dst="-1" />
+<file name="bitacora.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130917681327058729" remote="130917734060000000" Dst="-1" />
+<file name="exporta.class.php" server="132.248.52.241//var/www/SIELDIv2/" local="130915660823745425" remote="130915778090000000" Dst="-1" />
+<file name="inventario.class.php" server="132.248.52.241//var/www/RECFIPru/" local="131663233658909117" remote="131663304590000000" Dst="1" />
+<file name="bitacora.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130917681327058729" remote="131790351660000000" Dst="2" />
+<file name="class.conexion_db.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130260189540000000" remote="131790351660000000" Dst="2" />
+<file name="cotiza.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427786680000000" remote="131790351660000000" Dst="2" />
+<file name="departamentos.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130260189540000000" remote="131790351660000000" Dst="2" />
+<file name="divisiones.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131723469499737651" remote="131790351660000000" Dst="2" />
+<file name="exporta.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131698557834622711" remote="131790351660000000" Dst="2" />
+<file name="infra.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427812540000000" remote="131790351660000000" Dst="2" />
+<file name="inventario.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131746716555486937" remote="131790351660000000" Dst="2" />
+<file name="laboratorios.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131723462432031464" remote="131790351660000000" Dst="2" />
+<file name="log.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131571574150068149" remote="131790351660000000" Dst="2" />
+<file name="proyectos.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130271508340000000" remote="131790351660000000" Dst="2" />
+<file name="requerimientos.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130284322920000000" remote="131790351670000000" Dst="2" />
+<file name="Working Copy of divisiones.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130260258960000000" remote="131790351670000000" Dst="2" />
+<file name="importa.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131853299920000000" remote="131853299920000000" Dst="1" />
+</dwsync>
