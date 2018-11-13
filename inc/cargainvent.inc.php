@@ -2,7 +2,6 @@
 <?php
 
 require_once('../conexion.php');
-
 require_once('../clases/laboratorios.class.php');
 require_once('../clases/inventario.class.php');
 require_once('../clases/log.class.php');
@@ -52,26 +51,11 @@ if ($_GET['mod']=='invg' ){
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
     
-<input name="bOrden" type="submit" value="ordenar" />
+<input name="bOrden" type="submit" value="ordenarV" />
 </form>
 <!--</td>-->
 
-   <?php if ($_GET['lab']!=""){
-         
-           $action="../inc/exportaxlsgenarea_inv.inc.php"; 
-		   ?>
-            <tr>
-             <td align="left" >
-              <form action=<?php  echo $action; ?> method="post" name="expgenarea" >
-	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
-              </td>
-              </tr>
-           
-      <?php	}
-		   ?>
+
               
 <?php if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
         <tr>
@@ -92,72 +76,59 @@ if ($_GET['mod']=='invg' ){
 <?php	
 	
 	
-$listatablas= array("dispositivo","equipo");
 
 
-for ($x=0;$x<count($listatablas);$x++)
-{
+//for ($x=0;$x<count($listatablas);$x++)
+//{
 	
           if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10)
            ){
 
-                  if ($listatablas[$x]=='dispositivo') {
-	
+               
                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                    from ".$listatablas[$x]." e 
+                              from dispositivo e 
 
-                   left join cat_dispositivo cd
-                   on e.dispositivo_clave=cd.dispositivo_clave
-                   left join cat_familia cf
-                   on e.familia_clave=cf.id_familia
-                   left join cat_tipo_ram ctr
-                   on e.tipo_ram_clave=ctr.id_tipo_ram
-                   left join cat_tecnologia ct
-                   on e.tecnologia_clave=ct.id_tecnologia
-                   left join cat_sist_oper cso
-                   on  e.sist_oper=cso.id_sist_oper
-                   left join cat_marca cm
-                   on cm.id_marca=e.id_marca
-                   left join cat_memoria_ram cmr
-                   on e.id_mem_ram=cmr.id_mem_ram
-                   left join bienes_inventario bi
-                   on  e.bn_id = bi.bn_id
-                   left join laboratorios l
-                   on  l.id_lab=e.id_lab
-                   where l.id_lab=";
-                 }
-                  elseif ($listatablas[$x]=='equipo'){
-		
-	                $query = "select e.*, l.nombre as laboratorio, bi.* 
-                              from ".$listatablas[$x]." e
-		                      left join bienes_inventario bi
-		                      on e.bn_id=bi.bn_id
-		                      left join laboratorios l
+                              left join cat_dispositivo cd
+                              on e.dispositivo_clave=cd.dispositivo_clave
+                              left join cat_familia cf
+                              on e.familia_clave=cf.id_familia
+                              left join cat_tipo_ram ctr
+                              on e.tipo_ram_clave=ctr.id_tipo_ram
+                              left join cat_tecnologia ct
+                              on e.tecnologia_clave=ct.id_tecnologia
+                              left join cat_sist_oper cso
+                              on  e.sist_oper=cso.id_sist_oper
+                              left join cat_marca cm
+                              on cm.id_marca=e.id_marca
+                              left join cat_memoria_ram cmr
+                              on e.id_mem_ram=cmr.id_mem_ram
+                              left join bienes_inventario bi
+                              on  e.bn_id = bi.bn_id
+                              left join laboratorios l
                               on  l.id_lab=e.id_lab
                               where l.id_lab=";
-	
-             }
-
+                       
+                      
+  
             switch ($_GET['orden']){
  			case "descripcion":
-			$query.= $_GET['lab'] . "ORDER BY bi.bn_desc ASC";
+			    $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
 			break;
  			case "clave":
-			$query.= $_GET['lab'] . "ORDER BY bi.bn_clave ASC";
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
 			break;
 			case "marca":
-			$query.= $_GET['lab'] . "ORDER BY bi.bn_marca ASC";
+			    $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
 			break;
  			default:
-			$query.= $_GET['lab'] . "ORDER BY e.fecha DESC";
+			    $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
 	    	break;
 			
-        } // fin de switch
- }else{
-         if ($listatablas[$x]=='dispositivo') {
-	
+           } // fin de switch
+        }else{
+        
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-               from ".$listatablas[$x]." e 
+               from dispositivo e 
 
                left join cat_dispositivo cd
                on e.dispositivo_clave=cd.dispositivo_clave
@@ -180,40 +151,26 @@ for ($x=0;$x<count($listatablas);$x++)
                left join departamentos dp
                on dp.id_dep=l.id_dep
                where id_div=";
-               }
-                elseif ($listatablas[$x]=='equipo'){
-		
-	                $query = "select e.*, l.nombre as laboratorio, bi.* 
-                    from ".$listatablas[$x]." e
-		            left join bienes_inventario bi
-		            on e.bn_id=bi.bn_id
-		            left join laboratorios l
-                    on  l.id_lab=e.id_lab
-                    left join departamentos dp
-                    on dp.id_dep=l.id_dep
-                     where id_div=";
-	
-            }
-
+             
+               
 
             switch ($_GET['orden']){
  			case "descripcion":
-			$query.= $_SESSION['id_div'] . "ORDER BY bi.bn_desc ASC";
+			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
 			break;
  			case "clave":
-			$query.= $_SESSION['id_div'] . "ORDER BY bi.bn_clave ASC";
+			     $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
 			break;
 			case "marca":
-			$query.= $_SESSION['id_div']. "ORDER BY bi.bn_marca ASC";
+			    $query.= $_SESSION['id_div']. " ORDER BY bi.bn_marca ASC";
 			break;
  			default:
-			$query.= $_SESSION['id_div'] . "ORDER BY e.fecha DESC";
+			    $query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
 	    	break;
 			
         } // fin de switch
    }
-//echo 'query en cargainvent';
-//echo $query;
+ 
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
 
@@ -222,7 +179,6 @@ for ($x=0;$x<count($listatablas);$x++)
          $bandera1=1;  
      }
 
-	
      $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod'];
  
      ?>
@@ -232,67 +188,38 @@ for ($x=0;$x<count($listatablas);$x++)
  
  	<?php   
 
-if (isset($_GET['lab']) && isset($_GET['mod']))
- { 
+     if (isset($_GET['lab']) && isset($_GET['mod']))
+       { 
   
-		if ($listatablas[$x]=='equipo' ) {
-			 $titulo=' experimental ';}
-		 else if($listatablas[$x]=='dispositivo' ){
-			   $titulo=' de cómputo ';}
+			   $titulo=' de cómputo ';
 		   
            if ($inventario!=0 ) {
 			   
             // para poner titulo del inventario, si hay tuplas
 		   
 		   ?>
-    <br \>         		   	  
-   <table>
-   <tr>
-      <td align="rigth"><h2>Inventario de equipo <?php echo $titulo;?> </h2></td>
-   </tr>
-    </table>
+       <br \>         		   	  
+       <table>
+           <tr>
+                <td align="rigth"><h2>Inventario de equipo <?php echo $titulo;?> </h2></td>
+           </tr>
+        </table>
   <br \>
  
   
-   
-
  <?php  }  ?>
  
    
   <?php 
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-		// print_r($lab_invent);
 		
-		 if ($listatablas[$x]=='equipo' && $inventario!=0  ){
-		// && $lab_invent['bn_notas']=='EQUIPO'?>
-		
-         
-          <table class='material'>
-		 <tr>
-              <th width="20%" scope="col">No. Inventario</th>
-              <th width="20%" scope="col">No. Inventario del Área</th>
-              <th width="20%" scope="col">Descripción del equipo</th>
-              <th width="20%" scope="col">Marca</th>
-              <th width="20%" scope="col">Modelo</th>
-              <th width="20%" scope="col">Serie</th>
-         </tr>
+       
+            if ( $inventario!=0 
+                //&& $lab_invent['bn_notas']=='COMPUTO' 
+            ){
    
-            <tr>
-               <td width="20%" scope="col" ><?php echo $lab_invent['bn_clave'];?></td>
-               <td width="20%" scope="col" ><?php echo $lab_invent['inventario'];?></td>
-               <td width="20%" scope="col" ><?php echo $lab_invent['bn_desc'];?></td>
-               <td width="20%" scope="col" ><?php echo $lab_invent['bn_marca'];?></td>
-               <td width="20%" scope="col" ><?php echo $lab_invent['bn_modelo'];?></td>
-               <td width="20%" scope="col" ><?php echo $lab_invent['bn_serie'];?></td>
-            </tr>
-    
-   
-   <?php } elseif ($listatablas[$x]=='dispositivo' && $inventario!=0 
-   //&& $lab_invent['bn_notas']=='COMPUTO' 
-   ){
-   
-       //if ?>
+             ?>
    
             <table class='material'>
            <tr>
@@ -357,7 +284,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 	 //print_r ($lab_invent); 
 		?>
         
- <?php  if (($listatablas[$x]=='dispositivo'  && $_SESSION['tipo_usuario']!=10)) {
+ <?php  if (($_SESSION['tipo_usuario']!=10)) {
 
  ?>
       <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
@@ -396,7 +323,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 <!--<table>-->
 <table>
 <?php 
-} // fin del for que recorre cada inventarios experimental y cómputo
+//}  fin del for que recorre cada inventarios experimental y cómputo
 
 ?>
 <br \>
@@ -423,161 +350,150 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 else 
 { //&& $_SESSION['tipo_usuario']!=10
 	if($_GET['lab']!=NULL ){
-  if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
+    if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
 	
 	    $tabla="dispositivo";
 		$query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-from " . $tabla . " e 
+                 from " . $tabla . " e 
 
-left join cat_dispositivo cd
-on e.dispositivo_clave=cd.dispositivo_clave
-left join cat_familia cf
-on e.familia_clave=cf.id_familia
-left join cat_tipo_ram ctr
-on e.tipo_ram_clave=ctr.id_tipo_ram
-left join cat_tecnologia ct
-on e.tecnologia_clave=ct.id_tecnologia
-left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-where l.id_lab=";}
-           elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
-             {$tabla="dispositivo";
-			 $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-from " . $tabla . " e 
+                 left join cat_dispositivo cd
+                 on e.dispositivo_clave=cd.dispositivo_clave
+                 left join cat_familia cf
+                 on e.familia_clave=cf.id_familia
+                 left join cat_tipo_ram ctr
+                 on e.tipo_ram_clave=ctr.id_tipo_ram
+                 left join cat_tecnologia ct
+                 on e.tecnologia_clave=ct.id_tecnologia
+                 left join cat_sist_oper cso
+                 on  e.sist_oper=cso.id_sist_oper
+                 left join cat_marca cm
+                 on cm.id_marca=e.id_marca
+                 left join cat_memoria_ram cmr
+                 on e.id_mem_ram=cmr.id_mem_ram
+                 left join bienes_inventario bi
+                 on  e.bn_id = bi.bn_id
+                 join laboratorios l
+                 on  l.id_lab=e.id_lab
+                 where l.id_lab=";}
+                 elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
+                        {$tabla="dispositivo";
+			             $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+                          from " . $tabla . " e 
 
-left join cat_dispositivo cd
-on e.dispositivo_clave=cd.dispositivo_clave
-left join cat_familia cf
-on e.familia_clave=cf.id_familia
-left join cat_tipo_ram ctr
-on e.tipo_ram_clave=ctr.id_tipo_ram
-left join cat_tecnologia ct
-on e.tecnologia_clave=ct.id_tecnologia
-left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-where l.id_lab=";}
-             else 
-               {$tabla="equipo";
-			   $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-from " . $tabla . " e 
+                          left join cat_dispositivo cd
+                          on e.dispositivo_clave=cd.dispositivo_clave
+                          left join cat_familia cf
+                          on e.familia_clave=cf.id_familia
+                          left join cat_tipo_ram ctr
+                          on e.tipo_ram_clave=ctr.id_tipo_ram
+                          left join cat_tecnologia ct
+                          on e.tecnologia_clave=ct.id_tecnologia
+                          left join cat_sist_oper cso
+                          on  e.sist_oper=cso.id_sist_oper
+                          left join cat_marca cm
+                          on cm.id_marca=e.id_marca
+                          left join cat_memoria_ram cmr
+                          on e.id_mem_ram=cmr.id_mem_ram
+                          left join bienes_inventario bi
+                          on  e.bn_id = bi.bn_id
+                          join laboratorios l
+                          on  l.id_lab=e.id_lab
+                          where l.id_lab=";}
+                       /* else 
+                             { $tabla="equipo";
+			                   $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+                               from " . $tabla . " e 
 
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-where l.id_lab=";} 
+                               left join bienes_inventario bi
+                               on  e.bn_id = bi.bn_id
+                               join laboratorios l
+                               on  l.id_lab=e.id_lab
+                               where l.id_lab=";} */
 
-   switch ($_GET['orden']){
- 			case "descripcion":
-			$query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
-			break;
- 			case "clave":
-			$query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
-			break;
-			case "marca":
-			$query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
-			break;
- 			default:
-			$query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
-	    	break;
+              switch ($_GET['orden']){
+ 			  case "descripcion":
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
+			  break;
+ 			  case "clave":
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
+			  break;
+			  case "marca":
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
+			  break;
+ 			  default:
+			     $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
+	    	  break;
 			
         } // fin de switch
   
-  }else{
-	   if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
-	    $tabla="dispositivo";
-		$query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-from " . $tabla . " e 
+      }else{
+	     if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
+	         $tabla="dispositivo";
+		     $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+                      from " . $tabla . " e 
 
-left join cat_dispositivo cd
-on e.dispositivo_clave=cd.dispositivo_clave
-left join cat_familia cf
-on e.familia_clave=cf.id_familia
-left join cat_tipo_ram ctr
-on e.tipo_ram_clave=ctr.id_tipo_ram
-left join cat_tecnologia ct
-on e.tecnologia_clave=ct.id_tecnologia
-left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-left join laboratorios l
-on  l.id_lab=e.id_lab
-left join departamentos dp
-on dp.id_dep=l.id_dep
-where id_div=";}
-           elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
-             {$tabla="dispositivo";
-			 $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-from " . $tabla . " e 
+                      left join cat_dispositivo cd
+                      on e.dispositivo_clave=cd.dispositivo_clave
+                      left join cat_familia cf
+                      on e.familia_clave=cf.id_familia
+                      left join cat_tipo_ram ctr
+                      on e.tipo_ram_clave=ctr.id_tipo_ram
+                      left join cat_tecnologia ct
+                      on e.tecnologia_clave=ct.id_tecnologia
+                      left join cat_sist_oper cso
+                      on  e.sist_oper=cso.id_sist_oper
+                      left join cat_marca cm
+                      on cm.id_marca=e.id_marca
+                      left join cat_memoria_ram cmr
+                      on e.id_mem_ram=cmr.id_mem_ram
+                      left join bienes_inventario bi
+                      on  e.bn_id = bi.bn_id
+                      left join laboratorios l
+                      on  l.id_lab=e.id_lab
+                      left join departamentos dp
+                      on dp.id_dep=l.id_dep
+                      where id_div=";}
+                          elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
+                                 {$tabla= "dispositivo";
+			                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+                                           from " . $tabla . " e 
 
-left join cat_dispositivo cd
-on e.dispositivo_clave=cd.dispositivo_clave
-left join cat_familia cf
-on e.familia_clave=cf.id_familia
-left join cat_tipo_ram ctr
-on e.tipo_ram_clave=ctr.id_tipo_ram
-left join cat_tecnologia ct
-on e.tecnologia_clave=ct.id_tecnologia
-left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-left join laboratorios l
-on  l.id_lab=e.id_lab
-left join departamentos dp
-on dp.id_dep=l.id_dep
-where id_div=";}
-             else 
-               {$tabla="equipo";
-			   $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-from " . $tabla . " e 
+                                           left join cat_dispositivo cd
+                                           on e.dispositivo_clave=cd.dispositivo_clave
+                                           left join cat_familia cf
+                                           on e.familia_clave=cf.id_familia
+                                           left join cat_tipo_ram ctr
+                                           on e.tipo_ram_clave=ctr.id_tipo_ram
+                                           left join cat_tecnologia ct
+                                           on e.tecnologia_clave=ct.id_tecnologia
+                                           left join cat_sist_oper cso
+                                           on  e.sist_oper=cso.id_sist_oper
+                                           left join cat_marca cm
+                                           on cm.id_marca=e.id_marca
+                                           left join cat_memoria_ram cmr
+                                           on e.id_mem_ram=cmr.id_mem_ram
+                                           left join bienes_inventario bi
+                                           on  e.bn_id = bi.bn_id
+                                           left join laboratorios l
+                                           on  l.id_lab=e.id_lab
+                                           left join departamentos dp
+                                            on dp.id_dep=l.id_dep
+                                           where id_div=";}
+                               
 
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-left join laboratorios l
-on  l.id_lab=e.id_lab
-left join departamentos dp
-on dp.id_dep=l.id_dep
-where id_div=";}
-
-   switch ($_GET['orden']){
- 			case "descripcion":
-			$query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
-			break;
- 			case "clave":
-			$query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
-			break;
-			case "marca":
-			$query.= $_SESSION['id_div'] . " ORDER BY bi.bn_marca ASC";
-			break;
- 			default:
-			$query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
-	    	break;
+                    switch ($_GET['orden']){
+ 			        case "descripcion":
+			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
+			        break;
+ 			        case "clave":
+			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
+			        break;
+			        case "marca":
+			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_marca ASC";
+			        break;
+ 			        default:
+			                $query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
+	    	        break;
 			
         } // fin de switch
 }
@@ -652,30 +568,30 @@ if ($inventario!=0) { ?>
 </tr>
 
      <?php } elseif ($_GET['mod']=='invc' ) {// if(inventario ==0 )?> 
-    <br/>
-    <br/>
-     <tr>  
+                <br/>
+                <br/>
+                <tr>  
      
-     <td align="center">
+                  <td align="center">
     
-     <h3> No hay dispositivos registrados </h3>
-     </td>
-     </tr>
+                  <h3> No hay dispositivos registrados </h3>
+                  </td>
+                  </tr>
  
-  
-    <?php } elseif ($_GET['mod']=='inv' ) { ?>
-	 <br/>
-    <br/>
-     <tr>  
+             <?php } 
+	           /*elseif ($_GET['mod']=='inv' ) { */?>
+	            <br/>
+                <br/>
+    <!-- <tr>  
      
      <td align="center">
     
      <h3> No hay equipos experimentales registrados </h3>
      </td>
-     </tr>
+     </tr> -->
  
   
-    <?php }
+    <?php //}
   
     ?>
 
@@ -761,23 +677,24 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 
 <?php } //fin de si y solo hay registros 
 
-	      if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='inv' //&& $lab_invent['bn_notas']=='EQUIPO'
-		  ) { ?>
-          
+	    /* if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='inv' //&& $lab_invent['bn_notas']=='EQUIPO'
+		  ) { */?>
+        <!-- 
           <tr>
-               <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-               <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
-               <td width="20%" scope="col"><?php echo $lab_invent['bn_desc'];?></td>
-               <td width="20%" scope="col"><?php echo $lab_invent['bn_marca'];?></td>
-               <td width="20%" scope="col"><?php echo $lab_invent['bn_modelo'];?></td>
-               <td width="20%" scope="col"><?php echo $lab_invent['bn_serie'];?></td>
+               <td width="20%" scope="col"><?php // echo $lab_invent['bn_clave'];?></td>
+               <td width="20%" scope="col"><?php // echo $lab_invent['inventario'];?></td>
+               <td width="20%" scope="col"><?php // echo $lab_invent['bn_desc'];?></td>
+               <td width="20%" scope="col"><?php // echo $lab_invent['bn_marca'];?></td>
+               <td width="20%" scope="col"><?php // echo $lab_invent['bn_modelo'];?></td>
+               <td width="20%" scope="col"><?php // echo $lab_invent['bn_serie'];?></td>
          </tr>
-          
+          -->
           <?php
 		    
            $bandera=1;
 		   
-			} elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) { /**/ ?>
+		//	} else 
+			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) { /**/ ?>
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -811,20 +728,11 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
          <?php } //fin elseif ?> 
 
-<?php  if (($_SESSION['tipo_lab']=='e' && $bandera==0) && $_GET['mod']=='inv') //&& $lab_invent['bn_notas']=='EQUIPO'
-{ ?> 
 
-		 <tr>
-              <th  width="20%" scope="col">No. Inventario</th>
-              <th  width="20%" scope="col">No. Inventario del Área</th>
-              <th  width="20%" scope="col">Descripción del equipo</th>
-              <th  width="20%" scope="col">Marca</th>
-              <th  width="20%" scope="col">Modelo</th>
-              <th  width="20%" scope="col">Serie</th>
-          </tr>
-          
           	<?php 
-        }elseif ($_SESSION['tipo_lab']=='e'  && $_GET['mod']=='invc' ) { ?>
+      
+		
+		if ($_SESSION['tipo_lab']=='e'  && $_GET['mod']=='invc' ) { ?>
         
            <tr>
                <th width="20%" scope="col">Sistema Operativo</th>
@@ -857,23 +765,9 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
          
   <?php } //fin elseif ?> 
-<?php 
-if (($_SESSION['tipo_lab']=='e' && $bandera==0) && $_GET['mod']=='inv') 
-//&& $lab_invent['bn_notas']=='EQUIPO' )  
-{ ?>
-          
-          <tr>
-               <td  width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-               <td  width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
-               <td  width="20%" scope="col"><?php echo $lab_invent['bien'];?></td>
-               <td  width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
-               <td  width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
-               <td  width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
-           </tr>
-          
-          <?php
-			
-			} elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' ) {?>
+  <?php 
+
+			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' ) {?>
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>

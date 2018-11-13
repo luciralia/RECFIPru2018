@@ -133,7 +133,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
 		return $query;
 		
  	}	
-	
+	/*
 	function selectEquipoInvE($desc, $serie, $inv, $marca, $inv_ant,$lab){
  		//$where=" WHERE bn_in != NULL";
 		
@@ -164,6 +164,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
 		return $query;
 		
  	}	
+	*/
 function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
  		//$where=" WHERE bn_in != NULL";
 		

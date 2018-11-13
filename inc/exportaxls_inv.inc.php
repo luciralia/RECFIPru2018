@@ -291,9 +291,10 @@ for($i=0;$i<count($renglon_xls);$i++){
                  </table>
  <?php
                 
- }elseif ($listatablas[$x]=='equipo'){
+ }
+ //elseif ($listatablas[$x]=='equipo'){
 ?>	 
-	
+	  <!-- 
   <table border="1">
   <tr>
     <th scope="col">No. Inventario</th>
@@ -307,30 +308,32 @@ for($i=0;$i<count($renglon_xls);$i++){
     <th scope="col">Estado</th>
     <th scope="col">Modo de adquisición</th>  
  </tr>
-  
+  -->
 <?php 
+/*
 
-
-for($i=0;$i<count($renglon_xls);$i++){
+for($i=0;$i<count($renglon_xls);$i++){ */
 ?>
+  <!-- 
   <tr>
-    <td><?php echo $renglon_xls[$i]['bn_clave'];?></td>
-    <td><?php echo $renglon_xls[$i]['bn_anterior'];?></td>
-    <td><?php echo $renglon_xls[$i]['bn_desc'];?></td>
-    <td><?php echo $renglon_xls[$i]['bien'];?></td>
-    <td><?php echo $renglon_xls[$i]['bn_marca'];?></td>
-    <td><?php echo $renglon_xls[$i]['bn_modelo'];?></td>
-    <td><?php echo $renglon_xls[$i]['bn_serie'];?></td>
-    <td><?php echo date("d-m-Y", strtotime($renglon_xls[$i]['bn_fadq']));?></td>
-    <td><?php echo $renglon_xls[$i]['co_descr'];?></td>
-    <td><?php echo $madq->getModo($renglon_xls[$i]['id_mod']); ?></td>
+    <td><?php // echo $renglon_xls[$i]['bn_clave'];?></td>
+    <td><?php // echo $renglon_xls[$i]['bn_anterior'];?></td>
+    <td><?php // echo $renglon_xls[$i]['bn_desc'];?></td>
+    <td><?php // echo $renglon_xls[$i]['bien'];?></td>
+    <td><?php // echo $renglon_xls[$i]['bn_marca'];?></td>
+    <td><?php // echo $renglon_xls[$i]['bn_modelo'];?></td>
+    <td><?php // echo $renglon_xls[$i]['bn_serie'];?></td>
+    <td><?php // echo date("d-m-Y", strtotime($renglon_xls[$i]['bn_fadq']));?></td>
+    <td><?php // echo $renglon_xls[$i]['co_descr'];?></td>
+    <td><?php // echo $madq->getModo($renglon_xls[$i]['id_mod']); ?></td>
   </tr>
- 
+ -->
     
 <?php
-} ?>
- </table>  
+// } 
+?>
+  <!--</table>  -->
 
 <?php
-} 
+//} 
 }?>

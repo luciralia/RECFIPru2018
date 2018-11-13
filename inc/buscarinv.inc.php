@@ -73,63 +73,11 @@ $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."
 ?>
 <br />
 <br />
-<!--<div class=formulario>
-<div class="block" id="necesidades_content">-->
+  <!--<div class=formulario>
+  <div class="block" id="necesidades_content">-->
   <table>
 
-<?php
-/*
-if($_REQUEST['accion']=='buscarg' && $_GET['lab'] !=NULL )
-{
 
-
- $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'];
-
-?>
-
-<form action="<?php echo $action1; ?>" method="post" name="formbusca">
-
-        <table width="800" cellpadding="2" class="formulario">
-          <tr>
-            <td>Descripción:   </td>
-            <td><input type="text" name="_descripcion" id="_descripcion" /></td>
-            <td>No. Serie:    </td>
-            <td><input type="text" name="_no_serie" id="_no_serie" /></td>
-            <td>No. Inventario:      </td>
-            <td><input type="text" name="_no_inv" id="_no_inv" /></td>
-          </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            <td>No. Inventario<br />
-              anterior</td>
-            <td><input type="text" name="_no_inv_ant" id="_no_inv_ant" /></td>
-          </tr>
-          <tr>
-            <td>Marca: </td>
-            <td><input type="text" name="_marca" id="_marca" /></td>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-          </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            
-            <td colspan="2" align="right">
-            
-            <input type="submit" name="bbuscarg" id="Buscar" value="Buscar" />
-            <input type="reset"  name="bbuscarg" id="Limpiar" value="Limpiar" />
-            <input type="submit" name="bbuscarg" id="Cancelar" value="Cancelar" /></td>
-          </tr>
-        </table>
-
-<input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
-<input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
-<input name="bn_id" type="hidden" value="<?php echo $_GET['bn_id']; ?>" />
-</form>
-
-*/
-?>
 <?php
 
 if($_REQUEST['accion']=='buscarg' )
@@ -194,11 +142,7 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 
  ?> 
 
-<?php /*
-
-if ($_GET['basignar']=='Asignar'){
-
-	} else */
+<?php 
 	if ($_REQUEST['bbuscar']=='Buscar')   {
 	
 	if ( $_GET['mod']=='invc'){
@@ -207,6 +151,7 @@ if ($_GET['basignar']=='Asignar'){
 	} else if ( $_GET['mod']=='inv'){
 		$query=$obj_inv->selectEquipoInvE(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab']);
 	} 
+	
 	// fin de Asignar
 
 //echo $query; // revisar la sesión donde viene para cambiar el inventario si es de qeuipo cambia tabla
@@ -234,9 +179,9 @@ switch ($_GET['bn_id']){
 	
 	}
 
-//echo 'exhibe consulta ';
+ //echo 'exhibe consulta buscarinv ';
 
-//echo $query;
+ //echo $query;
 ?>
 
  
@@ -279,7 +224,7 @@ if ($inventario!=0){?>
 			<input name="_no_serie" type="hidden" value="<?php echo $_REQUEST['_no_serie']?>" />
             <input name="_estado" type="hidden" value="<?php echo $_REQUEST['_estado']?>" />
             <input name="bn_id" type="hidden" value="<?php echo $_REQUEST['bn_id']?>" />
-			<input name="bOrden" type="submit" value="ordenar" />
+			<input name="bOrden" type="submit" value="ordenarB" />
 
 </form>
 </td>
@@ -329,44 +274,39 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 
 //print_r ($lab_invent);
 
-?>
 
-<?php
  
-  if (isset($lab_invent))
+     if (isset($lab_invent))
  
-  {	?>
-
- <?php
- 
-  if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'  || $_GET['mod']=='invg')) {
+     {	
+         if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'  || $_GET['mod']=='invg')) {
 	  
-	?>
-     <table class='material'>
-    <tr>
-    <th width="20%" scope="col">No. Inventario</th>
-    <th width="20%" scope="col">No. Inventario Anterior</th>
-    <th width="20%" scope="col">Descripción del equipo</th>
-    <th width="20%" scope="col">Marca</th>
-    <th width="20%" scope="col">Modelo</th>
-    <th width="20%" scope="col">Serie</th>
-    </tr>
-  </table>  
+	  ?>
+          <table class='material'>
+           <tr>
+               <th width="20%" scope="col">No. Inventario</th>
+               <th width="20%" scope="col">No. Inventario Anterior</th>
+               <th width="20%" scope="col">Descripción del equipo</th>
+               <th width="20%" scope="col">Marca</th>
+               <th width="20%" scope="col">Modelo</th>
+               <th width="20%" scope="col">Serie</th>
+           </tr>
+        </table>  
 
 
    
- <?php } elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg')) {?>
+        <?php } elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg')) {?>
 
-    <table class='material'>
-    <tr>
-    <th width="20%" scope="col">No. Inventario</th>
-    <th width="20%" scope="col">No. Inventario Anterior</th>
-    <th width="20%" scope="col">Descripción del equipo</th>
-    <th width="20%" scope="col">Marca</th>
-    <th width="20%" scope="col">Modelo</th>
-    <th width="20%" scope="col">Serie</th>
-    </tr>
-    </table> 
+             <table class='material'>
+             <tr>
+                 <th width="20%" scope="col">No. Inventario</th>
+                 <th width="20%" scope="col">No. Inventario Anterior</th>
+                 <th width="20%" scope="col">Descripción del equipo</th>
+                 <th width="20%" scope="col">Marca</th>
+                 <th width="20%" scope="col">Modelo</th>
+                 <th width="20%" scope="col">Serie</th>
+             </tr>
+             </table> 
 
 
 
@@ -393,12 +333,12 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) { ?>
 <table class='material'>   
     <tr>
-    <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-    <td width="20%" scope="col"><?php echo $lab_invent['bn_anterior'];?></td>
-    <td width="20%" scope="col"><?php echo $lab_invent['bn_desc'];?></td>
-    <td width="20%" scope="col"><?php echo $lab_invent['bn_marca'];?></td>
-    <td width="20%" scope="col"><?php echo $lab_invent['bn_modelo'];?></td>
-    <td width="20%" scope="col"><?php echo $lab_invent['bn_serie'];?></td>
+        <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
+        <td width="20%" scope="col"><?php echo $lab_invent['bn_anterior'];?></td>
+        <td width="20%" scope="col"><?php echo $lab_invent['bn_desc'];?></td>
+        <td width="20%" scope="col"><?php echo $lab_invent['bn_marca'];?></td>
+        <td width="20%" scope="col"><?php echo $lab_invent['bn_modelo'];?></td>
+       <td width="20%" scope="col"><?php echo $lab_invent['bn_serie'];?></td>
     </tr>
     <tr >
     <td style="text-align: left" colspan="11"><strong>Asignado a: </strong> <?php echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']);?></td>
@@ -459,13 +399,13 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 
 
          if ($lab_invent['bn_notas']=='EQUIPO' ) { ?>  
-             <input name="eeasignar" type="submit" value="Asignar" />
+             <!--<input name="eeasignar" type="submit" value="Asignar" />-->
          <?php } elseif ($lab_invent['bn_notas']=='COMPUTO' ) { ?>  
              <input name="ecasignar" type="submit" value="Asignar" />
              <?php } else { // equipo experimental sin definir ?>
 			         <font color="blue"><?php echo 'El equipo no se identifica correctamente, aún así desea:';?></font>
-                   <input name="basignarc" type="submit" value="Asignar a Cómputo" />  <font color="blue"><?php echo  ó ?> </font>   
-	               <input name="basignare" type="submit" value="Asignar a Equipo" />
+                   <input name="basignarc" type="submit" value="Asignar a Cómputo" />  <font color="blue"><?php //echo  ó ?> </font>   
+	               <!--<input name="basignare" type="submit" value="Asignar a Equipo" />-->
                    
          <?php } ?>
    
@@ -473,7 +413,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
  
               <?php if ($lab_invent['bn_notas']=='EQUIPO' ) { ?>
               <!--<input name="basignare" type="submit" value="Asignar a Equipo" />-->
- 
+              
               <?php } elseif ($lab_invent['bn_notas']=='COMPUTO' ) { ?>
                     
                     <input name="ecasignar" type="submit" value="Asignar" />
@@ -482,8 +422,8 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 			
 			                <font color="blue"><?php echo 'El equipo no se identifica correctamente, aún así desea:';?></font>
 
-                   <input name="basignarc" type="submit" value="Asignar a Cómputo" /> <font color="blue"><?php echo  ó ?> </font>
-                   <input name="basignare" type="submit" value="Asignar a Equipo" />
+                   <input name="basignarc" type="submit" value="Asignar a Cómputo" /> <font color="blue"><?php //echo  ó ?> </font>
+                   <!--<input name="basignare" type="submit" value="Asignar a Equipo" /> -->
 	
 	       <?php } // fin del si es de equipo/cómputo
             }elseif ($_SESSION['tipo_lab']!='e'  && ($_GET['mod']=='invc' || $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {  // $_SESSION['tipo_lab']!='e' 

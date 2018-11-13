@@ -9,7 +9,7 @@ require_once('../inc/encabezado.inc.php'); ?>
    <tr>
     <td><?php 
    
-    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg' )
+    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act' )
     require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>
@@ -54,6 +54,8 @@ require_once('../inc/encabezado.inc.php'); ?>
 		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='imp')
 		include_once("../view/importamoderror.inc.php");	//modificado para deteectar errores ant importar.html.php
+		else if ($_GET['mod']=='act')
+		include_once("../view/actualizar.html.php");	
 		else if ($_GET['mod']=='cot')
 		include_once("../view/cotizaciones.html.php");
 		else if ($_GET['mod']=='infr')

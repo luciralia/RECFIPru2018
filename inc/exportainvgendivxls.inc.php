@@ -212,7 +212,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
 
 
 <?php 
-
+/*
 	$query = "select e.*, l.nombre as laboratorio, bi.* 
          from equipo e
 		 left join bienes_inventario bi
@@ -231,9 +231,9 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
 		
 	$datos = pg_query($con,$query);
      $inventario= pg_num_rows($datos); 
-	 
+	 */
  ?>
-
+<!--
  <table>
 <tr>
       <td align="center" ><h2> Inventario de Equipo Experimental</h2></td>
@@ -257,10 +257,10 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
     <th scope="col">Modo de adquisición</th> 
     
  </tr>
-  
+  -->
 <?php 
 
-
+/*
 while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ ?>
         
@@ -280,8 +280,10 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
   </tr>
   
   <?php }
+  */
   ?>
-  </table>  
+  <!--
+  </table> -->  
  
  
 
