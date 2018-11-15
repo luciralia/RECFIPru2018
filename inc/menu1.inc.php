@@ -45,15 +45,15 @@
                    <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>">Equipos de c&oacute;mputo</a></li>
                    
 			<?php } elseif ($_SESSION['tipo_lab']=='e'  && $_GET['lab']!=''  ) {?>
-                <li><a href="../view/inicio.html.php?mod=inv&lab=<?php  echo $_GET['lab'];?>">Equipos experimentales</a></li>
+                <!--<li><a href="../view/inicio.html.php?mod=inv&lab=<?php  //echo $_GET['lab'];?>">Equipos experimentales</a></li>-->
                 <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>">Equipos de c&oacute;mputo</a></li>
     	 <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']!=10 )	 {?>
                     <li><a href="../view/inicio.html.php?mod=imp">Importar</a></li>
          <?php } ?> 
-         <?php if ($_SESSION['tipo_usuario']!=10 )	 {?>
-                    <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li>
-         <?php } ?> 
+         <?php //if ($_SESSION['tipo_usuario']!=10 )	 {?>
+                   <!-- <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li>-->
+         <?php // } ?> 
           </ul>
 	   </li>
     
