@@ -23,12 +23,12 @@ if ($_SESSION['tipo_usuario']==10)
  if ($_GET['mod']=='ceneceq' ){
  ?>
 <br \>
-<br \>
+
 
 <div style="text-align:center;">
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo&nbsp;&nbsp;&nbsp;</h2></td>
+      <td align="center" ><h2>Censo de Equipo de Cómputo&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
    
   <td  align="center">
 		      <form action="../inc/exportaxls_censoeqc.inc.php" method="post" name="ceneceq" >
@@ -36,17 +36,19 @@ if ($_SESSION['tipo_usuario']==10)
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>    
+   </table>
+      
+   <br>
+   <table>  
    <tr>
-      <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes</h3></td>
+       <legend align="center"><h3>Anteriores a Pentium 4 o equivalentes</h3></legend>
+     <!-- <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes</h3></td>-->
     </tr>
     <tr>  </tr>  
    <tr>  </tr>
 </table>
-
+  <br>
+  <br>
   
 		<?php 
 		
@@ -198,12 +200,14 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-
+ <br>
   <table>
-   <tr>
-      <td align="center"><h3>Pentium Celeron  o equivalentes</h3></td>
+   
+     <tr>
+       <legend align="center"><h3>Pentium Celeron o equivalentes</h3></legend>
+     <!-- <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes</h3></td>-->
     </tr>
-     <tr></tr>
+     <br>
   </table>
 
    <table class='material' width=50%>
@@ -262,11 +266,15 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
+ <br>
  <table>
-   <tr>
-      <td align="center"><h3>Intel Core i3 o equivalentes </h3></td>
+ <tr>
+       <legend align="center"><h3>Intel Core i3 o equivalentes</h3></legend>
+  
     </tr>
+   
   </table>
+  <br>
    <table class='material' width=50%>
 		 <tr>
              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -321,11 +329,15 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
+<br>
     <table>
-   <tr>
-     <td align="center"><h3>Intel Core i5 o equivalentes </h3></td>
+    <tr>
+       <legend align="center"><h3>Intel Core i5 o equivalentes</h3></legend>
+  
     </tr>
+   
    </table>
+   <br>
     <table class='material' width=50%>
 		 <tr>  
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -378,11 +390,16 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
+   <br>
     <table>
     <tr>
-      <td align="center"><h3>Intel Core i7 o equivalentes </h3></td>
+       <legend align="center"><h3>Intel Core i7 o equivalentes</h3></legend>
+  
     </tr>
-    </table>
+   
+   </table>
+   <br>
+
    <table class='material' width=50%>
 		 <tr>  
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -437,11 +454,15 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
+    <br>
     <table>
     <tr>
-      <td align="center"><h3>Otros </h3></td>
+       <legend align="center"><h3>Otros</h3></legend>
+  
     </tr>
-    </table>
+   
+   </table>
+   <br>
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -580,11 +601,15 @@ if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-<table>
-<tr>
-      <td align="center"><h3>MAC </h3></td>
- </tr>
- </table>
+ <br>
+    <table>
+    <tr>
+       <legend align="center"><h3>MAC</h3></legend>
+  
+    </tr>
+   
+   </table>
+   <br>
  
  <table  class='material' width=50%>
 		 <tr>  
@@ -638,30 +663,29 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
  
 ?>
  <br />
-  <br />
 
-<table>
+ <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Sistema Operativo</h2></td>
+      <td align="center" ><h2>Censo de Equipo de Cómputo Sistema Operativo&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
    
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqcso.inc.php" method="post" name="ceneceq" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqcso.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>    
-   <tr>
-      <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes  </h3></td>
-    </tr>
-    <tr>  </tr>  
-   <tr>  </tr>
-</table>
-
-
+   </table>
+    <br>  
+   <br>
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Anteriores a Pentium 4 o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+   
 
 		<?php 
 		if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
@@ -815,13 +839,16 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-
-    <table>
-   <tr>
-      <td align="center"><h3>Pentium Celeron  o equivalentes </h3></td>
-    </tr>
-    </table>
-
+ <br>
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Pentium Celeron  o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+  
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
@@ -877,11 +904,17 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-   <table>
-   <tr>
-      <td align="center"><h3>Intel Core i3 o equivalentes</h3></td>
-    </tr>
+
+<br>
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Intel Core i3 o equivalentes</h3></legend>
+     </tr>
+   
    </table>
+   <br>
+   
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
@@ -937,12 +970,16 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
+<br>
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Intel Core i5 o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
 
-   <table>
-   <tr>
-     <td align="center"><h3>Intel Core i5 o equivalentes </h3></td>
-    </tr>
-    </table>
     <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
@@ -995,11 +1032,16 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-    <table>
+<br>
+   <table>  
+   
     <tr>
-      <td align="center"><h3>Intel Core i7 o equivalentes</h3></td>
-    </tr>
-    </table>
+       <legend align="center"><h3>Intel Core i7 o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+   
    
    <table class='material' width=50%>
 		 <tr>
@@ -1059,11 +1101,16 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-    <table>
+<br>
+   <table>  
+   
     <tr>
-      <td align="center"><h3>Otros </h3></td>
-    </tr>
-    </table>
+       <legend align="center"><h3>Otros</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+   
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
@@ -1117,11 +1164,16 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </tr>
 </table>
 
-<table>
-<tr>
-      <td align="center"><h3>MAC </h3></td>
-    </tr>
-</table>
+<br>
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>MAC</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+
 		<?php 
 	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
@@ -1264,6 +1316,8 @@ $inventario= pg_num_rows($datos);
    <td width="1%" ><strong><?php echo $cuenta;?></strong></td>
 </tr>
 </table>
+<br>
+<br>
 
 
 <?php		
@@ -1273,28 +1327,29 @@ $inventario= pg_num_rows($datos);
  if ($_GET['mod']=='cenecuf' ){
     
 		  ?>
- <br />
-  <br />
- <table>  
+          <br />
+
+ <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final</h2></td>
+      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
    
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqcuf.inc.php" method="post" name="ceneceq" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqcuf.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>    
+   </table>
+   <br>  
+   <br>
+   
+   <table>  
    <tr>
-      <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes  </h3></td>
-    </tr>
-    <tr>  </tr>  
-   <tr>  </tr>
-</table>
+       <legend align="center"><h3>Anteriores a Pentium 4 o equivalentes</h3></legend>
+     </tr>
+  </table>
+   <br>
+   
         
    
 		<?php 
@@ -1442,12 +1497,17 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
+<br>
+  
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Pentium Celeron  o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
 
-<table>
-   <tr>
-      <td align="center"><h3>Pentium Celeron  o equivalentes </h3></td>
-    </tr>
-</table>
  <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -1499,11 +1559,17 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-   <table>
-   <tr>
-      <td align="center"><h3>Intel Core i3 o equivalentes </h3></td>
-    </tr>
+   <br>
+  
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Intel Core i3 o equivalentes</h3></legend>
+     </tr>
+   
    </table>
+   <br>
+   
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -1555,11 +1621,18 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-   <table>
-   <tr>
-     <td align="center"><h3>Intel Core i5 o equivalentes </h3></td>
-    </tr>
-    </table>
+<br>
+  
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>Intel Core i5 o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+   
+  
     <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -1606,11 +1679,17 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-    <table>
+    <br>
+  
+   <table>  
+   
     <tr>
-      <td align="center"><h3>Intel Core i7 o equivalentes </h3></td>
-    </tr>
-    </table>
+       <legend align="center"><h3>Intel Core i7 o equivalentes</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+   
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -1665,11 +1744,17 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-    <table>
+    <br>
+  
+   <table>  
+   
     <tr>
-      <td align="center"><h3>Otros </h3></td>
-    </tr>
-    </table>
+       <legend align="center"><h3>Otros</h3></legend>
+     </tr>
+   
+   </table>
+   <br>
+   
    
    <table class='material' width=50%>
 		 <tr>
@@ -1721,13 +1806,18 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </table>
 
 
-
-
-   <table>
-   <tr>
-      <td align="center"><h3>MAC  </h3></td>
-    </tr>
+<br>
+  
+   <table>  
+   
+    <tr>
+       <legend align="center"><h3>MAC</h3></legend>
+     </tr>
+   
    </table>
+   <br>
+   
+   
 		<?php 
 		
 		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
@@ -1863,7 +1953,8 @@ $inventario= pg_num_rows($datos);
 </tr>
 </table>
 
-
+<br>
+<br>
 
 <?php		
 		
@@ -1871,29 +1962,32 @@ $inventario= pg_num_rows($datos);
 
  if ($_GET['mod']=='cenecufb' ){ ?>
  
-<br \>
-<br \>
+          <br />
+          <br>
 
- <table>  
- <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final Bibliotecas</h2></td>
-      
+ <table>
+  <tr>
+      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final Bibliotecas&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+   
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqcufb.inc.php" method="post" name="ceneceq" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqcufb.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>    
-   <tr>
-      <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes  </h3></td>
-    </tr>
-    <tr>  </tr>  
-   <tr>  </tr>
    </table>
+   <br>  
+   <br>
+   
+ 
+   
+   <table>  
+   <tr>
+       <legend align="center"><h3>Anteriores a Pentium 4 o equivalentes</h3></legend>
+     </tr>
+  </table>
+   <br>
+  
 		<?php 
 		
 if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
@@ -2041,11 +2135,14 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-   <table>
+
+<br>
+   <table>  
    <tr>
-      <td align="center"><h3>Pentium Celeron  o equivalentes</h3></td>
-    </tr>
-    </table>
+       <legend align="center"><h3>Pentium Celeron  o equivalentes</h3></legend>
+     </tr>
+  </table>
+   <br>
 
    <table class='material' width=50%>
 		 <tr>
@@ -2097,13 +2194,14 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-
-   <table>
+<br>
+   <table>  
    <tr>
-      <td align="center"><h3>Intel Core i3 o equivalentes</h3></td>
-    </tr>
-   </table>
-   
+       <legend align="center"><h3>Intel Core i3 o equivalentes</h3></legend>
+     </tr>
+  </table>
+   <br>
+
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -2154,11 +2252,14 @@ $inventario= pg_num_rows($datos);
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-     <table>
-     <tr>
-       <td align="center"><h3>Intel Core i5 o equivalentes </h3></td>
+    <br>
+   <table>  
+   <tr>
+       <legend align="center"><h3>Intel Core i5 o equivalentes</h3></legend>
      </tr>
-     </table>
+  </table>
+   <br>
+     
     <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -2205,11 +2306,14 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-    <table>
-    <tr>
-      <td align="center"><h3>Intel Core i7 o equivalentes</h3></td>
-    </tr>
-   </table>
+<br>
+   <table>  
+   <tr>
+       <legend align="center"><h3>Intel Core i7 o equivalentes</h3></legend>
+     </tr>
+  </table>
+   <br>
+    
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -2265,11 +2369,14 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
-    <table>
-    <tr>
-      <td align="center"><h3>Otros</h3></td>
-    </tr>
-    </table>
+<br>
+   <table>  
+   <tr>
+       <legend align="center"><h3>Otros</h3></legend>
+     </tr>
+  </table>
+   <br>
+    
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -2420,11 +2527,13 @@ $inventario= pg_num_rows($datos);
     
 ?>
 
-<table>
- <tr>
-      <td align="center"><h3>MAC</h3></td>
-    </tr>
-</table>   
+<br>
+   <table>  
+   <tr>
+       <legend align="center"><h3>MAC</h3></legend>
+     </tr>
+  </table>
+   <br>
    <table class='material' width=50%>
 		 <tr>
               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
@@ -2467,31 +2576,31 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
  <td width="1%" ><strong><?php echo $cuenta;?></strong></td>
 </tr>
 </table>
-
+<br>
+<br>
 <?php 
 }
  
  if ($_GET['mod']=='ceni' ){
  ?>
-   <br \>
- <br \>
+     <br />
+          <br>
 
- 
- <table>  
-   <tr>
-       <td align="center"><h2>Censo de Impresoras</h2></td>
-      
+ <table>
+  <tr>
+      <td align="center" ><h2>Censo de Impresoras&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+   
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqimp.inc.php" method="post" name="ceneceq" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqimp.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>    
-    </table>
+   </table>
+   <br>  
+   <br>
+
+ 
     
 		<?php 
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
@@ -2608,24 +2717,23 @@ $inventario= pg_num_rows($datos);
  if ($_GET['mod']=='cened' ){
  
 		  ?>
- <br \>
- <br \>
-
+  <br>
+  <br>        
  <table>
-   <tr>
-       <td align="center"><h2>Equipo Digital</h2></td>
-      
+  <tr>
+      <td align="center" ><h2>Censo de Equipo Digital&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+   
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqdig.inc.php" method="post" name="ceneceq" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqdig.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>    
-    </table>   
+   </table>
+   <br>  
+   <br>
+
+
 		<?php
 		
 		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
@@ -2739,22 +2847,23 @@ $inventario= pg_num_rows($datos);
 
  if ($_GET['mod']=='cenert' ){ ?>
  
-  
+  <br>
+  <br>        
  <table>
- <tr>
-       <td align="center"><h2>Censo Equipo Redes y Telecomunicaciones</h2></td>
-      
+  <tr>
+      <td align="center" ><h2>Censo de Redes y Telecomunicaciones&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+   
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqryt.inc.php" method="post" name="ceneceq" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqryt.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>     
    </table>
+   <br>  
+   <br>
+   
+ 
 		<?php 
 		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 
@@ -2870,21 +2979,20 @@ $inventario= pg_num_rows($datos);
  <br \>
 
  <table>
-<tr>
-       <td align="center"><h2>Censo de Equipos de Alto Rendimiento</h2></td>
-      
+  <tr>
+      <td align="center" ><h2>Censo de Equipos de Alto Rendimiento&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+   
   <td  align="center">
-		<form action="../inc/exportaxls_censoeqcar.inc.php" method="post" name="cenecar" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <form action="../inc/exportaxls_censoeqcar.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
    </td>           
    </tr>  
-   <tr>  </tr>  
-   <tr>  </tr>  
-       <tr>  </tr>  
-   <tr>  </tr>     
+   </table>
+<br>
+<br>
 
-    </table>
+ 
   
 		<?php 
 		

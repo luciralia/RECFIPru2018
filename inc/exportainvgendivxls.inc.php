@@ -90,6 +90,14 @@ where div.id_div=" . $_SESSION['id_div'] .
 <table border="1">
 
   <tr>
+  
+  
+  
+  
+  
+  
+  
+  
     <th scope="col">División</th>
     <th scope="col">Laboratorio</th>
     <th scope="col">Dispositivo</th>
@@ -168,7 +176,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
     <td><?php echo $lab_invent['no_factura'];?></td>
     <td><?php echo $lab_invent['proveedor_p'];?></td>
     <td><?php echo $lab_invent['anos_garantia'];?></td>
-    <td><?php echo date("d-m-Y", strtotime($lab_invent['fecha_factura']));?></td>
+    <td><?php echo $lab_invent['fecha_factura'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['fecha_factura']));-->
     <td><?php echo $lab_invent['nombre_familia'];?></td>
     <td><?php echo $lab_invent['familia_especificar'];?></td>
     <td><?php echo $lab_invent['modelo_procesador'];?></td>
@@ -200,8 +208,8 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
     <td><?php echo $lab_invent['nombre_so'];?></td>
     <td><?php echo $lab_invent['version_sist_oper'];?></td>
     <td><?php echo $lab_invent['licencia'];?></td>
-    <td><?php echo date("d-m-Y", strtotime($lab_invent['licencia_ini']));?></td>
-    <td><?php echo date("d-m-Y", strtotime($lab_invent['licencia_fin']));?></td>
+    <td><?php echo $lab_invent['licencia_ini'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['licencia_ini']));-->
+    <td><?php echo $lab_invent['licencia_fin'];?></td>
     <td><?php echo $lab_invent['modo'];?></td>
   </tr>
   

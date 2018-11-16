@@ -52,8 +52,8 @@
                     <li><a href="../view/inicio.html.php?mod=imp">Importar</a></li>
          <?php } ?> 
          <?php //if ($_SESSION['tipo_usuario']!=10 )	 {?>
-                   <!-- <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li>-->
-         <?php // } ?> 
+                 <!--<li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li> -->
+         <?php //} ?> 
           </ul>
 	   </li>
     

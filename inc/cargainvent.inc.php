@@ -1,6 +1,6 @@
 ﻿
 <?php
-
+// version que no toma equipoexperimentaL PARA VER
 require_once('../conexion.php');
 require_once('../clases/laboratorios.class.php');
 require_once('../clases/inventario.class.php');
@@ -51,7 +51,7 @@ if ($_GET['mod']=='invg' ){
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
     
-<input name="bOrden" type="submit" value="ordenarV" />
+<input name="bOrden" type="submit" value="ordenar" />
 </form>
 <!--</td>-->
 
@@ -399,7 +399,7 @@ else
                           join laboratorios l
                           on  l.id_lab=e.id_lab
                           where l.id_lab=";}
-                       /* else 
+                        else 
                              { $tabla="equipo";
 			                   $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                                from " . $tabla . " e 
@@ -408,7 +408,7 @@ else
                                on  e.bn_id = bi.bn_id
                                join laboratorios l
                                on  l.id_lab=e.id_lab
-                               where l.id_lab=";} */
+                               where l.id_lab=";} 
 
               switch ($_GET['orden']){
  			  case "descripcion":
@@ -765,6 +765,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
          
   <?php } //fin elseif ?> 
+
   <?php 
 
 			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' ) {?>

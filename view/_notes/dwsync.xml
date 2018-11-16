@@ -23,7 +23,7 @@
 <file name="documentos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130886308380000000" remote="131790350370000000" Dst="2" />
 <file name="equipamiento.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130272049340000000" remote="131790350370000000" Dst="2" />
 <file name="infraestructura.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130387142840000000" remote="131790350370000000" Dst="2" />
-<file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131849620957165176" remote="131853295170000000" Dst="1" />
+<file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131868657744125421" remote="131868657800000000" Dst="1" />
 <file name="inicio.html.php.bak" server="132.248.52.241//var/www/RECFIPru2018/" local="130254122720000000" remote="131790350370000000" Dst="2" />
 <file name="inventario.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131796221356812656" remote="131849588100000000" Dst="2" />
 <file name="material.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280974020000000" remote="131790350370000000" Dst="2" />
@@ -33,5 +33,6 @@
 <file name="servicios.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131063663242237820" remote="131790350370000000" Dst="2" />
 <file name="importar.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131796122374319121" remote="131796124430000000" Dst="2" />
 <file name="importar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131697495313025184" remote="131790350370000000" Dst="2" />
-<file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131853341667620258" remote="131853343970000000" Dst="1" />
+<file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131867701305013277" remote="131867954950000000" Dst="1" />
+<file name="actualizar.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131866134117234263" remote="131868631180000000" Dst="1" />
 </dwsync>
