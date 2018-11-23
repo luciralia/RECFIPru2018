@@ -145,7 +145,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -212,7 +212,7 @@ $inventario= pg_num_rows($datos);
 
    <table class='material' width=50%>
 		 <tr>
-             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
              <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -277,7 +277,7 @@ $inventario= pg_num_rows($datos);
   <br>
    <table class='material' width=50%>
 		 <tr>
-             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -340,7 +340,7 @@ $inventario= pg_num_rows($datos);
    <br>
     <table class='material' width=50%>
 		 <tr>  
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -402,7 +402,7 @@ $inventario= pg_num_rows($datos);
 
    <table class='material' width=50%>
 		 <tr>  
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -465,7 +465,7 @@ $inventario= pg_num_rows($datos);
    <br>
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -613,7 +613,7 @@ $inventario= pg_num_rows($datos);
  
  <table  class='material' width=50%>
 		 <tr>  
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
               <th width="15%" scope="col">Uso/Desuso</th>
@@ -783,7 +783,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -851,7 +851,7 @@ $inventario= pg_num_rows($datos);
   
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -917,7 +917,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -982,7 +982,7 @@ $inventario= pg_num_rows($datos);
 
     <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -1045,7 +1045,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -1113,7 +1113,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -1270,7 +1270,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="15%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -1449,7 +1449,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -1510,7 +1510,7 @@ $inventario= pg_num_rows($datos);
 
  <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -1572,7 +1572,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -1635,7 +1635,7 @@ $inventario= pg_num_rows($datos);
   
     <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -1692,7 +1692,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -1758,7 +1758,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -1916,7 +1916,7 @@ $inventario= pg_num_rows($datos);
 
  <table  class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2089,7 +2089,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2146,7 +2146,7 @@ $inventario= pg_num_rows($datos);
 
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2204,7 +2204,7 @@ $inventario= pg_num_rows($datos);
 
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2262,7 +2262,7 @@ $inventario= pg_num_rows($datos);
      
     <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2316,7 +2316,7 @@ $inventario= pg_num_rows($datos);
     
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2379,7 +2379,7 @@ $inventario= pg_num_rows($datos);
     
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2536,7 +2536,7 @@ $inventario= pg_num_rows($datos);
    <br>
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -2671,7 +2671,7 @@ $inventario= pg_num_rows($datos);
     
     	 <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Uso/Desuso</th>
               <th width="20%" scope="col">Fecha Adquisición</th>
@@ -2803,7 +2803,7 @@ $inventario= pg_num_rows($datos);
 ?>
     <table class='material'>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Bien</th>
               <th width="20%" scope="col">Uso/Desuso</th>
               <th width="20%" scope="col">Fecha Adquisición</th>
@@ -2932,7 +2932,7 @@ $inventario= pg_num_rows($datos);
 
         <table class='material'>
 		    <tr>
-               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Uso/Desuso</th>
               <th width="20%" scope="col">Fecha Adquisición</th>
@@ -3065,7 +3065,7 @@ $inventario= pg_num_rows($datos);
     
     	 <table class='material' width=50%>
 		 <tr>
-             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Marca</th>
               <th width="20%" scope="col">Modelo</th>
               <th width="20%" scope="col">Serie</th>
