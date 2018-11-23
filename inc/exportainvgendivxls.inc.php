@@ -73,6 +73,12 @@ join divisiones div
 on div.id_div=d.id_div
 left join cat_modo_adq cma
 on e.id_mod=cma.id_mod
+join cat_usuario_final uf
+on uf.usuario_final_clave=e.usuario_final_clave
+join cat_usuario_perfil up
+on up.id_usuario_perfil=e.usuario_perfil
+join cat_usuario_sector us
+on us.id_usuario_sector=e.usuario_sector
 where div.id_div=" . $_SESSION['id_div'] .
 "order by laboratorio" ;
 
@@ -93,13 +99,8 @@ where div.id_div=" . $_SESSION['id_div'] .
   
   
   
-  
-  
-  
-  
-  
     <th scope="col">División</th>
-    <th scope="col">Laboratorio</th>
+    <th scope="col">Área</th>
     <th scope="col">Dispositivo</th>
     <th scope="col">Usuario Final</th>
     <th scope="col">Nombre Resguardo</th>
@@ -189,7 +190,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC))
     <td><?php echo $lab_invent['num_elementos_almac'];?></td>
     <td><?php echo $lab_invent['nombre_tecnologia'];?></td>
     <td><?php echo $lab_invent['total_almac'];?></td>
-    <td><?php echo $lab_invent['numero_arreglos'];?></td>
+    <td><?php echo $lab_invent['num_arreglos'];?></td>
     <td><?php echo $lab_invent['esquema_uno'];?></td>
     <td><?php echo $lab_invent['tec_uno'];?></td>
     <td><?php echo $lab_invent['subtotal_uno'];?></td>

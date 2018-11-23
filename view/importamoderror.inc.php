@@ -514,7 +514,7 @@ function utf8_string_array_encode(&$array){
                  $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuario_perfil'], //13
 				 $disp['usuario_sector'], $disp['serie'], $disp['marca_p'], //16
 				 $disp['no_factura'], $disp['anos_garantia'], $disp['inventario'], //19
-                 $disp['modelo_p'], $disp['proveedor_p'],$disp['fecha_factura'], //22 date("Y-m-d", strtotime($disp['fecha_factura']))
+                 $disp['modelo_p'], $disp['proveedor'],$disp['fecha_factura'], //22 date("Y-m-d", strtotime($disp['fecha_factura']))
 			     $disp['familia_especificar'], $disp['modelo_procesador'], $disp['cantidad_procesador'], //25
 			     $disp['nucleos_totales'], $disp['nucleos_gpu'], $disp['memoria_ram'], //28
                  $disp['ram_especificar'], $disp['num_elementos_almac'], //30 
@@ -618,7 +618,7 @@ function utf8_string_array_encode(&$array){
                  $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuario_perfil'], //13
 				 $disp['usuario_sector'], $disp['serie'], $disp['marca_p'], //16
 				 $disp['no_factura'], $disp['anos_garantia'], $disp['inventario'], //19
-                 $disp['modelo_p'], $disp['proveedor_p'],$disp['fecha_factura'], //22
+                 $disp['modelo_p'], $disp['proveedor'],$disp['fecha_factura'], //22
 			     $disp['familia_especificar'], $disp['modelo_procesador'], $disp['cantidad_procesador'], //25
 			     $disp['nucleos_totales'], $disp['nucleos_gpu'], $disp['memoria_ram'], //28
                  $disp['ram_especificar'], $disp['num_elementos_almac'], //30 
