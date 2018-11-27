@@ -1,3 +1,5 @@
+
+
 <?php  
 require_once('cargaced.inc.php');
 require_once('../clases/laboratorios.class.php');
@@ -127,3 +129,6 @@ $lab = new laboratorios();
                         <?php } ?>
   </table>
                     </div>
+                    <br>
+                    <br>
+                    
