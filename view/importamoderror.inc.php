@@ -6,7 +6,7 @@ require_once('../clases/importa.class.php');
 session_start(); 
 //$invent = new importa();
 $error = new importa();
-
+$registroerror = new importa();
 
 function utf8_string_array_encode(&$array){
     $func = function(&$value,&$key){
@@ -103,11 +103,11 @@ function utf8_string_array_encode(&$array){
 		   } else { 
 	   //$conterroreg=0;
 	   //print_r($datos);
-	   //verificar errores de inserción 
-	   //si encuetra error menciona tupla, error y numero de columna
-	   
-	   //cambios para identificar errores de tipo de dato
+	 	   
+	   //$registroerror->revisarError($datos,$cuenta);
 	 
+	  
+	   $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
 	   
 	  if($datosdec[0]==NULL) //dispositivo_clave
 	     $columna1=0; elseif(preg_match("/^[0-9]+$/",$datosdec[0])) $columna1=1; else $columna1=2;	 
@@ -146,7 +146,7 @@ function utf8_string_array_encode(&$array){
 	  if($datosdec[17]==NULL)  //proveedor_p
 		 $columna18=0; elseif(is_int($datosdec[17])) $columna18=1; else $columna18=2;
 	  if($datosdec[18]==NULL)  //fecha_factura
-		 $columna19=0; elseif(is_int($datosdec[18])) $columna19=1; else $columna19=2;
+		 $columna19=0; elseif(!preg_match($regexFecha,$datosdec[18])) $columna19=3; else $columna19=2;
 	  if($datosdec[19]==NULL)  //modelo_procesador
 		 $columna20=0; elseif(is_int($datosdec[19])) $columna20=1; else $columna20=2; 
 	  if($datosdec[20]==NULL)  //familia_especificar
@@ -156,7 +156,7 @@ function utf8_string_array_encode(&$array){
 	  if($datosdec[22]==NULL)  //nucleos_totales
 		 $columna23=0; elseif(preg_match("/^[0-9]+$/",$datosdec[22])) $columna23=1; else $columna23=2;
 	  if($datosdec[23]==NULL)  //nucleos_gpu
-		 $columna24=0; elseif(is_int($datosdec[23])) $columna24=1; else $columna24=2;
+		 $columna24=0; elseif(preg_match("/^[0-9]+$/",$datosdec[23])) $columna24=1; else $columna24=2;
       if($datosdec[24]==NULL)  //memoria_ram
 		 $columna25=0; elseif(preg_match("/^[0-9]+$/",$datosdec[24])) $columna25=1; else $columna25=2;
 		 if($datosdec[25]==NULL)  //ram_especificar
@@ -166,7 +166,7 @@ function utf8_string_array_encode(&$array){
 	  if($datosdec[27]==NULL)  //total_almac
 		 $columna28=0; elseif(preg_match("/^[0-9]+$/",$datosdec[27])) $columna28=1; else $columna28=2;
 	  if($datosdec[28]==NULL)  //num_arreglos
-		 $columna29=0; elseif(is_int($datosdec[28])) $columna29=1; else $columna29=2;
+		 $columna29=0; elseif(preg_match("/^[0-9]+$/",$datosdec[28])) $columna29=1; else $columna29=2;
 	  if($datosdec[29]==NULL)  //esquema_uno
 		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$datosdec[29])) $columna30=1; else $columna30=2;	 		 		 	 	 	       if($datosdec[30]==NULL)  //esquema_dos
 		 $columna31=0;  elseif(preg_match("/^[0-9]+$/",$datosdec[30])) $columna31=1; else $columna31=2;
@@ -203,9 +203,9 @@ function utf8_string_array_encode(&$array){
 	  if($datosdec[46]==NULL)  //licencia
 	     $columna47=0;  elseif(preg_match("/^[0-9]+$/",$datosdec[46])) $columna47=1; else $columna47=2;
 	  if($datosdec[47]==NULL)  //licencia_ini
-	     $columna48=0;  elseif(is_int($datosdec[47])) $columna48=1; else $columna48=2;
+	     $columna48=0;  elseif(!preg_match($regexFecha,$datosdec[47])) $columna48=3; else $columna48=2;
 	  if($datosdec[48]==NULL)  //licencia_fin
-	     $columna49=0;  elseif(is_int($datosdec[48])) $columna49=1; else $columna49=2;
+	     $columna49=0;  elseif(!preg_match($regexFecha,$datosdec[48])) $columna49=3; else $columna49=2;
 	  if($datosdec[49]==NULL)  //id_edif
 	     $columna50=0;  elseif(preg_match("/^[0-9]+$/",$datosdec[49])) $columna50=1; else $columna50=2;
 	  if($datosdec[50]==NULL)  //id_lab
@@ -248,7 +248,6 @@ function utf8_string_array_encode(&$array){
 	   //echo $query;
 	   	 
 	   $result=pg_query($con, $query) or die('ERROR AL INSERTAR en errorinserta'); 
-	   
 	  
 	   // generar una tabla con nombre de las columnas 
 		 								                                            
@@ -297,21 +296,21 @@ function utf8_string_array_encode(&$array){
                              $registrore= pg_query($con,$queryre);
                              $ultimoerror= pg_fetch_array($registrore);
 	
-		                 if ($ultimoerror[0]==0)
-				             $ultimoerror=1;//inicializando la tabla dispositivouno
-			             else 
-			                 $ultimoerror=$ultimoerror[0]+1;	  
+		                          if ($ultimoerror[0]==0)
+				                    $ultimoerror=1;//inicializando la tabla dispositivouno
+			                      else 
+			                        $ultimoerror=$ultimoerror[0]+1;	  
              
-			            $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			                        $querybien="INSERT INTO                 registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
 			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
 						   
-			            $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );			 
-			            $registroerror= pg_query($con,$queryerror);
-			            $conterroreg=$conterroreg+1;
-                     //exit;
-			          } else {
+			                         $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );			 
+			                         $registroerror= pg_query($con,$queryerror);
+			                         $conterroreg++;;
+                         //exit;
+			              } else {
 
-			             $contexitototal=	$contexitototal+1;
+			             $contexitototal++;
  		  
                     } //if(!$result) else
 	
@@ -347,9 +346,6 @@ function utf8_string_array_encode(&$array){
 			   
                     $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivo'); 
               
-          
-	 
-			 
 		        } else { 
 				
 				//$invent->importaInventario($disp['inventario'],$disp['clave_disp'],$_SESSION['id_div'],$_SESSION['id_lab']);
@@ -393,10 +389,12 @@ function utf8_string_array_encode(&$array){
 			   $queryerror=sprintf($querybien,$ultimoerror,$disp['inventario'],$disp['dispositivo_clave'],date('Y-m-d H:i:s'),$_SESSION['id_div'],'b' );			 
 			   $registroerror= pg_query($con,$queryerror);
 			   
-			   if ($registroerror) 
+			    $conterrorbn=$conterrorbn+1;
+			   
+			  /* if ($registroerror) 
                    $conterrorbn=$conterrorbn+1;
 			    else
-				   $contexitobn=$contexitobn+1;
+				   $contexitobn=$contexitobn+1;*/
               
 				
 			  }
@@ -537,12 +535,11 @@ function utf8_string_array_encode(&$array){
 				// echo 'query que inserta';
                 // echo $strqueryd;
 				 
-				    if (!$result) {
-                          echo "Ocurrió un error.\n";
-                     //exit;
-					}else{
- 		              $cuentatotal=$cuentatotal+1;
-					}
+				    if (!$result) 
+					    echo "Ocurrió un error.\n";
+                    else
+ 		                $cuentatotal=$cuentatotal+1;
+				
 				// actualiaza bit de importación
 				
 		      $updatequery= "UPDATE dispositivo SET importa=1
@@ -663,9 +660,8 @@ function utf8_string_array_encode(&$array){
 		
 		 $error->importaError();
 		 
-     
-		
 		$total=$conterroreg+$contexitototal; 
+		
 		 if ( $conterrorbn ==0 && $conterroreg == 0){?>
 		 <tr>	 
 		 <td> <h4><?php echo "Importación con éxito" ?></h4> </td></tr>
@@ -676,12 +672,12 @@ function utf8_string_array_encode(&$array){
 		 }
 		
 		?>
-		
+		<br>
          <tr>
-             <td> <h4><?php echo "Se importaron " . $cuentatotal . " / " . $total . " dispositivos."; ?></h4> </td></tr>
+             <td><legend align="center"> <h4><?php echo "Se importaron " . $cuentatotal . " / " . $total . " dispositivos."; ?></h4> </legend></td></tr>
                <?php  if ( $conterrorbn > 0) { ?>
-             <td> <h4><?php echo "Faltó registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </td></tr>
-         <tr><td>    
+            <br> <td><legend align="center"> <h4><?php echo "Faltó registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend></td></tr>
+         <tr><td> <br>  
               <form action="../inc/erroresbn.inc.php" method="post" name="erroresbn" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
@@ -690,20 +686,22 @@ function utf8_string_array_encode(&$array){
 		 }
 		 
 		 if ($conterroreg > 0) { ?>
-                 <td> <h4><?php echo "Hay " . $conterroreg ." dispositivos que no cumplen con los requisitos. " ?></h4> </td></tr>
-              <tr><td>
+                 <td> <legend align="center"> <h4><?php echo "Hay " . $conterroreg ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> </td></tr>
+                 
+              <tr><td><br>
                 <form action="../inc/erroresreg.inc.php" method="post" name="erroresreg" >
-	               <input name="enviar" type="submit" value="Exportar a Excel" />
+	               <legend align="center"><input name="enviar" type="submit" value="Exportar a Excel" /></legend>
 	            </form>
               </td></tr>
          </table>
-         <br>
+        <br>
           <?php 
 		  } 
  }
 ?>
 
-</div></td>          
+</div>
+</td>          
 </tr>
 
 

@@ -22,11 +22,20 @@ $nombdiv= pg_fetch_array($registrodiv);
 
 $texto='Content-Disposition: attachment;filename="erroresbn_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
 header($texto);
+
+if ($_POST['actbn']=='Exportar a Excel'){
+	$titulo='Errores al actualizar';
+	$etiqueta='ba';
+}
+else {
+    $titulo='Errores al importar';	
+	$etiqueta='b';
+}
 ?>
 
 
    <tr>
-      <td align="center" ><h2>Errores al importar</h2></td>
+      <td align="center" ><h2><?php echo $titulo; ?></h2></td>
       
    </tr>
   <tr></tr>
@@ -42,9 +51,8 @@ header($texto);
 	                  JOIN cat_dispositivo cd
 				      ON re.clave_dispositivo=cd.dispositivo_clave
 	                  WHERE date(fecharegistro)= current_date
-					  AND tipoerror='b'
-				      AND id_div=" . $_SESSION['id_div']
-					  ;	
+					  AND tipoerror="."'".$etiqueta."'"."
+				      AND id_div=" . $_SESSION['id_div']  ;	
 			
 	    
 $datoserror = pg_query($con,$queryerror);
@@ -77,7 +85,7 @@ $registros= pg_num_rows($datoserror);
 		if ($reporteb==1){
 		 $queryerror="DELETE FROM registroerror re
 	                  WHERE date(fecharegistro)= current_date
-					  AND tipoerror='b'
+					  AND tipoerror="."'".$etiqueta."'"."
 				      AND id_div=" . $_SESSION['id_div']
 					  ;	
 			$datoserror = pg_query($con,$queryerror);
