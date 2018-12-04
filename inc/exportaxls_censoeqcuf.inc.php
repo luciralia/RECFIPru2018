@@ -73,8 +73,8 @@ header($texto);
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
@@ -94,8 +94,8 @@ header($texto);
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -117,8 +117,8 @@ header($texto);
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND  sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
@@ -138,8 +138,8 @@ header($texto);
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -426,7 +426,7 @@ $inventario= pg_num_rows($datos);
  <?php $cuenta=0;
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-		 if ($lab_invent['familia_clave']==22 ){; ?>
+		 if ( $lab_invent['familia_clave']==19 || $lab_invent['familia_clave']==20 || $lab_invent['familia_clave']==21 || $lab_invent['familia_clave']==22){; ?>
          <table class='material' width=50%>
             <tr>
                <?php if ( $_SESSION['tipo_usuario']==10|| $_SESSION['tipo_usuario']==9) { ?> <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
@@ -456,9 +456,6 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </table>
 
 
-
-
-
 <tr>
       <td align="center"><h3>MAC  </h3></td>
     </tr>
@@ -482,8 +479,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
@@ -503,8 +500,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -526,8 +523,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
@@ -547,8 +544,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	        LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";

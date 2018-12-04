@@ -81,8 +81,8 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND  sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -103,8 +103,8 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper<>3 AND  sist_oper<>7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -127,8 +127,8 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper<>3 AND  sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -149,8 +149,8 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p<>'APPLE' OR marca_p<>'MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper<>3 AND  sist_oper<>7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -444,7 +444,7 @@ $inventario= pg_num_rows($datos);
   $cuenta=0;
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-		 if ( $lab_invent['familia_clave']==22 ){;
+		 if ($lab_invent['familia_clave']==19 || $lab_invent['familia_clave']==20 || $lab_invent['familia_clave']==21 || $lab_invent['familia_clave']==22){;
 		 ?>
          <table class='material' width=50%>
             <tr>
@@ -494,8 +494,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -516,8 +516,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper=3 OR sist_oper=7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -540,8 +540,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+           AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -562,8 +562,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			AND  (marca_p='APPLE' OR marca_p='MAC')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND  (sist_oper=3 OR sist_oper=7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";

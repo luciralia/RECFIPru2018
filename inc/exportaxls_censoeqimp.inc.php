@@ -63,7 +63,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre";	
 	}
@@ -78,7 +78,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND id_div=".$_SESSION['id_div']  . "
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";
@@ -94,7 +94,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre";	
 	}
@@ -109,7 +109,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND id_div=".$_SESSION['id_div']  . "
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";

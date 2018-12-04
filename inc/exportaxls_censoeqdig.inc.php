@@ -61,7 +61,7 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=0 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre ASC";	
 	}
@@ -76,7 +76,7 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=0 )
             AND id_div=".$_SESSION['id_div']  . "
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta ASC";
 	}
@@ -91,7 +91,7 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=0 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre ASC";	
 	}
@@ -106,7 +106,7 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=0 )
             AND id_div=".$_SESSION['id_div']  . "
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta ASC";
 	}
