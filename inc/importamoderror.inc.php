@@ -107,16 +107,7 @@ function utf8_string_array_encode(&$array){
 	   //si encuetra error menciona tupla, error y numero de columna
 	   
 	   //cambios para identificar errores de tipo de dato
-	 /*  
-	   
-$variable='12345';
-if(!preg_match("/^[0-9]+$/", $variable) ){
-   echo 'la cadena es númerica';
-} else{
-    echo 'la cadena NO es númerica';
-}
-
-	  */ 
+	
 	   
 	   
 	  if($datosdec[0]==NULL) //dispositivo_clave
@@ -411,6 +402,7 @@ if(!preg_match("/^[0-9]+$/", $variable) ){
 				
 			  }
 			  //Buscar en equipoc valores por inventario
+			  //validar que el laboratorio exista
 			  
 			  $querye="SELECT id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
@@ -421,10 +413,12 @@ if(!preg_match("/^[0-9]+$/", $variable) ){
               $registroe= pg_query($con,$querye);
               $equipoc= pg_fetch_array($registroe);
 			 
-			  if($disp['id_lab']==0) // id id_lab=0
-			     $lab=$equipo[0];
+			  if($disp['id_lab']==0 || $disp['id_lab']==NULL) // id id_lab=0
+			     $lab=$equipoc[0];
 			  else 	 
 			     $lab=$disp['id_lab'];
+				 
+			 echo 'el laboratorio es ',$lab;
 				
 			  //buscar información de los catálogos de marca y memoria ram
 			  
@@ -448,15 +442,16 @@ if(!preg_match("/^[0-9]+$/", $variable) ){
 			  else 
 			      $ram=$ram[0];	  
 
+
               $queryd="SELECT detalle_ub 
 							  FROM laboratorios
-			                  WHERE id_lab=" . $disp['id_lab'];
+			                  WHERE id_lab=" . $lab;
 							  
               $registrod= pg_query($con,$queryd);
               $detalle= pg_fetch_array($registrod);	
 
               $updatequery= "UPDATE laboratorios SET detalle_ubcomp= '%s'
-			                  WHERE id_lab=" .$disp['id_lab'];
+			                  WHERE id_lab=" .$lab;
 			   
 			  $queryu=sprintf($updatequery, $detalle[0]|| ' ' || $disp['usuario_ubicacion'] ); 
 			   
@@ -653,7 +648,7 @@ if(!preg_match("/^[0-9]+$/", $variable) ){
 			     $updatequery= "UPDATE dispositivorespaldo SET importa=1
 			                    WHERE inventario="."'".$disp['inventario']."'";
 							  
-				 //echo 'Actualiza en dispositivouno...';			  
+				 //echo 'Actualiza en dispositivorespaldo...';			  
 			     $queryu=sprintf($updatequery, $disp['inventario'] ); 
 			   
                  $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivorespaldo'); 
@@ -662,7 +657,7 @@ if(!preg_match("/^[0-9]+$/", $variable) ){
 				
 			  }//valores que estan en bienes
 		  
-		  } // fin de la validación si existe
+		  } // fin de la validación si existe verifica si existe en dispositivo
 		
 		}//fin de while para insertar datos en dispositivo 
 		

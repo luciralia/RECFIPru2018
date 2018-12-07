@@ -111,7 +111,7 @@ function revisarError($revisar,$tupla){
 	  if($datosdec[49]==NULL)  //id_edif
 	     $columna50=0;  elseif(preg_match("/^[0-9]+$/",$datosdec[49])) $columna50=1; else $columna50=2;
 	  if($datosdec[50]==NULL)  //id_lab
-	     $columna51=0; 	elseif(preg_match("/^[0-9]+$/",$datosdec[50])) $columna51=1; else $columna51=2;
+	     $columna51=0; 	elseif(preg_match("/^[0-9]+$/",$datosdec[50])) $columna51=1; elseif($datosdec[50]==0) $columna51=3; else $columna51=2;
 		      
 	      //Traer el último valor en errorinserta
 			        $queryd="SELECT max(id_error) FROM errorinserta";
@@ -423,15 +423,21 @@ function revisarError($revisar,$tupla){
 		      <tr><td> <?php echo 'La columna AX, <strong> id_edificio </strong> del renglón '.$disperror['tupla'].' debe ser numérica.'; ?></td></tr>      <?php } ?>   
              <?php if ($disperror['columna51']==0){ ?>
 		      <tr><td> <?php echo 'La columna AY, <strong> id_lab </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr>            <?php  } ?>
-             <?php if ($disperror['columna51']==2){ ?>
-		      <tr><td> <?php echo 'La columna AY, <strong> id_lab </strong> del renglón '.$disperror['tupla'].' debe ser numérica.'; ?></td></tr>            <?php  } ?> 
-            
+             <?php //if ($disperror['columna51']==2){ ?>
+		      <tr><td> <?php //echo 'La columna AY, <strong> id_lab </strong> del renglón '.$disperror['tupla'].' debe ser numérica.'; ?></td></tr>            <?php // } ?> 
+            <?php if ($disperror['columna51']==4){ ?>
+		      <tr><td> <?php echo 'Revisar la columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> El área no existe para está división </strong>'; ?></td></tr> <?php  } ?>
+                <?php if ($disperror['columna51']==6){ ?>
+		      <tr><td> <?php echo 'Revisar la columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> se ingreso con cero y no se pudo localizar el dispositivo </strong>'; ?></td></tr> <?php  } ?>
+              <?php if ($disperror['columna51']==5){ ?>
+		      <tr><td> <?php echo 'La columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> se ingreso con cero aún asi se localizó el dispositivo y se registro.</strong>'; ?></td></tr> <?php  } ?>
 		 <?php } //fin de while $disperro
 		 ?>
+         
          <br>
  <?php 
-        $querydt="DELETE FROM errorinserta";	
-		$result = pg_query($querydt) or die('Hubo un error con la base de datos');
+        //$querydt="DELETE FROM errorinserta";	
+		//$result = pg_query($querydt) or die('Hubo un error con la base de datos');
 	}//finaliza Funcion importaError
 
 
