@@ -133,7 +133,7 @@ for($i=0;$i<count($renglon_xls);$i++){
     <td><?php echo $renglon_xls[$i]['num_elementos_almac'];?></td>
     <td><?php echo $renglon_xls[$i]['nombre_tecnologia'];?></td>
     <td><?php echo $renglon_xls[$i]['total_almac'];?></td>
-    <td><?php echo $renglon_xls[$i]['numero_arreglos'];?></td>
+    <td><?php echo $renglon_xls[$i]['num_arreglos'];?></td>
     <td><?php echo $renglon_xls[$i]['esquema_uno'];?></td>
     <td><?php echo $renglon_xls[$i]['tec_uno'];?></td>
     <td><?php echo $renglon_xls[$i]['subtotal_uno'];?></td>
@@ -259,7 +259,7 @@ for($i=0;$i<count($renglon_xls);$i++){
     <td><?php echo $renglon_xls[$i]['num_elementos_almac'];?></td>
     <td><?php echo $renglon_xls[$i]['nombre_tecnologia'];?></td>
     <td><?php echo $renglon_xls[$i]['total_almac'];?></td>
-    <td><?php echo $renglon_xls[$i]['numero_arreglos'];?></td>
+    <td><?php echo $renglon_xls[$i]['num_arreglos'];?></td>
     <td><?php echo $renglon_xls[$i]['esquema_uno'];?></td>
     <td><?php echo $renglon_xls[$i]['tec_uno'];?></td>
     <td><?php echo $renglon_xls[$i]['subtotal_uno'];?></td>

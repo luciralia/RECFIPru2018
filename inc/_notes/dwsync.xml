@@ -111,7 +111,7 @@
 <file name="cargaeq.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131657045674622128" remote="131790350970000000" Dst="2" />
 <file name="cargainfra.inc.funci.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130411034940000000" remote="131790350970000000" Dst="2" />
 <file name="cargainfra.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131657068442247999" remote="131790350970000000" Dst="2" />
-<file name="cargainvent.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131867969931504518" remote="131867970240000000" Dst="1" />
+<file name="cargainvent.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131890267496956477" remote="131890272070000000" Dst="1" />
 <file name="cargainventtodo.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131560130633747419" remote="131790350970000000" Dst="2" />
 <file name="cargainventVant.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131348470925234613" remote="131790350970000000" Dst="2" />
 <file name="cargaldd.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131792510535781863" remote="131792611400000000" Dst="2" />
@@ -137,7 +137,7 @@
 <file name="editainfra.inc.func.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130417327140000000" remote="131790350980000000" Dst="2" />
 <file name="editainfra.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130429583100000000" remote="131790350980000000" Dst="2" />
 <file name="editainv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130289585560000000" remote="131790350980000000" Dst="2" />
-<file name="editainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131868672075678627" remote="131868672290000000" Dst="1" />
+<file name="editainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131890338744727172" remote="131890338900000000" Dst="1" />
 <file name="editamat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130428334580000000" remote="131790350980000000" Dst="2" />
 <file name="editamob.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427833800000000" remote="131790350980000000" Dst="2" />
 <file name="editamobprueba.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427765320000000" remote="131790350980000000" Dst="2" />

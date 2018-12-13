@@ -288,7 +288,7 @@ if ($_GET['mod']=='invg' ){
 
  ?>
       <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
-      
+      <!--
       <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
 
@@ -303,7 +303,7 @@ if ($_GET['mod']=='invg' ){
 		
 		 ?>
          </form>
-        
+        -->
     <?php      
      }//fin if equipoc	para boton de editar	
 		?>

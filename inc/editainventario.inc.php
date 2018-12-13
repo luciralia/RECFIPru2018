@@ -162,8 +162,8 @@ $verifica = new inventario();
 
 if ($_POST['accion']=='editar'){  
 
-//echo 'Valores a editar;
-//print_r($_REQUEST);
+//echo 'Valores a editar';
+//print_r ($_REQUEST);
 
 ?>
 
@@ -236,7 +236,7 @@ if ($_POST['accion']=='editar'){
   <br />
   
  <table cellpadding="5" class="formulario">
-   <tr ><legend align="center"><h3>Información de patronato</h3></legend></tr>
+   <tr ><legend align="center"><h3>Información de patrimonio</h3></legend></tr>
    <br />
   <tr>
      <td >No.de serie/etiqueta de servicio</td>
