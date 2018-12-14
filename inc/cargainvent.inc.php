@@ -59,24 +59,45 @@ if ($_GET['mod']=='invg' ){
               
 <?php if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
         <tr>
-        <td align="right">  <h3> Inventario por División   </h3> </td>
+        <td align="right">  <h3> Inventario por División</h3> </td>
+       
         </tr>
-        <td align="right">
+        <tr></tr>
+        <tr></tr>
+        
+       
+         <tr>
+        <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>
+        <legend align="right">
           <?php $action="../inc/exportainvgendivxls.inc.php";?>
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
-	          <input name="enviar" type="submit" value="Exportar a Excel" />
+              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
+	          <input name="enviar" type="submit" value="Con identificador" />
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
               </form>
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            </tr> 
+            <tr>
+           <td>
+           <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
+	          <input name="enviar" type="submit" value="Con nombre" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
             </td>
             </tr> 
             
  <?php } ?>
 
-<?php	
-	
-	
+</td>
+</tr>
 
+<?php	
 
 //for ($x=0;$x<count($listatablas);$x++)
 //{
@@ -201,7 +222,9 @@ if ($_GET['mod']=='invg' ){
        <br \>         		   	  
        <table>
            <tr>
-                <td align="rigth"><h2>Inventario de equipo <?php echo $titulo;?> </h2></td>
+           <!--
+             <legend align="center"><h2>Inventario de equipo  <?php //echo $titulo;?> </h2></legend>
+               <td align="rigth"><h2>Inventario de equipo <?php //echo $titulo;?> </h2></td>-->
            </tr>
         </table>
   <br \>
@@ -544,8 +567,8 @@ if ($inventario!=0) { ?>
 <input name="bOrden" type="submit" value="ordenar" />
 </form>
 
-</td>
-<td>
+
+
 
 <?php		
 	if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='inv') { 
@@ -557,15 +580,34 @@ if ($inventario!=0) { ?>
 		          $action="../inc/exportaxls_inv.inc.php"; 
 				  }
 			  ?>
-            
-              <form action=<?php echo $action; ?> method="post" name="servbit" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
+              <tr>
+              <td>
+              <legend align="right"><h4>Exportar a Excel</h4></legend>
+              <legend align="right">
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
+	          <input name="enviar" type="submit" value="Con identificador" />
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-	          </form>
-</td>
-
-</tr>
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
+              </form>
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             </td>
+            </tr> 
+            <tr>
+           <td>
+              
+              <legend align="right">
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
+	          <input name="enviar" type="submit" value="Con nombre" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
+              </form>
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            </tr>
+            
+           
 
      <?php } elseif ($_GET['mod']=='invc' ) {// if(inventario ==0 )?> 
                 <br/>

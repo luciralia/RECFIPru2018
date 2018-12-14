@@ -22,7 +22,7 @@ $div = new departamentos();
 		  
 		  ?>
   <tr>
-    <td align="center"><h2>Inventario de equipo <?php echo $titulo ;?> </h2></td>
+    <td align="center"><h2>Inventario <?php echo $titulo ;?> </h2></td>
   </tr>
   <tr>
     <?php if($_SESSION['tipo_usuario']!=10){?>

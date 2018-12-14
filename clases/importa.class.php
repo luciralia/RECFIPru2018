@@ -9,7 +9,7 @@ class importa{
 	
 function detectaError(){
 	
-	     $cuenta=1;
+	    $cuenta=1;
 	    $querydet="SELECT * FROM dispositivotemp";
 		
 		$datosdet = pg_query($querydet)or die('Hubo un error con la base de datos con la tabla dispositivotemp');
@@ -165,13 +165,13 @@ function detectaError(){
 	  if($valida['id_edif']==NULL)  //id_edif
 	     $columna50=0;  elseif(preg_match("/^[0-9]+$/",$valida['id_edif'])) $columna50=1; else $columna50=2;
 	
-	if($lab==NULL)  //id_lab
-	        $columna51=0;   else $columna51=1;  
-		  if($errorlab==4)
+	  if($lab==NULL)  //id_lab
+	          $columna51=0;   else $columna51=1;  
+		   if($errorlab==4)
 		    $columna51=4; 
-          if ($errorlab==5)	
+           if ($errorlab==5)	
 		    $columna51=5;
-	      if ($errorlab==6)	
+	       if ($errorlab==6)	
 		    $columna51=6;		
 	  //Traer el último valor en errorinserta
 			        $queryd="SELECT max(id_error) FROM errorinserta";

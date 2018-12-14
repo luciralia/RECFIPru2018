@@ -254,7 +254,7 @@ if ($_POST['accion']=='editar'){
     
      <td  >Marca </td>
      <td><?php $combo->combomarca($_POST['descmarca'])?></td>
-     
+     <td><?php //$combo->combomarca($_POST['id_marca'])?></td>
     
      <td   >Otra Marca </td>
       <?php

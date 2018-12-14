@@ -554,8 +554,6 @@ header($direccion);
 
 ?>
 
-
-
 <?php if($_POST['accione']=='Guardar'){ ?>
 <h1>GUARDAR</h1>
 <?php 
@@ -574,11 +572,11 @@ if($_POST['total_almac'] == NULL){
 	else{$totalalmac=$_POST['total_almac'];};
 	
 if (isset($_POST['licencia']))
-{
+
 	$licencia=1;
-}else{ 
+else 
     $licencia=0;
-}
+
 echo 'licencia'. $licencia;
 
 $arregloTotal=$_POST['subtotal_uno']+$_POST['subtotal_dos']+$_POST['subtotal_tres']+$_POST['subtotal_cuatro'];
@@ -621,13 +619,23 @@ else
 if ($_POST['tec_cuatro']=='0')
     $tec_cuatro=1;
 else
-	$tec_cuatro=$_POST['tec_cuatro']; 			
+	$tec_cuatro=$_POST['tec_cuatro']; 
+	
+	//busca la marca en el catálogo de marcas...
+				
+	$querym="SELECT descmarca 
+							  FROM cat_marca
+			                  WHERE id_marca=".$_POST['id_marca'];
+		
+							  
+              $registrom= pg_query($con,$querym);
+              $marca= pg_fetch_array($registrom);
 	
 $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, usuario_final_clave=%d, familia_clave=%d,
                                     tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
                                     usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,
                                     usuario_sector=%d,marca_p='%s',no_factura='%s',
-                                 modelo_p='%s',proveedor_p='%s',fecha_factura='%s',familia_especificar='%s',
+                                    modelo_p='%s',proveedor_p='%s',fecha_factura='%s',familia_especificar='%s',
                                     modelo_procesador='%s',cantidad_procesador='%s',nucleos_totales='%s',
                                     nucleos_gpu='%s',id_mem_ram=%d,ram_especificar='%s',
                                     num_elementos_almac=%d,total_almac='%s', num_arreglos=%d,
@@ -644,9 +652,8 @@ WHERE id_dispositivo=". $_POST['id_dispositivo'];
 $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'],$_POST['usuario_final_clave'],$_POST['id_familia'],
                           $_POST['id_tipo_ram'],$_POST['id_tecnologia'],$_POST['resguardo_no_empleado'],$_POST['nombre_resguardo'],
                           $_POST['usuario_nombre'],$_POST['usuario_ubicacion'],$_POST['id_usuario_perfil'],
-                          $_POST['id_usuario_sector'],$_POST['descmarca'],$_POST['no_factura'],
-                          $_POST['modelo_p'],$_POST['proveedor_p'],date("d-m-Y", strtotime($_POST['fecha_factura'])),$_POST['familia_especificar'],
-                          $_POST['modelo_procesador'],$cantidad_procesador,$nucleos_totales,
+                          $_POST['id_usuario_sector'],$marca[0],$_POST['no_factura'],
+                          $_POST['modelo_p'],$_POST['proveedor_p'],date("d-m-Y", strtotime($_POST['fecha_factura'])),$_POST['familia_especificar'],$_POST['modelo_procesador'],$cantidad_procesador,$nucleos_totales,
                           $nucleos_gpu,$_POST['id_mem_ram'],$_POST['ram_especificar'],
                           $_POST['id_elemento'],$totalalmac,$_POST['id_arreglo'],
                           $_POST['esquema_uno'],$_POST['esquema_dos'],$_POST['esquema_tres'],$_POST['esquema_cuatro'],
@@ -734,6 +741,8 @@ $strquery="UPDATE equipoc SET descextensa='%s', procesador='%s',
 			tipodd='%s', equipoaltorend='%s',
 		    accesorios='%s', arquitectura='%s', servidor='%s',id_mod=%d
             WHERE bn_id=". $_REQUEST['bn_id'];
+			
+			
 
 $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
                $_POST['noprocesadores'],$_POST['velocidad'],$datoso['sistemaoperativo'],
@@ -745,19 +754,6 @@ $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-/*
-$nuevaubic= $_REQUEST['detalle_ub'].$_POST['usuario_ubicacion'];
-
-$strqueryl="UPDATE laboratorios SET detalle_ub='%s'
-           WHERE id_lab=". $_POST['lab'];
-
-$queryul=sprintf($strqueryl,$nuevaubic);						  
-$result=pg_query($con,$queryul) or die('ERROR AL ACTUALIZAR DATOS EN TABLA LABORATORIOS: ' . pg_last_error());		
-			  
-*/
-
-
-
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
 
 echo $direccion . "</br>";
@@ -767,7 +763,7 @@ echo $queryu;
 
 if($_POST['accione']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-//$direccion='location: ../view/inicio.html.php?mod=' . $_GET['mod'] . '&lab=' . $_GET['lab'] .'&orden='. $_REQUEST['orden'];
+
 echo $direccion;
 header($direccion);
 

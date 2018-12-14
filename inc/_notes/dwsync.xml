@@ -187,7 +187,7 @@
 <file name="procesainfra.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427873960000000" remote="131790350990000000" Dst="2" />
 <file name="procesainfraaux.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130426993760000000" remote="131790351000000000" Dst="2" />
 <file name="procesainv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131408951442488213" remote="131790351000000000" Dst="2" />
-<file name="procesainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131740798893901009" remote="131790387000000000" Dst="1" />
+<file name="procesainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131892100785201064" remote="131892934150000000" Dst="1" />
 <file name="procesamat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130284263120000000" remote="131790351000000000" Dst="2" />
 <file name="procesamobi.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427400400000000" remote="131790351000000000" Dst="2" />
 <file name="procesaqueja.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130927736912807036" remote="131790351000000000" Dst="2" />
