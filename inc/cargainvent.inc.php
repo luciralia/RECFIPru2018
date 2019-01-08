@@ -38,7 +38,7 @@ if ($_GET['mod']=='invg' ){
 
 <div class="block" id="necesidades_content">    
       
-          <form action="inicio.html.php" method="get" name="orderby">
+          <form action="../view/inicio.html.php" method="get" name="orderby">
         Ordenar por: <select name="orden">
           <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...         </option>
           <option value="descripcion" <?php echo $sel=($_GET['orden']=='descripcion')? 'selected="selected"': "";?>>Descripción</option>
@@ -549,12 +549,12 @@ if ($inventario!=0) { ?>
 <table>
 <tr><td>
 
-<form action="inicio.html.php" method="get" name="orderby">
+<form action="../view/inicio.html.php" method="get" name="orderby">
         Ordenar por: <select name="orden">
-          <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...</option>
-          <option value="descripcion" <?php echo $sel=($_GET['orden']=='descripcion')? 'selected="selected"': "";?>>Descripción</option>
-          <option value="clave" <?php echo $sel=($_GET['orden']=='clave')? 'selected="selected"': "";?>>No. Inventario</option>
-          <option value="marca" <?php echo $sel=($_GET['orden']=='marca')? 'selected="selected"': "";?>>Marca</option>
+          <option value="orden" <?php echo $sel=(!isset( $_GET['orden'])|| $_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...</option>
+          <option value="descripcion" <?php echo $sel=( $_GET['orden']=='descripcion')? 'selected="selected"': "";?>>Descripción</option>
+          <option value="clave" <?php echo $sel=( $_GET['orden']=='clave')? 'selected="selected"': "";?>>No. Inventario</option>
+          <option value="marca" <?php echo $sel=( $_GET['orden']=='marca')? 'selected="selected"': "";?>>Marca</option>
            </select>
     
 <?php

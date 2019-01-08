@@ -108,12 +108,6 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
  			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
  		}
 		
-		/*$query = "SELECT * FROM  
-                bienes_inventario bi
-                JOIN dispositivo ec
-                ON bi.bn_id=ec.bn_id
-                WHERE id_lab=" . $lab . " AND " .implode(" AND ",$array);
-		*/
 		$query= "SELECT bi.bn_id,* FROM  
                 bienes_inventario bi
                 left JOIN dispositivo e
@@ -133,38 +127,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
 		return $query;
 		
  	}	
-	/*
-	function selectEquipoInvE($desc, $serie, $inv, $marca, $inv_ant,$lab){
- 		//$where=" WHERE bn_in != NULL";
-		
-		
- 		if($desc != ''){
- 			$array['bn_desc']="bn_desc like '%".$desc."%'";
- 		}
- 		if($serie != ''){
- 			$array['bn_serie']="bn_serie like '%".$serie."%'";
- 		}
- 		if($inv != ''){
- 			$array['bn_clave']="bn_clave like '%".$inv."%'";
- 		}
- 		if($marca != ''){
- 			$array['bn_marca']="bn_marca like '%".$marca."%'";
- 		}
-		if($inv_ant != ''){
- 			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
- 		}
-		
-		$query = "SELECT * FROM  
-                bienes_inventario bi
-                left JOIN equipo ec
-                ON bi.bn_id=ec.bn_id
-                WHERE id_lab=" . $lab . " AND " .implode(" AND ",$array);
-		
-		
-		return $query;
-		
- 	}	
-	*/
+	
 function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
  		//$where=" WHERE bn_in != NULL";
 		
@@ -199,8 +162,7 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
 		
 	
 		return $query;
-		
- 	}		
+}		
 	
 function getAsig($bnid){
 	 //echo'bn_id'.$bnid;
@@ -259,7 +221,7 @@ function getAsig($bnid){
 			if ($dato['id_lab']==NULL)
 				$asignado="Ninguno";	
 			else {  	
-			 $tabla="equipo";$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*,*
+			  $tabla="equipo";$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*,*
 		           from " . $tabla . " e
 		           left join laboratorios l
 		           on e.id_lab=l.id_lab
@@ -268,13 +230,14 @@ function getAsig($bnid){
 		           where bi.bn_id=" . $bnid;
 				   
 			  $result = pg_query($query) or die('Hubo un error con la base de datos en dispositivo/equipo');
-			$dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
-			$asignado=$dato['nombre'];
+			  $dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+			  $asignado=$dato['nombre'];
 			}
 			}
 			elseif  ($_GET['mod']=='invg' && $inventariod==0   ){ 
 			//echo'p4';
-			$tabla="equipo";$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*,*
+			$tabla="equipo";
+			$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*,*
 		           from " . $tabla . " e
 		           left join laboratorios l
 		           on e.id_lab=l.id_lab
@@ -291,12 +254,9 @@ function getAsig($bnid){
 			  $asignado=$dato['nombre'];	
 			
 			}
-		
 		return $asignado;
-
 }
-					
-					
+				
 function tblEquipo($idlab)
 	{
 				
@@ -348,15 +308,15 @@ function combotecnologia($tecnologia,$tipo)
 							 while ($datosc = pg_fetch_array($result))
 					{
 						
-					if($datosc['nombre_tecnologia']==$tecnologia){
+					if($datosc['nombre_tecnologia']==$tecnologia)
 					
 						$salida.= "<option value='" . $datosc['id_tecnologia'] . "' selected='selected'>" . $datosc['nombre_tecnologia']. "</option>";
 					 
-					 } else { 
+					  else 
 					
 						$salida.= "<option value='" . $datosc['id_tecnologia'] . "'>" . $datosc['nombre_tecnologia']. "</option>";
 											  
-						}
+						
 						
 					}//Fin del while
 					
@@ -368,15 +328,14 @@ function combotecnologia($tecnologia,$tipo)
 							 while ($datosc = pg_fetch_array($result))
 					{
 						
-					if($datosc['id_tecnologia']==$tecnologia){
+					if($datosc['id_tecnologia']==$tecnologia)
 					
 						$salida.= "<option value='" . $datosc['id_tecnologia'] . "' selected='selected'>" . $datosc['nombre_tecnologia']. "</option>";
 					 
-					 } else { 
+					  else 
 					
 						$salida.= "<option value='" . $datosc['id_tecnologia'] . "'>" . $datosc['nombre_tecnologia']. "</option>";
-											  
-						}
+					
 						
 					}//Fin del while
 					
@@ -388,21 +347,16 @@ function combotecnologia($tecnologia,$tipo)
 							 while ($datosc = pg_fetch_array($result))
 					{
 						
-					if($datosc['id_tecnologia']==$tecnologia){
+					if($datosc['id_tecnologia']==$tecnologia)
 					
-						$salida.= "<option value='" . $datosc['id_tecnologia'] . "' selected='selected'>" . $datosc['nombre_tecnologia']. "</option>";
-					 
-					 } else { 
+						  $salida.= "<option value='" . $datosc['id_tecnologia'] . "' selected='selected'>" . $datosc['nombre_tecnologia']. "</option>";
+					  else 
+					     $salida.= "<option value='" . $datosc['id_tecnologia'] . "'>" . $datosc['nombre_tecnologia']. "</option>";
 					
-						$salida.= "<option value='" . $datosc['id_tecnologia'] . "'>" . $datosc['nombre_tecnologia']. "</option>";
-											  
-						}
-						
 					}//Fin del while
 					
 					
 					}
-				   
 				   
 				   if ($tipo==3){
 					$salida='<select name="tec_tres" id="tec_tres">;

@@ -159,12 +159,14 @@ $combo = new inventario();
 $radial = new inventario();
 $cbox = new inventario();
 $verifica = new inventario();
+$combolab= new laboratorios();
 
 if ($_POST['accion']=='editar'){  
 
-//echo 'Valores a editar';
-//print_r ($_REQUEST);
-
+echo 'Valores a editar';
+print_r ($_REQUEST);
+echo 'Valores de session';
+print_r ($_SESSION);
 ?>
 
 <form action="../inc/procesainventario.inc.php" method="post" name="form_edita" class="formul" onsubmit="return validaNum(this);" >
@@ -186,7 +188,9 @@ if ($_POST['accion']=='editar'){
       <td   ><label>Descripción Extensa</label></td>
      <td><label><input type="text" name="descextensa" id="descextensa"size="55" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
       </tr>
-  
+       <tr>
+        <td   ><label>Área</label></td>
+        <td ><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_div'])?></label></td>
     </table>
 <br />
 

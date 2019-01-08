@@ -14,18 +14,18 @@ require_once('../conexion.php');
 <?php 
 echo'Equipo que llega para asignar ';
 print_r($_SESSION);
-print_r($_POST); 
+print_r($_REQUEST); 
 ?>
 <!-- asigna equipo a un laboratorio-->
 <?php if($_POST['ecasignar']=='Asignar' && $_REQUEST ['bn_notas']=='COMPUTO'){
- 
+// if($_POST['ecasignar']=='Asignar'){
 $query="SELECT * FROM dispositivo d
         LEFT JOIN laboratorios l 
         ON l.id_lab=d.id_lab
         LEFT JOIN departamentos dep
 	    ON dep.id_dep=l.id_dep
 	    WHERE bn_id=". $_REQUEST['bn_id'] .
-		"AND (id_div=". $_SESSION['id_div']. 
+		" AND (id_div=". $_SESSION['id_div']. 
 		" OR id_div is NULL)";
 
 
@@ -36,6 +36,7 @@ $inventario= pg_num_rows($datos);
 
 if ($inventario > 0 )
 {   
+echo 'entra a aqui primer';
 
 $updatequery= "UPDATE dispositivo SET id_lab=" .$_REQUEST['lab'] . "WHERE  bn_id=" . $_REQUEST['bn_id'];
 
@@ -227,7 +228,7 @@ $inventario= pg_num_rows($datos);
 
 if ($inventario > 0 )
 {   
-
+echo 'entra a aquii';
 $updatequery= "UPDATE dispositivo SET id_lab=" .$_REQUEST['lab'] . "WHERE  bn_id=" . $_REQUEST['bn_id'];
 
 $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');
@@ -398,7 +399,7 @@ print_r($_POST);
 
 // verificar que el equipo pertenezca a la division del jefe de división que desea modificar
 
-$query="SELECT * FROM dispositivo d
+$query="SELECT importa FROM dispositivo d
         JOIN laboratorios l 
         ON l.id_lab=d.id_lab
         JOIN departamentos dep
@@ -411,8 +412,8 @@ $reg= pg_fetch_array($datos);
 $inventario= pg_num_rows($datos); 
 echo 'inventario'. $query;
 if ($inventario>0) {
-	echo 'importa', $reg[69];
-		  if($reg[69]==1){    
+	//echo 'importa', $reg[0];
+		  if($reg[0]==1){    
 		     echo 'Es importación';
                $updatequery= "UPDATE dispositivo SET id_lab=NULL WHERE  bn_id=" . $_REQUEST['bn_id'];
 
@@ -631,7 +632,7 @@ else
               $registrom= pg_query($con,$querym);
               $marca= pg_fetch_array($registrom);
 	
-$strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, usuario_final_clave=%d, familia_clave=%d,
+$strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
                                     tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
                                     usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,
                                     usuario_sector=%d,marca_p='%s',no_factura='%s',
@@ -649,7 +650,7 @@ WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
 
-$queryud=sprintf($strqueryd,$_POST['dispositivo_clave'],$_POST['usuario_final_clave'],$_POST['id_familia'],
+$queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
                           $_POST['id_tipo_ram'],$_POST['id_tecnologia'],$_POST['resguardo_no_empleado'],$_POST['nombre_resguardo'],
                           $_POST['usuario_nombre'],$_POST['usuario_ubicacion'],$_POST['id_usuario_perfil'],
                           $_POST['id_usuario_sector'],$marca[0],$_POST['no_factura'],

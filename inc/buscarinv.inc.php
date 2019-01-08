@@ -83,8 +83,8 @@ $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."
 if($_REQUEST['accion']=='buscarg' )
 {
 
- $action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'];
-
+ $action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'] ."&lab=". $_REQUEST['lab'];
+// agrega lab
 ?>
 
 <form action="<?php echo $action1; ?>" method="post" name="formbusca">
@@ -198,7 +198,7 @@ if ($inventario!=0){?>
 
 <tr><td>
 
-<form action="../inicio.html.php" method="get" name="orderby">
+<form action="../view/inicio.html.php" method="get" name="orderby">
              
 			        Ordenar por: <select name="orden">
                      
@@ -224,7 +224,7 @@ if ($inventario!=0){?>
 			<input name="_no_serie" type="hidden" value="<?php echo $_REQUEST['_no_serie']?>" />
             <input name="_estado" type="hidden" value="<?php echo $_REQUEST['_estado']?>" />
             <input name="bn_id" type="hidden" value="<?php echo $_REQUEST['bn_id']?>" />
-			<input name="bOrden" type="submit" value="ordenarB" />
+			<input name="bOrden" type="submit" value="ordenar" />
 
 </form>
 </td>
@@ -239,9 +239,11 @@ if ($inventario!=0){?>
    if ( $_GET['mod']=='invc' && $inventario==0){?>
     <br \>
     <table>
-    <tr>
+    <!--<tr>
     <td style="text-align: center"><h3>No existe el Equipo de Cómputo en el laboratorio </h3></td>
-    </tr>
+    </tr>-->
+    <tr>
+    <td ><legend align="right"><h3>No existe el Equipo de Cómputo en el laboratorio</h3></legend></td></tr>
     </table>
      <br \>
 <?php   } else if  ( $_GET['mod']=='inv' && $inventario==0){?>
@@ -392,8 +394,9 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 
 //print_r ($lab_invent);
 //echo $_SESSION['tipo_lab'];
+// para signar verifica que tenga laboratorio para asignar...
 
- if ($labasig=='Ninguno' ){
+ if ($labasig=='Ninguno' && $_GET['lab'] != NULL ){
 	  
  if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv' || $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {
 

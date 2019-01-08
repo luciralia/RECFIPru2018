@@ -13,7 +13,8 @@ $db=conexion_db::getInstance();
 
 var $_table = 'laboratorios';*/
 
- class laboratorios {
+
+class laboratorios {
 
 
 function getResponsable($idresp){
@@ -60,6 +61,41 @@ function getLaboratorio($idlab){
 			
 			return $salidar;
 	}
+	
+ function combolabdiv($id_lab,$div)
+					{
+						
+                    
+				    $query="SELECT l.nombre as nomlab,* FROM  laboratorios l
+                            JOIN departamentos d
+                            ON l.id_dep=d.id_dep
+                            WHERE d.id_div=".$div."
+                            ORDER BY l.nombre ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en laboratorios');
+					
+					$salida='<select name="id_lab" id="id_lab">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_lab']==$id_lab)
+					      $salida.= "<option value='" . $datosc['id_lab'] . "' selected='selected'>" . $datosc['nomlab']. "</option>";
+					 else 
+					      $salida.= "<option value='" . $datosc['id_lab'] . "'>" . $datosc['nomlab']. "</option>";
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dispositivo		
+
+
 
 function getDivision($iddiv){
 
@@ -139,7 +175,6 @@ function cmbEdif($idedif)
 				
 					$sele=($datosc['id']==$idedif)?" selected='selected'":"";
 					$salida.= "<option value='" . $datosc['id'] . "'" .$sele. ">" . $datosc['descripcion'] . "</option>";
-					
 					
 						}
 				//	return $salida;

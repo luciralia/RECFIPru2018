@@ -667,7 +667,8 @@ function utf8_string_array_encode(&$array){
 	     $datosdt = pg_query($con,$querydt);
 		
 		// $error->importaError();
-		$queryerror="SELECT * FROM errorinserta WHERE 
+		$queryerror="SELECT * FROM errorinserta";
+		/* WHERE 
 	                columna1=0 OR columna2=0 OR columna3=0 OR columna4=0 OR columna5=0 
 					OR columna6=0 OR columna7=0 OR columna8=0 OR columna9=0 OR columna10=0
 					OR columna11=0  OR columna13=0 OR columna14=0 OR columna15=0
@@ -677,7 +678,7 @@ function utf8_string_array_encode(&$array){
 					OR columna31=0 OR columna32=0 OR columna33=0 OR columna34=0 OR columna35=0
 					OR columna36=0 OR columna37=0 OR columna38=0 OR columna39=0 OR columna40=0
 					OR columna41=0 OR columna42=0 OR columna43=0 OR columna45=0
-					OR columna46=0 OR columna47=0 OR columna48=0 OR columna49=0 OR columna50=0 ";
+					OR columna46=0 OR columna47=0 OR columna48=0 OR columna49=0 OR columna50=0 ";*/
 			//echo $queryerror;			
 					
         $result=pg_query($con, $queryerror);
@@ -771,9 +772,9 @@ function utf8_string_array_encode(&$array){
 			  } 
 		 }//fin de while $disperro
 
-        // $querydt="DELETE FROM errorinserta";	
+         $querydt="DELETE FROM errorinserta";	
 			
-	    // $datosdt = pg_query($con,$querydt);
+	     $datosdt = pg_query($con,$querydt);
 		
 		// echo 'Ingresando en dispositivo....';
 		

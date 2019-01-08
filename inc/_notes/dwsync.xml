@@ -99,7 +99,7 @@
 <file name="borrarmat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427552000000000" remote="131790350970000000" Dst="2" />
 <file name="borrarmobi.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427536680000000" remote="131790350970000000" Dst="2" />
 <file name="borrarserv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130893483300000000" remote="131790350970000000" Dst="2" />
-<file name="buscarinv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131723420972096186" remote="131790350970000000" Dst="2" />
+<file name="buscarinv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131914507452461193" remote="131914507830000000" Dst="1" />
 <file name="cargaacerca.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131576680058063201" remote="131790350970000000" Dst="2" />
 <file name="cargabit.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130873593640000000" remote="131790350970000000" Dst="2" />
 <file name="cargaced.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130301456780000000" remote="131790350970000000" Dst="2" />
