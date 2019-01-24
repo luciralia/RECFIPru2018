@@ -10,7 +10,7 @@ class importa{
 function detectaError(){
 	
 	    $cuenta=1;
-	    $querydet="SELECT * FROM dispositivotemp";
+	    $querydet="SELECT * FROM dispositivotempo";
 		
 		$datosdet = pg_query($querydet)or die('Hubo un error con la base de datos con la tabla dispositivotemp');
 		
@@ -44,7 +44,8 @@ function detectaError(){
                                    ON d.id_dep=l.id_dep
                                    WHERE id_div=".$_SESSION['id_div'].
 					               " AND l.id_lab=".$valida['id_lab'];
-			
+			           // echo $querylab;
+						
 		                $existelab= pg_query($querylab) or die('Hubo un error con la base de datos');		
 			
 	    	            $cuantos=pg_num_rows($existelab);
@@ -64,6 +65,7 @@ function detectaError(){
 			
 	  
 	   $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
+	 
 	   
 	  if($valida['dispositivo_clave']==NULL) //dispositivo_clave
 	     $columna1=0; elseif(preg_match("/^[0-9]+$/",$valida['dispositivo_clave'])) $columna1=1; else $columna1=2;	 
@@ -99,14 +101,14 @@ function detectaError(){
 		 $columna16=0; elseif(is_int($valida['inventario'])) $columna16=1; else $columna16=2;
 	  if($valida['modelo_p']==NULL)  //modelo_p
 		 $columna17=0; elseif(is_int($valida['modelo_p'])) $columna17=1; else $columna17=2;
-	  if($valida['proveedor_p']==NULL)  //proveedor_p
-		 $columna18=0; elseif(is_int($valida['proveedor_p'])) $columna18=1; else $columna18=2;
+	  if($valida['proveedor']==NULL)  //proveedor_p
+		 $columna18=0; elseif(is_int($valida['proveedor'])) $columna18=1; else $columna18=2;
 	  if($valida['fecha_factura']==NULL)  //fecha_factura
 		 $columna19=0; elseif(!preg_match($regexFecha,$valida['fecha_factura'])) $columna19=3; else $columna19=2;
-	  if($valida['modelo_procesador']==NULL)  //modelo_procesador
-		 $columna20=0; elseif(is_int($valida['modelo_procesador'])) $columna20=1; else $columna20=2; 
 	  if($valida['familia_especificar']==NULL)  //familia_especificar
-		 $columna21=0; elseif(is_int($valida['familia_especificar'])) $columna21=1; else $columna21=2;
+		 $columna20=0; elseif(is_int($valida['familia_especificar'])) $columna20=1; else $columna20=2;	 
+	  if($valida['modelo_procesador']==NULL)  //modelo_procesador
+		 $columna21=0; elseif(is_int($valida['modelo_procesador'])) $columna21=1; else $columna21=2; 
 	  if($valida['cantidad_procesador']==NULL)  //cantidad_procesador
 		 $columna22=0; elseif(preg_match("/^[0-9]+$/",$valida['cantidad_procesador'])) $columna22=1; else $columna22=2;
 	  if($valida['nucleos_totales']==NULL)  //nucleos_totales
@@ -124,7 +126,7 @@ function detectaError(){
 	  if($valida['num_arreglos']==NULL)  //num_arreglos
 		 $columna29=0; elseif(preg_match("/^[0-9]+$/",$valida['num_arreglos'])) $columna29=1; else $columna29=2;
 	  if($valida['esquema_uno']==NULL)  //esquema_uno
-		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$valida['esquema_uno'])) $columna30=1; else $columna30=2;	 		 		 	 	 	      if($valida['esquema_dos']==NULL)  //esquema_dos
+		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$valida['esquema_uno'])) $columna30=1; else $columna30=2;	 		 		 	 	  if($valida['esquema_dos']==NULL)  //esquema_dos
 		 $columna31=0;  elseif(preg_match("/^[0-9]+$/",$valida['esquema_dos'])) $columna31=1; else $columna31=2;
 	  if($valida['esquema_tres']==NULL)  //esquema_tres
 		 $columna32=0;  elseif(preg_match("/^[0-9]+$/",$valida['esquema_tres'])) $columna32=1; else $columna32=2;
@@ -162,26 +164,29 @@ function detectaError(){
 	     $columna48=0;  elseif(!preg_match($regexFecha,$valida['licencia_ini'])) $columna48=3; else $columna48=2;
 	  if($valida['licencia_fin']==NULL)  //licencia_fin
 	     $columna49=0;  elseif(!preg_match($regexFecha,$valida['licencia_fin'])) $columna49=3; else $columna49=2;
-	  if($valida['id_edif']==NULL)  //id_edif
-	     $columna50=0;  elseif(preg_match("/^[0-9]+$/",$valida['id_edif'])) $columna50=1; else $columna50=2;
+	  if($valida['id_edificio']==NULL)  //id_edif
+	     $columna50=0;  elseif(preg_match("/^[0-9]+$/",$valida['id_edificio'])) $columna50=1; else $columna50=2;
 	
 	  if($lab==NULL)  //id_lab
-	          $columna51=0;   else $columna51=1;  
-		   if($errorlab==4)
-		    $columna51=4; 
-           if ($errorlab==5)	
-		    $columna51=5;
-	       if ($errorlab==6)	
-		    $columna51=6;		
+	      $columna51=0;   
+	  else 
+	      $columna51=1;  
+	  if($errorlab==4)
+		  $columna51=4; 
+      if ($errorlab==5)	
+		  $columna51=5;
+	  if ($errorlab==6)	
+		  $columna51=6;		
+		  
 	  //Traer el último valor en errorinserta
 			        $queryd="SELECT max(id_error) FROM errorinserta";
                     $registrod= pg_query($queryd)or die('Error en la base de datos'); 
                     $ultimo= pg_fetch_array($registrod);
 	
 		      if ($ultimo[0]==0)
-				    $ultimo=1;//inicializando la tabla dispositivouno
+				     $ultimo=1;//inicializando la tabla dispositivouno
 			  else 
-			        $ultimo=$ultimo[0]+1;
+			         $ultimo=$ultimo[0]+1;
 	   
 	  $inventario=$valida['inventario'];
 	  
@@ -219,8 +224,7 @@ function revisarError($revisar,$tupla){
 	echo 'valores recibidos';
 	print_r ($revisar);
 	 $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
-	
-	   
+	 
 	  if($datosdec[0]==NULL) //dispositivo_clave
 	     $columna1=0; elseif(preg_match("/^[0-9]+$/",$datosdec[0])) $columna1=1; else $columna1=2;	 
 	  if($datosdec[1]==NULL)//usuario_final_clave
@@ -259,9 +263,9 @@ function revisarError($revisar,$tupla){
 		 $columna18=0; elseif(is_int($datosdec[17])) $columna18=1; else $columna18=2;
 	  if($datosdec[18]==NULL)  //fecha_factura
 		 $columna19=0; elseif(!preg_match($regexFecha,$datosdec[18])) $columna19=3; else $columna19=2;
-	  if($datosdec[19]==NULL)  //modelo_procesador
+	  if($datosdec[19]==NULL)  //familia_especificar
 		 $columna20=0; elseif(is_int($datosdec[19])) $columna20=1; else $columna20=2; 
-	  if($datosdec[20]==NULL)  //familia_especificar
+	  if($datosdec[20]==NULL)  //modelo_procesador
 		 $columna21=0; elseif(is_int($datosdec[20])) $columna21=1; else $columna21=2;
 	  if($datosdec[21]==NULL)  //cantidad_procesador
 		 $columna22=0; elseif(preg_match("/^[0-9]+$/",$datosdec[21])) $columna22=1; else $columna22=2;
@@ -280,8 +284,7 @@ function revisarError($revisar,$tupla){
 	  if($datosdec[28]==NULL)  //num_arreglos
 		 $columna29=0; elseif(is_int($datosdec[28])) $columna29=1; else $columna29=2;
 	  if($datosdec[29]==NULL)  //esquema_uno
-		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$datosdec[29])) $columna30=1; else $columna30=2;	 		 		 	 	 	      
-     if($datosdec[30]==NULL)  //esquema_dos
+		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$datosdec[29])) $columna30=1; else $columna30=2;	 		 		 	 	 	      if($datosdec[30]==NULL)  //esquema_dos
 		 $columna31=0;  elseif(preg_match("/^[0-9]+$/",$datosdec[30])) $columna31=1; else $columna31=2;
 	  if($datosdec[31]==NULL)  //esquema_tres
 		 $columna32=0;  elseif(preg_match("/^[0-9]+$/",$datosdec[31])) $columna32=1; else $columna32=2;
@@ -368,21 +371,10 @@ function revisarError($revisar,$tupla){
 										 $columna41,$columna42,$columna43,$columna44,$columna45,
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
 										 $columna51 );
-				/*						 
-				$queryerror=sprintf($query,$ultimo,$tupla,$columna1,$columna2,$columna3,$columna4,$columna5,
-										 $columna6,$columna7,$columna8,$columna9,$columna10,
-	                                     $columna11,NULL,$columna13,$columna14,$columna15,
-										 $columna16,$columna17,$columna18,$columna19,NULL,
-										 $columna21,$columna22,$columna23,$columna24,$columna25,
-										 NULL,$columna27,NULL,$columna29,$columna30,
-										 $columna31,$columna32,$columna33,$columna34,$columna35,
-										 $columna36,$columna37,$columna38,$columna39,$columna40,
-										 $columna41,$columna42,$columna43,NULL,$columna45,
-										 $columna46,$columna47,$columna48,$columna49,$columna50,
-										 $columna51 );			*/			 
+				 
 			   
 			    $registroerror= pg_query($queryerror) or die('ERROR AL INSERTAR en errorinserta');							 
-	   //echo $query;
+	   echo $query;
 	 
 	   
 } //finaliza funcion revisa error
@@ -460,7 +452,8 @@ function revisarError($revisar,$tupla){
 			  <?php } ?>
               
 			  <?php if ($disperror['columna13']==0) {?>
-		      <tr><td> <?php echo 'La columna M, <strong> marca_p </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr>	  	    	      <?php } if ($disperror['columna14']==0) { ?>
+		      <tr><td> <?php echo 'La columna M, <strong> marca_p </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr>	
+			<?php } if ($disperror['columna14']==0) { ?>
 		      <tr><td> <?php echo 'La columna N, <strong> no_factura </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr>	
       <?php }  if ($disperror['columna15']==0) { ?>
 		      <tr><td> <?php echo 'La columna O, <strong> años garantía </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr> 
@@ -501,9 +494,9 @@ function revisarError($revisar,$tupla){
       <?php if ($disperror['columna25']==0) { ?>
 		      <tr><td> <?php echo 'La columna Y, <strong> memoria_RAM </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr>
       <?php  } ?>
-      <?php if ($disperror['columna25']==2) { ?>
-		      <tr><td> <?php echo 'La columna Y, <strong> memoria_RAM </strong> del renglón '.$disperror['tupla'].' debe ser numérica'; ?></td></tr>
-      <?php  } ?>
+      <?php //if ($disperror['columna25']==2) { ?>
+		      <tr><td> <?php //echo 'La columna Y, <strong> memoria_RAM </strong> del renglón '.$disperror['tupla'].' debe ser numérica'; ?></td></tr>
+      <?php //  } ?>
       
       <?php if ($disperror['columna27']==0){ ?>
 		      <tr><td> <?php echo 'La columna AA, <strong> num_elementos_almac </strong> del renglón '.$disperror['tupla'].' es obligatoria.'; ?></td></tr>      
