@@ -118,7 +118,9 @@ if ($_GET['mod']=='invg' ){
                               left join cat_tecnologia ct
                               on e.tecnologia_clave=ct.id_tecnologia
                               left join cat_sist_oper cso
-                              on  e.sist_oper=cso.id_sist_oper
+							  on  e.sist_oper=cso.id_sist_oper
+							  left join cat_usuario_final cuf
+			                  on cuf.usuario_final_clave=e.usuario_final_clave
                               left join cat_marca cm
                               on cm.id_marca=e.id_marca
                               left join cat_memoria_ram cmr
@@ -161,6 +163,8 @@ if ($_GET['mod']=='invg' ){
                on e.tecnologia_clave=ct.id_tecnologia
                left join cat_sist_oper cso
                on  e.sist_oper=cso.id_sist_oper
+			   left join cat_usuario_final cuf
+			   on cuf.usuario_final_clave=e.usuario_final_clave
                left join cat_marca cm
                on cm.id_marca=e.id_marca
                left join cat_memoria_ram cmr
@@ -191,7 +195,8 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
    }
- 
+  // echo 'consulta';
+  //echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
 
@@ -246,8 +251,10 @@ if ($_GET['mod']=='invg' ){
    
             <table class='material'>
            <tr>
-              <th width="20%" scope="col">No. Inventario</th>
+               <th width="20%" scope="col">No. Inventario</th>
                <th width="20%" scope="col">No. Inventario Área</th>
+               <th width="20%" scope="col">Área</th>
+               <th width="20%" scope="col">Usuario Final</th>
                <th width="20%" scope="col">Descripción del equipo</th>
                <th width="20%" scope="col">Marca</th>
                <th width="20%" scope="col">Modelo</th>
@@ -257,10 +264,13 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Núcleos GPU</th>
                
                
+               
            </tr>
           <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['laboratorio'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
@@ -268,6 +278,7 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
+                  
            </tr>
    
            <tr>
@@ -279,7 +290,8 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Tecnología</th>
                <th width="20%" scope="col">Total de almacenamiento</th>
                <th width="20%" scope="col">Número de arreglos</th>
-               <th width="20%" scope="col">Capacidad Total</th>   
+               <th width="20%" scope="col">Capacidad Total</th>  
+               <th width="20%" scope="col">Estado</th>  
              </tr>
             
              <tr>   
@@ -292,6 +304,7 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td> 
+                  <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
                  
           </tr>
          
@@ -389,6 +402,8 @@ else
                  on e.tecnologia_clave=ct.id_tecnologia
                  left join cat_sist_oper cso
                  on  e.sist_oper=cso.id_sist_oper
+				 left join cat_usuario_final cuf
+			     on cuf.usuario_final_clave=e.usuario_final_clave
                  left join cat_marca cm
                  on cm.id_marca=e.id_marca
                  left join cat_memoria_ram cmr
@@ -413,6 +428,8 @@ else
                           on e.tecnologia_clave=ct.id_tecnologia
                           left join cat_sist_oper cso
                           on  e.sist_oper=cso.id_sist_oper
+						  left join cat_usuario_final cuf
+			              on cuf.usuario_final_clave=e.usuario_final_clave
                           left join cat_marca cm
                           on cm.id_marca=e.id_marca
                           left join cat_memoria_ram cmr
@@ -465,6 +482,8 @@ else
                       on e.tecnologia_clave=ct.id_tecnologia
                       left join cat_sist_oper cso
                       on  e.sist_oper=cso.id_sist_oper
+					  left join cat_usuario_final cuf
+			          on cuf.usuario_final_clave=e.usuario_final_clave
                       left join cat_marca cm
                       on cm.id_marca=e.id_marca
                       left join cat_memoria_ram cmr
@@ -489,6 +508,8 @@ else
                                            on e.tipo_ram_clave=ctr.id_tipo_ram
                                            left join cat_tecnologia ct
                                            on e.tecnologia_clave=ct.id_tecnologia
+										   left join cat_usuario_final cuf
+			                               on cuf.usuario_final_clave=e.usuario_final_clave
                                            left join cat_sist_oper cso
                                            on  e.sist_oper=cso.id_sist_oper
                                            left join cat_marca cm
@@ -686,7 +707,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
             
 			<tr>
                <th width="20%" scope="col">No. Inventario</th>
-               <th width="20%" scope="col">No. Inventario del Área</th>
+               <th width="20%" scope="col">No. Inventario Área</th>
+               <th width="20%" scope="col">Usuario Final</th>
                <th width="20%" scope="col">Descripción del equipo</th>
                <th width="20%" scope="col">Marca</th>
                <th width="20%" scope="col">Modelo</th>
@@ -703,7 +725,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
         
          <tr>
                <th width="20%" scope="col">No. Inventario</th>
-               <th width="20%" scope="col">No. Inventario del Área</th>
+               <th width="20%" scope="col">No. Inventario Área</th>
+               <th width="20%" scope="col">Usuario Final</th>
                <th width="20%" scope="col">Descripción del equipo</th>
                <th width="20%" scope="col">Marca</th>
                <th width="20%" scope="col">Modelo</th>
@@ -740,7 +763,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                 <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
@@ -757,7 +781,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                 <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
@@ -781,11 +806,12 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Versión SO</th>
                <th width="20%" scope="col">Tipo de memoria</th>
                <th width="20%" scope="col">Cantidad de memoria</th>
-               <th width="20%" scope="col">Número de elementos</th>
+               <th width="20%" scope="col">Número de Elementos</th>
                <th width="20%" scope="col">Tecnología</th>
                <th width="20%" scope="col">Total de almacenamiento</th>
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
+               <th width="20%" scope="col">Estado</th>
                
            </tr>
            
@@ -803,6 +829,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Total de almacenamiento</th>
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
+               <th width="20%" scope="col">Estado</th>
            </tr>
            
          
@@ -822,6 +849,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
          </tr>
          
          <?php   
@@ -839,6 +867,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
                   
           </tr>
          

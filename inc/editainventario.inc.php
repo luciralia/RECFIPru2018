@@ -163,10 +163,10 @@ $combolab= new laboratorios();
 
 if ($_POST['accion']=='editar'){  
 
-echo 'Valores a editar';
-print_r ($_REQUEST);
-echo 'Valores de session';
-print_r ($_SESSION);
+//echo 'Valores a editar';
+//print_r ($_REQUEST);
+//echo 'Valores de session';
+//print_r ($_SESSION);
 ?>
 
 <form action="../inc/procesainventario.inc.php" method="post" name="form_edita" class="formul" onsubmit="return validaNum(this);" >
@@ -724,17 +724,14 @@ print_r ($_SESSION);
 
    <td >Equipo alto rendimiento</td>
    <td ><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
-   
-    <td  >Arquitectura</td>
-   
-    <td><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
-  
-    <td   ><font color="blue">Servidor</font></td>
+      <td align="left" >Arquitectura</td>
+      <td align="left"><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
+   </tr>
+   <tr>
+        <td ><font color="blue">Servidor</font></td>
     
-    <td><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font></td>
-
-  </tr>
- 
+       <td ><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font></td>
+   </tr>
    <tr> 
     <td >Tipo tarjeta de video</td>
     <td  ><input name="tipotarjvideo" type="text" id="tipotarjvideo" tabindex="1" size="7" value="<?php echo $_POST['tipotarjvideo']; ?>"></td>

@@ -222,7 +222,7 @@ function utf8_string_array_encode(&$array){
        <tr>
        <td> <?php // echo "Se insertaron ". $cuenta . " registros validos"; ?>  </td></tr>
 	 <?php
-	   /*
+	   
 	    $query="SELECT * FROM dispositivotempo dt
 		        JOIN errorinserta ei
 				on dt.inventario=ei.inventario
@@ -232,11 +232,11 @@ function utf8_string_array_encode(&$array){
 				AND columna30=1 AND columna31=1 AND columna32=1
 				AND columna33=1 AND columna34=1 AND columna35=1
 				AND columna36=1 AND columna37=1 AND columna45=1";
-				*/
+				
 		
 		// valida obligatoriedad
 		
-		$query="SELECT * FROM dispositivotempo dt
+		/*$query="SELECT * FROM dispositivotempo dt
                 JOIN errorinserta ei
                 ON dt.inventario=ei.inventario
                 WHERE columna51!=4 AND columna51!=6
@@ -259,7 +259,7 @@ function utf8_string_array_encode(&$array){
                 AND columna45=1 AND columna46=2 AND columna47=1
                 AND columna50=1 AND columna51=1"; 
 
-		$datos = pg_query($con,$query);
+		$datos = pg_query($con,$query);*/
 		
 		/*
 		$querye="SELECT * FROM dispositivotempo dt
@@ -362,7 +362,7 @@ function utf8_string_array_encode(&$array){
 							  
               $registrom= pg_query($con,$querym);
               $marca= pg_fetch_array($registrom);
-			  
+			  //Revisar al ingresar memoria RAM
 			  $querymr="SELECT id_mem_ram 
 							  FROM cat_memoria_ram
 			                  WHERE cantidad_ram="."'".$disp['memoria_ram']."'";
