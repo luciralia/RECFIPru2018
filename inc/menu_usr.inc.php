@@ -9,16 +9,13 @@
 if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) {
 	
        $estado='visible'; ?>
+        <div id="resaltado"> Debe seleccionar un departamento </div> 
+     <?php    
+     require_once('../inc/cargadept.inc.php');
 
-       
-            <div id="resaltado"> Debe seleccionar un área </div> 
-     
-	<?php    
-     require_once('../inc/cargaldd.inc.php');
-
-}else{
+     }else{
 	
-     require_once('../inc/cargaldd.inc.php'); 
+     require_once('../inc/cargadept.inc.php'); 
 
 } 
 
