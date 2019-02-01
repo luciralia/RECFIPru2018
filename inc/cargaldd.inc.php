@@ -13,13 +13,37 @@ require_once('../conexion.php');
 	 
     if ($_SESSION['tipo_usuario']==1){
 
-    /*   	
-    $querydepto="SELECT id_dep from laboratorios where id_lab=" .$_REQUEST['lab'];
-    $datosdepto=pg_query($con,$querydepto);
+	
+	//obtener el departamento 
+	
+   $querydepto="SELECT DISTINCT l.id_dep from laboratorios l
+                JOIN usuarios u
+				ON l.id_responsable=u.id_usuario
+                where l.id_responsable=" .$_SESSION['id_usuario'];
+   $datosdepto=pg_query($con,$querydepto);
 
-    $depto = pg_fetch_array($datosdepto, NULL, PGSQL_ASSOC);
-    $_SESSION['id_dep']=$depto[0];*/
+   $depto = pg_fetch_array($datosdepto);
+   $_SESSION['id_dep']=$depto[0];
+   
+   //obtener division
+    $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+               JOIN departamentos d
+               ON l.id_dep=d.id_dep
+               JOIN divisiones dv
+               ON dv.id_div=d.id_div
+               JOIN usuarios u
+		       ON l.id_responsable=u.id_usuario
+               WHERE l.id_responsable=" .$_SESSION['id_usuario'];
+   $datosdiv=pg_query($con,$querydiv);
 
+   $div = pg_fetch_array($datosdiv);
+   $_SESSION['id_div']=$div[0];
+
+
+
+
+
+    
        $query="select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,   di.nombre as div
         from laboratorios l
         join departamentos de

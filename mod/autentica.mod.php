@@ -68,13 +68,13 @@ if ($usuario['tipo_usuario']==1){
    
    //obtener division
     $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
-                 JOIN departamentos d
-                 ON l.id_dep=d.id_dep
-                 JOIN divisiones dv
-                 ON dv.id_div=d.id_div
-                JOIN usuarios u
-		        ON l.id_responsable=u.id_usuario
-                WHERE l.id_responsable=" .$usuario['id_usuario'];
+               JOIN departamentos d
+               ON l.id_dep=d.id_dep
+               JOIN divisiones dv
+               ON dv.id_div=d.id_div
+               JOIN usuarios u
+		       ON l.id_responsable=u.id_usuario
+               WHERE l.id_responsable=" .$usuario['id_usuario'];
    $datosdiv=pg_query($con,$querydiv);
 
    $div = pg_fetch_array($datosdiv);
