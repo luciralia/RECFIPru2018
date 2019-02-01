@@ -258,8 +258,8 @@ function utf8_string_array_encode(&$array){
                 AND columna41=1 AND columna42=1 AND columna43=1
                 AND columna45=1 AND columna46=2 AND columna47=1
                 AND columna50=1 AND columna51=1"; 
-
-		$datos = pg_query($con,$query);*/
+*/
+		$datos = pg_query($con,$query);
 		
 		/*
 		$querye="SELECT * FROM dispositivotempo dt

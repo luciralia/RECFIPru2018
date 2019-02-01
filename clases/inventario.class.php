@@ -88,7 +88,7 @@ function selectEquipo($desc, $serie, $inv, $marca, $inv_ant){
 		
  	}
 	
-function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
+function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
  		//$where=" WHERE bn_in != NULL";
 		
 		
@@ -108,6 +108,16 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
  			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
  		}
 		
+		$querytipo="SELECT tipo_usuario FROM usuarios
+	             WHERE id_usuario=".$usu;	
+		$resulttipo= @pg_query($querytipo) or die('Hubo un error con la base de datos en usuarios');	
+		$tipo= pg_fetch_array($resulttipo);
+	    $usutipo=$tipo[0];    
+		echo 'quwry typo';              	 
+		echo $tipo[0];
+			
+    if ($usutipo==1){
+		
 		$query= "SELECT bi.bn_id,* FROM  
                 bienes_inventario bi
                 left JOIN dispositivo e
@@ -121,9 +131,52 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab){
                 left JOIN cat_tecnologia ct
                 ON e.tecnologia_clave=ct.id_tecnologia
                 left JOIN cat_sist_oper cso
-                ON  e.sist_oper=cso.id_sist_oper
-                WHERE id_lab=" . $lab . " AND " .implode(" AND ",$array);
- 		
+                ON  e.sist_oper=cso.id_sist_oper	
+                left join laboratorios l
+                on e.id_lab=l.id_lab
+                left join departamentos de
+                on l.id_dep=de.id_dep
+                left join divisiones di
+                on de.id_div=di.id_div
+                left join usuarios u
+                on l.id_responsable=u.id_usuario
+                where l.id_responsable= ".$usu
+				. " AND " .implode(" AND ",$array);
+               // WHERE id_lab=" . $lab 
+	    }
+		 if ($usutipo==7){ $consultacomp="di.id_comite=";} 
+           else if($usutipo==3){$consultacomp="di.id_responsable=";}
+              else if($usutipo==6){$consultacomp="di.id_secacad=";}
+			    else if($usutipo==9 ){$consultacomp=" di.id_cac=";}                          
+			      else if($usutipo==10){$consultacomp="tipo_lab not like 'e' ";}
+		
+		 if ($usutipo==9){
+		
+		$query= "SELECT bi.bn_id,* FROM  
+                bienes_inventario bi
+                left JOIN dispositivo e
+                ON bi.bn_id=e.bn_id
+                left JOIN cat_dispositivo cd
+                ON e.dispositivo_clave=cd.dispositivo_clave
+                left JOIN cat_familia cf
+                ON e.familia_clave=cf.id_familia
+                left JOIN cat_tipo_ram ctr
+                ON e.tipo_ram_clave=ctr.id_tipo_ram
+                left JOIN cat_tecnologia ct
+                ON e.tecnologia_clave=ct.id_tecnologia
+                left JOIN cat_sist_oper cso
+                ON  e.sist_oper=cso.id_sist_oper	
+                left join laboratorios l
+                on e.id_lab=l.id_lab
+                left join departamentos de
+                on l.id_dep=de.id_dep
+                left join divisiones di
+                on de.id_div=di.id_div
+                left join usuarios u
+                on l.id_responsable=u.id_usuario
+                where " . $consultacomp  . $usu . " AND " .implode(" AND ",$array);
+		 }
+		 
 		return $query;
 		
  	}	

@@ -108,7 +108,6 @@ if ($_GET['mod']=='invg' ){
                
                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                               from dispositivo e 
-
                               left join cat_dispositivo cd
                               on e.dispositivo_clave=cd.dispositivo_clave
                               left join cat_familia cf
@@ -152,7 +151,6 @@ if ($_GET['mod']=='invg' ){
         
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
-
                left join cat_dispositivo cd
                on e.dispositivo_clave=cd.dispositivo_clave
                left join cat_familia cf

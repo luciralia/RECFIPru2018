@@ -8,9 +8,10 @@ require_once('../clases/inventario.class.php');
 $obj_inv = new Inventario();
 $madq = new Inventario();
 
-//echo 'en buscar inv';
-//print_r($_REQUEST);
-
+echo 'en buscar inv';
+print_r($_SESSION);
+echo 'request';
+print_r($_REQUEST);
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&bn_id='. $_GET['bn_id'];
 echo $direccion;
@@ -147,13 +148,13 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	
 	if ( $_GET['mod']=='invc'){
 		
-	   $query=$obj_inv->selectEquipoInvC(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab']);
+	   $query=$obj_inv->selectEquipoInvC(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab'],$_SESSION['id_usuario']);
 	} else if ( $_GET['mod']=='inv'){
 		$query=$obj_inv->selectEquipoInvE(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab']);
 	} 
 	
 	// fin de Asignar
-
+//echo 'queryinv';
 //echo $query; // revisar la sesión donde viene para cambiar el inventario si es de qeuipo cambia tabla
 
 switch ($_GET['bn_id']){
@@ -179,14 +180,14 @@ switch ($_GET['bn_id']){
 	
 	}
 
- //echo 'exhibe consulta buscarinv ';
+ echo 'exhibe consulta buscarinv ';
 
- //echo $query;
+ echo $query;
 ?>
 
  
 
-<table> <!--17mayo-->
+<table> 
 
 <?php 
 
@@ -274,7 +275,7 @@ if ($inventario!=0){?>
 while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC)) 
 { 
 
-//print_r ($lab_invent);
+print_r ($lab_invent);
 
 
  

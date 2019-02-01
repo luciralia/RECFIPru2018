@@ -7,10 +7,18 @@ require_once('../conexion.php');
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
  
   echo $laboratorio['id_lab'];
+  
+  echo 'session en cargaldd';
+  print_r($_REQUEST);
 	 
     if ($_SESSION['tipo_usuario']==1){
 
+    /*   	
+    $querydepto="SELECT id_dep from laboratorios where id_lab=" .$_REQUEST['lab'];
+    $datosdepto=pg_query($con,$querydepto);
 
+    $depto = pg_fetch_array($datosdepto, NULL, PGSQL_ASSOC);
+    $_SESSION['id_dep']=$depto[0];*/
 
        $query="select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,   di.nombre as div
         from laboratorios l
@@ -23,6 +31,9 @@ require_once('../conexion.php');
         where l.id_responsable =". $_SESSION['id_usuario'] . " 
         order by laboratorio";
        $datos = pg_query($con,$query);
+	   
+	   
+	   
       }
 
       if ($_SESSION['tipo_usuario']==2){
@@ -61,6 +72,13 @@ require_once('../conexion.php');
       }
 	  
       if ($_SESSION['tipo_usuario']==9 ){ //se agrego el id_div LHH 7/dic/2017
+	  /*
+	  $querydepto="SELECT id_dep from laboratorios where id_lab=" .$_REQUEST['lab'];
+      $datosdepto=pg_query($con,$querydepto);
+
+      $depto = pg_fetch_array($datosdepto);
+      $_SESSION['id_dep']=$depto[0];*/
+	  
       $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,       di.nombre as div, di.id_div 
       from laboratorios l, departamentos de, divisiones di, usuarios u where " . $consultacomp  . $_SESSION['id_usuario'] . "
       and l.id_dep=de.id_dep

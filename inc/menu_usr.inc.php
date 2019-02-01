@@ -9,13 +9,13 @@
 if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) {
 	
        $estado='visible'; ?>
-        <div id="resaltado"> Debe seleccionar un departamento </div> 
+        <div id="resaltado"> Debe seleccionar un Área </div> 
      <?php    
-     require_once('../inc/cargadept.inc.php');
+     require_once('../inc/cargaldd.inc.php');
 
      }else{
 	
-     require_once('../inc/cargadept.inc.php'); 
+     require_once('../inc/cargaldd.inc.php'); 
 
 } 
 
@@ -36,9 +36,9 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 <?php 
       require_once('../inc/cargadiv.inc.php');
     }
-	/*else{ 
+	else{ 
      require_once('../inc/cargadiv.inc.php');
-	 } */
+	 }
 
 
 ?>

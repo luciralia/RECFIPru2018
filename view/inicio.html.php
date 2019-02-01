@@ -8,6 +8,8 @@ require_once('../inc/encabezado.inc.php'); ?>
   </tr>
    <tr>
     <td><?php 
+	
+	
    
     if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act' )
     require_once('../inc/menu_usr.inc.php'); 
@@ -20,8 +22,8 @@ require_once('../inc/encabezado.inc.php'); ?>
 
 
     <td><?php 
-		//echo 'En inicio.html';
-		//print_r ($_SESSION);
+		echo 'En inicio.html SESSION';
+		print_r ($_SESSION);
 		
 		if (!isset($_GET['mod']) || $_GET['mod']=='def')
 		include_once("../inc/inicio.inc.php");

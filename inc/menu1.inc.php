@@ -35,8 +35,8 @@
  	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
  	      
       	  <ul>
-          <?php if ( $_SESSION['id_div']!='' || $_GET['lab']!='' )	 {
-			 //if ( $_GET['lab']!='' )	 {
+          <?php if ( $_SESSION['id_div']!='' || $_GET['div']!='' || $_GET['lab']!='' )	 {
+			
 				 ?>
              <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?> ">General</a></li>
            <?php } ?>   
