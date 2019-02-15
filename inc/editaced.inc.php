@@ -10,7 +10,8 @@ $motivo = new Requerimiento();
 $obj_lab = new laboratorios();
 
 if ($_REQUEST['editarced']=='Editar'){  
-//print_r($_POST);
+echo 'editar editaced';
+print_r($_SESSION);
 //print_r($usuario);
 ?>
 <div class="formulario">
@@ -82,7 +83,7 @@ if ($_REQUEST['editarced']=='Editar'){
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="id_usuario" type="hidden" value="<?php echo $usuario['id_usuario']; ?>" />
-
+<input name="id_div" type="hidden" value="<?php echo $_SESSION['id_div']; ?>" />
 
 </form>
 </div>

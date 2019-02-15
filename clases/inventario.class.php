@@ -1226,21 +1226,34 @@ function radialtorendimiento($altorend)
 		  $salida='<label><input type="radio" name="equipoaltorend" value="Si" '. $auxcheck . ">Sí</label>";  
 		  $salida.='<label><input type="radio" name="equipoaltorend" value="No" '. $auxcheck2 . ">No</label>";  
 		  
-
-		  /*if($datosc['altorendimiento']==$altorend){
-			       
-				   $salida.= " value='" . $datosc['altorendimiento'] . "' checked=''. checked . '>".$datosc['altorendimiento'];
-					 } else { 
-					
-						  $salida.= " value='" . $datosc['altorendimiento'] . " '>" .$datosc['altorendimiento'] ;
-						}*/
-			
-			echo $salida;
+		  echo $salida;
           
   //        }// fin del while
 
 } //fin radial alto Rendimiento
+function radialestado($estado)
+{  
+	      
 
+		  if ($estado == 'USO'){ 
+
+			$auxcheck= ' checked="checked"';	
+			
+				 
+		  } elseif ($estado == 'DESUSO'){ 
+		  			
+		  $auxcheck2=' checked="checked"';
+		 
+		  
+		  } else { }
+		  
+		  	  
+		  $salida='<label><input type="radio" name="estadobien" value="USO" '. $auxcheck . ">Uso</label>";  
+		  $salida.='<label><input type="radio" name="estadobien" value="DESUSO" '. $auxcheck2 . ">Desuso</label>";  
+		 
+		  echo $salida;
+      
+} //fin radial estadobien
 function radialarquitectura($arquitectura)
 {         
         

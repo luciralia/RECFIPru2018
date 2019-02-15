@@ -1,3 +1,6 @@
+<?php
+ob_start();
+?>
 <?php 
 session_start();
 require_once('../conexion.php');
@@ -137,10 +140,6 @@ header($direccion);
 }?>
 
 <?php if($_POST['eeasignar']=='Asignar' && $_REQUEST ['bn_notas']=='EQUIPO'){?>
-
-
-
-
 
 <p>"Si entre a asignar equipo experimental en equipo experimental"</p>
 
@@ -558,7 +557,6 @@ header($direccion);
 <?php if($_POST['accione']=='Guardar'){ ?>
 <h1>GUARDAR</h1>
 <?php 
-
 //Salvar una edición de inventarios
 echo 'valores para guardar registros:';
 print_r ($_REQUEST);
@@ -578,7 +576,7 @@ if (isset($_POST['licencia']))
 else 
     $licencia=0;
 
-echo 'licencia'. $licencia;
+//echo 'licencia'. $licencia;
 
 $arregloTotal=$_POST['subtotal_uno']+$_POST['subtotal_dos']+$_POST['subtotal_tres']+$_POST['subtotal_cuatro'];
 
@@ -645,7 +643,7 @@ $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_fin
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-licencia_ini='%s',licencia_fin='%s',equipoaltorend='%s',arquitectura='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d
+licencia_ini='%s',licencia_fin='%s',equipoaltorend='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
@@ -663,75 +661,70 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           $arregloTotal,$_POST['id_tec_com'],$_POST['tec_com_otro'],
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,
                           date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),
-						  $_POST['equipoaltorend'],$_POST['arquitectura'],$servidor,$_POST['descextensa'], 
-						  $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
+						  $_POST['equipoaltorend'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
 						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod']);
 					  
 $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS EN TABLA DISPOSITIVO: ' . pg_last_error());
 
 if (isset($_POST['idsoper']))
-{
-	
-$sistemaoper= "select sistemaoperativo from cat_sistema_operativo where id_so=" . $_POST['idsoper'];
-}
+
+   $sistemaoper= "select sistemaoperativo from cat_sistema_operativo where id_so=" . $_POST['idsoper'];
+
 if (isset($_POST['idtipomemoria']))
-{
-	
-$tipomemoria= "select tipomemoria from cat_tipo_memoria where id_tipo_memoria=" . $_POST['idtipomemoria'];
-}
+
+   $tipomemoria= "select tipomemoria from cat_tipo_memoria where id_tipo_memoria=" . $_POST['idtipomemoria'];
+
 if (isset($_POST['idnumdisco']))
-{
-	
-$numdisco="select numerodisco from cat_num_disco where id_num_disco=" . $_POST['idnumdisco'];
-}
+
+    $numdisco="select numerodisco from cat_num_disco where id_num_disco=" . $_POST['idnumdisco'];
+
 if (isset($_POST['idtinterfaz']))
-{
-$tipointerfaz="select tipointerfaz from cat_tipo_interfaz where idtipointerfaz=" . $_POST['idtinterfaz'];
-}
+
+    $tipointerfaz="select tipointerfaz from cat_tipo_interfaz where idtipointerfaz=" . $_POST['idtinterfaz'];
+
 
 if (isset($_POST['servidor']))
-{
-$tipoequipo="select servidor from cat_servidor where etiqueta='" . $_POST['servidor'] . "'";
-}
+
+    $tipoequipo="select servidor from cat_servidor where etiqueta='" . $_POST['servidor'] . "'";
+
 
 if (isset($_POST['arquitectura']))
-{
 	$arquit="select arquitectura from cat_arquitectura where arquitectura=" . $_POST['arquitectura'];
-}
+
 if (isset($_POST['idcatproc']))
-{
+
 	$proc="select descprocesador from cat_procesador  where idcatproc=" . $_POST['idcatproc'];
-}
+
 
 if (isset($sistemaoper)){
 
-$result = pg_query($sistemaoper) or die('Hubo un error con la base de datos sisoper');
-$datoso=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+   $result = pg_query($sistemaoper) or die('Hubo un error con la base de datos sisoper');
+   $datoso=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 if (isset($tipomemoria)){
-$result = pg_query($tipomemoria) or die('Hubo un error con la base de datos tipomemo');
-$datotm=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+    $result = pg_query($tipomemoria) or die('Hubo un error con la base de datos tipomemo');
+    $datotm=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 if (isset($numdisco)){
-$result = pg_query($numdisco) or die('Hubo un error con la base de datos numdisco');
-$datond=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+    $result = pg_query($numdisco) or die('Hubo un error con la base de datos numdisco');
+    $datond=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 if (isset($tipointerfaz)){
-$result = pg_query($tipointerfaz) or die('Hubo un error con la base de datos tipointerfaz');
-$datoti=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+   $result = pg_query($tipointerfaz) or die('Hubo un error con la base de datos tipointerfaz');
+   $datoti=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 if (isset($arquit)){
-$result = pg_query($arquit) or die('Hubo un error con la base de datos arquitectura');
-$datoarq=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+    $result = pg_query($arquit) or die('Hubo un error con la base de datos arquitectura');
+    $datoarq=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 
 if (isset($proc)){
-$result = pg_query($proc) or die('Hubo un error con la base de datos procesador');
-$datoproc=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+   $result = pg_query($proc) or die('Hubo un error con la base de datos procesador');
+   $datoproc=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 if (isset($tipoequipo)){
-$result = pg_query($tipoequipo) or die('Hubo un error con la base de datos servidor');
-$datoserv=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+   $result = pg_query($tipoequipo) or die('Hubo un error con la base de datos servidor');
+   $datoserv=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 
 $strquery="UPDATE equipoc SET descextensa='%s', procesador='%s', 
@@ -740,35 +733,34 @@ $strquery="UPDATE equipoc SET descextensa='%s', procesador='%s',
 			tipotarjvideo='%s', modelotarjvideo='%s', memoriavideo='%s', 
 			nodiscos='%s', capdisco='%s', tipointerfaz='%s', 
 			tipodd='%s', equipoaltorend='%s',
-		    accesorios='%s', arquitectura='%s', servidor='%s',id_mod=%d
+		    accesorios='%s', arquitectura='%s', estadobien='%s', servidor='%s',id_mod=%d
             WHERE bn_id=". $_REQUEST['bn_id'];
-			
-			
 
 $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
                $_POST['noprocesadores'],$_POST['velocidad'],$datoso['sistemaoperativo'],
 			   $_POST['cache'], $_POST['cantmemoria'], $datotm['tipomemoria'], 
 			   $_POST['tipotarjvideo'], $_POST['modelotarjvideo'], $_POST['memoriavideo'],
 			   $datond['numerodisco'], $_POST['capdisco'], $datoti['tipointerfaz'], $_POST['tipodd'],
-			   $_POST['equipoaltorend'], $_POST['accesorios'],$datoarq['arquitectura'], $datoserv['servidor'],$_POST['id_mod']);
+			   $_POST['equipoaltorend'], $_POST['accesorios'],$datoarq['arquitectura'],$_POST['estadobien'], $datoserv['servidor'],$_POST['id_mod']);
 
 
-$result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
+   $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-
-echo $direccion . "</br>";
-header($direccion);
-echo $queryu;
+   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+//echo $direccion . "</br>";
+   echo $direccion;
+   header($direccion);
+//echo $queryu;
 }
 
 if($_POST['accione']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
 
-echo $direccion;
-header($direccion);
-
+   echo $direccion;
+   header($direccion);
 }
 ?>
-
+<?php
+ob_end_flush();
+?>
 

@@ -1,10 +1,28 @@
-<link rel="stylesheet"  type="text/css" href="../css/menu_1.css">  
+<link rel="stylesheet"  type="text/css" href="../css/menu_1.css">
+<link rel="stylesheet"  type="text/css" href="../css/menu_usr.css">   
   <?php require_once('../clases/laboratorios.class.php');
+     // require_once('../inc/sesion.inc.php'); 
         $labNom = new laboratorios();
-		/*echo 'SESSIONen menu1.inc';
-	print_r($_SESSION);	
-	echo 'GETen menu1.inc';
+			if ($_SESSION['id_div']==NULL)
+     {
+		  //echo 'entra y cambia';
+		  $query = "SELECT * FROM usuarios U
+          JOIN divisiones d
+          ON u.id_usuario=d.id_cac
+          WHERE id_usuario = " . $_SESSION['id_usuario'];
+		  $datos=pg_query($query) or die('Error en base de datos');
+
+          $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
+          foreach ($usuario as $campo => $valor) {
+               $_SESSION[$campo]=$valor;
+		}
+ 
+	 }
+   // echo 'SESSION en menu1.inc';
+	//print_r($_SESSION);	
+	/*echo 'GET en menu1.inc';
 	print_r($_REQUEST);	*/
+	
 	?>
 
 <div id="header">
@@ -17,7 +35,7 @@
  	   if ($_GET['mod']=='ced') {?>
  	           <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>" class="actual">Cédula de Información</a></li>
  	<?php }else{ ?>
-       	       <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>" >Cédula de Información</a></li>
+       	       <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&id_div=<?php  echo $_SESSION['id_div'];?> "" >Cédula de Información</a></li>
         <?php }
 		
 	?>
@@ -35,11 +53,10 @@
  	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
  	      
       	  <ul>
-          <?php if ( $_SESSION['id_div']!='' || $_GET['div']!='' || $_GET['lab']!='' || $_SESSION['id_dep']!='' )	 {
-			
-				 ?>
-             <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?> ">General</a></li>
-           <?php } ?>   
+            <?php if ( $_SESSION['id_div']!='' || $_GET['div']!='' || $_GET['lab']!='' || $_SESSION['id_dep']!='' )	 {
+			?>
+               <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?> ">General</a></li>
+            <?php } ?>   
              <?php if ($_SESSION['tipo_lab']!='e' && $_GET['lab']!='' )	 {?>
              
                    <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>">Equipos de c&oacute;mputo</a></li>
@@ -85,8 +102,8 @@
 
 
     <?php if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
-    <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
-    <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Documentos</a></li>
+           <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
+           <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Documentos</a></li>
     <?php }?>
      <?php $actual=($_GET['mod']=='ace')? ' class="actual"':'';?>
      

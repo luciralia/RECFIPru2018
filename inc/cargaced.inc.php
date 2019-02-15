@@ -3,7 +3,8 @@
 require_once('../conexion.php');
 
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
-
+echo 'En cargaced';
+print_r($_SESSION);
 
 
 $query = "select l.*, l.nombre as laboratorio, u.nombre as nresp, a_paterno, a_materno, de.nombre as depa, di.nombre as div,

@@ -49,11 +49,11 @@ else {
 		<?php 
 	
 	    $queryerror="SELECT * FROM registroerror re
-		             JOIN cat_dispositivo cd
-					 ON re.clave_dispositivo=cd.dispositivo_clave
-	                  WHERE date(fecharegistro)= current_date
-					   AND tipoerror="."'".$etiqueta."'"."
-				      AND id_div=" . $_SESSION['id_div']
+                     JOIN errorinserta ei
+                     ON re.inventario=ei.inventario
+                     WHERE date(fecharegistro)= current_date
+					 AND tipoerror="."'".$etiqueta."'"."
+				     AND id_div=" . $_SESSION['id_div']
 					  ;	
 			
 	    

@@ -4,10 +4,11 @@ require_once('../conexion.php');
 require_once('../clases/importa.class.php');
 
 session_start(); 
-//$invent = new importa();
+
 $error = new importa();
 $registroerror = new importa();
 $buscaerror = new importa();
+$disperror =new importa();
 
 function utf8_string_array_encode(&$array){
     $func = function(&$value,&$key){
@@ -82,14 +83,14 @@ function utf8_string_array_encode(&$array){
 		 
 		  $datosdec=utf8_string_array_encode($datos); 
 		  
-	      $querytemp="SELECT * FROM dispositivotempo WHERE 
+	      $querytemp="SELECT * FROM dispositivotemp WHERE 
 		              inventario="."'".$datosdec[15]."'";
 					  
 		  $datostemp = pg_query($con,$querytemp);
 		   
 		  if (pg_num_rows($datostemp)>0) {
 			 
-		           $updatequery= "UPDATE dispositivotempo SET inventario='%s'
+		           $updatequery= "UPDATE dispositivotemp SET inventario='%s'
 			                      WHERE inventario="."'".$datosdec[15]."'";
 							  
 			        $queryu=sprintf($updatequery, $datosdec[15] ); 
@@ -141,7 +142,7 @@ function utf8_string_array_encode(&$array){
                  
 */
  
- $query = "INSERT INTO dispositivotempo ( dispositivo_clave,usuario_final_clave,familia_clave,
+ $query = "INSERT INTO dispositivotemp ( dispositivo_clave,usuario_final_clave,familia_clave,
                                                tipo_ram_clave,tecnologia_clave,resguardo_nombre,
 										       resguardo_no_empleado, usuario_nombre,usuario_ubicacion,
                                                usuario_perfil, usuario_sector,serie,
@@ -196,7 +197,7 @@ function utf8_string_array_encode(&$array){
 									 registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
 			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
 						   
-			                         $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );			 
+			                         $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'t' );			 
 			                         $registroerror= pg_query($con,$queryerror);
 			                         $conterroreg++; //inserciones con errores por error de registro
 									
@@ -211,19 +212,15 @@ function utf8_string_array_encode(&$array){
        
 	   } //while para insertar en dispositivo temporal
 	   
-	   echo 'registros en tempo';
-	   echo $contexitototal;
-	   
-	  $buscaerror->detectaError();
+	
+	   $buscaerror->detectaError();
 	  
-	   // echo 'Ingresando en dispositivotemp...';
-	   
 	   $cuentatotal=0;?>
        <tr>
        <td> <?php // echo "Se insertaron ". $cuenta . " registros validos"; ?>  </td></tr>
 	 <?php
 	   
-	    $query="SELECT * FROM dispositivotempo dt
+	    $query="SELECT * FROM dispositivotemp dt
 		        JOIN errorinserta ei
 				on dt.inventario=ei.inventario
 				WHERE columna51!=4 AND columna51!=6
@@ -430,7 +427,6 @@ function utf8_string_array_encode(&$array){
 				   '%s','%s','%s', --nofactura 19
 				   '%s','%s','%s',--modelo_p 22
 				   '%s','%s','%s',	--familia_espec 25
-				   
 				   '%s','%s','%s', --nucleos_totales 28
 				   '%s',%d,   --ram_espec 30
 				   %d,%d,%d,  --total_almac 33
@@ -596,29 +592,30 @@ function utf8_string_array_encode(&$array){
 		
 		$error->importaError();
 		
-		// contabilizar errores cuando no existe el área y cuando lab es cero y no lo encuentra en equipoc (inventario anterior)
-		
+	
 		//$querydt="DELETE FROM dispositivotempo";	
 			
 	    // $datosdt = pg_query($con,$querydt); 
+		
+		//Almacena los  dispositivos con error
+		
+		
+		 $querylab="SELECT * FROM errorinserta
+		           WHERE columna51=4 OR columna51=6";
+				   
+		 $result = pg_query($querylab) or die('Hubo un error con la base de datos en error inserta');
+		
+         $sinlab= pg_num_rows($result); 
+		 
+		 $total=$conterroreg+$contexitototal; 
 		 
 		//$querydt="DELETE FROM errorinserta";	
 		//$result = pg_query($querydt) or die('Hubo un error con la base de datos');
-		
-		 
-		 $total=$conterroreg+$contexitototal; 
-		
-		// if ( $conterrorbn ==0 && $conterroreg == 0 && $cuantose==0){?>
-		  <!--  <tr>	 
-		    <td> <h4><?php //echo "Importación con éxito" ?></h4> </td></tr>-->
-         <?php
-		// }
 		?>
-		<br>
          <tr>
              <td><legend align="center"> <h4><?php echo "Se importaron " . $cuentatotal . " / " . $total . " dispositivos."; ?></h4> </legend></td></tr>
                <?php  if ( $conterrorbn > 0) { ?>
-            <br> <td><legend align="center"> <h4><?php echo "Faltaron registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend></td></tr>
+            <br/> <td><legend align="center"> <h4><?php echo "Faltó registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend></td></tr>
          <tr><td> <br>  
               <form action="../inc/erroresbn.inc.php" method="post" name="erroresbn" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
@@ -627,26 +624,25 @@ function utf8_string_array_encode(&$array){
         <?php
 		 }
 		 
-		 if ($conterroreg > 0) { ?>
-                 <td> <legend align="center"> <h4><?php echo "Hay " . $conterroreg ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> </td></tr>
-                 
-              <tr><td><br>
-                <form action="../inc/erroresreg.inc.php" method="post" name="erroresreg" >
-	               <legend align="center"><input name="enviar" type="submit" value="Exportar a Excel" /></legend>
-	            </form>
-              </td></tr>
-         </table>
-        <br>
-          <?php 
-		  } 
+		 $disperror->guardaDispError();
+	
+	   if ($sinlab>0){
+		?>
+		<br>
+        <tr>
+            <td><legend align="center"> <h4><?php echo "Dispositivos  sin lab " . $sinlab ; ?></h4> </legend>
+            </td>
+        </tr>
+        <br/>
+       <?php } 
  }
 ?>
-
-</div>
 </td>          
 </tr>
+</table>
+</div>
 
+<br/>
 
-<?php //require('pie.inc.php'); ?>
 
 

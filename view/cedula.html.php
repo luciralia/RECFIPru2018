@@ -20,6 +20,9 @@ require_once('../clases/laboratorios.class.php'); ?>
 </tr>
 <tr>
 <td><div class="centrado"> <?php 
+
+            // echo 'cedula.html.php';
+			// print_r($_SESSION);
 			if (!isset($_GET['lab']) || $_GET['lab']==""){} 
 			
 			else if ( $_REQUEST['editardp']=='Editar'){

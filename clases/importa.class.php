@@ -10,7 +10,7 @@ class importa{
 function detectaError(){
 	
 	    $cuenta=1;
-	    $querydet="SELECT * FROM dispositivotempo";
+	    $querydet="SELECT * FROM dispositivotemp";
 		
 		$datosdet = pg_query($querydet)or die('Hubo un error con la base de datos con la tabla dispositivotemp');
 		
@@ -33,7 +33,7 @@ function detectaError(){
 		            if ($exite[0] == NULL) 
 		                   $errorlab=6;
 		            else 
-		                   $errorlab=5;
+		                   $errorlab=5; //se ingreso como 0  y no se encontró en equipoc previo inventario 2017
 				  		 
                
 		   }elseif ($valida['id_lab']!='0' ){  
@@ -51,7 +51,7 @@ function detectaError(){
 	    	            $cuantos=pg_num_rows($existelab);
 		
 			          if ($cuantos==0){
-			                     $errorlab=4;
+			                     $errorlab=4;//lab no existe en la división
 					             $lab=0;	
 								 $bandera=0;
 								 }	
@@ -104,7 +104,7 @@ function detectaError(){
 	  if($valida['proveedor']==NULL)  //proveedor_p
 		 $columna18=0; elseif(is_int($valida['proveedor'])) $columna18=1; else $columna18=2;
 	  if($valida['fecha_factura']==NULL)  //fecha_factura
-		 $columna19=0; elseif(!preg_match($regexFecha,$valida['fecha_factura'])) $columna19=3; else $columna19=2;
+		 $columna19=0; elseif(!preg_match($regexFecha,$valida['fecha_factura'])) $columna19=2; else $columna19=3;
 	  if($valida['familia_especificar']==NULL)  //familia_especificar
 		 $columna20=0; elseif(is_int($valida['familia_especificar'])) $columna20=1; else $columna20=2;	 
 	  if($valida['modelo_procesador']==NULL)  //modelo_procesador
@@ -126,7 +126,8 @@ function detectaError(){
 	  if($valida['num_arreglos']==NULL)  //num_arreglos
 		 $columna29=0; elseif(preg_match("/^[0-9]+$/",$valida['num_arreglos'])) $columna29=1; else $columna29=2;
 	  if($valida['esquema_uno']==NULL)  //esquema_uno
-		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$valida['esquema_uno'])) $columna30=1; else $columna30=2;	 		 		 	 	  if($valida['esquema_dos']==NULL)  //esquema_dos
+		 $columna30=0; elseif(preg_match("/^[0-9]+$/",$valida['esquema_uno'])) $columna30=1; else $columna30=2;	 		 		 	 	  
+	  if($valida['esquema_dos']==NULL)  //esquema_dos
 		 $columna31=0;  elseif(preg_match("/^[0-9]+$/",$valida['esquema_dos'])) $columna31=1; else $columna31=2;
 	  if($valida['esquema_tres']==NULL)  //esquema_tres
 		 $columna32=0;  elseif(preg_match("/^[0-9]+$/",$valida['esquema_tres'])) $columna32=1; else $columna32=2;
@@ -161,9 +162,9 @@ function detectaError(){
 	  if($valida['licencia']==NULL)  //licencia
 	     $columna47=0;  elseif(preg_match("/^[0-9]+$/",$valida['licencia'])) $columna47=1; else $columna47=2;
 	  if($valida['licencia_ini']==NULL)  //licencia_ini
-	     $columna48=0;  elseif(!preg_match($regexFecha,$valida['licencia_ini'])) $columna48=3; else $columna48=2;
+	     $columna48=0;  elseif(!preg_match($regexFecha,$valida['licencia_ini'])) $columna48=2; else $columna48=3;
 	  if($valida['licencia_fin']==NULL)  //licencia_fin
-	     $columna49=0;  elseif(!preg_match($regexFecha,$valida['licencia_fin'])) $columna49=3; else $columna49=2;
+	     $columna49=0;  elseif(!preg_match($regexFecha,$valida['licencia_fin'])) $columna49=2; else $columna49=3;
 	  if($valida['id_edificio']==NULL)  //id_edif
 	     $columna50=0;  elseif(preg_match("/^[0-9]+$/",$valida['id_edificio'])) $columna50=1; else $columna50=2;
 	
@@ -378,6 +379,9 @@ function revisarError($revisar,$tupla){
 	 
 	   
 } //finaliza funcion revisa error
+   
+
+
 
 	function importaError(){
 	
@@ -634,17 +638,64 @@ function revisarError($revisar,$tupla){
                 <?php if ($disperror['columna51']==6){ ?>
 		      <tr><td> <?php echo 'Revisar la columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> se ingresó con cero y no se pudo localizar el dispositivo </strong>'; ?></td></tr> <?php  } ?>
               <?php if ($disperror['columna51']==5){ ?>
-		      <tr><td> <?php echo 'La columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> se ingresó con cero aún asi se localizó el dispositivo y se registró.</strong>'; ?></td></tr> <?php  } ?>
+		      <tr><td> <?php echo 'La columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> se ingresó con cero aún así se localizó el dispositivo y se registró.</strong>'; ?></td></tr> <?php  } ?>
 		 <?php } //fin de while $disperro
 		 ?>
          
-         <br>
+         <br/>
+         <br/>
  <?php 
         //$querydt="DELETE FROM errorinserta";	
 		//$result = pg_query($querydt) or die('Hubo un error con la base de datos');
 	}//finaliza Funcion importaError
 
-
+ function guardaDispError(){
+	 
+	  $querydisp="SELECT dt.inventario FROM dispositivotemp dt
+                  JOIN bienes b
+                  ON b.bn_clave=dt.inventario
+                  JOIN errorinserta ei
+                  ON ei.inventario=dt.inventario
+                  EXCEPT
+                  SELECT d.inventario from dispositivo d";
+				  
+      $result = pg_query($querydisp) or die('Hubo un error con la base de datos');
+	  $existen= pg_num_rows($result); 
+	   if ($existen>0){
+		?>
+         <td> <legend align="center"> <h4><?php echo "Se intentaron registrar  " . $existen ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> </td></tr>
+ 				
+	<?php
+		while ($disperror = pg_fetch_array($result, NULL,PGSQL_ASSOC)) {
+			
+			        $queryd="SELECT max(id_error) FROM registroerror";
+                    $registrod= pg_query($queryd) or die('Hubo un error con la base de datos');
+                    $ultimo= pg_fetch_array($registrod);
+	
+		         if ($ultimo[0]==0)
+				    $ultimo=1;
+			     else 
+			        $ultimo=$ultimo[0]+1;
+		
+		          $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
+						   
+			      $queryerror=sprintf($querybien,$ultimo,$disperror['inventario'],$disperror['dispositivo_clave'],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );
+			   			 
+			      $registroerror= pg_query($queryerror)or die('Hubo un error con la base de datos');
+		
+			
+	    	}//fin while guarad errores
+		?>
+              <tr><td><br>
+                <form action="../inc/erroresreg.inc.php" method="post" name="erroresreg" >
+	               <legend align="center"><input name="enviar" type="submit" value="Exportar a Excel" /></legend>
+	            </form>
+              </td></tr>
+              <br>
+	<?php   }
+	 
+	}//finaliza funcion guardaDisError
 
 }//finaliza clase importa
 

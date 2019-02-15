@@ -4,17 +4,14 @@ margin:0px;
 }
 
 #header {
-/*margin: auto;*/
+ /*margin: auto;*/
  width:1024px;
  font-family:arial;
-
 }
 
 ul {
  list-style-type: none;
-
 }
-
 .navu li a {
 /* background-color:#069;
  color:#FFFFFF;
@@ -31,7 +28,6 @@ background-image: url('../images/fondo_boton_az_25.jpg');
 height: 15px;
 /*text-align:center;*/
 text-decoration:none;
-
 cursor:pointer;
 padding: 5px 5px; 
 }
@@ -62,8 +58,8 @@ border-bottom-style:none;
 .navu li ul {
  display:none;
  position:absolute;
- min-width:100px;
-
+ /*min-width:475px;*/
+  min-width:auto;
 }
 
 .navu li:hover > ul {
@@ -84,14 +80,34 @@ background-color: #0e84e4;
 position:relative;
 /*position:absolute;*/
 border-bottom-style:none;
-background-color: #0f8df1;
+/*background-color: #0f8df1;*/
+background-color: #ccb9bc; 
 background-image: url('../images/fondo_boton_az_25.jpg');
 height: 15px;
 z-index:100;
 }
 
 .navu li ul li ul {
- right:-140px;
+ /*right:-475px;*/
+ right:auto;
  top:0px;
  z-index:100;
+}
+/*Agregado recien*/
+
+.navu li ul li a {
+background-image: url('../images/fondo_boton_az_25_onx.jpg');
+background-color: #0e84e4;
+
+}
+.navu li ul li a:hover {
+position:relative;
+/*position:absolute;*/
+border-bottom-style:none;
+
+background-color: #0f8df1;  
+
+background-image: url('../images/fondo_boton_az_25.jpg');
+height: 15px;
+
 }

@@ -31,7 +31,6 @@ $nreng = pg_num_rows($datos);
 
 
 if ($nreng==1){
-	  
 $datos=pg_query($con, $query);		  
 $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
 foreach ($usuario as $campo => $valor) {
@@ -67,7 +66,7 @@ if ($usuario['tipo_usuario']==1){
    $_SESSION['id_dep']=$depto[0];
    
    //obtener division
-    $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+   $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
                JOIN departamentos d
                ON l.id_dep=d.id_dep
                JOIN divisiones dv

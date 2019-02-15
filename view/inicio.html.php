@@ -1,18 +1,33 @@
 <?php 
-require_once('../inc/encabezado.inc.php'); ?>
-<!--  <tr>
-  <td><?php //require('../inc/menu.inc.php'); ?>&nbsp;</td>
-  </tr> -->
+require_once('../inc/encabezado.inc.php'); 
+//require_once('../inc/sesion.inc.php'); 
+
+?>
   <tr>
   <td><?php require_once('../inc/menu1.inc.php'); ?>      &nbsp;</td>
   </tr>
    <tr>
     <td><?php 
-	
+	if ($_SESSION['id_div']==NULL)
+     {
+		  //echo 'entra y cambia';
+		  $query = "SELECT * FROM usuarios U
+          JOIN divisiones d
+          ON u.id_usuario=d.id_cac
+          WHERE id_usuario = " . $_SESSION['id_usuario'];
+		  $datos=pg_query($con, $query);
+
+          $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
+          foreach ($usuario as $campo => $valor) {
+               $_SESSION[$campo]=$valor;
+		}
+ 
+	 }
+     
 	
    
     if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act' )
-    require_once('../inc/menu_usr.inc.php'); 
+            require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>
 
@@ -22,8 +37,8 @@ require_once('../inc/encabezado.inc.php'); ?>
 
 
     <td><?php 
-		echo 'En inicio.html SESSION';
-		print_r ($_SESSION);
+		//echo 'En inicio.html SESSION';
+		//print_r ($_SESSION);
 		
 		if (!isset($_GET['mod']) || $_GET['mod']=='def')
 		include_once("../inc/inicio.inc.php");
