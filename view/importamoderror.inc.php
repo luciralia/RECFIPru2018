@@ -44,10 +44,11 @@ function utf8_string_array_encode(&$array){
  </tr>
  <tr>
 
+
    <td></td>
    <td></td>
-   <br/>
-<br/>
+
+
    <td colspan="2" align="center">
      <input  type="submit" value="Importar">
      <input type="reset" value="Cancelar">
@@ -102,46 +103,7 @@ function utf8_string_array_encode(&$array){
 			
 		   } else { 
 	   //$conterroreg=0;
-	   
-	   // generar una tabla con nombre de las columnas 
-	  /* 								                                            
-       $query = "INSERT INTO dispositivotempo ( dispositivo_clave,usuario_final_clave,familia_clave,
-                                               tipo_ram_clave,tecnologia_clave,resguardo_nombre,
-										       resguardo_no_empleado, usuario_nombre,usuario_ubicacion,
-                                               usuario_perfil, usuario_sector,serie,
-                                               marca_p, no_factura, anos_garantia,
-                                               inventario, modelo_p, proveedor,
-										       fecha_factura,familia_especificar,
-										       modelo_procesador,cantidad_procesador,nucleos_totales,
-										       nucleos_gpu, memoria_ram,ram_especificar, 
-										       num_elementos_almac,total_almac,num_arreglos,
-										       esquema_uno,esquema_dos,esquema_tres, esquema_cuatro,
-                                               tec_uno,tec_dos,tec_tres,tec_cuatro,
-                                               subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro,
-                                               arreglo_total,tec_com,tec_com_otro,
-                                               sist_oper,version_sist_oper,licencia,
-										       licencia_ini,licencia_fin,id_edificio,
-											   id_lab) VALUES 
-										      ( $datosdec[0], $datosdec[1], $datosdec[2], 
-                                               $datosdec[3], $datosdec[4], '$datosdec[5]',
-											   $datosdec[6], '$datosdec[7]', '$datosdec[8]', 
-											   $datosdec[9], $datosdec[10], '$datosdec[11]', 
-											  '$datosdec[12]', '$datosdec[13]', '$datosdec[14]', 
-											  '$datosdec[15]', '$datosdec[16]', '$datosdec[17]', 
-											  '$datosdec[18]', '$datosdec[19]',                
-											  '$datosdec[20]','$datosdec[21]','$datosdec[22]', 
-											  '$datosdec[23]','$datosdec[24]','$datosdec[25]', 
-											   $datosdec[26], $datosdec[27], $datosdec[28],   
-											   $datosdec[29], $datosdec[30], $datosdec[31], $datosdec[32], 
-											   $datosdec[33], $datosdec[34],$datosdec[35],$datosdec[36], 
-											   $datosdec[37], $datosdec[38],$datosdec[39],$datosdec[40],
-											   $datosdec[41], $datosdec[42],'$datosdec[43]',
-											   $datosdec[44], '$datosdec[45]',$datosdec[46],
-											   '$datosdec[47]', '$datosdec[48]',$datosdec[49],
-											   $datosdec[50])"; //$datos[51] previendo modificaccion para idmod
-                 
-*/
- 
+	
  $query = "INSERT INTO dispositivotemp ( dispositivo_clave,usuario_final_clave,familia_clave,
                                                tipo_ram_clave,tecnologia_clave,resguardo_nombre,
 										       resguardo_no_empleado, usuario_nombre,usuario_ubicacion,
@@ -258,16 +220,6 @@ function utf8_string_array_encode(&$array){
 */
 		$datos = pg_query($con,$query);
 		
-		/*
-		$querye="SELECT * FROM dispositivotempo dt
-		             JOIN errorinserta ei
-				     ON dt.inventario=ei.inventario
-				     WHERE columna51=4 OR columna51=6";
-		
-		$existee= pg_query($querye) or die('Hubo un error con la base de datos');		
-			
-	    $cuantose=pg_num_rows($existee);
-		*/
 		
 		while ($disp = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
@@ -592,13 +544,7 @@ function utf8_string_array_encode(&$array){
 		
 		$error->importaError();
 		
-	
-		//$querydt="DELETE FROM dispositivotempo";	
-			
-	    // $datosdt = pg_query($con,$querydt); 
-		
 		//Almacena los  dispositivos con error
-		
 		
 		 $querylab="SELECT * FROM errorinserta
 		           WHERE columna51=4 OR columna51=6";
@@ -608,13 +554,11 @@ function utf8_string_array_encode(&$array){
          $sinlab= pg_num_rows($result); 
 		 
 		 $total=$conterroreg+$contexitototal; 
-		 
-		//$querydt="DELETE FROM errorinserta";	
-		//$result = pg_query($querydt) or die('Hubo un error con la base de datos');
+		
 		?>
          <tr>
              <td><legend align="center"> <h4><?php echo "Se importaron " . $cuentatotal . " / " . $total . " dispositivos."; ?></h4> </legend></td></tr>
-               <?php  if ( $conterrorbn > 0) { ?>
+               <?php  if ( $conterrorbn > 0 && $cuentatotal!=0) { ?>
             <br/> <td><legend align="center"> <h4><?php echo "Faltó registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend></td></tr>
          <tr><td> <br>  
               <form action="../inc/erroresbn.inc.php" method="post" name="erroresbn" >
@@ -626,16 +570,25 @@ function utf8_string_array_encode(&$array){
 		 
 		 $disperror->guardaDispError();
 	
-	   if ($sinlab>0){
+	   if ($sinlab>0  && $cuentatotal!=0){
 		?>
 		<br>
         <tr>
-            <td><legend align="center"> <h4><?php echo "Dispositivos  sin lab " . $sinlab ; ?></h4> </legend>
+            <td><legend align="center"> <h4><?php echo "Dispositivos  con laboratorio inexistente" . $sinlab ; ?></h4> </legend>
             </td>
         </tr>
         <br/>
        <?php } 
+	   
+	    /*$querydt="DELETE FROM dispositivotemp";	
+		 $datosdt = pg_query($con,$querydt); 
+		$querydt="DELETE FROM errorinserta";	
+		 $result = pg_query($querydt) or die('Hubo un error con la base de datos');*/
  }
+       $querydt="DELETE FROM dispositivotemp";	
+		 $datosdt = pg_query($con,$querydt); 
+		$querydt="DELETE FROM errorinserta";	
+		 $result = pg_query($querydt) or die('Hubo un error con la base de datos');
 ?>
 </td>          
 </tr>

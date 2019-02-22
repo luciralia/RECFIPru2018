@@ -3,11 +3,11 @@
 require_once('../conexion.php');
 
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
-echo 'En cargaced';
-print_r($_SESSION);
+//echo 'En cargaced';
+//print_r($_SESSION);
 
 
-$query = "select l.*, l.nombre as laboratorio, u.nombre as nresp, a_paterno, a_materno, de.nombre as depa, di.nombre as div,
+$query = "select l.*, l.nombre as laboratorio, u.nombre as nresp, a_paterno, a_materno, de.nombre as depa, di.id_div as div, di.nombre as division,
 u.tel1 as tel1,u.tel2 as tel2, u.email as email,u.ext as ext, e.descripcion as edif, detalle_ub as ubica, l.dir_postal as postal, capacidad,asignaturas,carreras
 from laboratorios l, departamentos de, divisiones di, usuarios u, cat_edificio e 
 where l.id_dep=de.id_dep

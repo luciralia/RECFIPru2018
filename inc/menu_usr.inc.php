@@ -17,25 +17,22 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
          require_once('../inc/cargaldd.inc.php'); 
 } 
 */
+
 if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) {
 	
        $estado='visible'; ?>
         <div id="resaltado"> Debe seleccionar un Área </div> 
      <?php    
-         require_once('../pruebas/menuNiv.php');
+         require_once('../inc/menuNiv.inc.php');
 
      }else
 	
-         require_once('../pruebas/menuNiv.php'); 
+         require_once('../inc/menuNiv.inc.php'); 
 
 
-//echo 'Menú para Divisiones';
+//echo 'Menú para rcacfi';
 
-//print_r ($_SESSION);
 
-// echo 'entra a menu div';
-
-  
 	  if ((!isset($_GET['id_div']) || $_GET['id_div']=="" ) && $_SESSION['tipo_usuario']==10) { 
 //echo 'es rcacfi';
 	 

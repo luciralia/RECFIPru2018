@@ -3,26 +3,13 @@
   <?php require_once('../clases/laboratorios.class.php');
      // require_once('../inc/sesion.inc.php'); 
         $labNom = new laboratorios();
-			if ($_SESSION['id_div']==NULL)
-     {
-		  //echo 'entra y cambia';
-		  $query = "SELECT * FROM usuarios U
-          JOIN divisiones d
-          ON u.id_usuario=d.id_cac
-          WHERE id_usuario = " . $_SESSION['id_usuario'];
-		  $datos=pg_query($query) or die('Error en base de datos');
-
-          $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
-          foreach ($usuario as $campo => $valor) {
-               $_SESSION[$campo]=$valor;
-		}
- 
-	 }
-   // echo 'SESSION en menu1.inc';
-	//print_r($_SESSION);	
-	/*echo 'GET en menu1.inc';
-	print_r($_REQUEST);	*/
-	
+		
+   echo 'SESSION en menu1.inc';
+	print_r($_SESSION);	
+	echo 'GET en menu1.inc';
+	print_r($_REQUEST);	
+	if ( $_SESSION['id_div']==NULL)
+	     $_SESSION['id_div']=$_REQUEST['div'];
 	?>
 
 <div id="header">
@@ -33,9 +20,9 @@
     <?php $tipo=$labNom->getLaboratorio($_GET['lab']);?>
      <?php  
  	   if ($_GET['mod']=='ced') {?>
- 	           <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>" class="actual">Cédula de Información</a></li>
+ 	           <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Cédula de Información</a></li>
  	<?php }else{ ?>
-       	       <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&id_div=<?php  echo $_SESSION['id_div'];?> "" >Cédula de Información</a></li>
+       	       <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  >Cédula de Información</a></li>
         <?php }
 		
 	?>
@@ -43,8 +30,6 @@
 	<!--<?php $clase=($_GET['mod']=='que')?'" class="actual"':$clase='"'; ?>
 	<li><a href="../view/inicio.html.php?mod=que&lab=<?php echo $_GET['lab'];?>" <?php echo $clase;?>Quejas y sugerencias</a></li> -->
 
-	
-    
          <!-- Botón inventario -->
      <?php //echo $_REQUEST['mod'];?>
   
@@ -68,9 +53,9 @@
          <?php if ($_SESSION['tipo_usuario']!=10 )	 {?>
                     <li><a href="../view/inicio.html.php?mod=imp">Importar</a></li>
          <?php } ?> 
-         <?php if ($_SESSION['tipo_usuario']!=10 )	 {?>
-                 <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li> 
-         <?php } ?> 
+         <?php //if ($_SESSION['tipo_usuario']!=10 )	 {?>
+                <!-- <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li> -->
+         <?php //} ?> 
           </ul>
 	   </li>
     
@@ -82,20 +67,20 @@
         <ul >
             <li><a href="#">Equipo C&oacute;mputo</a>    <!--Temporal Nivel 1--> 
                   <ul>
-                     <li><a href="../view/inicio.html.php?mod=ceneceq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Estado del Equipo</a></li>
-                     <li><a href="../view/inicio.html.php?mod=cenecso&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Sistema Operativo</a></li>
-                     <li><a href="../view/inicio.html.php?mod=cenecuf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Usuario Final</a>
+                     <li><a href="../view/inicio.html.php?mod=ceneceq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Estado del Equipo</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenecso&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Sistema Operativo</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenecuf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Usuario Final</a>
                          <ul>
-                              <li><a href="../view/inicio.html.php?mod=cenecufb&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Usuario de Bibliotecas</a> </li>
+                              <li><a href="../view/inicio.html.php?mod=cenecufb&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Usuario de Bibliotecas</a> </li>
                          </ul>
                       </li>
-                     <li><a href="../view/inicio.html.php?mod=cenecar&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Equipo Alto Rendimiento</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenecar&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Alto Rendimiento</a></li>
                    </ul>
              </li>   <!-- Es fin del equipo de Cómputo--> 
             
-            <li><a href="../view/inicio.html.php?mod=ceni&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Impresoras </a></li>
-            <li><a href="../view/inicio.html.php?mod=cened&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Equipo Digital</a></li>
-            <li><a href="../view/inicio.html.php?mod=cenert&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?>">Equipo Redes y Telecomunicaciones</a></li>
+            <li><a href="../view/inicio.html.php?mod=ceni&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Impresoras </a></li>
+            <li><a href="../view/inicio.html.php?mod=cened&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Digital</a></li>
+            <li><a href="../view/inicio.html.php?mod=cenert&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Redes y Telecomunicaciones</a></li>
          </ul>  
     </li>  
      <?php }?>  

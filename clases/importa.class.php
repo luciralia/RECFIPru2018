@@ -225,6 +225,7 @@ function revisarError($revisar,$tupla){
 	echo 'valores recibidos';
 	print_r ($revisar);
 	 $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
+	
 	 
 	  if($datosdec[0]==NULL) //dispositivo_clave
 	     $columna1=0; elseif(preg_match("/^[0-9]+$/",$datosdec[0])) $columna1=1; else $columna1=2;	 
@@ -389,6 +390,7 @@ function revisarError($revisar,$tupla){
      $result = pg_query($queryerror) or die('Hubo un error con la base de datos');
 	 $existen= pg_num_rows($result); 
 	
+	 
 	 if ($existen>0){
 		?>
         <br> 
@@ -640,6 +642,7 @@ function revisarError($revisar,$tupla){
               <?php if ($disperror['columna51']==5){ ?>
 		      <tr><td> <?php echo 'La columna AY, <strong>id_lab</strong> del renglón '.$disperror['tupla'].'. <strong> se ingresó con cero aún así se localizó el dispositivo y se registró.</strong>'; ?></td></tr> <?php  } ?>
 		 <?php } //fin de while $disperro
+	 
 		 ?>
          
          <br/>

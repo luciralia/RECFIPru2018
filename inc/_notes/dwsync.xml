@@ -203,7 +203,7 @@
 <file name="erroresreg.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131699443557588918" remote="131790350980000000" Dst="2" />
 <file name="importar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131699432657226716" remote="131790350990000000" Dst="2" />
 <file name="catedificio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131714993604245484" remote="131790350980000000" Dst="2" />
-<file name="catlaboratorio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131714993425386942" remote="131790350980000000" Dst="2" />
+<file name="catlaboratorio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131952433636592459" remote="131952435000000000" Dst="1" />
 <file name="exportainvgendivxls.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131867941414677959" remote="131867945300000000" Dst="1" />
 <file name="exportainvgendivxls_inv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131698446246106902" remote="131790350990000000" Dst="2" />
 <file name="exportaxlsgenarea_inv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131698606520230388" remote="131790350990000000" Dst="2" />

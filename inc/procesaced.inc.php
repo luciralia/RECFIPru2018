@@ -12,8 +12,8 @@ require_once('../conexion.php');
 <p>procesaced</p>
 <p>&nbsp;</p>
 <?php 
-echo 'entrando a procesaced';
-print_r($_SESSION); ?>
+//echo 'entrando a procesaced';
+//print_r($_SESSION); ?>
 
 <!-- /* Guarda datos de registro nuevo */-->
 <?php if($_POST['accionc']=='Guardar'){ ?>
@@ -27,7 +27,7 @@ if(!isset($_POST['abi'])){$abi=1;} else {$abi=$_POST['abi'];}
 $act_generales=$doc*$inv*$abi;
 echo "act grales" . $act_generales;
 
-$strquery="UPDATE laboratoriosl SET id_edif=%d, detalle_ub='%s', dir_postal='%s', capacidad=%d, carreras='%s', asignaturas='%s', act_generales=%d where id_lab=" . $_POST['lab'];
+$strquery="UPDATE laboratorios SET id_edif=%d, detalle_ub='%s', dir_postal='%s', capacidad=%d, carreras='%s', asignaturas='%s', act_generales=%d where id_lab=" . $_POST['lab'];
 $queryu=sprintf($strquery,$_POST['id_edif'],$_POST['detalle_ub'],$_POST['postal'],$_POST['capacidad'],$_POST['carreras'],$_POST['asignaturas'],$act_generales);
 
 

@@ -12,8 +12,8 @@ header("Expires:0");
 header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
-//echo 'valores en exporta';
-//print_r($_SESSION);
+echo 'valores en exporta';
+print_r($_REQUEST);
 if ( $_SESSION['tipo_usuario']!=10 ){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;

@@ -8,20 +8,22 @@ require_once('../inc/encabezado.inc.php');
   </tr>
    <tr>
     <td><?php 
-	if ($_SESSION['id_div']==NULL)
+	if ($_SESSION['id_div']==NULL && $_SESSION['tipo_usuario']!=10)
      {
-		  //echo 'entra y cambia';
-		  $query = "SELECT * FROM usuarios U
-          JOIN divisiones d
-          ON u.id_usuario=d.id_cac
-          WHERE id_usuario = " . $_SESSION['id_usuario'];
-		  $datos=pg_query($con, $query);
-
-          $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
-          foreach ($usuario as $campo => $valor) {
-               $_SESSION[$campo]=$valor;
-		}
- 
+		  //obtener el departamento 
+	
+   $querydiv="SELECT d.id_div FROM laboratorios l
+                JOIN departamentos dp
+                ON l.id_dep=dp.id_dep
+                JOIN divisiones d
+                 ON d.id_div=dp.id_div
+                WHERE l.id_lab=" .$_GET['lab'];
+               $datosdiv=pg_query($con,$querydiv);
+               // echo 'query inicio.html'.$querydiv;
+   $div = pg_fetch_array($datosdiv);
+   $_SESSION['id_div']=$div[0];
+   
+   
 	 }
      
 	
