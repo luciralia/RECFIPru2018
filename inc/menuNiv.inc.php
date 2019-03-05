@@ -10,7 +10,7 @@ function Menu ($pid=0){
 if ($_SESSION['tipo_usuario']!=10){
   if ($_SESSION['tipo_usuario']==1){
      //obtener el departamento 
-	echo 'usuario 1';
+	
      $querydeptos="SELECT DISTINCT l.id_dep FROM laboratorios l
                    JOIN usuarios u
 				   ON l.id_responsable=u.id_usuario
@@ -78,12 +78,10 @@ if ($_SESSION['tipo_usuario']!=10){
       $datosdep = @pg_query($querydep)  or die('Hubo un error depto');
 	
 	  }
-	 
-                if ($_SESSION['tipo_usuario']!=1){
+	         if ($_SESSION['tipo_usuario']!=1){
                 while ($departamentos = pg_fetch_array($datosdep)) { 
 				     	//laboratorios
-                        
-                             if ($_SESSION['tipo_usuario']!=10 ){ 
+                          if ($_SESSION['tipo_usuario']!=10 ){ 
                               $querylab = "SELECT  l.id_lab,l.nombre as laboratorio
                                            FROM  laboratorios l
                                            JOIN departamentos d
@@ -132,10 +130,9 @@ if ($_SESSION['tipo_usuario']!=10){
                                    $menu.="<li><a href=\"../view/inicio.html.php?lab={$laboratorios['id_lab']}&mod={$_GET['mod']}&accion={$_REQUEST['accion']}&div={$_SESSION['id_div']}\">{$laboratorios['laboratorio']}</a></li>"; 
 							}//while laboratorios { 		   
 										   
-                           }
-					
-
-return $menu; 
+                    }
+				
+              return $menu; 
 				}
 }//function Menu ($pid=0,)
 $menu=Menu(0); 

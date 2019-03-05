@@ -7,12 +7,16 @@ require_once('../clases/inventario.class.php');
 
 $obj_inv = new Inventario();
 $madq = new Inventario();
+$division= new laboratorios();
 
-//echo 'en buscar inv';
-//print_r($_REQUEST);
+	if ( $_SESSION['id_div']==NULL)
+	     $_SESSION['id_div']=$_REQUEST['div'];
+
+echo 'en buscar inv';
+print_r($_SESSION);
 
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&bn_id='. $_GET['bn_id'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&div='. $_SESSION['id_div'];
 echo $direccion;
 header($direccion);
 
@@ -24,7 +28,7 @@ header($direccion);
 <?php
 if($_REQUEST['accion']=='buscar' )
 {
-$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'];
+$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'].'&div='. $_SESSION['id_div'];
 ?>
 
 <form action="<?php echo $action1; ?>" method="post" name="formbusca">
@@ -83,7 +87,7 @@ $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."
 if($_REQUEST['accion']=='buscarg' )
 {
 
- $action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'] ."&lab=". $_REQUEST['lab'];
+ $action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'] ."&lab=". $_REQUEST['lab'].'&div='. $_SESSION['id_div'];
 // agrega lab
 ?>
 
@@ -179,9 +183,9 @@ switch ($_GET['bn_id']){
 	
 	}
 
- echo 'exhibe consulta buscarinv ';
+ //echo 'exhibe consulta buscarinv ';
 
- echo $query;
+ //echo $query;
 ?>
 
  
@@ -275,7 +279,7 @@ echo $query;
 while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC)) 
 { 
 
-print_r ($lab_invent);
+//print_r ($lab_invent);
 
 
  
@@ -344,7 +348,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
        <td width="20%" scope="col"><?php echo $lab_invent['bn_serie'];?></td>
     </tr>
     <tr >
-    <td style="text-align: left" colspan="11"><strong>Asignado a: </strong> <?php echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']);?></td>
+    <td style="text-align: left" colspan="11"><strong>Asignado a: </strong> <?php echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']).' de la ' . $div->getDivision($_SESSION['id_div']);?></td>
   </tr>
   
 
@@ -363,7 +367,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
       
   </tr>
   <tr >
-    <td style="text-align: left" colspan="11"><strong>Asignado a: </strong> <?php echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']);?></td>
+    <td style="text-align: left" colspan="11"><strong>Asignado a: </strong> <?php echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']).' de la ' . $div->getDivision($_SESSION['id_div']);?></td>
   </tr>
   
  
@@ -381,7 +385,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
        
   </tr>
   <tr >
-    <td style="text-align: left" colspan="11"><strong>Asignado a: </strong> <?php  echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']);?></td>
+    <td style="text-align: left" colspan="25"><strong>Asignado a: </strong> <?php  echo $labasig=$obj_inv->getAsig($lab_invent['bn_id']) .' de la '. $division->getDivision($_SESSION['id_div']);?></td>
   </tr> 
     	
     
@@ -454,7 +458,6 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 
  if ($_SESSION['tipo_usuario']==1){
 
-	
 	//obtener el departamento 
 	
    $querydepto="SELECT DISTINCT l.id_dep from laboratorios l
@@ -484,18 +487,26 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 
 
 // revisa que se encuentre en dispositivo y en la división  
+
 $query="SELECT * FROM dispositivo d
         JOIN laboratorios l 
         ON l.id_lab=d.id_lab
         JOIN departamentos dep
 	    ON dep.id_dep=l.id_dep
 	    WHERE inventario="."'".$lab_invent['bn_clave']."'". " AND id_div=".$_SESSION['id_div'];
-		
+	
+/*
+$query="SELECT * FROM dispositivo d
+        JOIN laboratorios l 
+        ON l.id_lab=d.id_lab
+        JOIN departamentos dep
+	    ON dep.id_dep=l.id_dep
+	    WHERE inventario="."'".$lab_invent['bn_clave']."'";	*/
 //echo $query;
 $datos = pg_query($con,$query);
 $reg= pg_fetch_array($datos);
 $inventario= pg_num_rows($datos); 
-
+/*
 $queryexp="SELECT * FROM equipo d
            JOIN bienes b
            ON b.bn_id=d.bn_id
@@ -504,7 +515,15 @@ $queryexp="SELECT * FROM equipo d
            JOIN departamentos dep
 	       ON dep.id_dep=l.id_dep
 	       WHERE bn_clave="."'".$lab_invent['bn_clave']."'". " AND id_div=".$_SESSION['id_div'];
-		   
+*/
+$queryexp="SELECT * FROM equipo d
+           JOIN bienes b
+           ON b.bn_id=d.bn_id
+           JOIN laboratorios l 
+           ON l.id_lab=d.id_lab
+           JOIN departamentos dep
+	       ON dep.id_dep=l.id_dep
+	       WHERE bn_clave="."'".$lab_invent['bn_clave']."'";		   
 $datosexp = pg_query($con,$queryexp);
 $regexp= pg_fetch_array($datosexp);
 $inventarioexp= pg_num_rows($datosexp); 

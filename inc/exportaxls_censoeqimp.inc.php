@@ -15,7 +15,17 @@ header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
 
-if ( $_SESSION['tipo_usuario']!=10 ){
+if ( $_SESSION['tipo_usuario']==1){
+	 
+	$querylab="SELECT nombre FROM laboratorios
+           WHERE id_lab=" . $_REQUEST['lab'] ;
+    $registrolab = pg_query($con,$querylab);
+    $nomblab= pg_fetch_array($registrolab);
+    //echo 'consulta'.$querylab;
+    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+
+}
+if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ){
 	
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
@@ -51,8 +61,23 @@ header($texto);
    
     
 		<?php 
-		
-if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+if ($_SESSION['tipo_usuario']==1){
+
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND l.id_lab=".$_REQUEST['id_lab']  . "
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";
+	}
+	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp 
@@ -83,7 +108,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";
 	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp 
@@ -98,7 +123,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){
+	else if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
 
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
             FROM dispositivo dp 

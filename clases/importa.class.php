@@ -16,7 +16,7 @@ function detectaError(){
 		
 		while ($valida = pg_fetch_array($datosdet, NULL,PGSQL_ASSOC)) 
 		{ 
-	
+	    // print_r($valida);
 	
 		 //detectando el tipo de error
 		 
@@ -218,10 +218,11 @@ function detectaError(){
 	   $cuenta++;
 	   
 		}
+		
 }
 
 function revisarError($revisar,$tupla){
-	
+	//guarda en errorinserta
 	echo 'valores recibidos';
 	print_r ($revisar);
 	 $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
@@ -382,11 +383,16 @@ function revisarError($revisar,$tupla){
 } //finaliza funcion revisa error
    
 
-
-
 	function importaError(){
+	//Despliega errores 	
 	
-	 $queryerror="SELECT * FROM errorinserta";
+	 $queryerror="SELECT * FROM errorinserta
+	 WHERE  columna1!=1 OR columna2!=1 OR columna3!=1 OR columna4!=1 
+				OR  columna10!=1 OR columna11!=1 
+				OR columna30!=1 OR columna31!=1 OR columna32!=1
+				AND columna33!=1 OR columna34!=1 OR columna35!=1
+				AND columna36!=1 OR columna37!=1 OR columna45!=1"; 
+	 
      $result = pg_query($queryerror) or die('Hubo un error con la base de datos');
 	 $existen= pg_num_rows($result); 
 	
@@ -645,7 +651,7 @@ function revisarError($revisar,$tupla){
 	 
 		 ?>
          
-         <br/>
+        
          <br/>
  <?php 
         //$querydt="DELETE FROM errorinserta";	
@@ -653,12 +659,13 @@ function revisarError($revisar,$tupla){
 	}//finaliza Funcion importaError
 
  function guardaDispError(){
-	 
+	//detecta errores de datos en las columnas  
 	  $querydisp="SELECT dt.inventario FROM dispositivotemp dt
                   JOIN bienes b
                   ON b.bn_clave=dt.inventario
                   JOIN errorinserta ei
                   ON ei.inventario=dt.inventario
+				  WHERE columna51!=4 AND columna51!=6
                   EXCEPT
                   SELECT d.inventario from dispositivo d";
 				  
@@ -666,7 +673,8 @@ function revisarError($revisar,$tupla){
 	  $existen= pg_num_rows($result); 
 	   if ($existen>0){
 		?>
-         <td> <legend align="center"> <h4><?php echo "Se intentaron registrar  " . $existen ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> </td></tr>
+         <td> <legend align="center"> <h4><?php echo "Se intentaron registrar  " . $existen ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> 
+         </td>
  				
 	<?php
 		while ($disperror = pg_fetch_array($result, NULL,PGSQL_ASSOC)) {
@@ -699,7 +707,56 @@ function revisarError($revisar,$tupla){
 	<?php   }
 	 
 	}//finaliza funcion guardaDisError
-
+	
+function guardaDispErrorAct(){
+	//detecta errores de datos en las columnas  
+	  $querydisp="SELECT dt.inventario FROM dispositivotemp dt
+                  JOIN bienes b
+                  ON b.bn_clave=dt.inventario
+                  JOIN errorinserta ei
+                  ON ei.inventario=dt.inventario
+				  WHERE columna51!=4 AND columna51!=6
+                  EXCEPT
+                  SELECT d.inventario from dispositivo d";
+				  
+      $result = pg_query($querydisp) or die('Hubo un error con la base de datos');
+	  $existen= pg_num_rows($result); 
+	   if ($existen>0){
+		?>
+         <td> <legend align="center"> <h4><?php echo "Se intentaron actualizar  " . $existen ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> 
+         </td>
+ 				
+	<?php
+		while ($disperror = pg_fetch_array($result, NULL,PGSQL_ASSOC)) {
+			
+			        $queryd="SELECT max(id_error) FROM registroerror";
+                    $registrod= pg_query($queryd) or die('Hubo un error con la base de datos');
+                    $ultimo= pg_fetch_array($registrod);
+	
+		         if ($ultimo[0]==0)
+				    $ultimo=1;
+			     else 
+			        $ultimo=$ultimo[0]+1;
+		
+		          $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
+						   
+			      $queryerror=sprintf($querybien,$ultimo,$disperror['inventario'],$disperror['dispositivo_clave'],date('Y-m-d H:i:s'),$_SESSION['id_div'],'ra' );
+			   			 
+			      $registroerror= pg_query($queryerror)or die('Hubo un error con la base de datos');
+		
+			
+	    	}//fin while guarad errores
+		?>
+              <tr><td><br>
+                <form action="../inc/erroresreg.inc.php" method="post" name="erroresregact" >
+	               <legend align="center"><input name="enviar" type="submit" value="Exportar a Excel" /></legend>
+	            </form>
+              </td></tr>
+              <br>
+	<?php   }
+	 
+	}//finaliza funcion guardaDisError
 }//finaliza clase importa
 
 ?>

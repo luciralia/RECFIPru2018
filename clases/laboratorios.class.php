@@ -150,7 +150,7 @@ function getLaboratorio($idlab){
 
 
 function getDivision($iddiv){
-
+echo $iddiv;
 			if ($iddiv==NULL||$iddiv==0)
 			
 			$salidar="Ninguno"; 

@@ -11,12 +11,12 @@ require_once('../clases/log.class.php');
 $logger=new Log();
 
 $logger->putLog(7,2);
-
+/*
 echo 'Div en carga censo';
 print_r ($_SESSION);
 echo 'Div en carga censo RQ';
 print_r ($_REQUEST);
-
+*/
 if ($_SESSION['tipo_usuario']==10)
   $_SESSION['id_div']=$_REQUEST['div'];
 if ($_SESSION['tipo_usuario']==9)
@@ -29,32 +29,35 @@ if ($_SESSION['tipo_usuario']==9)
 <br>
 
 <!--<div style="text-align:center;">-->
+
  <table>
   <tr>
-      <td align="left" ><h2>Censo de Equipo de Cómputo&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="left">
-		      <form action="../inc/exportaxls_censoeqc.inc.php" method="post" name="ceneceq" >
+       <legend align="right"> <h3>Estado del equipo</h3>
+             <br>
+              <form action="../inc/exportaxls_censoeqc.inc.php" method="post" name="ceneceq" >
 	               <input name="enviar" type="submit" value="Exportar a Excel" />
-              </form>
-   </td>           
+                   <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+              </form></legend>
+            
    </tr>  
    </table>
-      
+    
    <br>
    <table>  
    <tr>
        <legend align="center"><h3>Anteriores a Pentium 4 o equivalentes</h3></legend>
      <!-- <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes</h3></td>-->
     </tr>
-    <tr>  </tr>  
-   <tr>  </tr>
+   
 </table>
   <br>
-  <br>
+
   
 		<?php 
-	if ( $_SESSION['tipo_usuario']==1 ){	
+	if ( $_SESSION['tipo_usuario']==1 &&  $_REQUEST['lab'] !=NULL ){	
+	
+	
+	
 	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -197,14 +200,15 @@ $inventario= pg_num_rows($datos);
             </tr>
             
          </table>    
-       <?php 
-      $cuenta=$cuenta+$lab_invent['cuenta'];
+     
+	 <?php  
+         $cuenta=$cuenta+$lab_invent['cuenta'];
           
 		 }//  procesador  ?>
-   
-
+    
    
     <?php
+
     } // while equipos anteriores a Pentium 4
 
 ?>
@@ -269,7 +273,8 @@ $inventario= pg_num_rows($datos);
              </table> 
 <?php 
  $cuenta=$cuenta+$lab_invent['cuenta'];
-          
+ 
+
 }// procesador 
 
 
@@ -391,12 +396,13 @@ $inventario= pg_num_rows($datos);
                <td width="15%" ><?php echo $lab_invent['fecha_factura'];?></td>
                <td width="1%"><?php echo $lab_invent['cuenta'];?></td>
             </tr>
+           
+
             </table>
-<?php 
+ <?php           
  $cuenta=$cuenta+$lab_invent['cuenta'];
           
 } // procesador 
-
 
 } // while equipos  Intel Core i5 o equivalentes
 ?>
@@ -542,7 +548,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </tr>
 </table>
 <?php
-if ( $_SESSION['tipo_usuario']==1 ){
+if ( $_SESSION['tipo_usuario']==1 &&  $_REQUEST['lab'] !=NULL  ){
 			
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -707,9 +713,13 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
    <td width="1%" ><strong><?php echo $cuenta;?></strong></td>
 </tr>
 </table>
+ <br>
+ <br>
 
-<?php
- } // fin de censo de equipo
+	
+ <?php     
+ }
+ // fin de censo de equipo
  
  
  if ($_GET['mod']=='cenecso' ){
@@ -719,13 +729,15 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Sistema Operativo&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
-		      <form action="../inc/exportaxls_censoeqcso.inc.php" method="post" name="ceneceq" >
-	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+  <legend align="right">
+  
+      <h3>Sistema Operativo</h3>
+         <br>
+             <form action="../inc/exportaxls_censoeqcso.inc.php" method="post" name="ceneceq" >
+	             <input name="enviar" type="submit" value="Exportar a Excel" />
+                 <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+             
    </tr>  
    </table>
     <br>  
@@ -1431,13 +1443,14 @@ $inventario= pg_num_rows($datos);
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Usuario Final</h3>
+          <br>
+  
 		      <form action="../inc/exportaxls_censoeqcuf.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+           
    </tr>  
    </table>
    <br>  
@@ -2110,13 +2123,14 @@ $inventario= pg_num_rows($datos);
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final Bibliotecas&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Usuario Final Bibliotecas</h3>
+        <br>
+
 		      <form action="../inc/exportaxls_censoeqcufb.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+            
    </tr>  
    </table>
    <br>  
@@ -2775,13 +2789,14 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Impresoras&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Impresoras</h3>
+   <br>
+ 
 		      <form action="../inc/exportaxls_censoeqimp.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+             
    </tr>  
    </table>
    <br>  
@@ -2924,12 +2939,14 @@ $inventario= pg_num_rows($datos);
   <br>        
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo Digital&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Equipo Digital
+      </h3>
+       <br>
+  
 		      <form action="../inc/exportaxls_censoeqdig.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
    </td>           
    </tr>  
    </table>
@@ -3068,13 +3085,14 @@ $inventario= pg_num_rows($datos);
   <br>
   <br>        
  <table>
-  <tr>
-      <td align="center" ><h2>Censo de Redes y Telecomunicaciones&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+  <tr><legend align="right">
+      <h3>Redes y Telecomunicaciones</h3>
    
-  <td  align="center">
+    <br>
 		      <form action="../inc/exportaxls_censoeqryt.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
    </td>           
    </tr>  
    </table>
@@ -3213,20 +3231,19 @@ $inventario= pg_num_rows($datos);
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipos de Alto Rendimiento&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+      <legend align="right"><h3>Equipos de Alto Rendimiento</h3></td>
    
-  <td  align="center">
+  <br>
 		      <form action="../inc/exportaxls_censoeqcar.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+           
    </tr>  
    </table>
 <br>
 <br>
 
- 
-  
 		<?php 
 		if ($_SESSION['tipo_usuario']==1){
 

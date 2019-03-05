@@ -20,8 +20,6 @@ $titulo='Actualizar Dispositivos';
   
 
 
-
-
 <tr>
 
 <td><div class="centrado"> 

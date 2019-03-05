@@ -12,10 +12,12 @@ $dep = new departamentos();
 
    
  <tr>
-    <td align="center"><h2>Censo<?php echo $titulo ;?> </h2></td>
+    <td align="center"><h2>Censo</h2></td>
   </tr>
-  <tr>
-    <?php if($_SESSION['tipo_usuario']!=10){?>
+  <tr><?php if($_SESSION['tipo_usuario']==1){?>
+    <td align="center"><?php echo $lab->getLaboratorio($_REQUEST['lab']);?></td>
+
+    <?php }else if($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1){?>
     <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
     <?php } else if($_SESSION['tipo_usuario']==10){?>
      
@@ -24,9 +26,6 @@ $dep = new departamentos();
      
   </tr>
   
-
-
-
 <tr>
 <td><div class="centrado"> <?php require('../inc/cargacenso.inc.php'); ?></div></td>
 </tr>

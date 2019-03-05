@@ -10,8 +10,8 @@ $motivo = new Requerimiento();
 $obj_lab = new laboratorios();
 
 if ($_REQUEST['editarced']=='Editar'){  
-echo 'editar editaced';
-print_r($_SESSION);
+//echo 'editar editaced';
+//print_r($_SESSION);
 //print_r($usuario);
 ?>
 <div class="formulario">

@@ -8,11 +8,11 @@ require_once('../inc/encabezado.inc.php');
   </tr>
    <tr>
     <td><?php 
-	if ($_SESSION['id_div']==NULL && $_SESSION['tipo_usuario']!=10)
+	if ($_SESSION['id_div']==NULL && ($_SESSION['tipo_usuario']!=10 ))
      {
-		  //obtener el departamento 
-	
-   $querydiv="SELECT d.id_div FROM laboratorios l
+		  //obtener la división
+
+     $querydiv="SELECT d.id_div FROM laboratorios l
                 JOIN departamentos dp
                 ON l.id_dep=dp.id_dep
                 JOIN divisiones d
@@ -20,9 +20,8 @@ require_once('../inc/encabezado.inc.php');
                 WHERE l.id_lab=" .$_GET['lab'];
                $datosdiv=pg_query($con,$querydiv);
                // echo 'query inicio.html'.$querydiv;
-   $div = pg_fetch_array($datosdiv);
-   $_SESSION['id_div']=$div[0];
-   
+     $div = pg_fetch_array($datosdiv);
+     $_SESSION['id_div']=$div[0];
    
 	 }
      
@@ -72,7 +71,7 @@ require_once('../inc/encabezado.inc.php');
 		else if (isset($_GET['lab'])  && $_GET['mod']=='invg'){
 		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='imp')
-		include_once("../view/importamoderror.inc.php");	//modificado para deteectar errores ant importar.html.php
+		include_once("../view/importar.html.php");	
 		else if ($_GET['mod']=='act')
 		include_once("../view/actualizar.html.php");	
 		else if ($_GET['mod']=='cot')

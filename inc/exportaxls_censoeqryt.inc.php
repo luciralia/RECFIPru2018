@@ -12,7 +12,18 @@ header("Expires:0");
 header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
-if ( $_SESSION['tipo_usuario']!=10 ){
+
+if ( $_SESSION['tipo_usuario']==1){
+	 
+	$querylab="SELECT nombre FROM laboratorios
+           WHERE id_lab=" . $_REQUEST['lab'] ;
+    $registrolab = pg_query($con,$querylab);
+    $nomblab= pg_fetch_array($registrolab);
+    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+
+}
+
+if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
 $registrodiv = pg_query($con,$querydiv);
@@ -48,6 +59,21 @@ header($texto);
    </tr>
 
 		<?php 
+		if ($_SESSION['tipo_usuario']==1){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=0 )
+            AND l.id_lab=".$_REQUEST['lab']  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+			ORDER BY cuenta ASC";
+	}
 		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
@@ -59,41 +85,11 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=0 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre ASC";	
 	}
 	else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){	 
-  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND id_div=".$_SESSION['id_div']  . "
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre ASC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
-
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre ASC";	
-	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	 
   $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp
             LEFT JOIN cat_dispositivo cd
@@ -104,9 +100,39 @@ header($texto);
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=0 )
             AND id_div=".$_SESSION['id_div']  . "
-            AND  (estadoBien='USO'OR estadoBien='DESUSO')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura
-			ORDER BY cuenta,l.nombre ASC";
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+			ORDER BY cuenta ASC";
+	}
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
+
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=0 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+			ORDER BY cuenta,l.nombre ASC";	
+	}
+	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=0 )
+            AND id_div=".$_SESSION['id_div']  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+			ORDER BY cuenta ASC";
 	}
 	
 $datos = pg_query($con,$query);
