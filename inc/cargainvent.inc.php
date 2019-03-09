@@ -57,8 +57,8 @@ if ($_GET['mod']=='invg' ){
 
 
               
-<?php if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-        <tr>
+<?php // if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
+        <!--<tr>
         <td align="right">  <h3> Inventario por División</h3> </td>
        
         </tr>
@@ -90,9 +90,9 @@ if ($_GET['mod']=='invg' ){
               </form>
               </legend>
             </td>
-            </tr> 
+            </tr> -->
             
- <?php } ?>
+ <?php //} ?>
 
 </td>
 </tr>
@@ -197,11 +197,48 @@ if ($_GET['mod']=='invg' ){
   //echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
+    if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
+        <tr>
+        <td align="right">  <h3> Inventario por División</h3> </td>
+       
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        
+         <tr>
+        <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>
+        <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
+	          <input name="enviar" type="submit" value="Con identificador" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            </tr> 
+            <tr>
+           <td>
+           <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
+	          <input name="enviar" type="submit" value="Con nombre" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
+            </td>
+            </tr> 
+            
+ <?php } ?>
 
- 
-     if (($inventario!=0 ) && $bandera1==0 ) { 
+</td>
+</tr>
+ <?php
+     if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  
-     }
+    
 
      $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod'];
  
@@ -212,12 +249,12 @@ if ($_GET['mod']=='invg' ){
  
  	<?php   
 
-     if (isset($_GET['lab']) && isset($_GET['mod']))
+    /* if (isset($_GET['lab']) || isset($_GET['mod']))
        { 
   
 			   $titulo=' de cómputo ';
 		   
-           if ($inventario!=0 ) {
+           if ($inventario!=0   ) {
 			   
             // para poner titulo del inventario, si hay tuplas
 		   
@@ -233,7 +270,7 @@ if ($_GET['mod']=='invg' ){
   <br \>
  
   
- <?php  }  ?>
+ <?php  } */  ?>
  
    
   <?php 
@@ -241,14 +278,14 @@ if ($_GET['mod']=='invg' ){
 		{ 
 		
        
-            if ( $inventario!=0 
+            if ( $inventario!=0) { 
                 //&& $lab_invent['bn_notas']=='COMPUTO' 
-            ){
-   
-             ?>
+            ?>
+	 
+
    
             <table class='material'>
-           <tr>
+            <tr>
                <th width="20%" scope="col">No. Inventario</th>
                <th width="20%" scope="col">No. Inventario Área</th>
                <th width="20%" scope="col">Área</th>
@@ -260,9 +297,7 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Procesador</th>
                <th width="20%" scope="col">Número de  Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
-               
-               
-               
+            
            </tr>
           <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -307,9 +342,8 @@ if ($_GET['mod']=='invg' ){
           </tr>
          
           
-   <?php  } //fin elseif 
-		 ?>
-<?php
+<?php //}
+
 	    foreach ($lab_invent as $campo => $valor) {
 				       
 		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
@@ -319,9 +353,7 @@ if ($_GET['mod']=='invg' ){
 		?>
         
  <?php  if (($_SESSION['tipo_usuario']!=10)) {
-
- ?>
-      <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];?>
+        $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];?>
       <!--
       <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
@@ -338,51 +370,30 @@ if ($_GET['mod']=='invg' ){
 		 ?>
          </form>
         -->
-    <?php      
-     }//fin if equipoc	para boton de editar	
-		?>
+       <?php      
+            }//fin if equipoc	para boton de editar	
+	?>
           
    <table>
-<!--<table>-->
-     <?php   
-		 
-   
-     } //isset($_GET['lab']) && isset($_GET['mod']) ?>
-     
-  <?php   
-  } // while
 
+     <?php  } else {
+	 $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];
+	  //isset($_GET['lab']) && isset($_GET['mod']) 
+	 }
+	 } //while
 
-?>
-<!--<table>-->
-
-<?php 
 //}  fin del for que recorre cada inventarios experimental y cómputo
 
-?>
-<!--
-<br \>
-<br \>
-</div>NEX-->
 
-<?php 
-/*if (($inventario==0 ) && $bandera1==0 ) { ?>
-
-<table>
-   <tr>
-      <td align="rigth"><h3>No existen equipos registrados en la división  </h3></td>
-   </tr>
-    </table>
-
+ if (($inventario==0 ) && $bandera1==0 ) { ?>
+<br>
+<br>
+<legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
 
 <?php
-} ?>*/
-
+}
 
 }// fin del inventario general
-
-
-
 else 
 { //&& $_SESSION['tipo_usuario']!=10
 
@@ -659,7 +670,7 @@ if ($inventario!=0) { ?>
      
                   <td align="center">
     
-                  <h3> No hay dispositivos registrados </h3>
+                  <h3> No hay dispositivos registrados. </h3>
                   </td>
                   </tr>
  
@@ -669,19 +680,7 @@ if ($inventario!=0) { ?>
      <tr>  
      
      <td align="center"> 
-    <!-- <tr>  
-     
-     <td align="center">
-    
-     <h3> No hay equipos experimentales registrados </h3>
-     </td>
-     </tr> -->
  
-  
-    
-
-<!--</table> -->
-    
 
 <br>
 <br>

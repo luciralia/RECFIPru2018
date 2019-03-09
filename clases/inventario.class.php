@@ -224,7 +224,7 @@ function getAsig($bnid){
        {
 		  
 		   $tabla="dispositivo";
-	    $query="select e.*, l.id_lab, l.nombre, l.id_dep, dv.nombre as division,bi.*,*
+	    $query="select e.*, l.id_lab, l.nombre as lab, l.id_dep, dv.nombre as division,bi.*,*
 		from " . $tabla . " e
 		left join laboratorios l
 		on e.id_lab=l.id_lab
@@ -238,20 +238,26 @@ function getAsig($bnid){
 		$result = pg_query($query) or die('Hubo un error con la base de datos en dispositivo/equipo');
 		$inventariod= pg_num_rows($result);
 		$dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+		//echo 'ep01';
 	   }
        elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg' ) )
              {
 			 $tabla="dispositivo";
-			 $query="select e.*, l.id_lab, l.nombre,l.id_dep,bi.*,*
+			 $query="select e.*, l.id_lab, l.nombre as lab,l.id_dep,dv.nombre as division,bi.*,*
 		from " . $tabla . " e
 		left join laboratorios l
 		on e.id_lab=l.id_lab
 		left join  bienes_inventario bi
 		on e.bn_id=bi.bn_id
+		left join departamentos dp
+		on dp.id_dep=l.id_dep
+		left join divisiones dv
+		on dv.id_div=dp.id_div
 		where bi.bn_id=" . $bnid;
 		$result = pg_query($query) or die('Hubo un error con la base de datos en dispositivo/equipo');
 		$inventariod= pg_num_rows($result);
 		$dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+			//echo 'ep02';
 			 }
          else 
              {$tabla="equipo";
@@ -268,11 +274,11 @@ function getAsig($bnid){
 			 }
 		
 	
-			if ($dato['nombre']!=''){
+			if ($dato['lab']!=''){
 			//echo'p1';
-			$asignado=$dato['nombre'];		
+			$asignado=$dato['lab']. ' de la '. $dato['division'];		
 			
-			} elseif ($_GET['mod']=='invc' && $dato['nombre']==''  ){
+			} elseif ($_GET['mod']=='invc' && $dato['lab']==''  ){
 			//echo'p2';
 			$asignado="Ninguno";
 			
@@ -281,7 +287,7 @@ function getAsig($bnid){
 				$asignado="Ninguno";	
 			else {  	
 			  $tabla="equipo";
-			  $query="select e.*, l.id_lab, l.nombre, l.id_dep,bi.*,*
+			  $query="select e.*, l.id_lab, l.nombre as lab , l.id_dep,bi.*,*
 		           from " . $tabla . " e
 		           left join laboratorios l
 		           on e.id_lab=l.id_lab
@@ -292,7 +298,7 @@ function getAsig($bnid){
 				   
 			  $result = pg_query($query) or die('Hubo un error con la base de datos en dispositivo/equipo');
 			  $dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
-			  $asignado=$dato['nombre'];
+			  $asignado=$dato['lab']   ;
 			}
 			}
 			elseif  ($_GET['mod']=='invg' && $inventariod==0   ){ 
@@ -313,7 +319,7 @@ function getAsig($bnid){
 			if ($dato['id_lab']==NULL)
 				$asignado="Ninguno";	
 			else 	
-			  $asignado=$dato['nombre'];	
+			  $asignado=$dato['lab'] . ' de la '. $dato['division'];	
 			
 			}
 		return $asignado;

@@ -80,7 +80,7 @@ function tblXls($idlab,$mod,$tabla){
 	if (($mod=="inv" || $mod=="invc" || $mod=="invg") && ( $tabla="dispositivo")){
 		
       
-	    $query = "SELECT e.*, cequ.nombre_esquema as esquemauno,
+	    $query = "SELECT e.*, ct.nombre_tecnologia as nomtec,cequ.nombre_esquema as esquemauno,
          ceqd.nombre_esquema as esquemados, 
          ceqt.nombre_esquema as esquematres,
          ceqc.nombre_esquema as esquemacuatro,

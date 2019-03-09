@@ -15,9 +15,6 @@ $madq = new inventario();
 
 /*  este for es para cargar los datos de los renglones*/
 
-
-
-		
 	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$_REQUEST['tabla']);
 				
 				foreach ($renglon_xls as $reng) {

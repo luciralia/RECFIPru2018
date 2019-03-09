@@ -36,7 +36,7 @@ function utf8_string_array_encode(&$array){
  </tr>
 
  <tr>
-   &nbsp;&nbsp;&nbsp;&nbsp;<td width="800" height="30" colspan="2" align="center">
+  <td width="800" height="30" colspan="2" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
      <input  type="submit" value="Actualizar">&nbsp;
      <input type="reset" value="Cancelar">
@@ -134,31 +134,7 @@ function utf8_string_array_encode(&$array){
 						   else 
 						   		 $contexitototal=	$contexitototal+1;
 								
-				          //echo $query;
-		/*
-                         if (!$result) {
-		        	          $queryre="SELECT max(id_error) FROM registroerror";
-                              $registrore= pg_query($con,$queryre);
-                              $ultimoerror= pg_fetch_array($registrore);
-	
-		                     if ($ultimoerror[0]==0)
-				                    $ultimoerror=1;//inicializando la tabla dispositivouno
-			                 else 
-			                        $ultimoerror=$ultimoerror[0]+1;	  
-             
-			                 $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
-			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
-						   
-			                 $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'ra' );			 
-			                 $registroerror= pg_query($con,$queryerror);
-			                 $conterroreg=$conterroreg+1;
-                               //exit;
-			             } else {
-
-			                $contexitototal=	$contexitototal+1;
- 		  
-                    } //if(!$result) else*/
-	 
+				
 		   } //if (pg_num_rows($datostemp)>0) else
       $cuenta=$cuenta+1;
 	   } //while para insertar en dispositivotemporal
@@ -169,6 +145,7 @@ function utf8_string_array_encode(&$array){
 	   
 	   $cuentatotal=0;
        $cuentaact=0;
+	   $noseimporto=0;
 	   // validar solo datos obligatorios
 	   
 	    $query="SELECT * FROM dispositivotemp dt
@@ -188,14 +165,22 @@ function utf8_string_array_encode(&$array){
 		{ 
 	          // Busca en dispositivo
 		      $queryinv="SELECT * FROM dispositivo WHERE 
-		              inventario="."'".$disp['inventario']."'";
-					  
-		       $datosinv = pg_query($con,$queryinv);
-			   
+		              inventario="."'".$disp['inventario']."'"
+					  ; //actualiza si y solo si se ha importado
+				//echo $queryinv;
+				  $datosinv = pg_query($con,$queryinv);  
+				  //cantidad
+				  /*if (pg_num_rows($datosinv)==0) {
+					
+						 echo 'no se importo';
+					     $noseimporto++;
+					 }else{
+				   echo'puede actualizar, porque ya se importo';*/
+					 
+		    
+			
 		       //De existir en dispositivo actualiza toda la tupla, en caso contrario ingresa en erroractualiza
-			               
-							
-		       if (pg_num_rows($datosinv)>0) {
+			    if (pg_num_rows($datosinv)>0) {
 			     // traer bn_id
 				 // echo 'Buscar en bienes'; 
 			    
@@ -267,14 +252,17 @@ function utf8_string_array_encode(&$array){
 				  
 			  $updatequery= "UPDATE dispositivo SET bn_id=%d,id_lab=%d,dispositivo_clave=%d,usuario_final_clave=%d,familia_clave=%d,tipo_ram_clave=%d,tecnologia_clave=%d,nombre_resguardo='%s',resguardo_no_empleado=%d,usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,usuario_sector=%d,serie='%s',marca_p='%s',no_factura='%s',anos_garantia='%s',inventario='%s',modelo_p='%s',proveedor_p='%s',fecha_factura='%s',familia_especificar='%s',modelo_procesador='%s',cantidad_procesador='%s',nucleos_totales='%s',nucleos_gpu='%s',memoria_ram='%s',ram_especificar='%s',num_elementos_almac=%d,total_almac=%d,num_arreglos=%d,esquema_uno=%d,esquema_dos=%d,esquema_tres=%d,esquema_cuatro=%d,tec_uno=%d,tec_dos=%d,tec_tres=%d,tec_cuatro=%d,subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,arreglo_total=%d,tec_com=%d, sist_oper=%d, version_sist_oper='%s',licencia=%d,licencia_ini='%s',licencia_fin='%s',fecha='%s',velocidad='%s',memcache='%s',tipotarjvideo='%s', modelotarjvideo='%s', memoriavideo='%s',equipoaltorend='%s',accesorios='%s',garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca='%s',marca_esp='%s',id_mem_ram=%d,importa=%d
 				 WHERE inventario="."'".$disp['inventario']."'";
+				
 					//echo $updatequery;		  
 							  
-			        $queryu=sprintf($updatequery, $bienes[0],$lab,$disp['dispositivo_clave'],$disp['usuario_final_clave'], $disp['familia_clave'],$disp['tipo_ram_clave'],$disp['tecnologia_clave'],$disp['resguardo_nombre'],$disp['resguardo_no_empleado'],$disp['usuario_nombre'],$disp['usuario_ubicacion'],$disp['usuario_perfil'],$disp['usuario_sector'],$disp['serie'],$disp['marca_p'],$disp['no_factura'],$disp['anos_garantia'],$disp['inventario'],$disp['modelo_p'],$disp['proveedor'],$disp['fecha_factura'],$disp['familia_especificar'],$disp['modelo_procesador'],$disp['cantidad_procesador'],$disp['nucleos_totales'],$disp['nucleos_gpu'],$disp['memoria_ram'],$disp['ram_especificar'],$disp['num_elementos_almac'],$disp['total_almac'],$disp['num_arreglos'],$disp['esquema_uno'],$disp['esquema_dos'],$disp['esquema_tres'],$disp['esquema_cuatro'],$disp['tec_uno'],$disp['tec_dos'],$disp['tec_tres'],$disp['tec_cuatro'],$disp['subtotal_uno'],$disp['subtotal_dos'],$disp['subtotal_tres'],$disp['subtotal_cuatro'],$disp['arreglo_total'],$disp['tec_com'],$disp['sist_oper'],$disp['version_sist_oper'],$disp['licencia'],$disp['licencia_ini'],$disp['licencia_fin'],date("Y-m-d"),$equipoc[1],$equipoc[2],$equipoc[3], $equipoc[4],$equipoc[5],$equipoc[6], $equipoc[7],$equipoc[8],$equipoc[9], $equipoc[10],$equipoc[11],$equipoc[12], $marca[0],$disp['marca'],'', $ram[0],1); 
+			        $queryu=sprintf($updatequery, $bienes[0],$lab,$disp['dispositivo_clave'],$disp['usuario_final_clave'], $disp['familia_clave'],$disp['tipo_ram_clave'],$disp['tecnologia_clave'],$disp['resguardo_nombre'],$disp['resguardo_no_empleado'],$disp['usuario_nombre'],$disp['usuario_ubicacion'],$disp['usuario_perfil'],$disp['usuario_sector'],$disp['serie'],$disp['marca_p'],$disp['no_factura'],$disp['anos_garantia'],$disp['inventario'],$disp['modelo_p'],$disp['proveedor'],$disp['fecha_factura'],$disp['familia_especificar'],$disp['modelo_procesador'],$disp['cantidad_procesador'],$disp['nucleos_totales'],$disp['nucleos_gpu'],$disp['memoria_ram'],$disp['ram_especificar'],$disp['num_elementos_almac'],$disp['total_almac'],$disp['num_arreglos'],$disp['esquema_uno'],$disp['esquema_dos'],$disp['esquema_tres'],$disp['esquema_cuatro'],$disp['tec_uno'],$disp['tec_dos'],$disp['tec_tres'],$disp['tec_cuatro'],$disp['subtotal_uno'],$disp['subtotal_dos'],$disp['subtotal_tres'],$disp['subtotal_cuatro'],$disp['arreglo_total'],$disp['tec_com'],$disp['sist_oper'],$disp['version_sist_oper'],$disp['licencia'],$disp['licencia_ini'],$disp['licencia_fin'],date("Y-m-d"),$equipoc[1],$equipoc[2],$equipoc[3], $equipoc[4],$equipoc[5],$equipoc[6], $equipoc[7],$equipoc[8],$equipoc[9], $equipoc[10],$equipoc[11],$equipoc[12], $marca[0],$disp['marca'],'', $ram[0],2); 
 			   
                     $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR tupla en dispositivo'); 
 					
-					 if (!$result) 
-					      echo "Ocurrió un error.\n";
+					 if (!$result) {
+						// echo 'entrono se importo';
+					    // $noseimporto++;
+					 }
                      else
  		                  $cuentaact++;
 				
@@ -310,8 +298,7 @@ function utf8_string_array_encode(&$array){
 		
 		}//fin de while para insertar datos en dispositivo 
 		
-		//$buscaerror->detectaError();
-	  
+
 		//para detectar tuplas con errores de lab
 		
 	     $querylab="SELECT * FROM errorinserta
@@ -325,40 +312,40 @@ function utf8_string_array_encode(&$array){
 		   $error->importaError();
 		// }
 
-		 //$total=$conterrorbn+$cuentaact; 
+		//}//no se importo
+		//echo 'no se importo'.$noseimporto;
+		// if ($noseimporto!=0){ ?>
+	    
+             <legend align="left"> <h4><?php // echo "El inventario no se ha registrado previamente."; ?></h4> </legend>
+		<?php //}
+		//else{?>
 		
-		/* if ( $conterrorbn ==0 && $conterroreg == 0){?>
-		 <tr>	 
-		 <td> <h4><?php echo "Actualización con éxito" ?></h4> </td></tr>
-        
-		 <?php
-		
-		 }*/
-		
-		?>
-		<br>
-         <tr>
-             <td> <h4><?php echo "Se actualizaron " . $cuentaact . " / " . $contexitototal . " dispositivos."; ?></h4> </td></tr>
+	
+         
+             <legend align="left"> <h4><?php echo "Se actualizaron " . $cuentaact . " / " . $contexitototal . " dispositivos."; ?></h4>  </legend>
+            
              <br>
+             
+          <?php // }?>   
                <?php  if ( $conterrorbn > 0) { ?>
-             <td> <h4><?php echo "Faltó actualizar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </td></tr>
-         <tr><td> <br>   
+            <legend align="left"> <h4><?php echo "Faltó actualizar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend> 
+                <br>
               <form action="../inc/erroresbn.inc.php" method="post" name="erroresbnact" >
 	          <input name="actbn" type="submit" value="Exportar a Excel" />
 	          </form>
-         </td></tr>
+              <br>
         <?php
 		 }
 		 
-		  $disperror->guardaDispErrorAct();
-		  
+		 if ($noseimporto==0)
+		     $disperror->guardaDispErrorAct();
+		 
+		 
 		  if ($sinlab>0 ){
 		?>
 		<br>
-        <tr>
-            <td><legend align="center"> <h4><?php echo "Dispositivos  con laboratorio inexistente : " . $sinlab ; ?></h4> </legend>
-            </td>
-        </tr>
+      <legend align="left"> <h4><?php echo "Dispositivos  con laboratorio inexistente : " . $sinlab ; ?></h4> </legend>
+          
         <br/>
        <?php } 
 		 

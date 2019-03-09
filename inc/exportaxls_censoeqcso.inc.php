@@ -176,7 +176,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr> 
-               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -239,7 +239,7 @@ $inventario= pg_num_rows($datos);
 
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -296,7 +296,7 @@ $inventario= pg_num_rows($datos);
  
    <table class='material' width=50%>
 		 <tr> 
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -357,7 +357,7 @@ $inventario= pg_num_rows($datos);
    
     <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -415,7 +415,7 @@ $inventario= pg_num_rows($datos);
    
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -477,7 +477,7 @@ $inventario= pg_num_rows($datos);
     
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>
@@ -652,7 +652,7 @@ $inventario= pg_num_rows($datos);
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-                <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+                <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
                <th width="15%" scope="col">Sistema Operativo</th>
               <th width="15%" scope="col">Familia</th>
               <th width="15%" scope="col">Dispositivo</th>

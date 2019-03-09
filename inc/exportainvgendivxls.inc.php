@@ -14,8 +14,8 @@ $esquema=new inventario();
 $madq = new inventario();
 
 /*  este for es para cargar los datos de los renglones*/
-echo 'imprime la datos';
-print_r ($_POST);
+//echo 'imprime la datos';
+//print_r ($_POST);
 
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;

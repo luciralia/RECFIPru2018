@@ -35,12 +35,12 @@ function utf8_string_array_encode(&$array){
    <td width="150" height="30" align="right">Subir archivo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
    <td width="400"><input type="file" name="archivo_txt" id='archivo'></td>
  </tr>
-
+ 
  <tr>
-   &nbsp;&nbsp;&nbsp;&nbsp;<td width="800" height="30" colspan="2" align="center">
+   <td width="800" height="30" colspan="2" align="center"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
    
-     <input  type="submit" value="Importar">&nbsp;
+     <input  type="submit" value="Importar">
      <input type="reset" value="Cancelar">
    </td>
  </tr>
@@ -142,12 +142,12 @@ function utf8_string_array_encode(&$array){
                              $ultimoerror= pg_fetch_array($registrore);
 	
 		                          if ($ultimoerror[0]==0)
-				                    $ultimoerror=1;//inicializando la tabla dispositivouno
+				                    $ultimoerror=1;//inicializando la tabla dispositivo
 			                      else 
 			                        $ultimoerror=$ultimoerror[0]+1;	  
              
 			                         $querybien="INSERT INTO
-									 registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+	registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
 			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
 						   
 			                         $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'t' );			 
@@ -214,38 +214,36 @@ function utf8_string_array_encode(&$array){
 		
 		while ($disp = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-	          // Busca en dispositivouno
+	          // Busca en dispositivo
 		      $queryinv="SELECT * FROM dispositivo WHERE 
 		              inventario="."'".$disp['inventario']."'";
 					  
 		       $datosinv = pg_query($con,$queryinv);
           
 		       //verifica si existe en dispositivo
-		       if (pg_num_rows($datosinv)>0) {
+		       if (pg_num_rows($datosinv)>0 ) {
 			  
 		            $updatequery= "UPDATE dispositivo SET inventario='%s'
 			                       WHERE inventario="."'".$disp['inventario']."'";
 							  
-				    //echo 'Actualiza en dispositivouno...';			  
+				   // echo 'Actualiza en dispositivo..';			  
 			        $queryu=sprintf($updatequery, $disp['inventario'] ); 
 			   
                     $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivo'); 
               
 		        } else { 
 				
-				//$invent->importaInventario($disp['inventario'],$disp['clave_disp'],$_SESSION['id_div'],$_SESSION['id_lab']);
-				
-		      //Traer el último valor en dispositivo
+		   // Traer el último valor en dispositivo
 			        $queryd="SELECT max(id_dispositivo) FROM dispositivo";
                     $registrod= pg_query($con,$queryd);
                     $ultimo= pg_fetch_array($registrod);
 	
 		      if ($ultimo[0]==0)
-				    $ultimo=1;//inicializando la tabla dispositivouno
+				    $ultimo=1;//inicializando la tabla dispositivo
 			  else 
 			        $ultimo=$ultimo[0]+1;
 					
-		      //Buscar en bienes 
+		  // Buscar en bienes 
 			 
 			 $queryb="SELECT bn_id
 							  FROM bienes
@@ -256,16 +254,16 @@ function utf8_string_array_encode(&$array){
 			  $registrob= pg_query($con,$queryb);
               $bienes= pg_fetch_array($registrob);
 			  
-			  if(pg_num_rows($registrob)==0){
+			  if(pg_num_rows($registrob)==0 ){
 				  
 			  $queryre="SELECT max(id_error) FROM registroerror";
               $registrore= pg_query($con,$queryre);
               $ultimoerror= pg_fetch_array($registrore);
 	
-		      if ($ultimoerror[0]==0)
-				    $ultimoerror=1;//inicializando la tabla dispositivouno
-			  else 
-			        $ultimoerror=$ultimoerror[0]+1;	  
+		           if ($ultimoerror[0]==0)
+				       $ultimoerror=1;//inicializando la tabla dispositivo
+			       else 
+			           $ultimoerror=$ultimoerror[0]+1;	  
              
 			   $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
 			               VALUES (%d,'%s',%d,'%s',%d,'%s')";
@@ -277,13 +275,25 @@ function utf8_string_array_encode(&$array){
 			 
 			  }
 			  
-			  //Buscar en equipoc valores por inventario
+			  //Buscar en equipoc valores por inventario verificando que sea de la div.
 			  
-			  $querye="SELECT id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
+			 /* $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
 							  estadobien,servidor,descextensa 
-							  FROM equipoc
-			                  WHERE inventario="."'".$disp['inventario']."'";
+							  FROM equipoc ec
+							  JOIN laboratorios l
+							  ON l.id_lab=ec.id_lab
+							  JOIN departamentos d
+							  ON l.id_dep=d.id_dep
+							  JOIN divisiones dv
+							  ON dv.id_div=d.id_div
+			                  WHERE inventario="."'".$disp['inventario']."'".
+							  " AND dv.id_div=" .$_SESSION['id_div'];*/
+			 $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
+			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
+							  estadobien,servidor,descextensa 
+							  FROM equipoc ec
+							  WHERE inventario="."'".$disp['inventario']."'";
 							  
               $registroe= pg_query($con,$querye);
               $equipoc= pg_fetch_array($registroe);
@@ -411,8 +421,7 @@ function utf8_string_array_encode(&$array){
                  $ram[0]);//,$disp['id_mod']
                
                 $result=pg_query($con,$queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
-				 //echo 'query que inserta';
-             // echo $strqueryd;
+			
 				 
 				    if (!$result) 
 					    echo "Ocurrió un error.\n";
@@ -423,8 +432,7 @@ function utf8_string_array_encode(&$array){
 				
 		      $updatequery= "UPDATE dispositivo SET importa=1
 			                  WHERE inventario="."'".$disp['inventario']."'";
-							  
-				//echo 'Actualiza en dispositivouno...';			  
+					  
 			  $queryu=sprintf($updatequery, $disp['inventario'] ); 
 			   
               $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivo'); 
@@ -436,7 +444,7 @@ function utf8_string_array_encode(&$array){
               $ultimoreg= pg_fetch_array($registrod);
 	
 		      if ($ultimoreg[0]==0)
-				    $ultimoreg=1;//inicializando la tabla dispositivouno
+				    $ultimoreg=1;//inicializando la tabla dispositivorespaldo
 			  else 
 			        $ultimoreg=$ultimoreg[0]+1;
 				
@@ -519,12 +527,11 @@ function utf8_string_array_encode(&$array){
 			     $updatequery= "UPDATE dispositivorespaldo SET importa=1
 			                    WHERE inventario="."'".$disp['inventario']."'";
 							  
-				 //echo 'Actualiza en dispositivouno...';			  
+				 //echo 'Actualiza en dispositivorespaldo...';			  
 			     $queryu=sprintf($updatequery, $disp['inventario'] ); 
 			   
                  $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivorespaldo'); 
-				
-				//echo "El dispositivo con número de inventario ".$disp['inventario']." fue insertado en la base de datos  ";
+			
 				
 			  }//valores que estan en bienes
 		  
@@ -544,68 +551,59 @@ function utf8_string_array_encode(&$array){
 		 
 		 $total=$conterroreg+$contexitototal; 
 		 
-		 if ($total!=0){
-		   $error->importaError();
-		}
-		 
-		 
-		if ($cuentatotal==0 && $total==0){?>
-			  <tr>
-             <td><legend align="center"> <h4><?php echo "El inventario fué registrado previamente"; ?></h4> </legend></td>
-         </tr>
-			
-		<?php }else{?>
+		 if ($cuentatotal!=0)
+		     $error->importaError();
+		 if   ($cuentatotal==0){?> 	 
+             <legend align="left"> <h4><?php echo "El inventario fué registrado previamente."; ?></h4> </legend> <br>
+       
+		 <?php    }else { ?>
         
-         <tr>
-             <td><legend align="center"> <h4><?php echo "Se importaron " . $cuentatotal . " / " . $total . " dispositivos."; ?></h4> </legend></td>
-         </tr>
-         <?php } ?>
+             <legend align="left"> <h4><?php echo "Se importaron " . $cuentatotal . " / " . $total . " dispositivos."; ?></h4> </legend>
+             
+        
                <?php  if ( $conterrorbn > 0 && $cuentatotal!=0  ) { ?>
-            <br> <tr><td><legend align="center"> <h4><?php echo "Faltó registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend></td></tr>
+            <br> 
+           
+            <legend align="left"> <h4><?php echo "Faltó registrar  " . $conterrorbn ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend>
             <br>
-         <tr><td> 
+        
               <form action="../inc/erroresbn.inc.php" method="post" name="erroresbn" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
 	          </form>
-         </td></tr>
+              <br>
+       
         <?php
 		 }
-	   //if ($total!=0){
+	   
 	                $disperror->guardaDispError();
-	  //}
+	
 	  // if ($sinlab>0  && $cuentatotal!=0  ){
 		  if ($sinlab>0 ){
 		?>
 		<br>
-        <tr>
-            <td><legend align="center"> <h4><?php echo "Dispositivos  con laboratorio inexistente : " . $sinlab ; ?></h4> </legend>
-            </td>
-        </tr>
+                   <legend align="left"> <h4><?php echo "Dispositivos  con laboratorio inexistente : " . $sinlab ; ?></h4> </legend>
+         
         <br/>
        <?php } 
-	   
 	 
- }  else { ?>
+	 
+  else { ?>
       <!--<tr>
       <td><legend align="center"> <h4><?php //echo 'Ingrese archivo';?></h4> </legend>
             </td>
       </tr>-->
      <?php  }
- 
-        $querydt="DELETE FROM dispositivotemp";	
+	      }
+		}
+         $querydt="DELETE FROM dispositivotemp";	
 		 $datosdt = pg_query($con,$querydt); 
-		$querydt="DELETE FROM errorinserta";	
+		 $querydt="DELETE FROM errorinserta";	
 		 $result = pg_query($querydt) or die('Hubo un error con la base de datos');
+		 
 ?>
-<!--
-</td>          
-</tr>
+
+
 </table>
-</div>-->
-</div></td>          
-</tr>
-
-
 
 
 

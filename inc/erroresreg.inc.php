@@ -49,13 +49,15 @@ else {
 		<?php 
 	
 	    $queryerror="SELECT * FROM registroerror re
-                     JOIN errorinserta ei
+                     LEFT JOIN errorinserta ei
                      ON re.inventario=ei.inventario
+					 LEFT JOIN cat_dispositivo cd
+                     ON cd.dispositivo_clave=re.clave_dispositivo
+
                      WHERE date(fecharegistro)= current_date
 					 AND tipoerror="."'".$etiqueta."'"."
-				     AND id_div=" . $_SESSION['id_div']
-					  ;	
-			
+				     AND id_div=" . $_SESSION['id_div'] ;	
+			//echo $queryerror;
 	    
 $datoserror = pg_query($con,$queryerror);
 $registros= pg_num_rows($datoserror); 
