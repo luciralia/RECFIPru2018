@@ -51,10 +51,10 @@
                 <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Equipos de c&oacute;mputo</a></li>
     	 <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-                    <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>">Importar</a></li>
+                    <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
          <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-                 <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li> 
+                 <li><a href="../view/inicio.html.php?mod=act&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"">Actualizar</a></li> 
          <?php } ?> 
           </ul>
 	   </li>

@@ -26,10 +26,10 @@ $titulo='Importar Dispositivos';
 
 if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invg'  ) {
 	
-	require('../inc/importamoderror.inc.php');
+	require('../inc/importamod.inc.php');
 	}
 	else { 
-	require('../inc/importamoderror.inc.php');}
+	require('../inc/importamod.inc.php');}
 	
 	
 	

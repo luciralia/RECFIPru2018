@@ -9,6 +9,9 @@ $error = new importa();
 $registroerror = new importa();
 $buscaerror = new importa();
 $disperror =new importa();
+$merror=new importa();
+$desp=new importa();
+
 
 function utf8_string_array_encode(&$array){
     $func = function(&$value,&$key){
@@ -56,7 +59,8 @@ function utf8_string_array_encode(&$array){
   $size = $_FILES["archivo_txt"]["size"];
   $tipo = $_FILES["archivo_txt"]["type"];
   $contexitobn=0;
-
+  $cuenta=1;
+  $no=1;
   $contexitototal=0;
  //echo $tmp_name;
  if($size > 0){
@@ -93,11 +97,32 @@ function utf8_string_array_encode(&$array){
 			 
 			
 		   } else { 
-	   //$conterroreg=0;
+	    //$conterroreg=0;
 	
-	
-	
-	
+	    //muestra errores y verifica valor en catálogo
+	     
+		  $desp->marcaerror($no,$datos);
+	    // $merror->revisarError($no,$datos);
+		 
+		// echo $error;
+		 
+		 /* $queryerror="SELECT * FROM errorinserta 
+	               WHERE id_error=" . $cuenta .
+				 " AND  (columna1!=2 AND columna2!=2 AND columna3!=2 AND columna4!=2 
+				AND  columna10!=2 AND columna11!=2 
+				AND columna25!=2 AND columna28!=2
+				AND columna30!=2 AND columna31!=2
+			    AND columna32!=2 AND columna33!=2 AND columna34!=2 AND columna35!=2
+				AND columna36!=2 AND columna37!=2 AND columna45!=2
+				AND columna51!=2)";*/
+		$queryerror="SELECT * FROM errorinserta 
+	               WHERE tupla=" . $cuenta .
+				 " AND  (columna1!=2 AND columna2!=2 AND columna3!=2 AND columna4!=2 )";
+	  $result = pg_query($queryerror) or die('Hubo un error con la base de datos');
+	  $error= pg_num_rows($result); 
+	   echo 'e'.$error;
+	   
+	 if ($error==1){
 	
  $query = "INSERT INTO dispositivotemp ( dispositivo_clave,usuario_final_clave,familia_clave,
                                                tipo_ram_clave,tecnologia_clave,resguardo_nombre,
@@ -135,11 +160,10 @@ function utf8_string_array_encode(&$array){
 											   '$datosdec[50]')"; //$datos[51] previendo modificaccion para idmod
 										   
                           $result=@pg_query($con, $query);
-						  
-						 // echo 'inserta en dispostivotemp';
-				          
-						 echo $query;
-		
+					 	
+	
+	  $cuenta++;	
+						 $no++;
                          if (!$result) {
 		        	         $queryre="SELECT max(id_error) FROM registroerror";
                              $registrore= pg_query($con,$queryre);
@@ -164,12 +188,14 @@ function utf8_string_array_encode(&$array){
 			             $contexitototal++; // inserciones restantes
  		  
                     } //if(!$result) else
-	
+ 
+	 }else {}
 		   }//if (pg_num_rows($datostemp)>0) else
        
 	   } //while para insertar en dispositivo temporal
+ }//size>0
 	   
-	
+	/*
 	   $buscaerror->detectaError();
 	  
 	   $cuentatotal=0;?>
@@ -212,7 +238,7 @@ function utf8_string_array_encode(&$array){
                 AND columna41=1 AND columna42=1 AND columna43=1
                 AND columna45=1 AND columna46=2 AND columna47=1
                 AND columna50=1 AND columna51=1"; 
-*/
+
 		$datos = pg_query($con,$query);
 		
 		
@@ -293,7 +319,7 @@ function utf8_string_array_encode(&$array){
 							  ON dv.id_div=d.id_div
 			                  WHERE inventario="."'".$disp['inventario']."'".
 							  " AND dv.id_div=" .$_SESSION['id_div'];*/
-			 $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
+							  /*			 $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
 							  estadobien,servidor,descextensa 
 							  FROM equipoc ec
@@ -599,15 +625,15 @@ function utf8_string_array_encode(&$array){
      <?php  }
 	      }
 		}
-      /*   $querydt="DELETE FROM dispositivotemp";	
+         $querydt="DELETE FROM dispositivotemp";	
 		 $datosdt = pg_query($con,$querydt); 
 		 $querydt="DELETE FROM errorinserta";	
-		 $result = pg_query($querydt) or die('Hubo un error con la base de datos');*/
-		 
+		 $result = pg_query($querydt) or die('Hubo un error con la base de datos');
+		 */
+
 ?>
 
 
-</table>
 
 
 
