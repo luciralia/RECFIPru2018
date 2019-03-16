@@ -1,7 +1,7 @@
 <?php 
 //require_once('../inc/sesion.inc.php');
 require_once('../conexion.php');
-require_once('../clases/importa.class.php');
+require_once('../clases/importaOtra.class.php');
 
 session_start(); 
 
@@ -97,8 +97,6 @@ function utf8_string_array_encode(&$array){
 	
 	
 	
-	
-	
  $query = "INSERT INTO dispositivotemp ( dispositivo_clave,usuario_final_clave,familia_clave,
                                                tipo_ram_clave,tecnologia_clave,resguardo_nombre,
 										       resguardo_no_empleado, usuario_nombre,usuario_ubicacion,
@@ -138,7 +136,7 @@ function utf8_string_array_encode(&$array){
 						  
 						 // echo 'inserta en dispostivotemp';
 				          
-						 echo $query;
+						// echo $query;
 		
                          if (!$result) {
 		        	         $queryre="SELECT max(id_error) FROM registroerror";
@@ -293,6 +291,7 @@ function utf8_string_array_encode(&$array){
 							  ON dv.id_div=d.id_div
 			                  WHERE inventario="."'".$disp['inventario']."'".
 							  " AND dv.id_div=" .$_SESSION['id_div'];*/
+							  
 			 $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
 							  estadobien,servidor,descextensa 

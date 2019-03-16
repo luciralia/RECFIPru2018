@@ -30,10 +30,10 @@ $titulo='Actualizar Dispositivos';
 
 if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invg'  ) {
 	
-	require('../inc/actualizar.inc.php');
+	require('../inc/actualizarmod.inc.php');
 	}
 	else { 
-	require('../inc/actualizar.inc.php');}
+	require('../inc/actualizarmod.inc.php');}
 	
 	
 	

@@ -356,7 +356,8 @@ function utf8_string_array_encode(&$array){
             </td>
       </tr>-->
  <?php  }
-       $querydt="DELETE FROM dispositivotemp";	
+ 
+        $querydt="DELETE FROM dispositivotemp";	
 		$datosdt = pg_query($con,$querydt); 
 		$querydt="DELETE FROM errorinserta";	
 		$result = pg_query($querydt) or die('Hubo un error con la base de datos');

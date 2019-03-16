@@ -53,7 +53,6 @@ else {
                      ON re.inventario=ei.inventario
 					 LEFT JOIN cat_dispositivo cd
                      ON cd.dispositivo_clave=re.clave_dispositivo
-
                      WHERE date(fecharegistro)= current_date
 					 AND tipoerror="."'".$etiqueta."'"."
 				     AND id_div=" . $_SESSION['id_div'] ;	
@@ -90,11 +89,10 @@ $registros= pg_num_rows($datoserror);
 		 }
 		 $reporter=1;
 		   if ($reporter==1){
-		      $queryerror="DELETE FROM registroerror re
+		     $queryerror="DELETE FROM registroerror re
 	                  WHERE date(fecharegistro)= current_date
 					   AND tipoerror="."'".$etiqueta."'"."
-				      AND id_div=" . $_SESSION['id_div']
-					  ;	
+				      AND id_div=" . $_SESSION['id_div'];
 			
 	      $datoserror = pg_query($con,$queryerror);
 			  }
