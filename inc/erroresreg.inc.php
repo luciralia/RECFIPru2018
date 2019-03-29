@@ -24,7 +24,7 @@ $nombdiv= pg_fetch_array($registrodiv);
 $texto='Content-Disposition: attachment;filename="erroresreg_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
 header($texto);
 
-if ($_POST['actreg']=='Exportar a Excel'){
+if ($_POST['tipo']=='actreg'){
 	$titulo='Errores al actualizar';
 	$etiqueta='ra';
 }
@@ -55,8 +55,9 @@ else {
                      ON cd.dispositivo_clave=re.clave_dispositivo
                      WHERE date(fecharegistro)= current_date
 					 AND tipoerror="."'".$etiqueta."'"."
+					 AND bnid!=0
 				     AND id_div=" . $_SESSION['id_div'] ;	
-			//echo $queryerror;
+			echo $queryerror;
 	    
 $datoserror = pg_query($con,$queryerror);
 $registros= pg_num_rows($datoserror); 

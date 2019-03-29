@@ -1331,9 +1331,9 @@ function radialservidor($servidor)
 	
 function verificaTipoEquipo($bien)
 		{
-			if($bien<>9 && $bien<>10 && $bien<>11 ){
-					$salida=1 ;}
-			else { $salida=0;}		
+			if($bien<>9 && $bien<>10 && $bien<>11 && $bien<>12)
+					$salida=1 ;
+			else  $salida=0;		
 					return $salida;
 		
 		}//fin metodo

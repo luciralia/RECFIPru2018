@@ -23,7 +23,7 @@
 <file name="documentos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130886308380000000" remote="131790350370000000" Dst="2" />
 <file name="equipamiento.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130272049340000000" remote="131790350370000000" Dst="2" />
 <file name="infraestructura.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130387142840000000" remote="131790350370000000" Dst="2" />
-<file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131868657744125421" remote="131868657800000000" Dst="1" />
+<file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131981218067272430" remote="131982789280000000" Dst="1" />
 <file name="inicio.html.php.bak" server="132.248.52.241//var/www/RECFIPru2018/" local="130254122720000000" remote="131790350370000000" Dst="2" />
 <file name="inventario.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131796221356812656" remote="131849588100000000" Dst="2" />
 <file name="material.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280974020000000" remote="131790350370000000" Dst="2" />
@@ -31,8 +31,7 @@
 <file name="proyectos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130271492080000000" remote="131790350370000000" Dst="2" />
 <file name="quejas.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130922670942273577" remote="131790350370000000" Dst="2" />
 <file name="servicios.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131063663242237820" remote="131790350370000000" Dst="2" />
-<file name="importar.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131796122374319121" remote="131796124430000000" Dst="2" />
+<file name="importar.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131970696488050879" remote="131982789420000000" Dst="1" />
 <file name="importar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131697495313025184" remote="131790350370000000" Dst="2" />
-<file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131874824330000000" remote="131874824330000000" Dst="1" />
 <file name="actualizar.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131866134117234263" remote="131868631180000000" Dst="1" />
 </dwsync>

@@ -23,7 +23,9 @@ $nombdiv= pg_fetch_array($registrodiv);
 $texto='Content-Disposition: attachment;filename="erroresbn_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
 header($texto);
 
-if ($_POST['actbn']=='Exportar a Excel'){
+print_r ($_POST);
+
+if ($_POST['tipo']=='actbn'){
 	$titulo='Errores al actualizar';
 	$etiqueta='ba';
 }
