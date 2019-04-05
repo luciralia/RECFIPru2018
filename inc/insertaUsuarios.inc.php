@@ -22,7 +22,7 @@ function utf8_string_array_encode(&$array){
     return $array;
 } 
 
-$titulo='Importar Áreas';
+$titulo='Importar Usuarios';
  ?>
  
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -83,43 +83,39 @@ $titulo='Importar Áreas';
 		  $cuenta++;
 		  $datosdec=utf8_string_array_encode($datos); 
 		  
-	      $querytemp="SELECT * FROM laboratorios WHERE 
-		              id_lab=".$datosdec[0];
+	      $querytemp="SELECT * FROM usuarios WHERE 
+		              id_usuario=".$datosdec[0];
 					  					  
 		  $datostemp = pg_query($querytemp);
 		   
 		  if (pg_num_rows($datostemp)>0) {
 			 
-		           $updatequery= "UPDATE laboratorios SET nombre='%s'
+		         /*  $updatequery= "UPDATE usuarios SET usuario='%s'
 			                      WHERE id_lab="."'".$datosdec[0]."'";
 							  
 			        $queryu=sprintf($updatequery,$datosdec[0] ); 
-			        $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios '); 
+			        $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios '); */
 			        $repetido++; ?>
-					 <legend align="left"> <?php echo "Se insertó previamente el área con identificador" . $datosdec[0]; ?></legend> 
+					 <legend align="left"> <?php echo "Se insertó previamente el usaurio con identificador" . $datosdec[0]; ?></legend> 
 			       
 		   <?php } else { 
 	     
 	  
-
+$ing='ingenieria';
 							
-							 $strqueryd="INSERT INTO laboratorios (id_lab,id_dep, id_responsable,
-							                                       nombre,dir_postal,act_generales,
-																   carreras,asignaturas,id_edif,
-																   detalle_ub,capacidad,tipo_lab)
-                                          VALUES (%d,%d, %d,
-										         '%s','%s', %d,
-												 '%s','%s',%d,
-												 '%s','%s','%s')";
+							 $strqueryd="INSERT INTO usuarios (id_usuario,usuario, password,
+							                                   tipo_usuario,nombre,a_paterno,
+                                                               a_materno,area,id_dep)
+                                                       VALUES (%d,'%s','%s',
+										                       %d,'%s', '%s',
+												               '%s','%s',%d)";
 				   
-                            $queryid=sprintf($strqueryd, $datosdec[0],$datosdec[1],$datosdec[2],
-				                             $datosdec[3],$datosdec[4],$datosdec[5],
-											 $datosdec[6],$datosdec[7],$datosdec[8],
-											 $datosdec[9],$datosdec[10],$datosdec[11]);
-											  
-											 echo $queryid;
+                     $queryid=sprintf($strqueryd, $datosdec[0],$datosdec[1],$datosdec[5],
+				                              $datosdec[7],$datosdec[2],$datosdec[3],
+											  $datosdec[4],$ing,$datosdec[6]);
                
-                           $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
+			         //echo $queryid;
+                $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
 				
 			                 $importa++; // inserciones restantes
 	
@@ -130,7 +126,7 @@ $titulo='Importar Áreas';
 	 ?>
 		
 	
-	      <legend align="left"> <h3><?php echo "Se importaron " . $importa . "/". $cuenta.  " áreas."; ?></legend> 
+	      <legend align="left"> <h3><?php echo "Se importaron " . $importa . "/". $cuenta.  " usuarios."; ?></legend> 
 <?php
   }
  ?>
@@ -143,11 +139,4 @@ $titulo='Importar Áreas';
 
  require('../inc/pie.inc.php');
  
-  ?>      
-             
-
-
-
-
-
-
+  ?>    

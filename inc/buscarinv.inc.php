@@ -253,7 +253,7 @@ if ($inventario!=0){?>
    } else if ( $_GET['mod']=='invg'  && $inventario==0){?>
     <br \>
    
-       <legend align="center"><h3>No se encuentra el dispositivo en el invnetario de la facultad.</h3></legend>
+       <legend align="center"><h3>No se encuentra el dispositivo en el inventario de la facultad.</h3></legend>
  
     <br \>
  <?php  

@@ -53,8 +53,8 @@ border-bottom-style:none;
  display:none;
  /*position:absolute;en choreme no*/
  position:absolute;
- min-width:450px;
- /*min-width:auto;*/
+ /*min-width:250px;*/
+ width:auto;
 }
 
 .navu li:hover > ul {
@@ -82,11 +82,10 @@ z-index:100;
 }
 
 .navu li ul li ul {
-right:-450px;
 
- /*right: inherit;*/
- top:0px;
- z-index:100;
+right:-200px;
+top:0px;
+z-index:100;
 }
 /*Agregado recien*/
 

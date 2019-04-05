@@ -14,13 +14,13 @@ $valida=new importa();
 $error=new importa();
 $verifica = new inventario();
 
-$querydt="DELETE FROM errorinserta";	
+$querydt= "DELETE FROM errorinserta";	
 $result = pg_query($querydt) or die('Hubo un error con la base de datos');
-
 $querypre="DELETE FROM registroerror re
 	       WHERE date(fecharegistro)= current_date
 		   AND id_div=" . $_SESSION['id_div'];
-$result = pg_query($querypre) or die('Hubo un error con la base de datos');	
+$result = pg_query($querypre) or die('Hubo un error con la base de datos');			 
+		 
 
 function buscaBienes(&$datosdec){
 	
@@ -134,9 +134,10 @@ if($size > 0){
       <?php 
 	  
      while($datos = fgetcsv ($fp, 1000, "\t")){
-		 
+		
+			 //print_r($datos);
 		  $datosdec=utf8_string_array_encode($datos); 
-		 
+		  
 	      $querytemp="SELECT * FROM dispositivo WHERE 
 		              inventario="."'".$datosdec[15]."'";
 		  //echo 	$querytemp;	  
@@ -181,29 +182,30 @@ if($size > 0){
           $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
           //echo'Valores de entrada marca error';
           // print_r($datosdec);
-		 
-          $inventario=$datosdec[15];
+		  
+         $inventario=$datosdec[15];
+		  
 		  $dispclave=$datosdec[0];
-        $verifica->verificaTipoEquipo($datosdec[0]);
+        $verifica->verificaTipoEquipo($dispclave);
         if ($datosdec[0]==NULL) { $columna1=$columna1*2;
-		        $dispclave=0;
-				
-				?>
+		        $dispclave=0;?>
 	           <legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>
      <?php } else {
 	    if(!preg_match("/^[0-9]+$/",$datosdec[0])) { $columna1=$columna1*4;
-		$dispclave=0;?>
+		?>
 	<legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend><?php  } else {
 	//detectar si es identificador valido
 	
-	$valida->valida_dispositivo($datosdec[0]);
+	$valida->valida_dispositivo($inventario);
 	if( $valida>0 && $verifica==1)
 	   $columna1=$columna1*3;
 	  else {
-	   $columna1=$columna1*6; ?>
+	   $columna1=$columna1*6;
+	    ?>
        <legend align="left"><?php  echo 'La columna A,  <strong>  clave_dispositivo </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
        
 <?php	  }
+    
 	 }
 	 }
       
@@ -346,14 +348,14 @@ if($size > 0){
 				<?php   } else $columna13=1; 
 			}
 			if ($datosdec[13]==NULL) { $columna14=0; ?>
-		      <legend align="left"><?php // echo 'La columna N, <strong> no_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+		      <legend align="left"><?php echo 'La columna N, <strong> no_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
       <?php }  elseif(is_int($datosdec[13])) $columna14=1; else $columna14=2; 
 	  
 	  if ($datosdec[14]==NULL) { $columna15=0;?>
 		      <legend align="left"><?php echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
       <?php }else {
 		  if(!preg_match("/^[0-9]+$/",$datosdec[14])){$columna15=1; ?>
-		  <legend align="left"><?php // echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser númerica.'; ?></legend>
+		  <legend align="left"><?php echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser númerica.'; ?></legend>
 		<?php   }
 		  else 
 		  $columna15=2; 
@@ -371,7 +373,7 @@ if($size > 0){
 	  }
 	  
 	  if ($datosdec[17]==NULL) {$columna18=0;?>
-		     <legend align="left"><?php // echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
+		     <legend align="left"><?php echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 	  <?php } else{
 		  if(is_int($datosdec[17])) $columna18=1; else $columna18=2; 
 	  	  if ($datosdec[18]==NULL) { $columna19=0;?>
@@ -435,7 +437,7 @@ if($size > 0){
 	  }
      
        if (!preg_match("/^[0-9]+$/",$datosdec[27])){ $columna28=2;?>
-		      <legend align="left"> <?php // echo 'La columna AB, <strong> total_almac </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+		      <legend align="left"> <?php echo 'La columna AB, <strong> total_almac </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
       <?php }  else $columna28=1; ?>
       
       <?php if ($datosdec[28]==NULL) { $columna29=0;?>
@@ -582,23 +584,22 @@ if($size > 0){
 		     <legend align="left"> <?php echo 'La columna AU, <strong> licencia </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
 			 <?php } else $columna47=1; 
 	  }?>
-       <?php if ($datosdec[47]==NULL) { $columna48=0;?>
+        <?php if ($datosdec[47]==NULL) { $columna48=0;?>
 		      <legend align="left"><?php echo 'La columna AV, <strong> licencia_ini </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>            
 	  <?php } else {?>
-      <?php if (!preg_match("/^[0-9]+$/",$datosdec[47])){ $columna48=2;?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[47])){ $columna48=1;?>
 		     <legend align="left"> <?php //echo 'El formato de fecha de la columna AV, <strong> licencia_ini </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
-      <?php }  else $columna48=1; 
+      <?php }  else $columna48=2; 
 	  }?>
       
       <?php if ($datosdec[48]==NULL) { $columna49=0;?>
 		      <legend align="left">  <?php echo 'La columna AW, <strong> licencia_fin </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
         <?php } else{
-		if(!preg_match($regexFecha,$datosdec[48])) { $columna49=2; ?>
+		if(!preg_match($regexFecha,$datosdec[48])) { $columna49=1; ?>
         
 		     <legend align="left"><?php //echo 'El formato de fecha de la columna AW, <strong> licencia_fin </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
-        <?php } else $columna49=3;
+        <?php } else $columna49=2;
 		   }?>
-           
          <?php if ($datosdec[49]==NULL) { $columna50=0;?>
 		       <legend align="left"> <?php echo 'La columna AX, <strong> id_edificio </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 			<?php } else{?> 
@@ -656,8 +657,7 @@ if($size > 0){
 				    $ultimo=1;//inicializando la tabla dispositivouno
 			  else 
 			        $ultimo=$ultimo[0]+1;
-					
-	   if (isset($inventario) || isset($dispclave)){
+	   
 	         $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
 	                                     columna6,columna7,columna8,columna9,columna10,
 	                                     columna11,columna12,columna13,columna14,columna15,
@@ -669,7 +669,7 @@ if($size > 0){
 										 columna41,columna42,columna43,columna44,columna45,
 										 columna46,columna47,columna48,columna49,columna50,
 										 columna51) VALUES 
-										 ($ultimo,$noo,'$inventario',$bnid,$dispclave,$columna1,$columna2,$columna3,$columna4,$columna5,
+										 ($ultimo,$noo,'$inventario',$bnid,1,$columna1,$columna2,$columna3,$columna4,$columna5,
 										 $columna6,$columna7,$columna8,$columna9,$columna10,
 	                                     $columna11,NULL,$columna13,$columna14,$columna15,
 										 $columna16,$columna17,$columna18,$columna19,NULL,
@@ -681,33 +681,14 @@ if($size > 0){
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
 							 $columna51 )";
 		
-		//echo $query;
+		echo $query;
 	    $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
-	   }
 	    if (!$result) 
 				 $errorinserta++;
 				
 		//valida identificadores de catálogos';	
 		/*$queryerror="SELECT * FROM errorinserta 
 	                 WHERE tupla=" . $cuenta .
-				   " AND  (
-				   columna1=3 AND columna2=3 AND columna3=3 AND columna4=3 AND columna5=3
-				     AND columna9!=0
-				     AND columna10=3 
-					 AND columna16!=0 AND columna17!=0
-					 AND columna18!=0 AND columna19!=0
-					 AND columna21!=0 AND columna22!=0
-					 AND columna30!=2 AND columna31!=2
-			         AND columna32!=2 AND columna33!=2 
-					 AND columna34!=2 AND columna35!=2
-				     AND columna36!=2 AND columna37!=2 
-					 AND columna43=3  AND columna45=3
-					 AND columna46!=0 AND columna47!=0
-					 AND columna48!=0 AND columna49!=0
-					 AND columna50!=0 AND columna51=1
-					 )";
-					 $queryerror="SELECT * FROM errorinserta 
-	                 WHERE tupla=" . $cuenta .
 				   " AND columna1=3 AND columna2=3 
 				     AND columna3=3 AND columna4=3 
 					 AND columna5=3
@@ -723,23 +704,13 @@ if($size > 0){
 					 AND columna46!=0 AND columna47!=0
 					 AND columna48!=0 AND columna49!=0
 					 AND columna50!=0 AND columna51=1
-					 ";*/
+					 )";*/
 					$queryerror="SELECT * FROM errorinserta 
 	                 WHERE tupla=" . $cuenta .
 				   " AND columna1=3 AND columna2=3 
 				     AND columna3=3 AND columna4=3 
 					 AND columna5=3
-				     AND columna10=3 AND columna11=3
-					 AND columna16!=0 AND columna17!=0
-					 AND columna19!=0
-					 AND columna21!=0 AND columna22!=0
-					 AND columna30!=2 AND columna31!=2
-			         AND columna32!=2 AND columna33!=2 
-					 AND columna34!=2 AND columna35!=2
-				     AND columna36!=2 AND columna37!=2 
-					 AND columna46!=0 AND columna47!=0
-					
-					 AND columna50!=0 AND columna51=1
+				     
 					 ";
 			 
 	        $result = pg_query($queryerror) or die('Hubo un error con la base de datos');
@@ -828,7 +799,7 @@ if($size > 0){
               $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios');
 			  		
 					
-					
+			  		
 			  if ($datosdec[18]==0) 
 			      $datosdec[18]= date("Y-m-d", strtotime($datosdec[18]));
 			  if ($datosdec[47]==0) 
@@ -949,8 +920,8 @@ if($size > 0){
 		
 	    }//while para insertar en dispositivo temporal
 		fclose($fp);
-	/*	
-	echo 'novalido '.$novalido;		 
+			
+	    echo 'novalido '.$novalido;		 
 		echo '$errorinserta'.$errorinserta;			 
 	    echo 'errorimp'.$errorimp;
 	    echo 'errorbien'.$errorbien;
@@ -958,7 +929,7 @@ if($size > 0){
 		echo 'registrovalido'.$regvalido;
 		echo 'importa'.$importa;
 		echo 'nunca'.$nunca;
-		echo 'preimporta',$preimpor;*/
+		echo 'preimporta',$preimpor;
 		
 		
 		$cuentaTotal=$cuenta-1;
@@ -969,20 +940,20 @@ if($size > 0){
 	      <legend align="left"> <h3><?php echo "Se importaron " . $importa . " / " . $cuentaTotal . " dispositivos."; ?></h3></legend> 
           <br>
 		<?php }
-		else{?> 
+		 else{?> 
           <legend align="left"> <h3><?php echo "Se importaron previamente " . $preimpor . " / " . $cuentaTotal . " dispositivos."; ?> </h3></legend>
           <br>
-          <legend align="left"> <h3><?php echo "Se importaron actualmente " . $importa  . " / " . $cuentaTotal . " dispositivos."; ?> </h3></legend>
+          <legend align="left"> <h3><?php echo "Se importaron nuevamente " . $importa  . " / " . $cuentaTotal . " dispositivos."; ?> </h3></legend>
           <br>
           <?php } 
           
            if ($sinlab>0 ){	?>
-	      <legend align="left"> <h3><?php echo "Tuplas con error por laboratorio inválido: " . $sinlab; ?></h3></legend> 
+	      <legend align="left"> <h3><?php echo "Tuplas con error por laboratorio inválido " . $sinlab; ?></h3></legend> 
           <br>
 		<?php } ?>
           
           
-          <?php if ($novalido > 0 )
+          <?php if ($novalido >0 )
 		  
 		            $botonReg->exportaErrorReg($novalido);
 			  
@@ -1001,16 +972,6 @@ if($size > 0){
  }
    
  }
- /*Revisar tipo de datos para validaciopnes de caTALOGOS
- QUE SEN ENTEROS.
- rEVISAR OBLIGATORIOERAD PERMITIR ALGUNOS
- */
+ 
  ?>
  
-   
-
-
-
-
-
-

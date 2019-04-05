@@ -209,7 +209,7 @@
 <file name="exportaxlsgenarea_inv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131698606520230388" remote="131790350990000000" Dst="2" />
 <file name="cargadiv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131734913627172939" remote="131790350970000000" Dst="2" />
 <file name="actualizar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131868761412323487" remote="131868825760000000" Dst="1" />
-<file name="insertaAreas.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131980911120914474" remote="131982604910000000" Dst="1" />
+<file name="insertaAreas.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131988662154064114" remote="131988663530000000" Dst="1" />
 <file name="actualizarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131982574634026852" remote="131982776000000000" Dst="1" />
-<file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131982806600000000" remote="131982806600000000" Dst="1" />
+<file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131986937276362949" remote="131986938270000000" Dst="1" />
 </dwsync>
