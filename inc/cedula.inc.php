@@ -10,8 +10,8 @@ $lab = new laboratorios();
 <?php 
 
 //echo 'session en cedula.inc.php';
-//print_r($laboratorio);
-//print_r ($_GET); ?>
+/*print_r($laboratorio);
+print_r ($_GET); */?>
 <div class="block2">
 <table class="cedula" width="100%" border="0" cellpadding="5">
                         <tr>

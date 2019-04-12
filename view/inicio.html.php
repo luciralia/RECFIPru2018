@@ -18,6 +18,7 @@ require_once('../inc/encabezado.inc.php');
                 JOIN divisiones d
                  ON d.id_div=dp.id_div
                 WHERE l.id_lab=" .$_GET['lab'];
+				
                $datosdiv=pg_query($con,$querydiv);
                // echo 'query inicio.html'.$querydiv;
      $div = pg_fetch_array($datosdiv);

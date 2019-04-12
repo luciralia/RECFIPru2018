@@ -109,7 +109,7 @@ $titulo='Importar Departamentos';
                                $queryid=sprintf($strqueryd, $datosdec[0],$datosdec[2],
 					                              $datosdec[3],$datosdec[1]);
                
-			         echo $queryid;
+			         //echo $queryid;
                 $result=pg_query($queryid) or die('ERROR AL INSERTAR EN Departamentos ' . pg_last_error());
 				
 			                 $importa++; // inserciones restantes

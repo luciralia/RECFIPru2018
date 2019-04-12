@@ -114,6 +114,8 @@ function utf8_string_array_encode(&$array){
 //echo $tmp_name;
  if($size > 0){
  
+if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
+ 
      $fp = fopen($tmp_name, "r");
    
      // Procesamos linea a linea el archivo  y 
@@ -151,7 +153,7 @@ function utf8_string_array_encode(&$array){
 	      //print_r($datos);
 		  //$marca->marcaError($datos);
 		  //catálogos
-		  $columna1=1; $columna2=1; $columna3=1;$columna4=1; $columna5=1;
+		   $columna1=1; $columna2=1; $columna3=1;$columna4=1; $columna5=1;
 		  $columna10=1; $columna11=1; $columna43=1; $columna45=1; $columna46=1;
 		 
           $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
@@ -160,12 +162,15 @@ function utf8_string_array_encode(&$array){
 		 
           $inventario=$datosdec[15];
 		  $dispclave=$datosdec[0];
-        $verifica->verificaTipoEquipo($datosdec[0]);
-        if ($datosdec[0]==NULL) { $columna1=$columna1*2;
-		        $dispclave=0;?>
+          $verifica->verificaTipoEquipo($datosdec[0]);
+          if ($datosdec[0]==NULL) { $columna1=$columna1*2;
+		         $dispclave=0;
+				
+				?>
 	           <legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>
      <?php } else {
-	    if(!preg_match("/^[0-9]+$/",$datosdec[0])) { $columna1=$columna1*4;?>
+	    if(!preg_match("/^[0-9]+$/",$datosdec[0])) { $columna1=$columna1*4;
+		$dispclave=0;?>
 	<legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend><?php  } else {
 	//detectar si es identificador valido
 	
@@ -319,14 +324,14 @@ function utf8_string_array_encode(&$array){
 				<?php   } else $columna13=1; 
 			}
 			if ($datosdec[13]==NULL) { $columna14=0; ?>
-		      <legend align="left"><?php echo 'La columna N, <strong> no_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+		      <legend align="left"><?php // echo 'La columna N, <strong> no_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
       <?php }  elseif(is_int($datosdec[13])) $columna14=1; else $columna14=2; 
 	  
 	  if ($datosdec[14]==NULL) { $columna15=0;?>
 		      <legend align="left"><?php echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
       <?php }else {
 		  if(!preg_match("/^[0-9]+$/",$datosdec[14])){$columna15=1; ?>
-		  <legend align="left"><?php echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser númerica.'; ?></legend>
+		  <legend align="left"><?php // echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser númerica.'; ?></legend>
 		<?php   }
 		  else 
 		  $columna15=2; 
@@ -344,7 +349,7 @@ function utf8_string_array_encode(&$array){
 	  }
 	  
 	  if ($datosdec[17]==NULL) {$columna18=0;?>
-		     <legend align="left"><?php echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
+		     <legend align="left"><?php // echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 	  <?php } else{
 		  if(is_int($datosdec[17])) $columna18=1; else $columna18=2; 
 	  	  if ($datosdec[18]==NULL) { $columna19=0;?>
@@ -408,7 +413,7 @@ function utf8_string_array_encode(&$array){
 	  }
      
        if (!preg_match("/^[0-9]+$/",$datosdec[27])){ $columna28=2;?>
-		      <legend align="left"> <?php echo 'La columna AB, <strong> total_almac </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+		      <legend align="left"> <?php // echo 'La columna AB, <strong> total_almac </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
       <?php }  else $columna28=1; ?>
       
       <?php if ($datosdec[28]==NULL) { $columna29=0;?>
@@ -558,18 +563,18 @@ function utf8_string_array_encode(&$array){
        <?php if ($datosdec[47]==NULL) { $columna48=0;?>
 		      <legend align="left"><?php echo 'La columna AV, <strong> licencia_ini </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>            
 	  <?php } else {?>
-      <?php if (!preg_match("/^[0-9]+$/",$datosdec[47])){ $columna48=1;?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[47])){ $columna48=2;?>
 		     <legend align="left"> <?php //echo 'El formato de fecha de la columna AV, <strong> licencia_ini </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
-      <?php }  else $columna48=2; 
+      <?php }  else $columna48=1; 
 	  }?>
       
       <?php if ($datosdec[48]==NULL) { $columna49=0;?>
 		      <legend align="left">  <?php echo 'La columna AW, <strong> licencia_fin </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
         <?php } else{
-		if(!preg_match($regexFecha,$datosdec[48])) { $columna49=1; ?>
+		if(!preg_match($regexFecha,$datosdec[48])) { $columna49=2; ?>
         
 		     <legend align="left"><?php //echo 'El formato de fecha de la columna AW, <strong> licencia_fin </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
-        <?php } else $columna49=2;
+        <?php } else $columna49=3;
 		   }?>
            
          <?php if ($datosdec[49]==NULL) { $columna50=0;?>
@@ -609,16 +614,16 @@ function utf8_string_array_encode(&$array){
 			
 			 }
        
+
+	   $busca=buscaBienesAct($datosdec); // si no  lo encuentra lo registra en errores
+		//echo 'buscabien', $busca;	
 		
-		  
-		  $busca=buscaBienesAct($datosdec); // si no  lo encuentra lo registra en errores
-		 // print_r($datosdec);
-		   if ($busca==NULL){
-		      $bnid=0;
-			  $errorbn++;
-		   }else 	
-		      $bnid=$busca;
+		if ($busca==NULL)
+		    $bnid=0;
+		else 	
+		    $bnid=$busca;
 		
+			
           //Traer el último valor en errorinserta
 			        $queryd="SELECT max(id_error) FROM errorinserta";
                    // $registrod= pg_query($con,$queryd);
@@ -629,7 +634,8 @@ function utf8_string_array_encode(&$array){
 				    $ultimo=1;//inicializando la tabla dispositivouno
 			  else 
 			        $ultimo=$ultimo[0]+1;
-	   
+					
+	   if (isset($inventario) || isset($dispclave)){
 	         $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
 	                                     columna6,columna7,columna8,columna9,columna10,
 	                                     columna11,columna12,columna13,columna14,columna15,
@@ -653,11 +659,12 @@ function utf8_string_array_encode(&$array){
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
 							 $columna51 )";
 		
-		  // echo $query;
-		   
-		    if (!$result) 
+		//echo $query;
+	    $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
+	   }
+	    if (!$result) 
 				 $errorinserta++;
-		
+				 
 	         $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
 			 
 			 
@@ -686,24 +693,25 @@ function utf8_string_array_encode(&$array){
 					 AND columna48!=0 AND columna49!=0
 					 AND columna50!=0 AND columna51=1
 					 ";*/
-					 $queryerror="SELECT * FROM errorinserta 
+					 
+					$queryerror="SELECT * FROM errorinserta 
 	                 WHERE tupla=" . $cuenta .
 				   " AND columna1=3 AND columna2=3 
 				     AND columna3=3 AND columna4=3 
 					 AND columna5=3
 				     AND columna10=3 AND columna11=3
 					 AND columna16!=0 AND columna17!=0
-					 AND columna18!=0 AND columna19!=0
+					 AND columna19!=0
 					 AND columna21!=0 AND columna22!=0
 					 AND columna30!=2 AND columna31!=2
 			         AND columna32!=2 AND columna33!=2 
 					 AND columna34!=2 AND columna35!=2
 				     AND columna36!=2 AND columna37!=2 
-					
 					 AND columna46!=0 AND columna47!=0
-					 AND columna48!=0 AND columna49!=0
+					
 					 AND columna50!=0 AND columna51=1
 					 ";
+			 
 				 
 		//echo $queryerror;	 
 	   $result = pg_query($queryerror) or die('Hubo un error con la base de datos');
@@ -862,6 +870,16 @@ function utf8_string_array_encode(&$array){
 				if ($conteorrorbn >0 && $cuentaact!=0)
 						 
 		              $botonBien->exportaErrorBienAct();
+}else {?>
+
+  <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></div></div>
+ <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
+
+<?php 
+
+ }
+
+
 	
 } // existe>0
 

@@ -14,6 +14,7 @@ $valida=new importa();
 $error=new importa();
 $verifica = new inventario();
 
+
 $querydt="DELETE FROM errorinserta";	
 $result = pg_query($querydt) or die('Hubo un error con la base de datos');
 
@@ -80,9 +81,8 @@ function utf8_string_array_encode(&$array){
 
 
 
-
 <table width="600" cellspacing="20" cellpadding="20" border="0" class="principal">
-<form  method="POST" enctype="multipart/form-data">
+<form action="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>"  method="POST" enctype="multipart/form-data">
  <tr>
    <td width="150" height="30" align="right">Subir archivo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
    <td width="400"><input type="file" name="archivo_txt" id='archivo'></td>
@@ -118,7 +118,7 @@ function utf8_string_array_encode(&$array){
   $nunca=0;
   $preimpor=0;
   $sinlab=0;
-//echo $file_upload;
+//print_r($_SESSION);
  
 if($size > 0){
  
@@ -184,9 +184,9 @@ if($size > 0){
 		 
           $inventario=$datosdec[15];
 		  $dispclave=$datosdec[0];
-        $verifica->verificaTipoEquipo($datosdec[0]);
-        if ($datosdec[0]==NULL) { $columna1=$columna1*2;
-		        $dispclave=0;
+          $verifica->verificaTipoEquipo($datosdec[0]);
+          if ($datosdec[0]==NULL) { $columna1=$columna1*2;
+		         $dispclave=0;
 				
 				?>
 	           <legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>
@@ -949,8 +949,8 @@ if($size > 0){
 		
 	    }//while para insertar en dispositivo temporal
 		fclose($fp);
-	/*	
-	echo 'novalido '.$novalido;		 
+	    /*	
+	    echo 'novalido '.$novalido;		 
 		echo '$errorinserta'.$errorinserta;			 
 	    echo 'errorimp'.$errorimp;
 	    echo 'errorbien'.$errorbien;
@@ -985,16 +985,15 @@ if($size > 0){
           <?php if ($novalido > 0 )
 		  
 		            $botonReg->exportaErrorReg($novalido);
-			  
-			  	
-				if ($errorbien >0 )
+					
+			    if ($errorbien >0 )
 						 
 		            $botonBien->exportaErrorBien();
 	
 
  }else {?>
-
-  <legend align="center"><?php echo "Tipo de archivo incorrecto"; ?></legend>       
+   <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></legend></div></div>
+ <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
 
 <?php 
 

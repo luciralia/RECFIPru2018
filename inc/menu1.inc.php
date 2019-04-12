@@ -90,7 +90,7 @@
 
     <?php if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
            <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
-           <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Documentos</a></li>
+           <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Documentos</a></li>
     <?php }?>
      <?php $actual=($_GET['mod']=='ace')? ' class="actual"':'';?>
      

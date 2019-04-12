@@ -117,7 +117,7 @@ $titulo='Importar Áreas';
 											 $datosdec[6],$datosdec[7],$datosdec[8],
 											 $datosdec[9],$datosdec[10],$datosdec[11]);
 											  
-											 echo $queryid;
+											// echo $queryid;
                
                            $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
 				

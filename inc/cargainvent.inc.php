@@ -218,8 +218,10 @@ if ($_GET['mod']=='invg' ){
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
             </tr> 
-            <tr>
+            
+           <tr>
            <td>
+            
            <legend align="right">
           <?php $action="../inc/exportainvgendivxls.inc.php";?>
          
@@ -231,10 +233,25 @@ if ($_GET['mod']=='invg' ){
             </td>
             </tr> 
             
+             <tr>
+           <td>
+           <br>
+           <legend align="right">
+          <?php $action="../inc/exportainvDGTyC.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expDGTyC" >
+	          <input name="enviar" type="submit" value="DGTyC" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
+            </td>
+            </tr> 
+            
  <?php } ?>
 
 </td>
 </tr>
+<br>
  <?php
      if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  
@@ -272,7 +289,7 @@ if ($_GET['mod']=='invg' ){
   
  <?php  } */  ?>
  
-   
+    <br>
   <?php 
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
@@ -283,7 +300,7 @@ if ($_GET['mod']=='invg' ){
             ?>
 	 
 
-   
+  
             <table class='material'>
             <tr>
                <th width="20%" scope="col">No. Inventario</th>
@@ -325,6 +342,7 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>  
                <th width="20%" scope="col">Estado</th>  
+               <th width="20%" scope="col">      </th>  
              </tr>
             
              <tr>   
@@ -833,8 +851,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
-               
-           </tr>
+              
            
      <?php     
 			
@@ -851,6 +868,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+              
            </tr>
            
          
@@ -871,6 +889,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                
          </tr>
          
          <?php   
@@ -889,6 +908,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                 
                   
           </tr>
          
