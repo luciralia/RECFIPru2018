@@ -935,7 +935,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
             <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
  
  <?php 
- 
+ print_r($_GET);
  ?>
 
  	<?php

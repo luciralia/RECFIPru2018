@@ -121,6 +121,7 @@ function getLaboratorio($idlab){
       and l.id_dep=de.id_dep
       and de.id_div=di.id_div
       and l.id_responsable=u.id_usuario order by laboratorio";
+	 // echo $query;
     }
 
 				    

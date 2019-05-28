@@ -155,6 +155,8 @@ document.form.resultado.value=resultado;
 <?php  
 //echo 'hace solicitud a editainventario.inc'; print_r($_POST);
 require_once('../clases/inventario.class.php');
+require_once('../clases/laboratorios.class.php');
+
 $combo = new inventario();
 $radial = new inventario();
 $cbox = new inventario();
@@ -175,7 +177,7 @@ if ($_POST['accion']=='editar'){
           
 <table  class="formulario">
  
-<tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo</h3></legend></tr>
+<tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo...</h3></legend></tr>
  <br> 
    <tr>
       <td><label>Dispositivo: </label></td>
@@ -188,8 +190,8 @@ if ($_POST['accion']=='editar'){
        <td><label><input type="text" name="descextensa" id="descextensa"size="55" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
     </tr>
      <tr>
-        <td ><label>Área</label></td>
-        <td ><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_usuario'])?></label></td>
+        <td><label>Área</label></td>
+        <td><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_usuario'])?></label></td>
      </tr>   
     </table>
 <br />
@@ -269,15 +271,15 @@ if ($_POST['accion']=='editar'){
      </tr>
      <tr>
          <td>Factura</td>
-         <td><input type="text" name="no_factura" size="40" value="<?php echo $_POST['no_factura'];  ?>" required ></td>
+         <td><input type="text" name="no_factura" size="40" value="<?php echo $_POST['no_factura'];  ?>" ></td>
          <td>Proveedor</td>
-         <td><input type="text" name="proveedor_p" size="25" value="<?php echo $_POST['proveedor_p'];  ?>" required ></td>
+         <td><input type="text" name="proveedor_p" size="25" value="<?php echo $_POST['proveedor_p'];  ?>"  ></td>
      </tr>
      <tr>
          <td>Años de garantía</td>
          <td><input type="text" name="anos_garantia" size="20" value="<?php echo $_POST['anos_garantia'];  ?>" ></td>
          <td>Fecha Factura</td>
-         <td><input name="fecha_factura" type="date" id="fecha_factura" step="1" min="01-01-1985" max="31-12-2030"  value="<?php echo $_POST['fecha_factura']; ?>"  required > </td>
+         <td><input name="fecha_factura" type="date" id="fecha_factura" step="1" min="01-01-1985" max="31-12-2030"  value="<?php echo $_POST['fecha_factura']; ?>"   > </td>
      </tr>
    </table>
   <br />

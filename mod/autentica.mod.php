@@ -3,6 +3,9 @@ session_start();
 require_once('../conexion.php');
 require_once('../clases/log.class.php');
 
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+
 $logger=new Log();
 
 

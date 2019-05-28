@@ -81,4 +81,51 @@
 <file name="02_eventos_crear_detener.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131681415070000000" remote="131790350390000000" Dst="2" />
 <file name="02_eventos_crear_detener.zip" server="132.248.52.241//var/www/RECFIPru2018/" local="131689890820000000" remote="131790350390000000" Dst="2" />
 <file name="menuejemplo.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131702653957456332" remote="131790350400000000" Dst="2" />
+<file name="actualizarAnt.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131872168757007469" remote="132005101290000000" Dst="2" />
+<file name="cambio.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131683912345934593" remote="132005101290000000" Dst="2" />
+<file name="censo.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131577442769079811" remote="132005101290000000" Dst="2" />
+<file name="censoeqcomp_20181116-153437_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868776803786996" remote="132005101290000000" Dst="2" />
+<file name="censoeqcomp_20181116-162827_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868809120943988" remote="132005101290000000" Dst="2" />
+<file name="censoeqcomp_20181116-163313_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868812030151129" remote="132005101290000000" Dst="2" />
+<file name="censoeqcomp_20181116-163612_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868813767667991" remote="132005101290000000" Dst="2" />
+<file name="censoeqcomp_20181116-163752_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868814763584659" remote="132005101290000000" Dst="2" />
+<file name="censoeqdig_20181116-162759_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868808862427810" remote="132005101290000000" Dst="2" />
+<file name="edtainvnetarioant13abril.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131681194076268187" remote="132005101290000000" Dst="2" />
+<file name="enviaexcel.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131680389010000000" remote="132005101300000000" Dst="2" />
+<file name="errores.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131880863771326415" remote="132005101300000000" Dst="2" />
+<file name="erroresbn_20181116-100427_Secretaría de Apoyo a la Docencia (1).xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868578770840984" remote="132005101300000000" Dst="2" />
+<file name="erroresbn_20181116-100427_Secretaría de Apoyo a la Docencia.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131868578728581812" remote="132005101300000000" Dst="2" />
+<file name="erroresbn_20181120-130149_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131872141168988901" remote="132005101300000000" Dst="2" />
+<file name="erroresreg_20181120-112107_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131872080751175135" remote="132005101300000000" Dst="2" />
+<file name="excel.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131680391076320487" remote="132005101300000000" Dst="2" />
+<file name="expReg.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131953346068951021" remote="132005101300000000" Dst="2" />
+<file name="importarListas.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131819442432345790" remote="132005101300000000" Dst="2" />
+<file name="importarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131843785896737608" remote="132005101300000000" Dst="2" />
+<file name="indexform.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131867662338077497" remote="132005101300000000" Dst="2" />
+<file name="inventariogendiv_20181115-170002_DIVISIÓN DE CIENCIAS BÁSICAS.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131867964083998426" remote="132005101300000000" Dst="2" />
+<file name="inventario_20181115-164808_Jefatura.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131867956928300247" remote="132005101300000000" Dst="2" />
+<file name="inventario_20181115-165838_Aula I101.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="131867963556394373" remote="132005101300000000" Dst="2" />
+<file name="Invmal.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131956949032086535" remote="132005101300000000" Dst="2" />
+<file name="lab.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131940384890254730" remote="132005101300000000" Dst="2" />
+<file name="liga.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131626709051099165" remote="132005101300000000" Dst="2" />
+<file name="menudesp.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131929201096555991" remote="132005101300000000" Dst="2" />
+<file name="menuDIE.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131947378620696061" remote="132005101310000000" Dst="2" />
+<file name="menuDIE2.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131953243070066888" remote="132005101310000000" Dst="2" />
+<file name="menulab.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131940511607244333" remote="132005101310000000" Dst="2" />
+<file name="menumouse.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131938792687442315" remote="132005101310000000" Dst="2" />
+<file name="menuNew.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131947337487901332" remote="132005101310000000" Dst="2" />
+<file name="menuNiv.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131953299104948795" remote="132005101310000000" Dst="2" />
+<file name="menuNivel.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131952564332866660" remote="132005101310000000" Dst="2" />
+<file name="menuNivStile.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131953250698236265" remote="132005101310000000" Dst="2" />
+<file name="menuNuevo.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131953259945086445" remote="132005101310000000" Dst="2" />
+<file name="menuOtro.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131941162036889568" remote="132005101310000000" Dst="2" />
+<file name="menuPrueba.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131995687487986133" remote="132005101310000000" Dst="2" />
+<file name="menus.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131944686280370428" remote="132005101310000000" Dst="2" />
+<file name="menuSG.html" server="132.248.52.241//var/www/RECFIPru2018/" local="131947298029997224" remote="132005101310000000" Dst="2" />
+<file name="menusub.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131938647358845409" remote="132005101310000000" Dst="2" />
+<file name="menu_otro.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131935340853104743" remote="132005101310000000" Dst="2" />
+<file name="precarga.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131831456676246061" remote="132005101310000000" Dst="2" />
+<file name="reportes.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131559216839621497" remote="132005101320000000" Dst="2" />
+<file name="exportaLicencia.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132019010723022923" remote="132019035570000000" Dst="2" />
+<file name="exportaDGTyCLicencias.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132019035703443836" remote="132019035750000000" Dst="2" />
 </dwsync>

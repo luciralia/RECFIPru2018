@@ -374,16 +374,14 @@ if($size > 0){
 		     <legend align="left"><?php // echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 	  <?php } else{
 		  if(is_int($datosdec[17])) $columna18=1; else $columna18=2; 
+	  }
 	  	  if ($datosdec[18]==NULL) { $columna19=0;?>
 		     <legend align="left"> <?php echo 'La columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria..'; ?></legend>
-      <?php } 
+      <?php }else{ 
 		  if(!preg_match($regexFecha,$datosdec[18])) $columna19=2; else $columna19=3;
 	  }
-
-         if ($datosdec[18]==NULL) { $columna19=0;?>
-    
-		     <legend align="left"><?php echo 'El formato de fecha de la columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
-      <?php } ?>
+         
+	 ?>	
       
 	  <?php if ($datosdec[20]==NULL) { $columna21=0;?>
 		     <legend align="left"><?php echo 'La columna U, <strong> modelo_procesador </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>     
@@ -731,7 +729,7 @@ if($size > 0){
 					 AND columna5=3
 				     AND columna10=3 AND columna11=3
 					 AND columna16!=0 AND columna17!=0
-					 AND columna19!=0
+					 
 					 AND columna21!=0 AND columna22!=0
 					 AND columna30!=2 AND columna31!=2
 			         AND columna32!=2 AND columna33!=2 
@@ -828,7 +826,12 @@ if($size > 0){
               $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios');
 			  		
 					
-					
+			  if ($datosdec[13]=='')
+			      $datosdec[13]='  ';
+			  if ($datosdec[14]=='')
+			      $datosdec[14]='  ';  
+			  if ($datosdec[18]=='')
+			      $datosdec[18]=0;	  
 			  if ($datosdec[18]==0) 
 			      $datosdec[18]= date("Y-m-d", strtotime($datosdec[18]));
 			  if ($datosdec[47]==0) 
@@ -838,9 +841,9 @@ if($size > 0){
 				  		
 	     
 			 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
-                                                                  dispositivo_clave,usuario_final_clave,familia_clave,
-                                                                 tipo_ram_clave,tecnologia_clave,nombre_resguardo,resguardo_no_empleado,
-                                                                 usuario_nombre,usuario_ubicacion,usuario_perfil, 
+              dispositivo_clave,usuario_final_clave,familia_clave,
+              tipo_ram_clave,tecnologia_clave,nombre_resguardo,resguardo_no_empleado,
+              usuario_nombre,usuario_ubicacion,usuario_perfil, 
               usuario_sector,serie,marca_p, 
               no_factura,anos_garantia,inventario, 
               modelo_p,proveedor_p,fecha_factura,
@@ -1000,10 +1003,7 @@ if($size > 0){
  }
    
  }
- /*Revisar tipo de datos para validaciopnes de caTALOGOS
- QUE SEN ENTEROS.
- rEVISAR OBLIGATORIOERAD PERMITIR ALGUNOS
- */
+ 
  ?>
  
    

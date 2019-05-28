@@ -1,10 +1,10 @@
 * {
-padding:0px;
-margin:0px; 
+padding: 0px;
+margin: 0px; 
 }
 
 #header {
- /*margin: auto;*/
+/*margin: auto;*/
 width:1024px;
 font-family:arial;
 }
@@ -55,7 +55,8 @@ float:left;
 .navu li ul {
 display: none;
 position: absolute;
-min-width: 420px;
+min-width: 450px;
+
 }
 
 .navu li:hover > ul {
@@ -66,7 +67,6 @@ display:block;
 .navu li ul li {
 position: relative;
 z-index: 199;
-
 }
 
 .navu li ul li a {
@@ -84,9 +84,9 @@ z-index:199;
 }
 
 .navu li ul li ul {
-	
-right: -420px;
-max-width: auto;
+left: 450px;
+/*min-width: auto;*/
+min-width: 300px;
 top: 0px;
 z-index: 199;
 }

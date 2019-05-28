@@ -99,12 +99,13 @@ if ($_SESSION['tipo_usuario']!=10){
 						 
 						// echo $querylab;
 						   $datoslab = @pg_query($querylab) or die('Hubo un error lab');
+						   $depto=strtoupper($departamentos['departamento']);
                            if (pg_num_rows($datoslab)==0 ){//si no tiene hijos imprime la lista 
 				   
-                             $menu.="<li><a href=\"#\">{$departamentos['departamento']}</a></li>"; 
+                             $menu.="<li><a href=\"#\">{$depto}</a></li>"; 
                           }//if (mysql_num_rows($querysub2)==0){ 
                           else{//si tiene hijos empieza a buscarlos  
-                             $menu.="<li><a href=\"#\">{$departamentos['departamento']}</a><ul>"; 
+                             $menu.="<li><a href=\"#\">{$depto}</a><ul>"; 
                               while ($laboratorios = pg_fetch_array($datoslab)) { 
                                    $menu.="<li><a href=\"../view/inicio.html.php?lab={$laboratorios['id_lab']}&mod={$_GET['mod']}&accion={$_REQUEST['accion']}&div={$_SESSION['id_div']}\">{$laboratorios['laboratorio']}</a></li>"; 
 							}//while laboratorios { 

@@ -96,7 +96,7 @@ $titulo='Importar Usuarios';
 			        $queryu=sprintf($updatequery,$datosdec[0] ); 
 			        $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios '); */
 			        $repetido++; ?>
-					 <legend align="left"> <?php echo "Se insertó previamente el usaurio con identificador" . $datosdec[0]; ?></legend> 
+					 <legend align="left"> <?php echo "Se insertó previamente el usuario con identificador" . $datosdec[0]; ?></legend> 
 			       
 		   <?php } else { 
 	     

@@ -1,0 +1,63 @@
+<?php  
+//echo 'hace solicitud a editainventario.inc'; print_r($_POST);
+require_once('../clases/inventario.class.php');
+$combo = new inventario();
+?>
+<form action="../inc/procesainventario.inc.php" method="post" name="form_edita" class="formul" onsubmit="return validaNum(this);" >
+
+ <br>  <br> 
+          
+<table  class="formulario">
+ 
+<tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo</h3></legend></tr>
+ <br> 
+   <tr>
+      <td><label>Dispositivo: </label></td>
+      <td><label><?php $combo->combodispositivo($_POST['dispositivo_clave'])?></label></td>
+      <td><label>Usuario Final:</label></td>
+      <td><label><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></label></td>
+   </tr>
+   <tr>
+       <td><label>Descripción Extensa</label></td>
+       <td><label><input type="text" name="descextensa" id="descextensa"size="55" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
+    </tr>
+     <tr>
+        <td ><label>Área</label></td>
+        <td ><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_usuario'])?></label></td>
+     </tr>   
+    </table>
+<br />
+
+ <table cellpadding="5" class="formulario">
+ 
+  <tr><legend align="center"><h3>Resguardo</h3></legend></tr>
+  <br />
+   <tr>
+      <td><label>Nombre</td>
+      <td><input type="text" name="nombre_resguardo"  id="nombre_resguardo" size="37"  value="<?php echo $_POST['nombre_resguardo'];?>" required></label></td>
+      <table>
+   <br/>
+ <br/>
+  <tr>
+      <td colspan="3" align="center">
+        <input type="submit" name="accione" value="Guardar" />
+        <input type="reset" name="accione"  value="Limpiar" />
+	    <input type="submit" name="accione" value="Cancelar" />
+    
+      </td>
+  </tr>    
+   </table>
+<br/>
+<br/>
+
+
+<input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
+<input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
+<input name="bn_id" type="hidden" value="<?php echo $_POST['bn_id']; ?>" />
+<input name="id_equipo" type="hidden" value="<?php echo $_POST['id_equipo']; ?>" />
+<input name="id_dispositivo" type="hidden" value="<?php echo $_POST['id_dispositivo']; ?>" />
+</form>
+  
+<?php 
+}
+?>

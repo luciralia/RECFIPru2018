@@ -162,7 +162,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		 
           $inventario=$datosdec[15];
 		  $dispclave=$datosdec[0];
-          $verifica->verificaTipoEquipo($datosdec[0]);
+           $verifica->verificaTipoEquipo($datosdec[0]);
           if ($datosdec[0]==NULL) { $columna1=$columna1*2;
 		         $dispclave=0;
 				
@@ -352,16 +352,14 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		     <legend align="left"><?php // echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 	  <?php } else{
 		  if(is_int($datosdec[17])) $columna18=1; else $columna18=2; 
+	  }
 	  	  if ($datosdec[18]==NULL) { $columna19=0;?>
 		     <legend align="left"> <?php echo 'La columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria..'; ?></legend>
-      <?php } 
+      <?php }else{ 
 		  if(!preg_match($regexFecha,$datosdec[18])) $columna19=2; else $columna19=3;
 	  }
-
-         if ($datosdec[18]==NULL) { $columna19=0;?>
-    
-		     <legend align="left"><?php echo 'El formato de fecha de la columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
-      <?php } ?>
+         
+	 ?>	
       
 	  <?php if ($datosdec[20]==NULL) { $columna21=0;?>
 		     <legend align="left"><?php echo 'La columna U, <strong> modelo_procesador </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>     
@@ -612,8 +610,9 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 					  }
 				  }
 			
-			 }
-       
+			 } 
+		  
+		  
 
 	   $busca=buscaBienesAct($datosdec); // si no  lo encuentra lo registra en errores
 		//echo 'buscabien', $busca;	

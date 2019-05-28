@@ -4,9 +4,9 @@ require_once('../inc/encabezado.inc.php');
 
 ?>
   <tr>
-  <td><?php require_once('../inc/menu1.inc.php'); ?>      &nbsp;</td>
+        <td><?php require_once('../inc/menu1.inc.php'); ?>      &nbsp;</td>
   </tr>
-   <tr>
+  <tr>
     <td><?php 
 	if ($_SESSION['id_div']==NULL && ($_SESSION['tipo_usuario']!=10 ))
      {

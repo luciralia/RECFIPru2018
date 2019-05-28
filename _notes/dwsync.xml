@@ -9,12 +9,16 @@
 <file name="index_aux.php" server="132.248.52.241//var/www/SIELDIv2/" local="130428300870894349" remote="130428323920000000" Dst="-1" />
 <file name="conexion.php" server="132.248.52.241//var/www/RECFIPru/" local="131662243950864200" remote="131662320570000000" Dst="1" />
 <file name="config.php" server="132.248.52.241//var/www/RECFIPru/" local="131662244264289680" remote="131662320700000000" Dst="1" />
-<file name="conexion.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131823880030109787" remote="131849623800000000" Dst="1" />
-<file name="config.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131853313825392122" remote="131853313930000000" Dst="1" />
-<file name="index.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131711408554763913" remote="131790350360000000" Dst="2" />
+<file name="conexion.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005100490304038" remote="132005101170000000" Dst="2" />
+<file name="config.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005100119177784" remote="132005101170000000" Dst="2" />
+<file name="index.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132006720486632878" remote="132006720530000000" Dst="2" />
 <file name="index_actualizacion.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130428209583603015" remote="131790350360000000" Dst="2" />
 <file name="index_aux.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130428300870894349" remote="131790350360000000" Dst="2" />
 <file name="index_bak.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130428213653825818" remote="131790350360000000" Dst="2" />
 <file name="index_titanv.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130417192735316696" remote="131790350360000000" Dst="2" />
 <file name="php.ini.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131417631884942295" remote="131790350360000000" Dst="2" />
+<file name=".buildpath" server="132.248.52.241//var/www/RECFIPru2018/" local="131950762566055809" remote="132005101170000000" Dst="2" />
+<file name=".project" server="132.248.52.241//var/www/RECFIPru2018/" local="131950762419297717" remote="132005101170000000" Dst="2" />
+<file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131878227204289415" remote="132005101180000000" Dst="2" />
+<file name=".gitignore" server="132.248.52.241//var/www/RECFIPru2018/" local="131865972305137802" remote="132005101180000000" Dst="2" />
 </dwsync>

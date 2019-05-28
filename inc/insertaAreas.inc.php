@@ -93,7 +93,7 @@ $titulo='Importar Áreas';
 		           $updatequery= "UPDATE laboratorios SET nombre='%s'
 			                      WHERE id_lab="."'".$datosdec[0]."'";
 							  
-			        $queryu=sprintf($updatequery,$datosdec[0] ); 
+			        $queryu=sprintf($updatequery,$datosdec[3] ); 
 			        $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios '); 
 			        $repetido++; ?>
 					 <legend align="left"> <?php echo "Se insertó previamente el área con identificador" . $datosdec[0]; ?></legend> 

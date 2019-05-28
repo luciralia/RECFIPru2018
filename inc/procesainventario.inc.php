@@ -265,6 +265,8 @@ $queryd="SELECT max(id_dispositivo) FROM dispositivo";
 $registrod= pg_query($con,$queryd);
 $ultimo= pg_fetch_array($registrod);
 
+
+
 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
 dispositivo_clave,usuario_final_clave,familia_clave,
 tipo_ram_clave,tecnologia_clave,resguardo_no_empleado,nombre_resguardo,
@@ -620,6 +622,23 @@ if ($_POST['tec_cuatro']=='0')
 else
 	$tec_cuatro=$_POST['tec_cuatro']; 
 	
+if ($_POST['no_factura']=='')
+    $no_factura='  ';
+else 
+    $no_factura=$_POST['no_factura'];	
+
+
+if ($_POST['proveedor_p']=='')
+    $proveedor_p='  ';
+else 
+    $proveedor_p=$_POST['proveedor_p'];	
+	
+if ($_POST['fecha_factura']=='')
+    $fecha_factura='  ';
+else 
+    $fecha_factura=date("d-m-Y", strtotime($_POST['fecha_factura']));	
+	
+				
 	//busca la marca en el catálogo de marcas...
 				
 	$querym="SELECT descmarca 
@@ -651,8 +670,8 @@ WHERE id_dispositivo=". $_POST['id_dispositivo'];
 $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
                           $_POST['id_tipo_ram'],$_POST['id_tecnologia'],$_POST['resguardo_no_empleado'],$_POST['nombre_resguardo'],
                           $_POST['usuario_nombre'],$_POST['usuario_ubicacion'],$_POST['id_usuario_perfil'],
-                          $_POST['id_usuario_sector'],$marca[0],$_POST['no_factura'],
-                          $_POST['modelo_p'],$_POST['proveedor_p'],date("d-m-Y", strtotime($_POST['fecha_factura'])),$_POST['familia_especificar'],$_POST['modelo_procesador'],$cantidad_procesador,$nucleos_totales,
+                          $_POST['id_usuario_sector'],$marca[0],$no_factura,
+                          $_POST['modelo_p'],$proveedor_p,$fecha_factura,$_POST['familia_especificar'],$_POST['modelo_procesador'],$cantidad_procesador,$nucleos_totales,
                           $nucleos_gpu,$_POST['id_mem_ram'],$_POST['ram_especificar'],
                           $_POST['id_elemento'],$totalalmac,$_POST['id_arreglo'],
                           $_POST['esquema_uno'],$_POST['esquema_dos'],$_POST['esquema_tres'],$_POST['esquema_cuatro'],
