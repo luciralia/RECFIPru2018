@@ -128,7 +128,7 @@ function getLaboratorio($idlab){
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en laboratoriosmmm');
 					
-					$salida='<select name="id_lab" id="id_lab">';
+					$salida='<select name="id_lab" id="id_lab" >';
 					        // <option value="0" >Ninguna</option>'; 
 					
 					while ($datosc = pg_fetch_array($result))

@@ -89,7 +89,7 @@ resultado=valor1*valor2;
 document.form.resultado.value=resultado;
 }  
 
-  function validaNum(formulario) {
+function validaNum(formulario) {
 	  
 	  /*if ((formulario.descextensa.value.length == 0 )  ){
                     window.alert('Falta información obligatoria');
@@ -171,13 +171,13 @@ if ($_POST['accion']=='editar'){
 //print_r ($_SESSION);
 ?>
 
-<form action="../inc/procesainventario.inc.php" method="post" name="form_edita" class="formul" onsubmit="return validaNum(this);" >
+<form action="../inc/procesainventario.inc.php" method="post" name="form_edita" class="formul" onsubmit="return validaNum(this);"  >
 
  <br>  <br> 
           
 <table  class="formulario">
  
-<tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo...</h3></legend></tr>
+<tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo..</h3></legend></tr>
  <br> 
    <tr>
       <td><label>Dispositivo: </label></td>
@@ -190,7 +190,7 @@ if ($_POST['accion']=='editar'){
        <td><label><input type="text" name="descextensa" id="descextensa"size="55" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
     </tr>
      <tr>
-        <td><label>Área</label></td>
+        <td><label>Área...</label></td>
         <td><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_usuario'])?></label></td>
      </tr>   
     </table>
@@ -698,16 +698,16 @@ if ($_POST['accion']=='editar'){
   
   <tr>  
 
-     <td>Equipo alto rendimiento</td>
-     <td><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
-     <td align="left" >Arquitectura</td>
-     <td align="left"><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
+     <td colspan="2" align="left">Equipo alto rendimiento</td>
+     <td ><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
+     <td  align="left" >Arquitectura</td>
+     <td ><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
    </tr>
    <tr>
-        <td><font color="blue">Servidor</font></td>
-        <td><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font></td>
-        <td align="left" >Estado</td>
-        <td align="left"><?php $radial->radialestado($_POST['estadobien'])?></td>
+        <td colspan="2" align="left "><font color="blue">Servidor</font></td>
+        <td ><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font></td>
+        <td >Estado</td>
+        <td ><?php $radial->radialestado($_POST['estadobien'])?></td>
    </tr>
    <tr> 
         <td>Tipo tarjeta de video</td>

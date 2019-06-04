@@ -130,8 +130,6 @@ if($_REQUEST['accion']=='buscarg' )
 <input name="bn_id" type="hidden" value="<?php echo $_GET['bn_id']; ?>" />
 </form>
 
-
-<!--</div>-->
 <?php
 }
 ?>
@@ -179,8 +177,6 @@ switch ($_GET['bn_id']){
 	else if ($_REQUEST['bbuscarg']=='Buscar' ){
 
 	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
-	
-	
 	}
 
  //echo 'exhibe consulta buscarinv ';
@@ -188,7 +184,7 @@ switch ($_GET['bn_id']){
  //echo $query;
 ?>
 
-<table> <!--17mayo-->
+<table> 
 
 <?php 
 
@@ -211,13 +207,11 @@ if ($inventario!=0){?>
 			           </select>
 			    
 			<?php
-			
 			    echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 				echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
-				echo "<input name='mod' type='hidden' value='".$_GET['bn_id']."' /> \n";
-				
+				//echo "<input name='mod' type='hidden' value='".$_GET['bn_id']."' /> \n";
 			?>
-			<input name="bbuscar" type="hidden" value="Buscar" />
+			<!--<input name="bbuscar" type="hidden" value="Buscar" />
 			<input name="accion" type="hidden" value="Buscar" />
 			<input name="_no_inv" type="hidden" value="<?php echo $_REQUEST['_no_inv']?>" />
 			<input name="_no_inv_ant" type="hidden" value="<?php echo $_REQUEST['_no_inv_ant']?>" />
@@ -225,10 +219,9 @@ if ($inventario!=0){?>
 			<input name="_modelo" type="hidden" value="<?php echo $_REQUEST['_modelo']?>" />
 			<input name="_no_serie" type="hidden" value="<?php echo $_REQUEST['_no_serie']?>" />
             <input name="_estado" type="hidden" value="<?php echo $_REQUEST['_estado']?>" />
-            <input name="bn_id" type="hidden" value="<?php echo $_REQUEST['bn_id']?>" />
+            <input name="bn_id" type="hidden" value="<?php echo $_REQUEST['bn_id']?>" />-->
 			<input name="bOrden" type="submit" value="ordenar" />
-
-</form>
+            </form>
 </td>
 
 </tr>
@@ -390,7 +383,6 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 
   <?php 
 
-
 // para signar verifica que tenga laboratorio para asignar...
 
  if ($labasig=='Ninguno' && $_GET['lab'] != NULL ){
@@ -544,9 +536,7 @@ $inventarioexp= pg_num_rows($datosexp);
 	      
 			<?php }  
  } 
- 
-//print_r ($lab_invent);
-  
+
 ?>
 
 </td></tr>
@@ -595,8 +585,7 @@ $inventarioexp= pg_num_rows($datosexp);
 
 <br />
 <br />
-
- <br \>
+<br />
 
 
 

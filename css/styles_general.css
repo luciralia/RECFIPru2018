@@ -221,7 +221,7 @@ box-shadow: 10px 10px 15px #888888;
 
 table.formulario
 {
-max-width:800px;
+width:800px;
 /*background-image: url('../images/bkg_02.gif');*/
 background-color: #EEEEEE;
 /*border:2px ridge #D3d3d3;*/

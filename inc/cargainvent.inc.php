@@ -1,4 +1,4 @@
-﻿
+﻿<strong></strong>
 <?php
 // version que no toma equipoexperimentaL PARA VER
 require_once('../conexion.php');
@@ -16,13 +16,12 @@ $madq = new inventario();
 $logger->putLog(7,2);
 
 $bandera1=0;
-/*echo'datos en cargaInv';
-print_r($_SESSION);*/
+//echo'datos en cargaInv';
+//print_r($_SESSION);
 
 if ($_GET['mod']=='invg' ){
 	
 	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div']?>
-
 
 <tr>
 <td align="center">
@@ -193,8 +192,8 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
    }
-  // echo 'consulta';
-  //echo $query;
+   echo 'consultaen cargainv';
+  echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
@@ -372,11 +371,11 @@ if ($_GET['mod']=='invg' ){
         
  <?php  if (($_SESSION['tipo_usuario']!=10)) {
         $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];?>
-      <!--
+    
       <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
 
-            <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>
+           <!-- <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>-->
  
  <?php 
 
@@ -387,7 +386,7 @@ if ($_GET['mod']=='invg' ){
 		
 		 ?>
          </form>
-        -->
+      
        <?php      
             }//fin if equipoc	para boton de editar	
 	?>
@@ -413,7 +412,7 @@ if ($_GET['mod']=='invg' ){
 
 }// fin del inventario general
 else 
-{ //&& $_SESSION['tipo_usuario']!=10
+{ 
 
 if ( $_SESSION['id_div']==NULL)
 	     $_SESSION['id_div']=$_REQUEST['div'];
@@ -575,24 +574,16 @@ if ( $_SESSION['id_div']==NULL)
 			
         } // fin de switch
 }
-	  
-	//echo 'el query es inv';
-	//echo  $query;
-	  
+
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); //lHH
-
-//echo $query . "</br>"; 
-//print_r($_REQUEST);
-//print_r($_SESSION);
-/*si y solo si hay registros muestra*/
 
 if ($inventario!=0) { ?>
    
 <?php $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div']?>
-<!-- <form action="<?php echo $action1; ?>" method="post" name="fbusqueda">
+ <form action="<?php echo $action1; ?>" method="post" name="fbusqueda">
 <p style="text-align: right"> <input name="accion" type="submit" value="buscar" id="botonblu"/>
-</form>-->
+</form>
 
 <tr>
 <td align="center">
@@ -611,9 +602,6 @@ if ($inventario!=0) { ?>
 
 
 
- <!--
-<table>
-<tr><td>-->
 
 <form action="../view/inicio.html.php" method="get" name="orderby">
         Ordenar por: <select name="orden">
@@ -632,8 +620,6 @@ if ($inventario!=0) { ?>
 
 <input name="bOrden" type="submit" value="ordenar" />
 </form>
-
-
 
 
 <?php		
@@ -704,7 +690,7 @@ if ($inventario!=0) { ?>
 <br>
 
 <?php
-	 // fin de eauipos existentes
+	 // fin de equipos existentes
 if (isset($_GET['lab']) && isset($_GET['mod']))
  { 
  
@@ -802,7 +788,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-                 <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
@@ -820,7 +806,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-                 <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
@@ -926,22 +912,18 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
  <?php  if (($_SESSION['tipo_lab']=='c' || $_SESSION['tipo_lab']=='o' || $_SESSION['tipo_lab']=='e' || $_SESSION['tipo_lab']=='u'||$_SESSION['tipo_lab']=='s' ||$_SESSION['tipo_lab']=='a'||$_SESSION['tipo_lab']=='b'||$_SESSION['tipo_lab']=='t') && $_GET['mod']=='invc' && $_SESSION['tipo_usuario']!=10 ){
 
  ?>
-      <?php //echo $form=$lab_invent['id_lab'] ."_".$lab_invent['id_equipo'];?>
+   
       
       <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];?>
       
       <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
  
-            <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
+       <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
  
- <?php 
- print_r($_GET);
- ?>
-
- 	<?php
+        <?php
 	
-		foreach ($lab_invent as $campo => $valor) {
-				        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
+		 foreach ($lab_invent as $campo => $valor) {
+				      
 		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				
 		}?>
@@ -949,18 +931,13 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
       </form>    
         
 	        <?php	
-		
-			} // fin del while?> 
+		    } // fin del while
+			?> 
       </table>
 	 <?php		
- } //isset($_GET['lab']) && isset($_GET['mod'])
+   } //isset($_GET['lab']) && isset($_GET['mod'])
 
-?>
-
- <!-- </table> -->   
- <?php 
- 	
- }
+  }
 
 } //fin del if-else si en inventario general
 

@@ -15,14 +15,12 @@ require_once('../conexion.php');
 <p>procesaInventario</p>
 <p>&nbsp;</p>
 <?php 
-//echo'Equipo que llega para asignar ';
-//print_r($_SESSION);
+echo'Equipo que llega para asignar ';
+print_r($_SESSION);
 print_r($_REQUEST); 
 ?>
-
 <!-- asigna equipo a un laboratorio-->
-<?php 
-if($_POST['ecasignar']=='Asignar' && $_REQUEST ['bn_notas']=='COMPUTO'){
+<?php if($_POST['ecasignar']=='Asignar' && $_REQUEST ['bn_notas']=='COMPUTO'){
 // if($_POST['ecasignar']=='Asignar'){
 $query="SELECT * FROM dispositivo d
         LEFT JOIN laboratorios l 
@@ -85,10 +83,10 @@ $result=pg_query($con,$query) or die('ERROR AL INSERTAR EN EQUIPOC: ' . pg_last_
 $queryd="SELECT max(id_dispositivo) FROM dispositivo";
 $registrod= pg_query($con,$queryd);
 $ultimo= pg_fetch_array($registrod);
-
-//$querymarca="SELECT id_marca FROM cat_marca WHERE descmarca=" . $_REQUEST['bn_marca'];
-//$traeidmarca=pg_query($con,$querymarca);
-//$idmarca=pg_fetch_array($traeidmarca);
+/*
+$querymarca="SELECT id_marca FROM cat_marca WHERE descmarca=" . $_REQUEST['bn_marca'];
+$traeidmarca=pg_query($con,$querymarca);
+$idmarca=pg_fetch_array($traeidmarca);*/
 
 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
 dispositivo_clave,usuario_final_clave,familia_clave,
@@ -371,7 +369,8 @@ $strquery="INSERT INTO equipo (id_equipo,bn_id,id_lab,fecha,id_asig,tipo_mant,
 								
 $query=sprintf($strquery,$reg[0],$_REQUEST['bn_id'],$_REQUEST['lab'],date('Y-m-d'),$_POST['id_mod'],$_REQUEST['bn_desc'],$_REQUEST['bn_clave'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_modelo']);
 
-$result=pg_query($con,$query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+
+			$result=pg_query($con,$query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 			
 $updatequery= "UPDATE bienes SET bn_notas='EQUIPO' WHERE  bn_id=" . $_REQUEST['bn_id'];
 
@@ -557,7 +556,7 @@ header($direccion);
 
 ?>
 
-<?php if($_POST['accioned']=='Guardar'){ ?>
+<?php if($_POST['accione']=='Guardar'){ ?>
 <h1>GUARDAR</h1>
 <?php 
 //Salvar una edición de inventarios
@@ -650,7 +649,7 @@ else
               $registrom= pg_query($con,$querym);
               $marca= pg_fetch_array($registrom);
 	
-$strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
+$strqueryd="UPDATE dispositivon SET  dispositivo_clave=%d, id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
                                     tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
                                     usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,
                                     usuario_sector=%d,marca_p='%s',no_factura='%s',
@@ -684,7 +683,7 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
 						  $_POST['equipoaltorend'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
 						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod']);	
 
- $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en dispositivo: ' . pg_last_error());
+
 
 if (isset($_POST['idsoper']))
 
@@ -764,21 +763,23 @@ $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
 			   $_POST['equipoaltorend'], $_POST['accesorios'],$datoarq['arquitectura'],$_POST['estadobien'], $datoserv['servidor'],$_POST['id_mod']);
 
 
-    $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
-
-    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-    echo $direccion;
-    header($direccion);
-
-}
-
-if( $_POST['accionn']=='Cancelar'){ 
+   $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+//echo $direccion . "</br>";
+   echo $direccion;
+   header($direccion);
+//echo $queryu;
+}
+
+if($_POST['accione']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
+   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+
    echo $direccion;
    header($direccion);
 }
-
+?>
+<?php
 ob_end_flush();
 ?>
 
