@@ -15,24 +15,27 @@ header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
 
-if ( $_SESSION['tipo_usuario']==1){
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
 	 
 	$querylab="SELECT nombre FROM laboratorios
            WHERE id_lab=" . $_REQUEST['lab'] ;
     $registrolab = pg_query($con,$querylab);
     $nomblab= pg_fetch_array($registrolab);
+    //echo 'consulta'.$querylab;
     $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+
 }
 
-if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1){
+if ( $_SESSION['tipo_usuario']==9 && $_SESSION['id_div']!=NULL && $_REQUEST['lab']==NULL ){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
 $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 
-$texto='Content-Disposition: attachment;filename="censoeqar_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 }
+
 
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 $querydiv="SELECT nombre FROM divisiones
@@ -41,13 +44,12 @@ $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
 
-$texto='Content-Disposition: attachment;filename="censoeqar_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 }
 else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 $titulo='FacultadIngenieria';	
-$texto='Content-Disposition: attachment;filename="censoeqar_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
-}
-	
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
+}	
 header($texto);
 
 ?>
@@ -57,7 +59,7 @@ header($texto);
  
 		<?php 
 		
-	if ($_SESSION['tipo_usuario']==1){
+	if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
 
   $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
 	        FROM dispositivo dp
@@ -72,7 +74,7 @@ header($texto);
             WHERE equipoaltorend='Si'
 			AND l.id_lab=". $_REQUEST['lab']  . "
 			ORDER BY marca_p,l.nombre ASC";
-	}
+	}else
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query=" SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
@@ -103,7 +105,7 @@ header($texto);
             WHERE equipoaltorend='Si'
 			AND id_div=". $_SESSION['id_div']  . "
 			ORDER BY marca_p,l.nombre ASC";
-	}
+	}else
 		if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query=" SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre,l.nombre

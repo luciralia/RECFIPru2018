@@ -7,7 +7,7 @@ require_once('../clases/inventario.class.php');
 session_start(); 
 
 $marca=new importa();
-
+$guarda=new importa();
 $botonReg=new importa();
 $botonBien=new importa();
 $valida=new importa();
@@ -55,6 +55,12 @@ function buscaBienes(&$datosdec){
 						   
 			          $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'b' );			 
 			           $registroerror= @pg_query($queryerror) or die('ERROR AL INSERTAR en registroerror');
+					   
+					   $querybienbk="INSERT INTO  registroerrorbk                                                   (id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			               VALUES (%d,'%s',%d,'%s',%d,'%s')";
+						   
+			          $queryerrorbk=sprintf($querybienbk,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'b' );			 
+			           $registroerrorbk= @pg_query($queryerrorbk) or die('ERROR AL INSERTAR en registroerror');
 			   
 			        $conterrorbn=$conterrorbn+1;
 			 
@@ -136,10 +142,14 @@ if($size > 0){
      while($datos = fgetcsv ($fp, 1000, "\t")){
 		 
 		  $datosdec=utf8_string_array_encode($datos); 
+		  
+		  $estado=1; // para importación
+		  $guarda->respaldo($datos,$estado);
+		  
 		 
 	      $querytemp="SELECT * FROM dispositivo WHERE 
 		              inventario="."'".$datosdec[15]."'";
-		  //echo 	$querytemp;	  
+		  
 		  $datostemp = pg_query($querytemp);
 		  
 		  $importado=pg_num_rows($datostemp);
@@ -159,15 +169,9 @@ if($size > 0){
 				      echo 'ENTRO'.$datosdec[15];
 				      $nunca++;
 				  }else { 	
-		         /*  $updatequery= "UPDATE dispositivo SET inventario='%s'
-			                      WHERE inventario="."'".$datosdec[15]."'";
-							  
-			        $queryu=sprintf($updatequery,$datosdec[15] ); 
-			        $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR dispositivo '); */
-			        $preimpor++; ?>
+		             $preimpor++; ?>
 					 <legend align="left"> <strong><?php echo "Se importó previamente el dispositivo con número de inventario " . $datosdec[15]; ?></strong></legend> 
-			       
-		   <?php 
+			 <?php 
 				}
 		} else { 
 	     
@@ -643,7 +647,7 @@ if($size > 0){
 		else 	
 		    $bnid=$busca;
 		
-			
+			$validotupla=0;
           //Traer el último valor en errorinserta
 			        $queryd="SELECT max(id_error) FROM errorinserta";
                    // $registrod= pg_query($con,$queryd);
@@ -654,6 +658,35 @@ if($size > 0){
 				    $ultimo=1;//inicializando la tabla dispositivouno
 			  else 
 			        $ultimo=$ultimo[0]+1;
+					
+				$fechaerror=	date('Y-m-d H:i:s');
+	       $querybk= "INSERT INTO errorinsertabackup(id_error,tupla,valida,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
+	                                     columna6,columna7,columna8,columna9,columna10,
+	                                     columna11,columna12,columna13,columna14,columna15,
+										 columna16,columna17,columna18,columna19,columna20,
+										 columna21,columna22,columna23,columna24,columna25,
+										 columna26,columna27,columna28,columna29,columna30,
+										 columna31,columna32,columna33,columna34,columna35,
+										 columna36,columna37,columna38,columna39,columna40,
+										 columna41,columna42,columna43,columna44,columna45,
+										 columna46,columna47,columna48,columna49,columna50,
+										 columna51,fechaerror) VALUES 
+										 ($ultimo,$noo,$validotupla,'$inventario',$bnid,$dispclave,$columna1,$columna2,$columna3,$columna4,$columna5,
+										 $columna6,$columna7,$columna8,$columna9,$columna10,
+	                                     $columna11,NULL,$columna13,$columna14,$columna15,
+										 $columna16,$columna17,$columna18,$columna19,NULL,
+										 $columna21,$columna22,$columna23,$columna24,$columna25,
+										 NULL,$columna27,NULL,$columna29,$columna30,
+										 $columna31,$columna32,$columna33,$columna34,$columna35,
+										 $columna36,$columna37,$columna38,$columna39,$columna40,
+										 $columna41,$columna42,$columna43,NULL,$columna45,
+										 $columna46,$columna47,$columna48,$columna49,$columna50,
+							             $columna51,'$fechaerror' )";
+		
+		echo $querybk;
+	    $resultbk=@pg_query($querybk) or die('ERROR AL INSERTAR en errorinsertabackup'); 				
+					
+					
 					
 	   if (isset($inventario) || isset($dispclave)){
 	         $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
@@ -729,20 +762,18 @@ if($size > 0){
 					 AND columna5=3
 				     AND columna10=3 AND columna11=3
 					 AND columna16!=0 AND columna17!=0
-					 
 					 AND columna21!=0 AND columna22!=0
 					 AND columna30!=2 AND columna31!=2
 			         AND columna32!=2 AND columna33!=2 
 					 AND columna34!=2 AND columna35!=2
 				     AND columna36!=2 AND columna37!=2 
 					 AND columna46!=0 AND columna47!=0
-					
 					 AND columna50!=0 AND columna51=1
 					 ";
 			 
 	        $result = pg_query($queryerror) or die('Hubo un error con la base de datos');
 	        $error= pg_num_rows($result); 
-	  //echo 'errorno',$error;
+	   //echo 'errorno',$error;
 	  // echo 'bien'. $bienes[0].  'error'.$error;
 			
 	 if ($error>0 ){
@@ -750,7 +781,8 @@ if($size > 0){
 	   $regvalido++;
 	 
 	  if ($busca!=NULL){
-	
+		   
+	      $validotupla=1;
 	      //ultimo valor en dispositivo
 	      $queryd="SELECT max(id_dispositivo) FROM dispositivo";
                     $registrod= pg_query($queryd) or die('ERROR ...'); ;
@@ -904,7 +936,7 @@ if($size > 0){
 				 $datosdec[37],$datosdec[38],$datosdec[39],$datosdec[40], 
                  $datosdec[41],$datosdec[42],$datosdec[43], 
 			     $datosdec[44],$datosdec[45], 
-			     $datosdec[46],$datosdec[47],$datosdec[48],date('Y-m-d'), 
+			     $datosdec[46],$datosdec[47],$datosdec[48],date('Y-m-d H:i:s'), 
 				 $equipoc[1],$equipoc[2],$equipoc[3], 
 				 $equipoc[4],$equipoc[5],$equipoc[6], 
                  $equipoc[7],$equipoc[8],$equipoc[9], 
@@ -940,9 +972,22 @@ if($size > 0){
 			      $queryerror=sprintf($querybien,$ultimo,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );
 			   			 
 			      $registroerror= pg_query($queryerror)or die('Hubo un error con la base de datos');
-		
+		          //backup
+				  $querybienbk="INSERT INTO registroerrorbk(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
+						   
+			      $queryerrorbk=sprintf($querybienbk,$ultimo,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );
+			   			 
+			      $registroerrorbk= pg_query($queryerrorbk)or die('Hubo un error con la base de datos');
 		
 	      } //error
+		  
+		      $validaquery= "UPDATE errorinsertabackup SET valida= %d
+			                  WHERE inventario="."'".$datosdec[15]."'";
+							  
+			  $queryv=sprintf($validaquery, $validotupla); 
+			   
+              $resultv=pg_query($queryv) or die('ERROR AL ACTUALIZAR errorinsertabackup');
 	   
 	     }// else importado
 		   

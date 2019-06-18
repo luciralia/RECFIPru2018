@@ -12,10 +12,12 @@ header("Expires:0");
 header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
-//echo 'valores en exporta';
-//print_r($_REQUEST);
 
-if ( $_SESSION['tipo_usuario']==1){
+$exporta=$_POST;
+echo 'exporta'.$exporta;
+
+
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
 	 
 	$querylab="SELECT nombre FROM laboratorios
            WHERE id_lab=" . $_REQUEST['lab'] ;
@@ -26,7 +28,7 @@ if ( $_SESSION['tipo_usuario']==1){
 
 }
 
-if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1){
+if ( $_SESSION['tipo_usuario']==9 && $_SESSION['id_div']!=NULL && $_REQUEST['lab']==NULL ){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
 $registrodiv = pg_query($con,$querydiv);
@@ -35,6 +37,7 @@ $nombdiv= pg_fetch_array($registrodiv);
 $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 
 }
+
 
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 $querydiv="SELECT nombre FROM divisiones
@@ -55,7 +58,8 @@ header($texto);
 <?php
 
 	
-	if ( $_SESSION['tipo_usuario']==1 ){	
+	
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
 	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -76,7 +80,7 @@ header($texto);
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 		
-	}	
+	}	else
 	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -97,7 +101,7 @@ header($texto);
 			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 			
-	}
+	}else
 	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] !="" ){	
 	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -119,7 +123,7 @@ header($texto);
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 		
-	}
+	}else
 	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1)   && $_SESSION['id_div'] !="" ){
 			
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -529,8 +533,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </table>
 
 <?php
-if ( $_SESSION['tipo_usuario']==1 ){
-			
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){				
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -549,7 +552,7 @@ if ( $_SESSION['tipo_usuario']==1 ){
 			AND l.id_lab=". $_REQUEST['lab'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
+	}else
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -592,7 +595,7 @@ if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 		
-	}
+	}else
 	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div'] !="" ){
 			
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre

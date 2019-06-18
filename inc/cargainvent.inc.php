@@ -21,7 +21,7 @@ $bandera1=0;
 
 if ($_GET['mod']=='invg' ){
 	
-	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div']?>
+	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
 
 <tr>
 <td align="center">
@@ -38,8 +38,8 @@ if ($_GET['mod']=='invg' ){
 <div class="block" id="necesidades_content">    
       
           <form action="../view/inicio.html.php" method="get" name="orderby">
-        Ordenar por: <select name="orden">
-          <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...         </option>
+          Ordenar por: <select name="orden">
+          <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...          </option>
           <option value="descripcion" <?php echo $sel=($_GET['orden']=='descripcion')? 'selected="selected"': "";?>>Descripción</option>
           <option value="clave" <?php echo $sel=($_GET['orden']=='clave')? 'selected="selected"': "";?>>No. Inventario</option>
           <option value="marca" <?php echo $sel=($_GET['orden']=='marca')? 'selected="selected"': "";?>>Marca</option>
@@ -49,8 +49,10 @@ if ($_GET['mod']=='invg' ){
 
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
-    
+   
 <input name="bOrden" type="submit" value="ordenar" />
+
+
 </form>
 <!--</td>-->
 
@@ -192,8 +194,8 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
    }
-   echo 'consultaen cargainv';
-  echo $query;
+  // echo 'consulta en cargainv'. $query;
+
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
@@ -236,10 +238,10 @@ if ($_GET['mod']=='invg' ){
            <td>
            <br>
            <legend align="right">
-          <?php $action="../inc/exportainvDGTyC.inc.php";?>
+          <?php $action="../inc/exportainvDGTIC.inc.php";?>
          
-              <form action=<?php  echo $action; ?> method="post" name="expDGTyC" >
-	          <input name="enviar" type="submit" value="DGTyC" />
+              <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
+	          <input name="enviar" type="submit" value="DGTIC" />
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
               </form>
               </legend>
@@ -256,7 +258,7 @@ if ($_GET['mod']=='invg' ){
          $bandera1=1;  
     
 
-     $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod'];
+
  
      ?>
     </td>
@@ -293,10 +295,11 @@ if ($_GET['mod']=='invg' ){
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
 		
-       
-            if ( $inventario!=0) { 
+          //print_r($lab_invent);
+		   	if (count($lab_invent > 0 )){
+        
                 //&& $lab_invent['bn_notas']=='COMPUTO' 
-            ?>
+           ?>
 	 
 
   
@@ -366,13 +369,13 @@ if ($_GET['mod']=='invg' ){
 		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				
 		} // fin foreach
-	 //print_r ($lab_invent); 
+	
 		?>
         
  <?php  if (($_SESSION['tipo_usuario']!=10)) {
-        $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];?>
-    
-      <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
+     
+     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+      <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
 
            <!-- <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>-->
@@ -394,7 +397,8 @@ if ($_GET['mod']=='invg' ){
    <table>
 
      <?php  } else {
-	 $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];
+	 //$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];
+	
 	  //isset($_GET['lab']) && isset($_GET['mod']) 
 	 }
 	 } //while
@@ -580,10 +584,10 @@ $inventario= pg_num_rows($datos); //lHH
 
 if ($inventario!=0) { ?>
    
-<?php $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div']?>
- <form action="<?php echo $action1; ?>" method="post" name="fbusqueda">
+<?php $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];?>
+<!-- <form action="<?php echo $action1; ?>" method="post" name="fbusqueda">
 <p style="text-align: right"> <input name="accion" type="submit" value="buscar" id="botonblu"/>
-</form>
+</form>-->
 
 <tr>
 <td align="center">
@@ -615,6 +619,7 @@ if ($inventario!=0) { ?>
 
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
+	
 	
 		?>
 
@@ -706,7 +711,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 		 else 
 		 {$etiqServidor='No';} 
 	      
-         if ($inventario!=0) { ?>
+         if (count($lab_invent > 0 )){?>
          
 		<table class='material'>
          
@@ -914,9 +919,9 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
  ?>
    
       
-      <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'];?>
+      <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
       
-      <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
+      <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
  
        <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
  

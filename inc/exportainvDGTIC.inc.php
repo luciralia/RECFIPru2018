@@ -29,7 +29,7 @@ header("Content-Type: application/vnd.ms-excel" );
 header("Expires: 0" );
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 //header("Content-type: text/html");
-$texto='Content-Disposition: attachment;filename="inventarioDGTYCdiv_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
+$texto='Content-Disposition: attachment;filename="inventarioDGTICdiv_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
 header($texto);
 
 ?>
@@ -121,27 +121,27 @@ order by laboratorio" ;
 
   <tr>
   
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
       <th scope="col">dispositivo_clave</th>
    <?php } else {  ?>
       <th scope="col">Dispositivo</th>
    <?php }
-      if ($_POST['enviar']=='DGTyC'){ ?> 
+      if ($_POST['enviar']=='DGTIC'){ ?> 
      <th scope="col">usuario_final_clave</th>
    <?php }  else { ?>
      <th scope="col">Usuario Final</th>
    <?php }
-      if ($_POST['enviar']=='DGTyC'){ ?> 
+      if ($_POST['enviar']=='DGTIC'){ ?> 
     <th scope="col">familia_clave</th>
    <?php } else { ?>
     <th scope="col">Familia</th>
    <?php }
-    if ($_POST['enviar']=='DGTyC'){ ?>
+    if ($_POST['enviar']=='DGTIC'){ ?>
     <th scope="col">tipo_ram_clave</th>
    <?php } else {?>
     <th scope="col">Tipo</th>
    <?php }
-    if ($_POST['enviar']=='DGTyC'){ ?>
+    if ($_POST['enviar']=='DGTIC'){ ?>
     <th scope="col">tecnologia_clave</th>
    <?php }  else {?> 
     <th scope="col">Tecnología</th>
@@ -150,12 +150,12 @@ order by laboratorio" ;
     <th scope="col">Nombre Resguardo</th>
     <th scope="col">Nombre Usuario</th>
     <th scope="col">Ubicación</th>
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
     <th scope="col">Usuario_perfil</th>
    <?php } else { ?> 
     <th scope="col">Perfil</th>
    <?php }
-      if ($_POST['enviar']=='DGTyC'){ ?> 
+      if ($_POST['enviar']=='DGTIC'){ ?> 
     <th scope="col">Usuario_sector</th>
    <?php } else { ?> 
       <th scope="col">Sector</th>
@@ -178,59 +178,59 @@ order by laboratorio" ;
     <th scope="col">Número de elementos</th>
     <th scope="col">Capacidad Total [GB]</th>
     <th scope="col">Número de arreglos</th>
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?> 
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?> 
     <th scope="col">id_esquema_uno</th>
    <?php } else { ?>  
      <th scope="col">Esquema Uno</th>
    <?php }
-    if ($_POST['enviar']=='DGTyC'){ ?>
+    if ($_POST['enviar']=='DGTIC'){ ?>
      <th scope="col">id_tec_uno</th>
    <?php } else { ?> 
      <th scope="col">Tecnología Uno</th>
    <?php }  ?> 
     <th scope="col">SubTotal Uno [GB]</th>
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?> 
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?> 
     <th scope="col">id_esquema_dos</th>
    <?php }  else {?> 
     <th scope="col">Esquema Dos</th>
    <?php }
-      if ($_POST['enviar']=='DGTyC'){ ?> 
+      if ($_POST['enviar']=='DGTIC'){ ?> 
     <th scope="col">id_tec_dos</th>
    <?php } else { ?> 
       <th scope="col">Tecnología Dos</th>
     <?php }  ?> 
     <th scope="col">SubTotal Dos [GB]</th>
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
     <th scope="col">id_esquema_tres</th>
    <?php }  else {?> 
     <th scope="col">Esquema Tres</th>
    <?php }
-   if ($_POST['enviar']=='DGTyC'){ ?>
+   if ($_POST['enviar']=='DGTIC'){ ?>
     <th scope="col">id_tec_tres</th>
    <?php } else {  ?>  
     <th scope="col">Tecnología Tres</th>
    <?php } ?> 
     <th scope="col">SubTotal Tres [GB]</th>
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
     <th scope="col">id_esquema_cuatro</th>
    <?php } else { ?> 
     <th scope="col">Esquema Cuatro</th>
     
    <?php }
-     if ($_POST['enviar']=='DGTyC'){ ?> 
+     if ($_POST['enviar']=='DGTIC'){ ?> 
      <th scope="col">id_tec_cuatro</th>
    <?php } else { ?> 
       <th scope="col">Tecnología Cuatro</th>
    <?php } ?> 
     <th scope="col">SubTotal Cuatro [GB]</th>
     <th scope="col">Capacidad Total [GB]</th>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?> 
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?> 
       <th scope="col">id_tec_com</th>
     <?php } else {  ?>
       <th scope="col">Tecnología de Comunicación</th>
      <?php } ?> 
      <th scope="col">Tecnología de Comunicación otro</th>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
      <th scope="col">id_sistema_operativo</th>
     <?php } else { ?>
      <th scope="col">Sistema operativo</th>
@@ -249,27 +249,27 @@ order by laboratorio" ;
 <table border="1">
   <tr>
   
-   <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['dispositivo_clave'];?></td>
    <?php } else {  ?>
      <td><?php echo $lab_invent['nombre_dispositivo'];?></td>
    <?php }
-   if ($_POST['enviar']=='DGTyC'){ ?>
+   if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['usuario_final_clave'];?></td>
    <?php } else {  ?>
      <td><?php echo $lab_invent['tipo_usuario'];?></td>
    <?php }
-    if ($_POST['enviar']=='DGTyC'){ ?>
+    if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['familia_clave'];?></td>
    <?php } else { ?> 
       <td><?php echo $lab_invent['nombre_familia'];?></td>
    <?php }
-   if ($_POST['enviar']=='DGTyC'){ ?>
+   if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['tipo_ram_clave'];?></td>
    <?php }  else {?>
       <td><?php echo $lab_invent['nombre_tipo_ram'];?></td>
    <?php }
-    if ($_POST['enviar']=='DGTyC'){ ?>
+    if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['tecnologia_clave'];?></td>
    <?php } else { ?> 
     <td><?php echo $lab_invent['nomtec'];?></td>
@@ -278,12 +278,12 @@ order by laboratorio" ;
     <td><?php echo $lab_invent['nombre_resguardo'];?></td>
     <td><?php echo $lab_invent['usuario_nombre'];?></td>
     <td><?php echo $lab_invent['usuario_ubicacion'];?></td> 
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['usuario_perfil'];?></td> 
     <?php } else { ?>
        <td><?php echo $lab_invent['nombre_perfil'];?></td>
     <?php }  ?>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['usuario_sector'];?></td> 
     <?php } else { ?>
       <td><?php echo $lab_invent['nombre_sector'];?></td>
@@ -306,12 +306,12 @@ order by laboratorio" ;
     <td><?php echo $lab_invent['num_elementos_almac'];?></td>
     <td><?php echo $lab_invent['total_almac'];?></td>
     <td><?php echo $lab_invent['num_arreglos'];?></td>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['esquema_uno'];?></td>
     <?php } else { ?>
        <td><?php echo $lab_invent['esquemauno'];?></td>
     <?php }  ?>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['tec_uno'];?></td>
     <?php } else { ?>
        <td><?php echo $lab_invent['tecuno'];?></td>
@@ -322,43 +322,43 @@ order by laboratorio" ;
     <?php } else { ?>
        <td><?php echo $lab_invent['esquemados'];?></td>
     <?php }  ?>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['tec_dos'];?></td>
     <?php } else { ?>
       <td><?php echo $lab_invent['tecdos'];?></td>
     <?php }  ?>
     <td><?php echo $lab_invent['subtotal_dos'];?></td>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['esquema_tres'];?></td>
     <?php }  else {?>
     <td><?php echo $lab_invent['esquematres'];?></td>
     
     <?php }
-	 if ($_POST['enviar']=='DGTyC'){ ?>
+	 if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['tec_tres'];?></td>
     <?php }  else { ?>
       <td><?php echo $lab_invent['tectres'];?></td>
     <?php }  ?>
     <td><?php echo $lab_invent['subtotal_tres'];?></td>
-    <?php if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['esquema_cuatro'];?></td>
     <?php }  else { ?>
     <td><?php echo $lab_invent['esquemacuatro'];?></td>
     <?php }
-	if ($_POST['enviar']=='DGTyC'){ ?>
+	if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['tec_cuatro'];?></td>
     <?php } else { ?>
        <td><?php echo $lab_invent['teccuatro'];?></td>
     <?php }  ?>
     <td><?php echo $lab_invent['subtotal_cuatro'];?></td>
     <td><?php echo $lab_invent['arreglo_total'];?></td>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['id_tec_com'];?></td>
     <?php } else { ?>
     <td><?php echo $lab_invent['nombre_tec_com'];?></td>
     <?php }  ?>
     <td><?php echo $lab_invent['tec_com_otro'];?></td>
-    <?php  if ($_POST['enviar']=='DGTyC'){ ?>
+    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
        <td><?php echo $lab_invent['sist_oper'];?></td>
     <?php } else { ?>
     <td><?php echo $lab_invent['nombre_so'];?></td>

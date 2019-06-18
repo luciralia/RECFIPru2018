@@ -18,10 +18,29 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 } 
 */
 
-if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) {
+
+
+if ((!isset($_GET['lab'])  )  && $_SESSION['tipo_usuario']!=10){
+     $estado='visible'; ?>
+     <div id="resaltado"> Seleccione un Área... </div> 		 
+ <?php
+ } else {
+	 
+ }
+ 
+if ($_SESSION['id_div']==''  && $_SESSION['tipo_usuario']==10){
+     $estado='visible'; ?>
+     <div id="resaltado"> Seleccione una División...</div> 		 
+ <?php
+ } else {
+	 
+ }?> 
+
+ 
+ <?php
+if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) { ?>
 	
-       $estado='visible'; ?>
-        <div id="resaltado"> Debe seleccionar un Área </div> 
+     
      <?php    
          require_once('../inc/menuNiv.inc.php');
 
@@ -36,10 +55,10 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 	  if ((!isset($_GET['id_div']) || $_GET['id_div']=="" ) && $_SESSION['tipo_usuario']==10) { 
 //echo 'es rcacfi';
 	 
-	   $estado='visible';
+	 //  $estado='visible';
 	  
  ?>
-<div id="resaltado"> Debe seleccionar una división </div> 
+<!--<div id="resaltado"> Debe seleccionar una División </div> -->
 <?php 
       require_once('../inc/cargadiv.inc.php');
     }

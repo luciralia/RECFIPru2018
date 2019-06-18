@@ -104,6 +104,80 @@ function valida_sistoper($val){
 	
 }
 
+
+function respaldo ($datos,$estado){ 
+   
+    $queryd="SELECT max(id_dispositivo) FROM dispositivobackup";
+                    $registrod= pg_query($queryd) or die('ERROR ...'); ;
+                    $ultimo= pg_fetch_array($registrod);
+	
+		      if ($ultimo[0]==0)
+				    $ultimo=1;//inicializando la tabla dispositivo
+			  else 
+			        $ultimo=$ultimo[0]+1;
+   
+ $queryd="INSERT INTO dispositivobackup (id_dispositivo,id_lab,
+              dispositivo_clave,usuario_final_clave,familia_clave,
+              tipo_ram_clave,tecnologia_clave,nombre_resguardo,resguardo_no_empleado,
+              usuario_nombre,usuario_ubicacion,usuario_perfil, 
+              usuario_sector,serie,marca_p, 
+              no_factura,anos_garantia,inventario, 
+              modelo_p,proveedor_p,fecha_factura,
+              familia_especificar,modelo_procesador,cantidad_procesador,
+              nucleos_totales,nucleos_gpu, memoria_ram,
+              ram_especificar, num_elementos_almac,
+              total_almac,num_arreglos,esquema_uno,
+              esquema_dos,esquema_tres, esquema_cuatro, 
+              tec_uno,tec_dos,tec_tres,tec_cuatro,
+              subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro,
+              arreglo_total,tec_com,tec_com_otro, 
+              sist_oper,version_sist_oper,
+              licencia,licencia_ini,licencia_fin,fecha,
+			  id_edif,importa)
+
+		      VALUES (%d,'%s',
+		           '%s','%s','%s',
+				   '%s','%s','%s','%s',
+				   '%s','%s','%s', 
+				   '%s','%s','%s', 
+				   '%s','%s','%s', 
+				   '%s','%s','%s',
+				   '%s','%s','%s',	
+				   '%s','%s','%s', 
+				   '%s','%s',   
+				   '%s','%s','%s',  
+				   '%s','%s','%s',  
+				   '%s','%s','%s','%s', 
+				   '%s','%s','%s','%s', 
+				   '%s','%s','%s',  
+				   '%s','%s',      
+				   '%s','%s','%s','%s', 
+				   '%s',%d )";
+				   
+                 $queryid=sprintf($queryd,$ultimo,$datos[50], 
+                 $datos[0],$datos[1],$datos[2], 
+				 $datos[3],$datos[4],$datos[5],$datos[6] ,
+                 $datos[7],$datos[8],$datos[9], 
+				 $datos[10],$datos[11],$datos[12], 
+				 $datos[13],$datos[14],$datos[15], 
+                 $datos[16],$datos[17],$datos[18], 
+			     $datos[19],$datos[20],$datos[21], 
+			     $datos[22],$datos[23],$datos[24], 
+                 $datos[25],$datos[26],
+			     $datos[27],$datos[28],$datos[29],
+			     $datos[30],$datos[31],$datos[32], 
+			     $datos[33],$datos[34],$datos[35],$datos[36], 
+				 $datos[37],$datos[38],$datos[39],$datos[40], 
+                 $datos[41],$datos[42],$datos[43], 
+			     $datos[44],$datos[45], 
+			     $datos[46],$datos[47],$datos[48],date('Y-m-d H:i:s'), 
+				 $datos[49],$estado);
+               
+                $result=pg_query($queryid) or die('ERROR AL INSERTAR EN DISPOSITIVOBackup: ' . pg_last_error());
+
+
+}
+
 public function marcaError($datosdec,$noo){ 
 require_once('../clases/inventario.class.php');
 require_once('../clases/importa.class.php');
@@ -626,7 +700,7 @@ $valida=new importa();
 										 $columna36,$columna37,$columna38,$columna39,$columna40,
 										 $columna41,$columna42,$columna43,NULL,$columna45,
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
-							 $columna51 )";
+							             $columna51 )";
 		
 		//echo $query;
 	   // 

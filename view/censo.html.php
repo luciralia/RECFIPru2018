@@ -6,9 +6,9 @@ require_once('../clases/divisiones.class.php');
 $lab = new laboratorios();
 $div = new departamentos();
 $dep = new departamentos();
+
  ?>
  
-
 
    
  <tr>
@@ -16,11 +16,11 @@ $dep = new departamentos();
   </tr>
   <tr><?php if($_SESSION['tipo_usuario']==1){?>
     <td align="center"><?php echo $lab->getLaboratorio($_REQUEST['lab']);?></td>
-
-    <?php }else if($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1){?>
+    <?php }else if($_SESSION['tipo_usuario']==9 && $_SESSION['id_div']==NULL && $_REQUEST['lab']==NULL ){ ?>
     <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
+    <?php }else if($_SESSION['tipo_usuario']==9 && $_REQUEST['lab']!=NULL){?>
+   <td align="center"><?php echo $lab->getLaboratorio($_REQUEST['lab']);?></td>
     <?php } else if($_SESSION['tipo_usuario']==10){?>
-     
     <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
     <?php } ?>
      

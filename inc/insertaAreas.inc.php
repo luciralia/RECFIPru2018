@@ -100,14 +100,11 @@ $titulo='Importar Áreas';
 			       
 		   <?php } else { 
 	     
-	  
-
-							
-							 $strqueryd="INSERT INTO laboratorios (id_lab,id_dep, id_responsable,
+	                        $strqueryd="INSERT INTO laboratorios (id_lab,id_dep, id_responsable,
 							                                       nombre,dir_postal,act_generales,
 																   carreras,asignaturas,id_edif,
 																   detalle_ub,capacidad,tipo_lab)
-                                          VALUES (%d,%d, %d,
+                                        VALUES (%d,%d, %d,
 										         '%s','%s', %d,
 												 '%s','%s',%d,
 												 '%s','%s','%s')";

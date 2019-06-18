@@ -12,8 +12,8 @@ $division= new laboratorios();
 	if ( $_SESSION['id_div']==NULL)
 	     $_SESSION['id_div']=$_REQUEST['div'];
 
-//echo 'en buscar inv';
-//print_r($_SESSION);
+echo 'en buscar inv';
+print_r($_REQUEST);
 
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&div='. $_SESSION['id_div'];
@@ -86,8 +86,9 @@ $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."
 
 if($_REQUEST['accion']=='buscarg' )
 {
-
- $action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'] ."&lab=". $_REQUEST['lab'].'&div='. $_SESSION['id_div'];
+echo 'toma boton busquedag';
+ //$action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'] ."&lab=". $_REQUEST['lab'].'&div='. $_SESSION['id_div'];
+ $action1="../view/inicio.html.php?mod=". $_GET['mod'] .'&div='. $_SESSION['id_div'];
 // agrega lab
 ?>
 
@@ -132,6 +133,7 @@ if($_REQUEST['accion']=='buscarg' )
 
 <?php
 }
+echo "consulta busquedag".$query;
 ?>
 <br />
 <br />
@@ -179,9 +181,9 @@ switch ($_GET['bn_id']){
 	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
 	}
 
- //echo 'exhibe consulta buscarinv ';
+echo 'exhibe consulta buscarinv ';
 
- //echo $query;
+ echo $query;
 ?>
 
 <table> 
@@ -211,9 +213,9 @@ if ($inventario!=0){?>
 				echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
 				//echo "<input name='mod' type='hidden' value='".$_GET['bn_id']."' /> \n";
 			?>
-			<!--<input name="bbuscar" type="hidden" value="Buscar" />
+			<input name="bbuscar" type="hidden" value="Buscar" />
 			<input name="accion" type="hidden" value="Buscar" />
-			<input name="_no_inv" type="hidden" value="<?php echo $_REQUEST['_no_inv']?>" />
+			<!--<input name="_no_inv" type="hidden" value="<?php echo $_REQUEST['_no_inv']?>" />
 			<input name="_no_inv_ant" type="hidden" value="<?php echo $_REQUEST['_no_inv_ant']?>" />
 			<input name="_marca" type="hidden" value="<?php echo $_REQUEST['_marca']?>" />
 			<input name="_modelo" type="hidden" value="<?php echo $_REQUEST['_modelo']?>" />
@@ -264,12 +266,9 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 { 
 
 //print_r ($lab_invent);
-
-     if (isset($lab_invent))
- 
-     {	
-         if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'  || $_GET['mod']=='invg')) {
-	  
+ if (count($lab_invent)>0) {	
+         if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'  || $_GET['mod']=='invg' || $_GET['mod']==''  )) {
+	     
 	  ?>
           <table class='material'>
            <tr>
@@ -284,7 +283,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 
 
    
-        <?php } elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg')) {?>
+        <?php } elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg'  || $_GET['mod']=='' )) {?>
 
              <table class='material'>
              <tr>
@@ -301,7 +300,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 
 	
     <?php 
-    }elseif ($_SESSION['tipo_lab']!='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg'))  {   
+    }elseif ($_SESSION['tipo_lab']!='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg'  || $_GET['mod']=='' ))  {   
 	?>
     <table class='material'>
        <tr>   
@@ -320,7 +319,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 
 <?php
 
-if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) { ?>
+if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg'  || $_GET['mod']=='' )) { ?>
 <table class='material'>   
     <tr>
         <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -338,7 +337,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 
     
 	 <?php
-	} elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg')) {?>
+	} elseif ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg'  || $_GET['mod']=='' )) {?>
  
   <table class='material'> 
    	<tr>
@@ -357,7 +356,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
   
  
  <?php
- }elseif ($_SESSION['tipo_lab']!='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg')) {     ?>
+ }elseif ($_SESSION['tipo_lab']!='e' && ($_GET['mod']=='invc' || $_GET['mod']=='invg'  || $_GET['mod']=='' )) {     ?>
 	
     <table class='material'>   
     <tr>
@@ -389,7 +388,7 @@ if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv'|| $_GET['mod']=='invg')) 
 	
 	  
  //if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv' || $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {
-if (($_SESSION['tipo_lab']=='e' &&  $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {
+if (($_SESSION['tipo_lab']=='e' &&  ($_GET['mod']=='invg' ||   $_GET['mod']=='' ) ) && $_SESSION['tipo_usuario']!=10) {
 
          if ($lab_invent['bn_notas']=='EQUIPO' ) { ?>  
              <!--<input name="eeasignar" type="submit" value="Asignar" />-->
@@ -403,7 +402,7 @@ if (($_SESSION['tipo_lab']=='e' &&  $_GET['mod']=='invg' ) && $_SESSION['tipo_us
          <?php } ?>
    
          <?php } //if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv' || $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {
-			 if (($_SESSION['tipo_lab']=='e' &&  $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {?>
+			 if (($_SESSION['tipo_lab']=='e' &&  ($_GET['mod']=='invg' ||   $_GET['mod']=='' ) ) && $_SESSION['tipo_usuario']!=10) {?>
  
               <?php if ($lab_invent['bn_notas']=='EQUIPO' ) { ?>
               <!--<input name="basignare" type="submit" value="Asignar a Equipo" />-->
@@ -422,7 +421,7 @@ if (($_SESSION['tipo_lab']=='e' &&  $_GET['mod']=='invg' ) && $_SESSION['tipo_us
 	       <?php } // fin del si es de equipo/cómputo
 		 
             }//if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv' || $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {  // $_SESSION['tipo_lab']!='e' 
-                 if (($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10) {
+                 if (($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='invg'  ||   $_GET['mod']=='' ) ) && $_SESSION['tipo_usuario']!=10) {
 				 if ($lab_invent['bn_notas']=='COMPUTO' ) { ?>
                    <input name="ecasignar" type="submit" value="Asignar" />
             <?php } elseif ($lab_invent['bn_notas']=='EQUIPO' ) { ?>   
@@ -523,14 +522,12 @@ $inventarioexp= pg_num_rows($datosexp);
               <input name="eedasignar" type="submit" value="Desasignar" />
       
          <?php } //if ($_SESSION['tipo_lab']=='e' && ($_GET['mod']=='inv' || $_GET['mod']=='invg' ) 
-		 if (($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invg' ) 
-		 && $_SESSION['tipo_usuario']!=10 
-		 && ($inventario!=0 ) ){
+		 if (($_SESSION['tipo_lab']=='e' && ( $_GET['mod']=='invg'  ||   $_GET['mod']=='' ))  && $_SESSION['tipo_usuario']!=10  && ($inventario!=0 ) ){
 			  ?>
                 <input name="ecdasignar" type="submit" value="Desasignar" />
          <?php
             }//elseif ($_SESSION['tipo_lab']!='e'  && ($_GET['mod']=='invc' || $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10 
-			elseif (($_SESSION['tipo_lab']!='e'  &&  $_GET['mod']=='invg' ) && $_SESSION['tipo_usuario']!=10 
+			elseif (($_SESSION['tipo_lab']!='e'  && ( $_GET['mod']=='invg'  ||   $_GET['mod']=='' )) && $_SESSION['tipo_usuario']!=10 
 			&& $inventario!=0) {  ?>
                    <input name="dasignarc" type="submit" value="Desasignar" />
 	      

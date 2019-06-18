@@ -22,7 +22,7 @@ print_r($_REQUEST);
 
 <!-- asigna equipo a un laboratorio-->
 <?php 
-if($_POST['ecasignar']=='Asignar' && $_REQUEST ['bn_notas']=='COMPUTO'){
+if($_POST['ecasignar']=='Asignar' && ($_REQUEST ['bn_notas']=='COMPUTO' || $_REQUEST ['bn_notas']=='')){
 // if($_POST['ecasignar']=='Asignar'){
 $query="SELECT * FROM dispositivo d
         LEFT JOIN laboratorios l 
@@ -54,7 +54,7 @@ $updatequery= "UPDATE bienes SET bn_notas='COMPUTO' WHERE bn_id=" . $_REQUEST['b
 $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR TABLA BIENES');
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 } else {?>
@@ -90,6 +90,8 @@ $ultimo= pg_fetch_array($registrod);
 //$traeidmarca=pg_query($con,$querymarca);
 //$idmarca=pg_fetch_array($traeidmarca);
 
+
+
 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
 dispositivo_clave,usuario_final_clave,familia_clave,
 tipo_ram_clave,tecnologia_clave,resguardo_no_empleado,nombre_resguardo,
@@ -108,13 +110,13 @@ arreglo_total,tec_com,tec_com_otro,
 sist_oper,version_sist_oper,
 licencia,licencia_ini,licencia_fin,fecha,id_marca)
 		   VALUES (%d,%d,%d,
-		           3,NULL,NULL,
-				   NULL,NULL,NULL,NULL,
-				   NULL,NULL,NULL,
-				   NULL,'%s','%s',
-				   NULL,1,'%s',
+		           3,0,0,
+				   0,0,0,NULL,
+				   NULL,NULL,0,
+				   0,'%s','%s',
+				   0,1,'%s',
 				   '%s','', 
-				   '',NULL,'',	
+				   '',0,'',	
 				   '',0,NULL,
 				   NULL,NULL,
 				   NULL,1,1,
@@ -123,14 +125,16 @@ licencia,licencia_ini,licencia_fin,fecha,id_marca)
 				   0,0,0,0,
 				   0,0,NULL,
 				   0,NULL,
-				   0,NULL,NULL,'%s',%d)";
+				   0,'2000/01/01','2000/01/01','%s',%d)";
 	         
 $queryid=sprintf($strqueryd,$ultimo[0]+1,$_REQUEST['bn_id'],$_REQUEST['lab'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_clave'],$_REQUEST['bn_modelo'],date('Y-m-d'),$idmarca);
+
+echo $queryid;
 
 $result=pg_query($con,$queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['bn_clave']. '&ecasignar='. $_REQUEST['ecasignar']. '&_no_inv='. $_REQUEST['_no_inv']. '&_no_inv_ant='. $_REQUEST['_no_inv_ant']. '&_marca='. $_REQUEST['_marca']. '&_descripcion='. $_REQUEST['_descripcion']. '&_no_serie='. $_REQUEST['_no_serie'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden']. '&ecasignar='. $_REQUEST['ecasignar']. '&_no_inv='. $_REQUEST['_no_inv']. '&_no_inv_ant='. $_REQUEST['_no_inv_ant']. '&_marca='. $_REQUEST['_marca']. '&_descripcion='. $_REQUEST['_descripcion']. '&_no_serie='. $_REQUEST['_no_serie'];
 
 /*$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']; */
 echo $direccion;
@@ -237,7 +241,7 @@ $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');
 
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 } else {
@@ -381,7 +385,7 @@ $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR bienes');
 
 }
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 
@@ -412,7 +416,7 @@ $query="SELECT importa FROM dispositivo d
 $datos = pg_query($con,$query);
 $reg= pg_fetch_array($datos);
 $inventario= pg_num_rows($datos); 
-echo 'inventario'. $query;
+//echo 'inventario'. $query;
 if ($inventario>0) {
 	//echo 'importa', $reg[0];
 		  if($reg[0]==1){    
@@ -472,9 +476,9 @@ if ($inventario>0) {
  
 		  
 		  }
-		  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']; 
-echo $direccion;
-header($direccion);
+		  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
+          echo $direccion;
+          header($direccion);
              
  }else { ?>
 
@@ -771,14 +775,14 @@ $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
     header($direccion);
 
 }
-
+/*
 if( $_POST['accionn']=='Cancelar'){ 
 
    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
    echo $direccion;
    header($direccion);
 }
-
+*/
 ob_end_flush();
 ?>
 

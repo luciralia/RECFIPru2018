@@ -44,6 +44,7 @@ function buscaBienesAct(&$datosdec){
 			//echo 'valor bien en funcion',$ebien;	
 			  if(pg_num_rows($registrob)==0 ){
 				 // echo 'no lo encuentra en bienes';
+				 
 			        $queryre="SELECT max(id_error) FROM registroerror";
                     $registrore= pg_query($queryre) or die('Error en tabla  registroerror'); 
                     $ultimoerror= pg_fetch_array($registrore);
@@ -839,13 +840,13 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		   $noo++;
 		}//fin de while para insertar datos en dispositivo 
 		
-		echo 'nunca'.$noimportado;
+		/*echo 'nunca'.$noimportado;
         echo 'cuentaact'.$cuentaact;
 		echo 'novalido'.$novalido;
 		echo 'regvalido'.$regvalido;
 		echo 'errorinserta'.$errorinserta;
 		echo 'errorbn'.$errorbn;
-		echo  'novalido'.$novalido;
+		echo  'novalido'.$novalido;*/
 		
 		$cuentaTotal=$cuenta-1;
 		
