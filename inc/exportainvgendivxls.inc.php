@@ -45,7 +45,7 @@ header($texto);
   
   
 <?php
-
+if ($_SESSION['nivel']==2){
 $query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
 cequ.nombre_esquema as esquemauno,
          ceqd.nombre_esquema as esquemados, 
@@ -108,6 +108,76 @@ left join cat_tec_com ctcom
 on ctcom.id_tec_com=e.tec_com
 where div.id_div=" . $_SESSION['id_div'] .
 "order by laboratorio" ;
+}else if ($_SESSION['nivel']==3){
+$query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
+cequ.nombre_esquema as esquemauno,
+         ceqd.nombre_esquema as esquemados, 
+         ceqt.nombre_esquema as esquematres,
+         ceqc.nombre_esquema as esquemacuatro,
+		 ctu.nombre_tecnologia as tecuno,
+		 ctd.nombre_tecnologia as tecdos,
+		 ctt.nombre_tecnologia as tectres,
+		 ctc.nombre_tecnologia as teccuatro,
+         l.nombre as laboratorio, bi.*,* 
+         FROM dispositivo e 
+         LEFT JOIN cat_dispositivo cd
+         ON e.dispositivo_clave=cd.dispositivo_clave
+         LEFT JOIN cat_familia cf
+         ON e.familia_clave=cf.id_familia
+         left join cat_tipo_ram ctr
+         on e.tipo_ram_clave=ctr.id_tipo_ram
+         left join cat_tecnologia ct
+         on e.tecnologia_clave=ct.id_tecnologia
+         left join cat_sist_oper cso
+on  e.sist_oper=cso.id_sist_oper
+left join cat_marca cm
+on cm.id_marca=e.id_marca
+left join cat_memoria_ram cmr
+on e.id_mem_ram=cmr.id_mem_ram
+left join bienes_inventario bi
+on  e.bn_id = bi.bn_id
+join laboratorios l
+on  l.id_lab=e.id_lab
+join departamentos d
+on d.id_dep=l.id_dep
+join coordinacion co
+co.id_coord=d.id_coord
+join divisiones div
+on div.id_div=co.id_div
+left join cat_modo_adq cma
+on e.id_mod=cma.id_mod
+join cat_usuario_final uf
+on uf.usuario_final_clave=e.usuario_final_clave
+join cat_usuario_perfil up
+on up.id_usuario_perfil=e.usuario_perfil
+join cat_usuario_sector us
+on us.id_usuario_sector=e.usuario_sector
+
+left join cat_esquema cequ
+on e.esquema_uno=cequ.id_esquema
+left join cat_esquema ceqd
+on e.esquema_dos=ceqd.id_esquema
+left join cat_esquema ceqt
+on e.esquema_tres=ceqt.id_esquema
+left join cat_esquema ceqc
+on e.esquema_tres=ceqc.id_esquema
+left join cat_tecnologia ctu
+on e.tec_uno=ctu.id_tecnologia
+left join cat_tecnologia ctd
+on e.tec_dos=ctd.id_tecnologia
+left join cat_tecnologia ctt
+on e.tec_tres=ctt.id_tecnologia
+left join cat_tecnologia ctc
+on e.tec_cuatro=ctc.id_tecnologia
+left join cat_tec_com ctcom
+on ctcom.id_tec_com=e.tec_com
+where div.id_div=" . $_SESSION['id_div'] .
+"order by laboratorio";
+
+
+
+}
+
 
  $datos = pg_query($con,$query);
  $inventario= pg_num_rows($datos); 

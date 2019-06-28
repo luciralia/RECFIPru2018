@@ -6,13 +6,16 @@
 
 <?php
 session_start(); 
-require_once('../conexion.php'); 
+require_once('../clases/inventario.class.php'); 
 
 header("Pargma:public");
 header("Expires:0");
 header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
+
+
+$censoxls= new inventario();
 
 
 if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
@@ -59,89 +62,10 @@ header($texto);
  
 		<?php 
 		
-	if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
-
-  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
-	        FROM dispositivo dp
-            LEFT JOIN cat_marca cm
-            ON cm.id_marca=dp.id_marca
-			LEFT JOIN laboratorios l
-			ON dp.id_lab=l.id_lab
-            LEFT JOIN cat_sist_oper cso
-            ON cso.id_sist_oper=dp.sist_oper
-			LEFT JOIN departamentos d 
-			ON d.id_dep=l.id_dep
-            WHERE equipoaltorend='Si'
-			AND l.id_lab=". $_REQUEST['lab']  . "
-			ORDER BY marca_p,l.nombre ASC";
-	}else
-	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
-	
-	$query=" SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
-	        FROM dispositivo dp
-            LEFT JOIN cat_marca cm
-            ON cm.id_marca=dp.id_marca
-			LEFT JOIN laboratorios l
-			ON dp.id_lab=l.id_lab
-            LEFT JOIN cat_sist_oper cso
-            ON cso.id_sist_oper=dp.sist_oper
-			LEFT JOIN departamentos d 
-			ON d.id_dep=l.id_dep
-            WHERE equipoaltorend='Si'
-			ORDER BY marca_p,l.nombre ASC";	
-	}
-	else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
-
-  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
-	        FROM dispositivo dp
-            LEFT JOIN cat_marca cm
-            ON cm.id_marca=dp.id_marca
-			LEFT JOIN laboratorios l
-			ON dp.id_lab=l.id_lab
-            LEFT JOIN cat_sist_oper cso
-            ON cso.id_sist_oper=dp.sist_oper
-			LEFT JOIN departamentos d 
-			ON d.id_dep=l.id_dep
-            WHERE equipoaltorend='Si'
-			AND id_div=". $_SESSION['id_div']  . "
-			ORDER BY marca_p,l.nombre ASC";
-	}else
-		if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
-	
-	$query=" SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre,l.nombre
-	        FROM dispositivo dp
-            LEFT JOIN cat_marca cm
-            ON cm.id_marca=dp.id_marca
-			LEFT JOIN laboratorios l
-			ON dp.id_lab=l.id_lab
-            LEFT JOIN cat_sist_oper cso
-            ON cso.id_sist_oper=dp.sist_oper
-			LEFT JOIN departamentos d 
-			ON d.id_dep=l.id_dep
-            WHERE equipoaltorend='Si'
-			ORDER BY marca_p,l.nombre ASC";	
-	}
-	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
-
-  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
-	        FROM dispositivo dp
-            LEFT JOIN cat_marca cm
-            ON cm.id_marca=dp.id_marca
-			LEFT JOIN laboratorios l
-			ON dp.id_lab=l.id_lab
-            LEFT JOIN cat_sist_oper cso
-            ON cso.id_sist_oper=dp.sist_oper
-			LEFT JOIN departamentos d 
-			ON d.id_dep=l.id_dep
-            WHERE equipoaltorend='Si'
-			AND id_div=". $_SESSION['id_div']  . "
-			ORDER BY marca_p,l.nombre ASC";
-	}
-	
-	
-	
-$datos = pg_query($con,$query);
-$inventario= pg_num_rows($datos); 
+	$query=$censoxls->EquAR($_SESSION['tipo_usuario'],$_SESSION['id_div'],$_REQUEST['lab']);
+		
+    $datos = pg_query($con,$query);
+    $inventario= pg_num_rows($datos); 
     ?>
     
     	 <table class='material' width=50%>

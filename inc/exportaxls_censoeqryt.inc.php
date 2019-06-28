@@ -7,12 +7,16 @@
 <?php
 session_start(); 
 require_once('../conexion.php'); 
+require_once('../clases/inventario.class.php'); 
+
 header("Pargma:public");
 header("Expires:0");
 header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
+
+$censoxls= new inventario();
 
 if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
 	 
@@ -61,82 +65,9 @@ header($texto);
    </tr>
 
 		<?php 
-		if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
-  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND l.id_lab=".$_REQUEST['lab']  . "
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta ASC";
-	}else
-		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
-
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre ASC";	
-	}
-	else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){	 
-  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND id_div=".$_SESSION['id_div']  . "
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta ASC";
-	}else
-	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
-
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre ASC";	
-	}
-	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	 
-  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-            FROM dispositivo dp
-            LEFT JOIN cat_dispositivo cd
-            ON dp.dispositivo_clave=cd.dispositivo_clave
-            LEFT JOIN laboratorios l
-            ON dp.id_lab=l.id_lab
-            LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (dp.dispositivo_clave=0 )
-            AND id_div=".$_SESSION['id_div']  . "
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
-			ORDER BY cuenta ASC";
-	}
-	
+			
+$query=$censoxls->RedesTel($_SESSION['tipo_usuario'],$_SESSION['id_div'],$_REQUEST['lab']);
+		
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
     

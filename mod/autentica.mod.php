@@ -53,7 +53,7 @@ $_SESSION['permisos'][$campo]=$valor;
 //    echo "\$usuariop[$campo] => $valor.\n" . "</br>";
 }
 
-//si usurio es tipo_usuario=1 obtener que depto y div
+//si usuario es tipo_usuario=1 obtener que depto y div
 
 if ($usuario['tipo_usuario']==1){
 	

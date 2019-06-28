@@ -10,7 +10,8 @@ require_once('../clases/log.class.php');
 $logger=new Log();
 
 $lab = new laboratorios();
-$madq = new inventario();
+
+$consulta= new inventario();
 
 
 $logger->putLog(7,2);
@@ -103,8 +104,7 @@ if ($_GET['mod']=='invg' ){
 //for ($x=0;$x<count($listatablas);$x++)
 //{
 	
-          if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10)
-           ){
+          if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) ){
 
                
                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
@@ -150,34 +150,9 @@ if ($_GET['mod']=='invg' ){
            } // fin de switch
         }else{
         
-               $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-               from dispositivo e 
-               left join cat_dispositivo cd
-               on e.dispositivo_clave=cd.dispositivo_clave
-               left join cat_familia cf
-               on e.familia_clave=cf.id_familia
-               left join cat_tipo_ram ctr
-               on e.tipo_ram_clave=ctr.id_tipo_ram
-               left join cat_tecnologia ct
-               on e.tecnologia_clave=ct.id_tecnologia
-               left join cat_sist_oper cso
-               on  e.sist_oper=cso.id_sist_oper
-			   left join cat_usuario_final cuf
-			   on cuf.usuario_final_clave=e.usuario_final_clave
-               left join cat_marca cm
-               on cm.id_marca=e.id_marca
-               left join cat_memoria_ram cmr
-               on e.id_mem_ram=cmr.id_mem_ram
-               left join bienes_inventario bi
-               on  e.bn_id = bi.bn_id
-               left join laboratorios l
-               on  l.id_lab=e.id_lab
-               left join departamentos dp
-               on dp.id_dep=l.id_dep
-               where id_div=";
-             
-               
-
+		     //adapta la consulta    
+		      $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],0);
+			
             switch ($_GET['orden']){
  			case "descripcion":
 			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
@@ -194,7 +169,7 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
    }
-  // echo 'consulta en cargainv'. $query;
+  //echo 'consulta en cargainv'. $query;
 
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
@@ -505,7 +480,10 @@ if ( $_SESSION['id_div']==NULL)
   
       }else{
 	     if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
-	         $tabla="dispositivo";
+			 
+			 $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],$_SESSION['tipo_lab']);
+			 
+	        /*$tabla="dispositivo";
 		     $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                       from " . $tabla . " e 
 
@@ -531,9 +509,12 @@ if ( $_SESSION['id_div']==NULL)
                       on  l.id_lab=e.id_lab
                       left join departamentos dp
                       on dp.id_dep=l.id_dep
-                      where id_div=";}
+                      where id_div=";
+					  */}
                           elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
-                                 {$tabla= "dispositivo";
+                                 {
+								  $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],$_SESSION['tipo_lab']);	 
+									/*$tabla= "dispositivo";
 			                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                                            from " . $tabla . " e 
 
@@ -559,7 +540,8 @@ if ( $_SESSION['id_div']==NULL)
                                            on  l.id_lab=e.id_lab
                                            left join departamentos dp
                                             on dp.id_dep=l.id_dep
-                                           where id_div=";}
+                                           where id_div=";
+										   */}
                                
 
                     switch ($_GET['orden']){

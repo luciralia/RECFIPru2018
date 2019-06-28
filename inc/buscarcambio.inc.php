@@ -176,11 +176,11 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	
 	if ( $_GET['mod']=='invc'){
 		
-		$query=$obj_inv->selectEquipoInvC(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab'],$_SESSION['id_usuario']);
+		$query=$obj_inv->selectEquipoInvC(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab'],$_SESSION['id_usuario'],$_SESSION['nivel']);//adapta al nivel
 		
 	   
 	} else if ( $_GET['mod']=='inv'){
-		
+		//No se necesita adpar
 		$query=$obj_inv->selectEquipoInvE(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab']);
 		
 	
@@ -207,7 +207,7 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	else if ($_REQUEST['bbuscarg']=='Buscar' && $_GET['lab']!='' ){
 	
      // realiza la consulta del inventario general de la facultad con la finalidad de poder buscar en el inventario y asignar/desasignar disp
-	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant'])); 
 	
 	switch ($_GET['orden']){
  			case "descripcion":
@@ -227,7 +227,7 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	
 	}else if ($_REQUEST['bbuscarg']=='Buscar' && $_GET['lab']=='' ){
 		
-    $query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),  strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+    $query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),  strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant'],$_SESSION['nivel']));//adapta al nivel
  
    switch ($_GET['orden']){
  			        case "descripcion":
@@ -415,26 +415,54 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 */
   }//if ($labasig=='Ninguno' && $_GET['lab'] != NULL ){
    else { 
-   $querydis="SELECT * FROM dispositivo d
-        JOIN laboratorios l 
-        ON l.id_lab=d.id_lab
-        JOIN departamentos dep
-	    ON dep.id_dep=l.id_dep
-	    WHERE inventario="."'".$lab_invent['bn_clave']."'". " AND id_div=".$_SESSION['id_div'];
+   $querydis="SELECT * FROM dispositivo dp
+        JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+	    WHERE inventario="."'".$lab_invent['bn_clave']."'". " AND n.id_div=".$_SESSION['id_div'];
 	
 
 $datosdis = pg_query($con,$querydis);
 $reg= pg_fetch_array($datosdis);
 $inventariodis= pg_num_rows($datosdis); 
 
-$queryexp="SELECT * FROM equipo d
+$queryexp="SELECT * FROM equipo dp
            JOIN bienes b
            ON b.bn_id=d.bn_id
-           JOIN laboratorios l 
-           ON l.id_lab=d.id_lab
-           JOIN departamentos dep
-	       ON dep.id_dep=l.id_dep
-	       WHERE bn_clave="."'".$lab_invent['bn_clave']."'". " AND id_div=".$_SESSION['id_div'];	   
+           JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+	       WHERE bn_clave="."'".$lab_invent['bn_clave']."'". " AND n.id_div=".$_SESSION['id_div'];	   
 $datosexp = pg_query($con,$queryexp);
 $regexp= pg_fetch_array($datosexp);
 $inventarioexp= pg_num_rows($datosexp); 

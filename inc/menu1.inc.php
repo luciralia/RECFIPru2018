@@ -3,9 +3,9 @@
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
 		
- /* echo 'SESSION en menu1.inc';
+ echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
-	echo 'GET en menu1.inc';
+	/*echo 'GET en menu1.inc';
 	print_r($_GET);	*/
 	
 	if ( $_SESSION['id_div']==NULL)
@@ -20,9 +20,9 @@
     <?php $tipo=$labNom->getLaboratorio($_GET['lab']);?>
      <?php  
  	   if ($_GET['lab']=='' || $_SESSION['id_div']=='' ) {?>
-              <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio*</a></li>
+              <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
  	<?php }elseif ($_GET['lab']!=''|| $_GET['div']!=''){ ?>
-       	       <li><a href="../view/inicio.html.php?div=<?php  echo $_SESSION['id_div'];?>" >Inicio</a></li>
+       	       <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" >Inicio</a></li>
         <?php }
 		 
  	   if ($_GET['mod']=='ced') {?>
@@ -59,7 +59,7 @@
                     <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
          <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-              <li><a href="../view/inicio.html.php?mod=act&lab=<?php // echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Actualizar</a></li> 
+             <!-- <li><a href="../view/inicio.html.php?mod=act&lab=<?php // echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Actualizar</a></li> -->
          <?php } ?> 
           </ul>
 	   </li>

@@ -4,7 +4,8 @@ require ('../conexion.php');
 
 
 	
-function Menu ($pid=0){ 
+function MenuTres ($pid=0){ 
+
  
 if ($_SESSION['tipo_usuario']!=10){
   if ($_SESSION['tipo_usuario']==1){
@@ -56,56 +57,64 @@ if ($_SESSION['tipo_usuario']!=10){
        else if ($_SESSION['tipo_usuario']==7){$consultacomp="di.id_comite= ";} 
           else if($_SESSION['tipo_usuario']==3){$consultacomp="di.id_responsable= ";}
               else if($_SESSION['tipo_usuario']==6){$consultacomp="di.id_secacad= ";}
-		    	  else if($_SESSION['tipo_usuario']==9 ){$consultacomp=" di.id_cac= ";
+		    	  else if($_SESSION['tipo_usuario']==9 ){$consultacomp=" c.id_responsable= ";
 				                                       $consultadepto= " AND de.id_dep= "; 
 													   $consultadiv=" AND di.id_div= ";}                         
 			         else if($_SESSION['tipo_usuario']==10){$consultacomp="tipo_lab NOT LIKE 'e' ";
 				                                          $consultadepto= "";} 
 	  if ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ){
-       $querydep = "SELECT  d.id_dep, d.id_responsable, d.nombre as departamento, di.nombre  as div,  di.id_div 
-                    FROM departamentos d
-                    
-					JOIN divisiones di 
-                    ON  d.id_div=di.id_div
+       $querycoord = "SELECT  c.id_coord, c.id_responsable,c.nombre as coordinacion, di.nombre  as div,  di.id_div 
+                    FROM coordinacion c
+                    JOIN divisiones di 
+                    ON  c.id_div=di.id_div
                     JOIN usuarios u
                     ON di.id_responsable=u.id_usuario
                     WHERE " . $consultacomp  . $_SESSION['id_usuario'] .
                     $consultadiv . $_SESSION['id_div'].
-                   " ORDER BY departamento";
-				    // echo $querydep;
+                   " ORDER BY coordinacion";
+				    echo 'coord '. $querycoord;
 	  
-      $datosdep = @pg_query($querydep)  or die('Hubo un error depto');
+      $datoscoord = @pg_query($querycoord)  or die('Hubo un error coordinacion');
 	
 	  }
 	         if ($_SESSION['tipo_usuario']!=1){
-                while ($departamentos = pg_fetch_array($datosdep)) { 
-				     	//laboratorios
+                while ($coordinaciones = pg_fetch_array($datoscoord)) { 
+				     	//deptos
                           if ($_SESSION['tipo_usuario']!=10 ){ 
-                              $querylab = "SELECT  l.id_lab,l.nombre as laboratorio
-                                           FROM  laboratorios l
-                                           JOIN departamentos d
-                                           ON l.id_dep=d.id_Dep
-                                           JOIN divisiones di 
-                                           ON  d.id_div=di.id_div
-                                           JOIN usuarios u
-                                           ON di.id_responsable=u.id_usuario
-							               WHERE " . $consultacomp . $_SESSION['id_usuario'] 
-										  . " AND l.id_dep=" .$departamentos['id_dep'].
-										  $consultadiv . $_SESSION['id_div'].
-										   " ORDER BY laboratorio";
+                             /* $querydeptos = "SELECT  c.id_coord,c.nombre as coordinacion
+                                              FROM   departamentos d
+                                              JOIN coordinacion c
+                                              ON  d.id_coord=c.id_coord
+                                              JOIN usuarios u
+                                              ON d.id_responsable=u.id_usuario
+							                  WHERE " . $consultacomp . $_SESSION['id_usuario'] 
+										      . " AND d.id_coord=" .$coordinaciones['id_coord'].
+										      $consultadiv . $_SESSION['id_div'].
+										      " ORDER BY coordinacion";*/
+											  
+											  $querydeptos = "SELECT  c.id_coord,c.nombre as coordinacion
+                                              FROM  coordinacion c
+                                              left  JOIN departamentos d
+                                              ON  d.id_coord=c.id_coord
+                                              JOIN usuarios u
+                                              ON d.id_responsable=u.id_usuario
+							                  WHERE " . $consultacomp . $_SESSION['id_usuario'] 
+										      . " AND d.id_coord=" .$coordinaciones['id_coord'].
+										      
+										      " ORDER BY coordinacion";
+											  echo 'deptos'.$querydeptos;
                            }
 						  
-						 
-						// echo $querylab;
-						   $datoslab = @pg_query($querylab) or die('Hubo un error lab');
-						   $depto=strtoupper($departamentos['departamento']);
-                           if (pg_num_rows($datoslab)==0 ){//si no tiene hijos imprime la lista 
+						 // echo $querydepto;
+						   $datosdeptos = @pg_query($querydeptos) or die('Hubo un error lab');
+						   $coord=strtoupper($coordinaciones['coordinacion']);
+                           if (pg_num_rows($datosdeptos)==0 ){//si no tiene hijos imprime la lista 
 				   
-                             $menu.="<li><a href=\"#\">{$depto}</a></li>"; 
+                             $menu.="<li><a href=\"#\">{$coord}</a></li>"; 
                           }//if (mysql_num_rows($querysub2)==0){ 
                           else{//si tiene hijos empieza a buscarlos  
-                             $menu.="<li><a href=\"#\">{$depto}</a><ul>"; 
-                              while ($laboratorios = pg_fetch_array($datoslab)) { 
+                             $menu.="<li><a href=\"#\">{$coord}</a><ul>"; 
+                              while ($departamentos = pg_fetch_array($datosdeptos)) { 
                                    $menu.="<li><a href=\"../view/inicio.html.php?lab={$laboratorios['id_lab']}&mod={$_GET['mod']}&accion={$_REQUEST['accion']}&div={$_SESSION['id_div']}\">{$laboratorios['laboratorio']}</a></li>"; 
 							}//while laboratorios { 
                                $menu.="</ul> </li>";
@@ -118,6 +127,8 @@ if ($_SESSION['tipo_usuario']!=10){
                                            FROM  laboratorios l
                                            JOIN departamentos d
                                            ON l.id_dep=d.id_Dep
+										   LEFT JOIN coordinacion c
+										   on 
                                            JOIN divisiones di 
                                            ON  d.id_div=di.id_div
                                            JOIN usuarios u
@@ -131,12 +142,12 @@ if ($_SESSION['tipo_usuario']!=10){
 							}//while laboratorios { 		   
 										   
                     }
-				
+			
               return $menu; 
 				}
 }//function Menu ($pid=0,)
 
-$menu=Menu(0); 
+$menu=MenuTres(0); 
 
     $menu="<div id=\"header\"><ul class=\"navu\">$menu</ul>
 	 

@@ -683,7 +683,7 @@ if($size > 0){
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
 							             $columna51,'$fechaerror' )";
 		
-		echo $querybk;
+		//echo $querybk;
 	    $resultbk=@pg_query($querybk) or die('ERROR AL INSERTAR en errorinsertabackup'); 				
 					
 					
@@ -799,14 +799,26 @@ if($size > 0){
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
 							  estadobien,servidor,descextensa 
 							  FROM equipoc ec
-							  JOIN laboratorios l
-							  ON l.id_lab=ec.id_lab
-							  JOIN departamentos d
-							  ON l.id_dep=d.id_dep
-							  JOIN divisiones dv
-							  ON dv.id_div=d.id_div
+							  JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                              ac.id_acad,ac.nombre AS academia, 
+                              d.id_dep, d.nombre AS depto, 
+                              co.id_coord,co.nombre AS coord, 
+                              dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                              FROM laboratorios l
+                              LEFT JOIN academia ac
+                              ON ac.id_acad=l.id_acad
+                              LEFT JOIN departamentos d
+                              ON (ac.id_dep=d.id_dep
+                                  OR l.id_dep=d.id_dep)
+                              LEFT JOIN coordinacion co
+                              ON (co.id_coord=d.id_coord
+                                  OR co.id_coord=l.id_coord)
+                              LEFT JOIN divisiones dv
+                              ON (dv.id_div=co.id_div
+                                 OR d.id_div=dv.id_div )) n
+                              ON n.lab=dp.id_lab
 			                  WHERE inventario="."'".$datosdec[15]."'".
-							  " AND dv.id_div=" .$_SESSION['id_div'];
+							  " AND n.id_div=" .$_SESSION['id_div'];
 							 /*			 $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
 							  estadobien,servidor,descextensa 

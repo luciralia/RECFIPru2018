@@ -1,8 +1,11 @@
 <strong></strong>
 <?php
-require_once('../conexion.php');
 session_start(); 
+
+require_once('../conexion.php');
+
 class Inventario{
+
 
 function getModo($idmod){
 
@@ -80,7 +83,8 @@ function selectEquipo($desc, $serie, $inv, $marca, $inv_ant){
  			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
  		}
 		
-		$query = "SELECT * FROM bienes_inventario bi WHERE ".implode(" AND ",$array); //." ORDER BY bn_clave";
+		$query = "SELECT * FROM bienes_inventario bi WHERE ".implode(" AND ",$array); 
+		//." ORDER BY bn_clave";
 		//echo 'Consulta inventario bienes';
 		//echo $query;
 		
@@ -88,24 +92,136 @@ function selectEquipo($desc, $serie, $inv, $marca, $inv_ant){
 		
  	}
 	
-function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
+function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu,$nivel){
  		//$where=" WHERE bn_in != NULL";
-		
+	
 		
  		if($desc != ''){
- 			$array['bn_desc']="bn_desc like '%".$desc."%'";
+ 			$array['bn_desc']="bn_desc LIKE '%".$desc."%'";
  		}
  		if($serie != ''){
- 			$array['bn_serie']="bn_serie like '%".$serie."%'";
+ 			$array['bn_serie']="bn_serie LIKE '%".$serie."%'";
  		}
  		if($inv != ''){
- 			$array['bn_clave']="bn_clave like '%".$inv."%'";
+ 			$array['bn_clave']="bn_clave LIKE '%".$inv."%'";
  		}
  		if($marca != ''){
- 			$array['bn_marca']="bn_marca like '%".$marca."%'";
+ 			$array['bn_marca']="bn_marca LIKR '%".$marca."%'";
  		}
 		if($inv_ant != ''){
- 			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
+ 			$array['bn_anterior']="bn_anterior LIKE '%".$inv_ant."%'";
+ 		}
+		
+		$querytipo="SELECT tipo_usuario FROM usuarios
+	                WHERE id_usuario=".$usu;	
+		$resulttipo= @pg_query($querytipo) or die('Hubo un error con la base de datos en usuarios');	
+		$tipo= pg_fetch_array($resulttipo);
+	    $usutipo=$tipo[0];    
+		//echo 'quwry typo';              	 
+		//echo $tipo[0];
+			
+    if ($usutipo==1){
+		
+		$query= "SELECT bi.bn_id,* FROM  
+                bienes bi
+                LEFT JOIN dispositivo e
+                ON bi.bn_id=e.bn_id
+                LEFT JOIN cat_dispositivo cd
+                ON e.dispositivo_clave=cd.dispositivo_clave
+                LEFT JOIN cat_familia cf
+                ON e.familia_clave=cf.id_familia
+                LEFT JOIN cat_tipo_ram ctr
+                ON e.tipo_ram_clave=ctr.id_tipo_ram
+                LEFT JOIN cat_tecnologia ct
+                ON e.tecnologia_clave=ct.id_tecnologia
+                LEFT JOIN cat_sist_oper cso
+                ON  e.sist_oper=cso.id_sist_oper
+                LEFT JOIN(SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision, id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        on ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div) ) n
+                ON n.lab=e.id_lab
+                LEFT JOIN usuarios u
+                ON n.id_responsable=u.id_usuario
+                WHERE n.id_responsable= ".$usu
+				. " AND " .implode(" AND ",$array);
+               // WHERE id_lab=" . $lab 
+	    }
+		 if ($usutipo==7){ $consultacomp="di.id_comite=";} 
+           else if($usutipo==3){$consultacomp="di.id_responsable=";}
+              else if($usutipo==6){$consultacomp="di.id_secacad=";}
+			    else if($usutipo==9 ){$consultacomp=" di.id_cac=";}                          
+			      else if($usutipo==10){$consultacomp="tipo_lab NOT LIKE 'e' ";}
+		
+		 if ($usutipo==9){
+		
+		$query= "SELECT bi.bn_id,* FROM  
+                bienes bi
+                LEFT JOIN dispositivo e
+                ON bi.bn_id=e.bn_id
+                LEFT JOIN cat_dispositivo cd
+                ON e.dispositivo_clave=cd.dispositivo_clave
+                LEFT JOIN cat_familia cf
+                ON e.familia_clave=cf.id_familia
+                LEFT JOIN cat_tipo_ram ctr
+                ON e.tipo_ram_clave=ctr.id_tipo_ram
+                LEFT JOIN cat_tecnologia ct
+                ON e.tecnologia_clave=ct.id_tecnologia
+                LEFT JOIN cat_sist_oper cso
+                ON  e.sist_oper=cso.id_sist_oper
+                LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        on ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+						    OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div
+                        )) n
+                ON n.lab=e.id_lab
+                LEFT JOIN usuarios u
+                ON n.id_responsable=u.id_usuario
+                WHERE " . $consultacomp  . $usu . " AND " .implode(" AND ",$array);
+		 }
+	/*	 
+	}if ($nivel==3){
+	   if($desc != ''){
+ 			$array['bn_desc']="bn_desc LIKE '%".$desc."%'";
+ 		}
+ 		if($serie != ''){
+ 			$array['bn_serie']="bn_serie LIKE '%".$serie."%'";
+ 		}
+ 		if($inv != ''){
+ 			$array['bn_clave']="bn_clave LIKE '%".$inv."%'";
+ 		}
+ 		if($marca != ''){
+ 			$array['bn_marca']="bn_marca LIKE '%".$marca."%'";
+ 		}
+		if($inv_ant != ''){
+ 			$array['bn_anterior']="bn_anterior LIKE '%".$inv_ant."%'";
  		}
 		
 		$querytipo="SELECT tipo_usuario FROM usuarios
@@ -136,6 +252,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
                 on e.id_lab=l.id_lab
                 left join departamentos de
                 on l.id_dep=de.id_dep
+				
                 left join divisiones di
                 on de.id_div=di.id_div
                 left join usuarios u
@@ -170,13 +287,17 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
                 on e.id_lab=l.id_lab
                 left join departamentos de
                 on l.id_dep=de.id_dep
+				left join coordinacion co
+				on co.id_coord=de.id_coord
                 left join divisiones di
-                on de.id_div=di.id_div
+                on co.id_div=di.id_div
                 left join usuarios u
                 on l.id_responsable=u.id_usuario
                 where " . $consultacomp  . $usu . " AND " .implode(" AND ",$array);
-		 }
-		//echo $query;
+		 }*/
+	
+	//}
+	//echo $query;
 		return $query;
 		
  	}	
@@ -185,23 +306,24 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
  		//$where=" WHERE bn_in != NULL";
 		
  		if($desc != ''){
- 			$array['bn_desc']="bn_desc like '%".$desc."%'";
+ 			$array['bn_desc']="bn_desc LIKE '%".$desc."%'";
  		}
  		if($serie != ''){
- 			$array['bn_serie']="bn_serie like '%".$serie."%'";
+ 			$array['bn_serie']="bn_serie LIKE '%".$serie."%'";
  		}
  		if($inv != ''){
- 			$array['bn_clave']="bn_clave like '%".$inv."%'";
+ 			$array['bn_clave']="bn_clave LIKE '%".$inv."%'";
  		}
  		if($marca != ''){
- 			$array['bn_marca']="bn_marca like '%".$marca."%'";
+ 			$array['bn_marca']="bn_marca LIKE '%".$marca."%'";
  		}
 		if($inv_ant != ''){
- 			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
+ 			$array['bn_anterior']="bn_anterior LIKE '%".$inv_ant."%'";
  		}
 		
-		$query ="SELECT bi.bn_id,bn_desc,bn_serie,bn_clave,bn_marca,bn_anterior,bn_notas,e.id_lab,d.id_lab,nombre_dispositivo, nombre_so FROM  
-                bienes bi
+		$query ="SELECT bi.bn_id,bn_desc,bn_serie,bn_clave,bn_marca,bn_anterior,
+		        bn_notas,e.id_lab,d.id_lab,nombre_dispositivo, nombre_so 
+				FROM  bienes bi
                 FULL OUTER JOIN equipo e
                 ON bi.bn_id=e.bn_id
 		        FULL OUTER JOIN dispositivo d
@@ -213,30 +335,72 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
                  
 				WHERE " .implode(" AND ",$array);
 		
-	
 		return $query;
 }	
 
 
 
-function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant){
+function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant,$nivel){
  		//$where=" WHERE bn_in != NULL";
 		
  		if($desc != ''){
- 			$array['bn_desc']="bn_desc like '%".$desc."%'";
+ 			$array['bn_desc']="bn_desc LIKE '%".$desc."%'";
  		}
  		if($serie != ''){
- 			$array['bn_serie']="bn_serie like '%".$serie."%'";
+ 			$array['bn_serie']="bn_serie LIKE '%".$serie."%'";
  		}
  		if($inv != ''){
- 			$array['bn_clave']="bn_clave like '%".$inv."%'";
+ 			$array['bn_clave']="bn_clave LIKE '%".$inv."%'";
  		}
  		if($marca != ''){
- 			$array['bn_marca']="bn_marca like '%".$marca."%'";
+ 			$array['bn_marca']="bn_marca LIKE '%".$marca."%'";
  		}
 		if($inv_ant != ''){
- 			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
+ 			$array['bn_anterior']="bn_anterior LIKE '%".$inv_ant."%'";
  		}
+		
+		
+		$query="SELECT  e.*, n.nomblab AS laboratorio, bi.*,* 
+                FROM dispositivo e 
+                LEFT JOIN cat_dispositivo cd
+                ON e.dispositivo_clave=cd.dispositivo_clave
+                LEFT JOIN cat_familia cf
+                ON e.familia_clave=cf.id_familia
+                LEFT JOIN cat_tipo_ram ctr
+                ON e.tipo_ram_clave=ctr.id_tipo_ram
+                LEFT JOIN cat_tecnologia ct
+                ON e.tecnologia_clave=ct.id_tecnologia
+				LEFT JOIN cat_usuario_final cuf
+			    ON cuf.usuario_final_clave=e.usuario_final_clave
+                LEFT JOIN cat_sist_oper cso
+                ON  e.sist_oper=cso.id_sist_oper
+                LEFT JOIN cat_marca cm
+                ON cm.id_marca=e.id_marca
+                LEFT JOIN cat_memoria_ram cmr
+                ON e.id_mem_ram=cmr.id_mem_ram
+                LEFT JOIN bienes_inventario bi
+                ON  e.bn_id = bi.bn_id
+		        LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomblab,
+                           ac.id_acad,ac.nombre AS academia, 
+                           d.id_dep, d.nombre AS depto, 
+                           co.id_coord,co.nombre AS coord, 
+                           dv.id_div,dv.nombre AS division  
+                           FROM laboratorios l
+                           LEFT JOIN academia ac
+                           ON ac.id_acad=l.id_acad
+                           LEFT JOIN departamentos d
+                           ON (ac.id_dep=d.id_dep
+                               OR l.id_dep=d.id_dep)
+                           LEFT JOIN coordinacion co
+                           ON (co.id_coord=d.id_coord
+                               OR co.id_coord=l.id_coord)
+                           LEFT JOIN divisiones dv
+                           ON (dv.id_div=co.id_div
+                               OR d.id_div=dv.id_div )) n
+                           ON n.lab=e.id_lab
+                WHERE " .implode( " AND ",$array). " AND n.id_div="; 
+		/*
+		if ($nivel==2){
 		
 		$query ="select  e.*, l.nombre as laboratorio, bi.*,* 
                                            from dispositivo e 
@@ -263,44 +427,102 @@ function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant){
                                            on  l.id_lab=e.id_lab
                                            left join departamentos dp
                                             on dp.id_dep=l.id_dep
+										
                                             where "
                                             .implode( " AND ",$array). " AND id_div= " ;
-		
+		}elseif ($nivel==3){
+		$query ="select  e.*, l.nombre as laboratorio, bi.*,* 
+                                           from dispositivo e 
+
+                                           left join cat_dispositivo cd
+                                           on e.dispositivo_clave=cd.dispositivo_clave
+                                           left join cat_familia cf
+                                           on e.familia_clave=cf.id_familia
+                                           left join cat_tipo_ram ctr
+                                           on e.tipo_ram_clave=ctr.id_tipo_ram
+                                           left join cat_tecnologia ct
+                                           on e.tecnologia_clave=ct.id_tecnologia
+										   left join cat_usuario_final cuf
+			                               on cuf.usuario_final_clave=e.usuario_final_clave
+                                           left join cat_sist_oper cso
+                                           on  e.sist_oper=cso.id_sist_oper
+                                           left join cat_marca cm
+                                           on cm.id_marca=e.id_marca
+                                           left join cat_memoria_ram cmr
+                                           on e.id_mem_ram=cmr.id_mem_ram
+                                           left join bienes_inventario bi
+                                           on  e.bn_id = bi.bn_id
+                                           left join laboratorios l
+                                           on  l.id_lab=e.id_lab
+                                           left join departamentos dp
+                                           on dp.id_dep=l.id_dep
+										   left join coordinacion co
+										   on co.id_coord=dp.id_coord
+										   where "
+                                           .implode( " AND ",$array). " AND id_div= " ;	
+			
+		}*/
 		return $query;
 }	
 
 function getAsig($bnid){
 	//echo'bn_id'.$bnid;
 	 
-		$tabla="dispositivo";
-	    $query="SELECT e.*, l.id_lab, l.nombre as lab, l.id_dep, dv.nombre as division,bi.*,*
-		        FROM " . $tabla . " e
-		        LEFT JOIN laboratorios l
-		        ON e.id_lab=l.id_lab
-		        LEFT JOIN  bienes bi
+		
+	    $query="SELECT e.*, n.idlab AS idlab, n.nomlab AS lab, n.id_dep, n.nombdivision AS division,bi.*,*
+		        FROM dispositivo e
+                LEFT JOIN  bienes bi
 		        ON e.bn_id=bi.bn_id
-		        LEFT JOIN departamentos dp
-		        ON dp.id_dep=l.id_dep
-		        LEFT JOIN divisiones dv
-		        ON dv.id_div=dp.id_div
-		        WHERE bi.bn_id=" . $bnid;
+		        LEFT JOIN (SELECT l.id_lab AS idlab,l.nombre AS nomlab,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div)) n
+                        ON n.idlab=e.id_lab
+		         WHERE bi.bn_id=" . $bnid;
+				 
 		        $result = pg_query($query) or die('Hubo un error con la base de datos en dispositivo/equipo');
 		        $inventariod= pg_num_rows($result);
 		        $dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 		        
 		 	if ($inventariod==0){			   
-	  	        $tabla="equipo";// dispositivo
-		        $query="SELECT e.*, l.id_lab, l.nombre as lab,l.id_dep,dv.nombre as division,bi.*,*
-		             FROM " . $tabla . " e
-		             LEFT JOIN laboratorios l
-		             ON e.id_lab=l.id_lab
-		             LEFT JOIN  bienes bi
-		             ON e.bn_id=bi.bn_id
-		             LEFT JOIN departamentos dp
-		             ON dp.id_dep=l.id_dep
-		             LEFT JOIN divisiones dv
-		             ON dv.id_div=dp.id_div
-		             WHERE bi.bn_id=" . $bnid;
+	  	      
+		        $query="SELECT e.*, n.idlab AS idlab, n.nomlab AS lab, n.id_dep, n.nombdivision AS division,bi.*,*
+		        FROM equipo e
+                LEFT JOIN  bienes bi
+		        ON e.bn_id=bi.bn_id
+		        LEFT JOIN (SELECT l.id_lab AS idlab,l.nombre AS nomlab,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div)) n
+                        ON n.idlab=e.id_lab
+		         WHERE bi.bn_id=" . $bnid;
+				 
 		             $result = pg_query($query) or die('Hubo un error con la base de datos en dispositivo/equipo');
 		             $inventarioex= pg_num_rows($result);
 		             $dato=pg_fetch_array($result,NULL,PGSQL_ASSOC);
@@ -462,11 +684,11 @@ function tblEquipo($idlab)
 				else 
 				   {$tabla="equipo";}
 				   		
-				$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*
-				from ".$tabla." e, laboratorios l, bienes bi
-				where e.id_lab=l.id_lab
-				AND e.bn_id=bi.bn_id
-				AND e.id_lab=" . $idlab . " order by bn_desc asc";
+				$query="SELECT e.*, l.id_lab, l.nombre, id_dep,bi.*
+				        FROM ".$tabla." e, laboratorios l, bienes bi
+				        WHERE e.id_lab=l.id_lab
+				        AND e.bn_id=bi.bn_id
+				        AND e.id_lab=" . $idlab . " ORDER BY bn_desc ASC";
 				
 				//echo $query ."</br>". $id_cot . "</br>" . $lab;
 					
@@ -495,7 +717,7 @@ function tblEquipo($idlab)
 function combotecnologia($tecnologia,$tipo)
 					{
                    
-				    $query="Select * from  cat_tecnologia order by nombre_tecnologia asc";
+				    $query="SELECT * FROM  cat_tecnologia ORDER BY nombre_tecnologia ASC";
 				     
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_tecnologia');
 					
@@ -1468,7 +1690,2312 @@ function verificaTipoEquipo($bien)
 					return $salida;
 		
 		}//fin metodo
+		
+function adapta($tipo,$tipolab){
+	
+	if ($tipo =='invg' ){
+		
+		$query= "SELECT  e.*, n.nomlab AS laboratorio, bi.*,* 
+                 FROM dispositivo e 
+                 LEFT JOIN cat_dispositivo cd
+                 ON e.dispositivo_clave=cd.dispositivo_clave
+                 LEFT JOIN cat_familia cf
+                 ON e.familia_clave=cf.id_familia
+                 LEFT JOIN cat_tipo_ram ctr
+                 ON e.tipo_ram_clave=ctr.id_tipo_ram
+                 LEFT JOIN cat_tecnologia ct
+                 on e.tecnologia_clave=ct.id_tecnologia
+                 LEFT JOIN cat_sist_oper cso
+                 on  e.sist_oper=cso.id_sist_oper
+	             LEFT JOIN cat_usuario_final cuf
+	             on cuf.usuario_final_clave=e.usuario_final_clave
+                 LEFT JOIN cat_marca cm
+                 on cm.id_marca=e.id_marca
+                 LEFT JOIN cat_memoria_ram cmr
+                 on e.id_mem_ram=cmr.id_mem_ram
+                 LEFT JOIN bienes_inventario bi
+                 ON e.bn_id = bi.bn_id
+                 LEFT JOIN(	
+                          SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                          ac.id_acad,ac.nombre AS academia, 
+                          d.id_dep, d.nombre AS depto, 
+                          co.id_coord,co.nombre AS coord, 
+                          dv.id_div,dv.nombre AS nombdivision,id_cac
+                          FROM laboratorios l
+                          LEFT JOIN academia ac
+                          on ac.id_acad=l.id_acad
+                          LEFT JOIN departamentos d
+                          ON (ac.id_dep=d.id_dep
+                              OR l.id_dep=d.id_dep)
+                          LEFT JOIN coordinacion co
+                          ON (co.id_coord=d.id_coord
+                              OR co.id_coord=l.id_coord)
+                          LEFT JOIN divisiones dv
+                          ON (dv.id_div=co.id_div
+                             OR d.id_div=dv.id_div )) n
+                ON n.lab=e.id_lab
+			    WHERE n.id_div=";
+		
+		
+		}elseif  ($tipo =='invg'  && $tipolab!='e'){
+	        $query= "SELECT  e.*, n.nomlab AS laboratorio, bi.*,* 
+                 FROM dispositivo e 
+                 LEFT JOIN cat_dispositivo cd
+                 ON e.dispositivo_clave=cd.dispositivo_clave
+                 LEFT JOIN cat_familia cf
+                 ON e.familia_clave=cf.id_familia
+                 LEFT JOIN cat_tipo_ram ctr
+                 ON e.tipo_ram_clave=ctr.id_tipo_ram
+                 LEFT JOIN cat_tecnologia ct
+                 on e.tecnologia_clave=ct.id_tecnologia
+                 LEFT JOIN cat_sist_oper cso
+                 on  e.sist_oper=cso.id_sist_oper
+	             LEFT JOIN cat_usuario_final cuf
+	             on cuf.usuario_final_clave=e.usuario_final_clave
+                 LEFT JOIN cat_marca cm
+                 on cm.id_marca=e.id_marca
+                 LEFT JOIN cat_memoria_ram cmr
+                 on e.id_mem_ram=cmr.id_mem_ram
+                 LEFT JOIN bienes_inventario bi
+                 ON e.bn_id = bi.bn_id
+                 LEFT JOIN(	
+                          SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                          ac.id_acad,ac.nombre AS academia, 
+                          d.id_dep, d.nombre AS depto, 
+                          co.id_coord,co.nombre AS coord, 
+                          dv.id_div,dv.nombre AS nombdivision,id_cac
+                          FROM laboratorios l
+                          LEFT JOIN academia ac
+                          on ac.id_acad=l.id_acad
+                          LEFT JOIN departamentos d
+                          ON (ac.id_dep=d.id_dep
+                              OR l.id_dep=d.id_dep)
+                          LEFT JOIN coordinacion co
+                          ON (co.id_coord=d.id_coord
+                              OR co.id_coord=l.id_coord)
+                          LEFT JOIN divisiones dv
+                          ON (dv.id_div=co.id_div
+                              OR d.id_div=dv.id_div )) n
+                ON n.lab=e.id_lab
+			    WHERE n.id_div=";
+		
+	
+	}
+	
+	return $query;
+	
+}
 
+function CensoECNoMac($tipousu,$div,$lab){
+	//quitar el tipo de usuario o se utiliza 
+	if ( ($tipousu==1 || $tipousu==9) &&  $lab !=NULL ){	
+	
+	
+   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.lab=" . $lab . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+		
+	}else if ( $tipousu==10 && $div =="" ){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+			
+	}elseif ( $tipousu==10 && $div !="" ){	
+	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=" . $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+		
+	}elseif ( ($tipousu!=10 && $tipousu!=1)   && $div!=""  ){
+	
+	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=" . $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else if ( ($tipousu!=10 && $tipousu!=1)   && $div =="" ){ 
+	
+	$query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			 GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}
+	
+
+  return $query;
+
+
+}//fin clase censoecnomacxls
+
+
+
+function CensoECMac($tipousu,$div,$lab){
+
+
+if (($tipousu==1 || $tipousu==9)  &&  $lab!=NULL){
+			
+	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.lab=". $lab . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+			
+	}elseif ($tipousu==10 && $div =="" ){
+
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	
+                        SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+			
+	}elseif ( $tipousu==10 && $div!="" ){	
+	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+			WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=" . $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+		
+	}
+	else
+	if ( ($tipousu!=10 && $tipousu!=1) && $div !="" ){
+		//echo 'usu!=10  and usu!=1 and div!=NULL';	
+	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                           OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+			WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=" . $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+			
+	}else if ( ($tipousu!=10 && $tipousu!=1)  && $div =="" )
+	{ 
+		$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+	        LEFT JOIN cat_marca cm
+	        ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	
+	}  
+	
+	return $query;	       
+}//fin funcion censo mac
+
+function CensoSONoMac($tipousu,$div,$lab){
+
+if (( $tipousu==1 || $tipousu==9)  &&  $lab !=NULL  ){
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.lab=". $lab . "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC ";
+	}else
+		
+		if ( $tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+		    GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC ";	
+	}
+	else if ( $tipousu==10 && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=". $div . "
+		    GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC ";
+			
+	}elseif ( ($tipousu!=10 && $tipousu!=1 ) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+		    GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+			
+	}else if ( ($tipousu!=10 && $tipousu!=1 ) && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=". $div . "
+		    GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC ";
+	}
+	return $query;
+}
+
+
+function CensoSOMac($tipousu,$div,$lab){
+		if (($tipousu==1 ||$tipousu==9)  &&  $lab !=NULL  ){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND n.lab=". $lab . "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}else
+	if ($tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND n.id_div=". $div. "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}
+	else if ( $tipousu==10 && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND n.id_div=". $div. "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else
+	
+	if ( ($tipousu!=10 && $tipousu!=1) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}else if (  ($tipousu!=10 && $tipousu!=1) && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec
+			LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN(	SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND n.id_div=". $div. "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien
+			,equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}
+	return $query;
+}
+
+
+function CensoUFNoMac($tipousu,$div,$lab){
+if (($tipousu==1 ||$tipousu==9)  &&  $lab !=NULL  ){
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.lab=". $lab . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else
+	if ($tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}
+	else if ($tipousu==10 && $div!=""){	
+	
+    $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=". $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else
+	if (($tipousu!=10 && $tipousu!=1) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}
+	else if (($tipousu!=10 && $tipousu!=1) && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=". $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}
+	return $query;
+}
+
+function CensoUFMac($tipousu,$div,$lab){
+	
+	if (($tipousu==1 || $tipousu==9)  &&  $lab !=NULL  ){
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.lab=". $lab . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else
+		if ($tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}
+	else if ($tipousu==10 && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=". $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else
+	if (($tipousu!=10 && $tipousu!=1) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=". $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}
+	else if (($tipousu!=10 && $tipousu!=1) && $div!=""){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=". $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}
+	return $query;
+
+}
+
+function CensoUFBNoMac($tipousu,$div,$lab){
+	
+if (($tipousu==1 ||$tipousu==9)  &&  $lab !=NULL  ){	
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.lab=". $lab . "
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC ";
+	}elseif ($tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper<>3 AND sist_oper<>7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}	
+	else if ($tipousu==10 && $div!=""){			
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=". $div . "
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	} else
+	if (($tipousu!=10 && $tipousu!=1 ) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND n.id_div=". $div . "
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}	
+	else if ( ($tipousu!=10 && $tipousu!=1 ) && $div!=""){			
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND tipo_lab='b'
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND id_div=". $div . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}
+	return $query;
+}
+
+function CensoUFBMac($tipousu,$div,$lab){
+	if (($tipousu==1 ||$tipousu==9)  &&  $lab !=NULL  ){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.lab=". $lab . "
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else	
+if ($tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper=3 AND sist_oper=7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}	
+	else if ($tipousu==10 && $div!=""){			
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=". $div . "
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}else
+	if (($tipousu!=10 && $tipousu!=1) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper=3 AND sist_oper=7)
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";	
+	}	
+	else if ($tipousu!=10 && $div!=""){			
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+            equipoaltorend,fecha_factura,n.nomlab
+            FROM dispositivo ec 
+            LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=ec.id_lab
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND tipo_lab='b'
+			AND (sist_oper=3 AND sist_oper=7)
+			AND n.id_div=". $div . "
+			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,
+			equipoaltorend,fecha_factura,n.nomlab
+			ORDER BY cuenta DESC";
+	}
+	
+	return $query;
+}
+function Impresora($tipousu,$div,$lab){
+	
+	if (($tipousu==1 || $tipousu==9)  &&  $lab !=NULL  ){
+
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND n.lab=".$lab  . "
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";
+	}else
+	if ($tipousu==10 && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";	
+	}
+	else if ($tipousu==10 && $div!=""){
+
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND n.id_div=".$div  . "
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";
+	}else
+	if (($tipousu!=10 && $tipousu!=1) && $div==""){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";	
+	}
+	else if (($tipousu!=10 && $tipousu!=1) && $div!=""){
+
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND n.id_div=".$div  . "
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";
+	}
+	return $query;
+}
+
+function EquDigital($tipousu,$div,$lab){
+			if (($tipousu==1 ||$tipousu==9)  &&  $lab !=NULL  ){
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=12 )
+            AND n.lab=".$lab  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";
+	}else if ($tipousu==10 && $div==""){
+
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=12  )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";	
+	}
+	else if ($tipousu==10 && $div!=""){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            AND n.id_div=".$div  . "
+			WHERE (dp.dispositivo_clave=12)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";
+	}else if (($tipousu!=10  && $$tipousu!=1 ) && $div==""){
+
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=12  )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";	
+	}
+	else if (($tipousu!=10  && $tipousu!=1 ) && $div!=""){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            AND n.id_div=".$div . "
+			WHERE (dp.dispositivo_clave=12  )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";
+	}
+return $query;	
+}
+
+function RedesTel($tipousu,$div,$lab){
+
+if ($tipousu==1 &&  $lab !=NULL ){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=7  )
+            AND n.lab=".$lab  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";
+	 }else
+		if ($tipousu==10 && $div==""){
+
+	$query=" SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=7  )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";	
+	}
+	else if ($tipousu==10 && $div!=""){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=7  )
+            AND n.id_div=".$div  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";
+	}
+	if (($tipousu!=10 && $$tipousu!=1) && $div==""){
+
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=7  )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";	
+	}
+	else if (($tipousu!=10 && $tipousu!=1) && $div!=""){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+			WHERE (dp.dispositivo_clave=7)
+            AND n.id_div=".$div  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,n.nomlab
+			ORDER BY cuenta ASC";
+	}
+	return $query;
+}
+
+function EquAR($tipousu,$div,$lab){
+		if (($tipousu==1 || $tipousu==9)  &&  $lab !=NULL  ){
+
+  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,n.nomlab
+	        FROM dispositivo dp
+            LEFT JOIN cat_marca cm
+            ON cm.id_marca=dp.id_marca
+			LEFT JOIN cat_sist_oper cso
+            ON cso.id_sist_oper=dp.sist_oper
+			LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE equipoaltorend='Si'
+			AND n.lab=". $lab  . "
+			ORDER BY marca_p,n.nomlab ASC";
+	}
+	if ($tipousu==10 && $div==""){
+	
+	$query="SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,n.nomlab
+	        FROM dispositivo dp
+            LEFT JOIN cat_marca cm
+            ON cm.id_marca=dp.id_marca
+			LEFT JOIN cat_sist_oper cso
+            ON cso.id_sist_oper=dp.sist_oper
+			LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE equipoaltorend='Si'
+			ORDER BY marca_p,n.nomlab ASC";	
+	}
+	else if ($tipousu==10 && $div!=""){
+
+  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,n.nomlab
+	        FROM dispositivo dp
+            LEFT JOIN cat_marca cm
+            ON cm.id_marca=dp.id_marca
+			LEFT JOIN cat_sist_oper cso
+            ON cso.id_sist_oper=dp.sist_oper
+			LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE equipoaltorend='Si'
+			AND n.id_div=". $div  . "
+			ORDER BY marca_p,n.nomlab ASC";
+	}else
+		if (($tipousu!=10 && $$tipousu!=1) && $div==""){
+	
+	$query="SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,n.nomlab
+	        FROM dispositivo dp
+            LEFT JOIN cat_marca cm
+            ON cm.id_marca=dp.id_marca
+			LEFT JOIN cat_sist_oper cso
+            ON cso.id_sist_oper=dp.sist_oper
+			LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE equipoaltorend='Si'
+			ORDER BY marca_p,n.nomlab ASC";	
+	}
+	else if (($tipousu!=10 && $tipousu!=1) && $div!=""){
+
+  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,n.nomlab
+	        FROM dispositivo dp
+            LEFT JOIN cat_marca cm
+            ON cm.id_marca=dp.id_marca
+			LEFT JOIN cat_sist_oper cso
+            ON cso.id_sist_oper=dp.sist_oper
+			LEFT JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+            ON n.lab=dp.id_lab
+            WHERE equipoaltorend='Si'
+			AND n.id_div=". $div  . "
+			ORDER BY marca_p,n.nomlab ASC";
+	}
+	return $query;
+}
+
+function obtienenombre ($tipousuario,$div,$lab){
+	
+if ( ($tipousuario==1 || $tipousuario==9 ) && $div==NULL || $lab!=NULL ){
+	 
+	$querylab="SELECT nombre FROM laboratorios
+               WHERE id_lab=" . $lab ;
+    $registrolab = pg_query($con,$querylab);
+    $nomblab= pg_fetch_array($registrolab);
+    echo 'consulta'.$querylab;
+    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+
+}
+
+if ($tipousuario==9 && $div!=NULL && $lab==NULL ){
+	
+$querydiv="SELECT nombre FROM divisiones
+           WHERE id_div=" . $div ;
+ echo $querydiv;
+$registrodiv = pg_query($con,$querydiv);
+$nombdiv= pg_fetch_array($registrodiv);
+
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+
+}
+if ( $tipousuario==9 && $div==""){
+$querydiv="SELECT nombre FROM divisiones
+           WHERE id_div=" . $div ;
+$registrodiv = pg_query($con,$querydiv);
+$nombdiv= pg_fetch_array($registrodiv);
+
+
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+}
+
+if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
+$querydiv="SELECT nombre FROM divisiones
+           WHERE id_div=" . $_SESSION['id_div'] ;
+$registrodiv = pg_query($con,$querydiv);
+$nombdiv= pg_fetch_array($registrodiv);
+
+
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+}
+else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+$titulo='FacultadIngenieria';	
+$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
+}	
+echo $texto;
+return $texto;
+}
 
 
 } // fin de clase

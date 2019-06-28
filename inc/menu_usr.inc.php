@@ -20,7 +20,7 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 
 
 
-if ((!isset($_GET['lab'])  )  && $_SESSION['tipo_usuario']!=10){
+if ((!isset($_GET['lab']) || $_GET['lab']=="" )  && $_SESSION['tipo_usuario']!=10){
      $estado='visible'; ?>
      <div id="resaltado"> Seleccione un Área... </div> 		 
  <?php
@@ -38,7 +38,7 @@ if ($_SESSION['id_div']==''  && $_SESSION['tipo_usuario']==10){
 
  
  <?php
-if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) { ?>
+if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10 && $_SESSION['nivel']==2) { ?>
 	
      
      <?php    
@@ -48,6 +48,15 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 	
          require_once('../inc/menuNiv.inc.php'); 
 
+if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10 && $_SESSION['nivel']==3) { ?>
+	
+     
+     <?php    
+         require_once('../inc/menuNivTres.inc.php');
+
+     }else
+	
+         require_once('../inc/menuNivTres.inc.php'); 
 
 //echo 'Menú para rcacfi';
 

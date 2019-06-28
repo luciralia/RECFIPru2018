@@ -7,12 +7,16 @@
 <?php
 session_start(); 
 require_once('../conexion.php'); 
+require_once('../clases/inventario.class.php'); 
 
 header("Pargma:public");
 header("Expires:0");
 header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
+
+
+$censoxls= new inventario();
 
 if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
 	 
@@ -59,118 +63,12 @@ header($texto);
       <td align="center"><h3>Anteriores a Pentium 4 o equivalentes </h3></td>
       </tr>
 
-		<?php 
-		if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper<>3 AND sist_oper<>7)
-			AND l.id_lab=". $_REQUEST['lab'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta DESC ";
-	}else
-		if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
-	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper<>3 AND sist_oper<>7)
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre DESC";	
-	}
-	else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){	
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper<>3 AND sist_oper<>7)
-			AND id_div=". $_SESSION['id_div'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta DESC ";
-	}else
-	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']==""){
-	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper<>3 AND sist_oper<>7)
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre DESC";	
-	}else if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']!=""){	
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper<>3 AND sist_oper<>7)
-			AND id_div=". $_SESSION['id_div'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta DESC ";
-	}
-			      
+<?php 
+
+$query=$censoxls->CensoSONoMac($_SESSION['tipo_usuario'],$_SESSION['id_div'],$_REQUEST['lab']);
+		
 $datos = pg_query($con,$query);
+
 $inventario= pg_num_rows($datos); 
     
 ?>
@@ -192,8 +90,6 @@ $inventario= pg_num_rows($datos);
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
        
-     
-		
 		 if ( $lab_invent['familia_clave']==1 ||  $lab_invent['familia_clave']==2 || $lab_invent['familia_clave']==3 ||$lab_invent['familia_clave']==11){;
 		
 		  ?>
@@ -254,12 +150,13 @@ $inventario= pg_num_rows($datos);
 		$cuenta=0;  
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-		 if ( $lab_invent['familia_clave']==4 || $lab_invent['familia_clave']==5||  $lab_invent['familia_clave']==12|| $lab_invent['familia_clave']==10 ||  $lab_invent['familia_clave']==13){;
-		
-		  ?>
+		 if ( $lab_invent['familia_clave']==4 || $lab_invent['familia_clave']==5||  $lab_invent['familia_clave']==12|| $lab_invent['familia_clave']==10 ||  $lab_invent['familia_clave']==13){
+		 ?>
            <table class='material' width=50%>
 		   <tr>
-               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
+               <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?>
+               <td width="20%"><?php echo $lab_invent['nombre'];?></td> 
+			   <?php }?>
                <td width="15%"><?php echo $lab_invent['nombre_so'];?></td>
                <td width="15%"><?php echo $lab_invent['nombre_familia'];?></td>
                <td width="15%"><?php echo $lab_invent['nombre_dispositivo'];?></td>
@@ -532,119 +429,9 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
     </tr>
 
 		<?php 
-		if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
-	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper=3 OR sist_oper=7)
-			AND l.id_lab=". $_REQUEST['lab'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre DESC";	
-	}else
-	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
-	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper=3 OR sist_oper=7)
-			AND id_div=". $_SESSION['id_div'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre DESC";	
-	}
-	else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){	
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-           AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper=3 OR sist_oper=7)
-			AND id_div=". $_SESSION['id_div'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta DESC ";
-	}else
-	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
-	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper=3 OR sist_oper=7)
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre DESC";	
-	}else if (  ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-            FROM dispositivo ec 
-            LEFT JOIN laboratorios l
-            ON ec.id_lab=l.id_lab
-	        LEFT JOIN cat_familia cf
-            ON ec.familia_clave=cf.id_familia
-            LEFT JOIN cat_dispositivo cd
-            ON ec.dispositivo_clave=cd.dispositivo_clave
-			LEFT JOIN cat_sist_oper cso
-			ON ec.sist_oper=cso.id_sist_oper 
-			LEFT JOIN cat_marca cm
-			ON cm.id_marca=ec.id_marca
-	        LEFT JOIN departamentos d
-            ON d.id_dep=l.id_dep
-            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper=3 OR sist_oper=7)
-			AND id_div=". $_SESSION['id_div'] . "
-            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
-			ORDER BY cuenta DESC ";
-	}
-			       
-			       
+	       
+$query=$censoxls->CensoSOMac($_SESSION['tipo_usuario'],$_SESSION['id_div'],$_REQUEST['lab']);
+		
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
     
