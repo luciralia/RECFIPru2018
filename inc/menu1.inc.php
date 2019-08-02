@@ -3,10 +3,11 @@
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
 		
- echo 'SESSION en menu1.inc';
+  /*
+    echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
-	/*echo 'GET en menu1.inc';
-	print_r($_GET);	*/
+	echo 'GET en menu1.inc';
+	print_r($_GET);*/
 	
 	if ( $_SESSION['id_div']==NULL)
 	     $_SESSION['id_div']=$_REQUEST['div'];
@@ -43,7 +44,9 @@
  	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
  	      
       	  <ul>
-            <?php if ( $_SESSION['id_div']!='' || $_GET['div']!='' || $_GET['lab']!='' || $_SESSION['id_dep']!='' )	 {
+            <?php //if ( $_SESSION['id_div']!='' || $_GET['div']!='' || $_GET['lab']!='' || $_SESSION['id_dep']!='' )	 {
+			?>
+            <?php if (( $_SESSION['id_div']!='' || $_GET['div']!=''  || $_SESSION['id_dep']!='' )	&&  $_GET['lab']=='' ) {
 			?>
                <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">General</a></li>
             <?php } ?>   

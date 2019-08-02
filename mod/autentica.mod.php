@@ -27,8 +27,6 @@ $query = "SELECT * FROM usuarios U
 //$query = sprintf("SELECT * FROM usuarios WHERE usuario = '%s' AND pass='%s'", trim($_POST['usuario']), trim($_POST['pwd']));
 $datos=pg_query($con, $query);
 
-
-
 //si encuentra coincidencia
 $nreng = pg_num_rows($datos);
 
@@ -37,11 +35,9 @@ if ($nreng==1){
 $datos=pg_query($con, $query);		  
 $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
 foreach ($usuario as $campo => $valor) {
-        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
+    //echo "\$usuario[$campo] => $valor.\n" . "</br>";
 	$_SESSION[$campo]=$valor;
-		}
-
-
+}
 
 //consulta permisos
 $query2="Select * from permisos where id_usuario=" . $usuario['id_usuario'];
@@ -69,18 +65,40 @@ if ($usuario['tipo_usuario']==1){
    $_SESSION['id_dep']=$depto[0];
    
    //obtener division
-   $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+  /* $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
                JOIN departamentos d
                ON l.id_dep=d.id_dep
                JOIN divisiones dv
                ON dv.id_div=d.id_div
                JOIN usuarios u
 		       ON l.id_responsable=u.id_usuario
-               WHERE l.id_responsable=" .$usuario['id_usuario'];
+               WHERE l.id_responsable=" .$usuario['id_usuario'];*/
+			   
+			   
+	$querydiv="SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+              ac.id_acad,ac.nombre AS academia, 
+              d.id_dep, d.nombre AS depto, 
+              co.id_coord,co.nombre AS coord, 
+              dv.id_div as div,dv.nombre AS nombdivision,id_cac,tipo_lab
+              FROM laboratorios l
+              LEFT JOIN academia ac
+              ON ac.id_acad=l.id_acad
+              LEFT JOIN departamentos d
+              ON (ac.id_dep=d.id_dep
+                  OR l.id_dep=d.id_dep)
+              LEFT JOIN coordinacion co
+              ON (co.id_coord=d.id_coord
+                  OR co.id_coord=l.id_coord)
+              LEFT JOIN divisiones dv
+              ON (dv.id_div=co.id_div
+                  OR d.id_div=dv.id_div ) ";
+					   
    $datosdiv=pg_query($con,$querydiv);
 
    $div = pg_fetch_array($datosdiv);
-   $_SESSION['id_div']=$div[0];
+   
+   $_SESSION['div']=$div[0];
+   
 }
 
 
@@ -99,7 +117,6 @@ $result=@pg_query($con,$queryn) or die('ERROR AL INSERTAR DATOS: ' . pg_last_err
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-
 pg_close($con);
 $textoheader="location:../view/inicio.html.php?mod=def&log=si&id_usuario=". $usuario['id_usuario'];
 echo $textoheader;
@@ -108,7 +125,6 @@ header($textoheader);
 
 
 }else{
-   	     
    	     session_destroy();
    	     pg_close($con);
 		 $direccion='location:../?log=no&usr='.$login;

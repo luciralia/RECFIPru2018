@@ -29,7 +29,7 @@ if ($_SESSION['tipo_usuario']!=10){
      $_SESSION['id_div']=$div[0];
     }
   
-      $menu= "<li><a href=\"#\" >Área...</a>
+      $menu= "<li><a href=\"#\" >Áreas...</a>
               <ul>";
       if ($_SESSION['tipo_usuario']==10)	
 	  	   $querydiv = "SELECT  di.id_div, di.id_responsable, di.nombre as division,  u.nombre, a_paterno, a_materno  

@@ -163,7 +163,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu,$nivel
 		 if ($usutipo==7){ $consultacomp="di.id_comite=";} 
            else if($usutipo==3){$consultacomp="di.id_responsable=";}
               else if($usutipo==6){$consultacomp="di.id_secacad=";}
-			    else if($usutipo==9 ){$consultacomp=" di.id_cac=";}                          
+			    else if($usutipo==9 ){$consultacomp=" n.id_cac=";}                          
 			      else if($usutipo==10){$consultacomp="tipo_lab NOT LIKE 'e' ";}
 		
 		 if ($usutipo==9){
@@ -190,7 +190,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu,$nivel
                         dv.id_div,dv.nombre AS nombdivision,id_cac
                         FROM laboratorios l
                         LEFT JOIN academia ac
-                        on ac.id_acad=l.id_acad
+                        ON ac.id_acad=l.id_acad
                         LEFT JOIN departamentos d
                         ON (ac.id_dep=d.id_dep
                             OR l.id_dep=d.id_dep)
@@ -340,7 +340,7 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
 
 
 
-function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant,$nivel){
+function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant){
  		//$where=" WHERE bn_in != NULL";
 		
  		if($desc != ''){
@@ -3948,13 +3948,14 @@ function EquAR($tipousu,$div,$lab){
 
 function obtienenombre ($tipousuario,$div,$lab){
 	
-if ( ($tipousuario==1 || $tipousuario==9 ) && $div==NULL || $lab!=NULL ){
+	
+if (($tipousuario==1 || $tipousuario==9 ) && $div==NULL || $lab!=NULL ){
 	 
 	$querylab="SELECT nombre FROM laboratorios
                WHERE id_lab=" . $lab ;
-    $registrolab = pg_query($con,$querylab);
+    $registrolab = pg_query($querylab) or die('Hubo un error con la base de datos en laboratorios');
     $nomblab= pg_fetch_array($registrolab);
-    echo 'consulta'.$querylab;
+	
     $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
 
 }
@@ -3963,8 +3964,8 @@ if ($tipousuario==9 && $div!=NULL && $lab==NULL ){
 	
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $div ;
- echo $querydiv;
-$registrodiv = pg_query($con,$querydiv);
+
+$registrodiv = pg_query($querydiv) or die('Hubo un error con la base de datos en divisiones');
 $nombdiv= pg_fetch_array($registrodiv);
 
 $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
@@ -3973,7 +3974,7 @@ $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His"
 if ( $tipousuario==9 && $div==""){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $div ;
-$registrodiv = pg_query($con,$querydiv);
+$registrodiv = pg_query($querydiv) or die('Hubo un error con la base de datos en divisiones');
 $nombdiv= pg_fetch_array($registrodiv);
 
 
@@ -3981,9 +3982,11 @@ $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His"
 }
 
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
+	
 $querydiv="SELECT nombre FROM divisiones
-           WHERE id_div=" . $_SESSION['id_div'] ;
-$registrodiv = pg_query($con,$querydiv);
+           WHERE id_div=" . $_SESSION['id_div'];
+		   
+$registrodiv = pg_query($querydiv) or die('Hubo un error con la base de datos en divisiones');
 $nombdiv= pg_fetch_array($registrodiv);
 
 
@@ -3997,6 +4000,81 @@ echo $texto;
 return $texto;
 }
 
+function exportaInv(){
+	$query= "SELECT  e.*, ct.nombre_tecnologia AS nomtec,
+         cequ.nombre_esquema AS esquemauno,
+         ceqd.nombre_esquema AS esquemados, 
+         ceqt.nombre_esquema AS esquematres,
+         ceqc.nombre_esquema AS esquemacuatro,
+		 ctu.nombre_tecnologia AS tecuno,
+		 ctd.nombre_tecnologia AS tecdos,
+		 ctt.nombre_tecnologia AS tectres,
+		 ctc.nombre_tecnologia AS teccuatro,
+         n.nomlab AS laboratorio, bi.*,* 
+         FROM dispositivo e 
+         LEFT JOIN cat_dispositivo cd
+         ON e.dispositivo_clave=cd.dispositivo_clave
+         LEFT JOIN cat_familia cf
+         ON e.familia_clave=cf.id_familia
+         LEFT JOIN cat_tipo_ram ctr
+         ON e.tipo_ram_clave=ctr.id_tipo_ram
+         LEFT JOIN cat_tecnologia ct
+         ON e.tecnologia_clave=ct.id_tecnologia
+         LEFT JOIN cat_sist_oper cso
+         ON  e.sist_oper=cso.id_sist_oper
+         LEFT JOIN cat_marca cm
+         ON cm.id_marca=e.id_marca
+         LEFT JOIN cat_memoria_ram cmr
+         ON e.id_mem_ram=cmr.id_mem_ram
+         LEFT JOIN bienes_inventario bi
+         ON  e.bn_id = bi.bn_id
+		 LEFT JOIN cat_modo_adq cma
+         ON e.id_mod=cma.id_mod
+         JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                        ac.id_acad,ac.nombre AS academia, 
+                        d.id_dep, d.nombre AS depto, 
+                        co.id_coord,co.nombre AS coord, 
+                        dv.id_div as div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                        FROM laboratorios l
+                        LEFT JOIN academia ac
+                        ON ac.id_acad=l.id_acad
+                        LEFT JOIN departamentos d
+                        ON (ac.id_dep=d.id_dep
+                            OR l.id_dep=d.id_dep)
+                        LEFT JOIN coordinacion co
+                        ON (co.id_coord=d.id_coord
+                            OR co.id_coord=l.id_coord)
+                        LEFT JOIN divisiones dv
+                        ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div )) n
+           ON n.lab=e.id_lab
+           JOIN cat_usuario_final uf
+           ON uf.usuario_final_clave=e.usuario_final_clave
+           JOIN cat_usuario_perfil up
+           ON up.id_usuario_perfil=e.usuario_perfil
+           JOIN cat_usuario_sector us
+           ON us.id_usuario_sector=e.usuario_sector
+           LEFT JOIN cat_esquema cequ
+           ON e.esquema_uno=cequ.id_esquema
+           LEFT JOIN cat_esquema ceqd
+           ON e.esquema_dos=ceqd.id_esquema
+           LEFT JOIN cat_esquema ceqt
+           ON e.esquema_tres=ceqt.id_esquema
+           LEFT JOIN cat_esquema ceqc
+           ON e.esquema_tres=ceqc.id_esquema
+           LEFT JOIN cat_tecnologia ctu
+           ON e.tec_uno=ctu.id_tecnologia
+           LEFT JOIN cat_tecnologia ctd
+           ON e.tec_dos=ctd.id_tecnologia
+           LEFT JOIN cat_tecnologia ctt
+           ON e.tec_tres=ctt.id_tecnologia
+           LEFT JOIN cat_tecnologia ctc
+           ON e.tec_cuatro=ctc.id_tecnologia
+           LEFT JOIN cat_tec_com ctcom
+           ON ctcom.id_tec_com=e.tec_com
+           WHERE n.div=";
+	return $query;
+}
 
 } // fin de clase
 

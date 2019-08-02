@@ -23,18 +23,32 @@ if ($_SESSION['tipo_usuario']==1){
         $_SESSION['id_dep']=$depto[0];
    
         //obtener division
-         $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
-                    JOIN departamentos d
-                    ON l.id_dep=d.id_dep
-                    JOIN divisiones dv
-                    ON dv.id_div=d.id_div
+         $querydiv="SELECT DISTINCT n.id_div from laboratorios l 
+                    JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                         ac.id_acad,ac.nombre AS academia, 
+                         d.id_dep, d.nombre AS depto, 
+                         co.id_coord,co.nombre AS coord, 
+                         dv.id_div,dv.nombre AS nombdivision, id_cac
+                         FROM laboratorios l
+                         LEFT JOIN academia ac
+                         ON ac.id_acad=l.id_acad
+                         LEFT JOIN departamentos d
+                         ON (ac.id_dep=d.id_dep
+                             OR l.id_dep=d.id_dep)
+                         LEFT JOIN coordinacion co
+                         ON (co.id_coord=d.id_coord
+                             OR co.id_coord=l.id_coord)
+                         LEFT JOIN divisiones dv
+                         ON (dv.id_div=co.id_div
+                            OR d.id_div=dv.id_div) ) n
+                    ON n.lab=l.id_lab
                     JOIN usuarios u
-		            ON l.id_responsable=u.id_usuario
-                    WHERE l.id_responsable=" .$_SESSION['id_usuario'];
+		            ON n.id_responsable=u.id_usuario
+                    WHERE n.id_responsable=" .$_SESSION['id_usuario'];
          $datosdiv=pg_query($con,$querydiv);
 
          $div = pg_fetch_array($datosdiv);
-        $_SESSION['id_div']=$div[0];
+         $_SESSION['id_div']=$div[0];
       }
 
 
@@ -187,16 +201,16 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	} 
 	switch ($_GET['orden']){
  			case "descripcion":
-			$query.=" order by bn_desc asc";
+			$query.=" ORDER BY bn_desc ASC";
             break;
  			case "clave":
-			$query.=" order by bn_clave asc";
+			$query.=" ORDER BY bn_clave ASC";
  			break;
 			case "marca":
-			$query.=" order by bn_marca asc";
+			$query.=" ORDER BY bn_marca ASC";
  			break;
  			default:
-			$query.=" order by bi.bn_id";
+			$query.=" ORDER BY bi.bn_id";
 	        break;
 
 	} //fin de switch
@@ -211,24 +225,24 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	
 	switch ($_GET['orden']){
  			case "descripcion":
-			$query.=" order by bn_desc asc";
+			$query.=" ORDER BY  bn_desc ASC";
             break;
  			case "clave":
-			$query.=" order by bn_clave asc";
+			$query.=" ORDER BY bn_clave ASC";
  			break;
 			case "marca":
-			$query.=" order by bn_marca asc";
+			$query.=" ORDER BY bn_marca ASC";
  			break;
  			default:
-			$query.=" order by bi.bn_id";
+			$query.=" ORDER BY bi.bn_id";
 	        break;
 	}
 	
 	
 	}else if ($_REQUEST['bbuscarg']=='Buscar' && $_GET['lab']=='' ){
 		
-    $query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),  strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant'],$_SESSION['nivel']));//adapta al nivel
- 
+    $query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),  strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+   
    switch ($_GET['orden']){
  			        case "descripcion":
 			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
@@ -248,8 +262,6 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 
 	 	
 	}
-	
-	
 	
      $datos = pg_query($con,$query); 
      $inventario= pg_num_rows($datos);
@@ -415,8 +427,9 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 */
   }//if ($labasig=='Ninguno' && $_GET['lab'] != NULL ){
    else { 
+   
    $querydis="SELECT * FROM dispositivo dp
-        JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+              JOIN  (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
                         ac.id_acad,ac.nombre AS academia, 
                         d.id_dep, d.nombre AS depto, 
                         co.id_coord,co.nombre AS coord, 
@@ -434,7 +447,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
                         ON (dv.id_div=co.id_div
                             OR d.id_div=dv.id_div )) n
             ON n.lab=dp.id_lab
-	    WHERE inventario="."'".$lab_invent['bn_clave']."'". " AND n.id_div=".$_SESSION['id_div'];
+	        WHERE inventario="."'".$lab_invent['bn_clave']."'". " AND n.id_div=".$_SESSION['id_div'];
 	
 
 $datosdis = pg_query($con,$querydis);
@@ -462,7 +475,8 @@ $queryexp="SELECT * FROM equipo dp
                         ON (dv.id_div=co.id_div
                             OR d.id_div=dv.id_div )) n
             ON n.lab=dp.id_lab
-	       WHERE bn_clave="."'".$lab_invent['bn_clave']."'". " AND n.id_div=".$_SESSION['id_div'];	   
+	        WHERE bn_clave="."'".$lab_invent['bn_clave']."'". " AND n.id_div=".$_SESSION['id_div'];	
+		      
 $datosexp = pg_query($con,$queryexp);
 $regexp= pg_fetch_array($datosexp);
 $inventarioexp= pg_num_rows($datosexp); 
@@ -894,6 +908,7 @@ elseif ( $_GET['mod']=='invc' || $_GET['mod']=='inv')  {
   <table>
 <?php
  } else { ?>
+  <table>
     <br \>
        <legend align="center"><h3>No se encuentran coincidencias en el inventario </h3></legend>
    <br \>

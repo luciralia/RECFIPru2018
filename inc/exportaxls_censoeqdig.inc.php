@@ -17,28 +17,19 @@ header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
 
 $censoxls= new inventario();
+$nombredoc= new Inventario();
 
-if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
-	 
-	$querylab="SELECT nombre FROM laboratorios
-           WHERE id_lab=" . $_REQUEST['lab'] ;
-    $registrolab = pg_query($con,$querylab);
-    $nomblab= pg_fetch_array($registrolab);
-    //echo 'consulta'.$querylab;
-    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+$textosi=$nombredoc->obtienenombre($_SESSION['tipo_usuario'],$_SESSION['id_div'],$_REQUEST['lab']);
 
-}
-
-if ( $_SESSION['tipo_usuario']==9 && $_SESSION['id_div']!=NULL && $_REQUEST['lab']==NULL ){
-$querydiv="SELECT nombre FROM divisiones
-           WHERE id_div=" . $_SESSION['id_div'] ;
-$registrodiv = pg_query($con,$querydiv);
-$nombdiv= pg_fetch_array($registrodiv);
-
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
-
-}
-
+header($textosi);
+?>
+ 
+   <tr>
+      <td align="center"><h2>Censo Equipo Digital</h2></td>
+   </tr>
+   
+    
+		<?php 
 
 $query=$censoxls->CensoEquDigital($_SESSION['tipo_usuario'],$_SESSION['id_div'],$_REQUEST['lab']);
 		

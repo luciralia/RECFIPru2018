@@ -21,7 +21,6 @@ $bandera1=0;
 //print_r($_SESSION);
 
 if ($_GET['mod']=='invg' ){
-	
 	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
 
 <tr>
@@ -107,51 +106,106 @@ if ($_GET['mod']=='invg' ){
           if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) ){
 
                
-                     $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                              from dispositivo e 
-                              left join cat_dispositivo cd
-                              on e.dispositivo_clave=cd.dispositivo_clave
-                              left join cat_familia cf
-                              on e.familia_clave=cf.id_familia
-                              left join cat_tipo_ram ctr
-                              on e.tipo_ram_clave=ctr.id_tipo_ram
-                              left join cat_tecnologia ct
-                              on e.tecnologia_clave=ct.id_tecnologia
-                              left join cat_sist_oper cso
-							  on  e.sist_oper=cso.id_sist_oper
-							  left join cat_usuario_final cuf
-			                  on cuf.usuario_final_clave=e.usuario_final_clave
-                              left join cat_marca cm
-                              on cm.id_marca=e.id_marca
-                              left join cat_memoria_ram cmr
-                              on e.id_mem_ram=cmr.id_mem_ram
-                              left join bienes_inventario bi
-                              on  e.bn_id = bi.bn_id
-                              left join laboratorios l
-                              on  l.id_lab=e.id_lab
-                              where l.id_lab=";
+                     $query= "SELECT  e.*, n.nomlab as laboratorio, bi.*,* 
+                              FROM dispositivo e 
+                              LEFT JOIN cat_dispositivo cd
+                              ON e.dispositivo_clave=cd.dispositivo_clave
+                              LEFT JOIN cat_familia cf
+                              ON e.familia_clave=cf.id_familia
+                              LEFT JOIN cat_tipo_ram ctr
+                              ON e.tipo_ram_clave=ctr.id_tipo_ram
+                              LEFT JOIN cat_tecnologia ct
+                              ON e.tecnologia_clave=ct.id_tecnologia
+                              LEFT JOIN cat_sist_oper cso
+							  ON  e.sist_oper=cso.id_sist_oper
+							  LEFT JOIN cat_usuario_final cuf
+			                  ON cuf.usuario_final_clave=e.usuario_final_clave
+                              LEFT JOIN cat_marca cm
+                              ON cm.id_marca=e.id_marca
+                              LEFT JOIN cat_memoria_ram cmr
+                              ON e.id_mem_ram=cmr.id_mem_ram
+                              LEFT JOIN bienes_inventario bi
+                              ON e.bn_id = bi.bn_id
+                              LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                                          ac.id_acad,ac.nombre AS academia, 
+                                          d.id_dep, d.nombre AS depto, 
+                                          co.id_coord,co.nombre AS coord, 
+                                          dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                                          FROM laboratorios l
+                                          LEFT JOIN academia ac
+                                          ON ac.id_acad=l.id_acad
+                                          LEFT JOIN departamentos d
+                                          ON (ac.id_dep=d.id_dep
+                                              OR l.id_dep=d.id_dep)
+                                          LEFT JOIN coordinacion co
+                                          ON (co.id_coord=d.id_coord
+                                              OR co.id_coord=l.id_coord)
+                                          LEFT JOIN divisiones dv
+                                          ON (dv.id_div=co.id_div
+                                              OR d.id_div=dv.id_div )) n
+                                          ON n.lab=e.id_lab
+							  WHERE n.lab=";
                        
                       
   
             switch ($_GET['orden']){
  			case "descripcion":
-			    $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
 			break;
  			case "clave":
 			     $query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
 			break;
 			case "marca":
-			    $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
 			break;
  			default:
-			    $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
+			     $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
 	    	break;
 			
            } // fin de switch
         }else{
-        
-		     //adapta la consulta    
-		      $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],0);
+         //adapta la consulta    
+		 // $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],0);
+		 $query= " SELECT  e.*, n.nomlab AS laboratorio, bi.*,* 
+                 FROM dispositivo e 
+                 LEFT JOIN cat_dispositivo cd
+                 ON e.dispositivo_clave=cd.dispositivo_clave
+                 LEFT JOIN cat_familia cf
+                 ON e.familia_clave=cf.id_familia
+                 LEFT JOIN cat_tipo_ram ctr
+                 ON e.tipo_ram_clave=ctr.id_tipo_ram
+                 LEFT JOIN cat_tecnologia ct
+                 on e.tecnologia_clave=ct.id_tecnologia
+                 LEFT JOIN cat_sist_oper cso
+                 on  e.sist_oper=cso.id_sist_oper
+	             LEFT JOIN cat_usuario_final cuf
+	             on cuf.usuario_final_clave=e.usuario_final_clave
+                 LEFT JOIN cat_marca cm
+                 on cm.id_marca=e.id_marca
+                 LEFT JOIN cat_memoria_ram cmr
+                 on e.id_mem_ram=cmr.id_mem_ram
+                 LEFT JOIN bienes_inventario bi
+                 ON e.bn_id = bi.bn_id
+                 LEFT JOIN(	
+                          SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                          ac.id_acad,ac.nombre AS academia, 
+                          d.id_dep, d.nombre AS depto, 
+                          co.id_coord,co.nombre AS coord, 
+                          dv.id_div,dv.nombre AS nombdivision,id_cac
+                          FROM laboratorios l
+                          LEFT JOIN academia ac
+                          on ac.id_acad=l.id_acad
+                          LEFT JOIN departamentos d
+                          ON (ac.id_dep=d.id_dep
+                              OR l.id_dep=d.id_dep)
+                          LEFT JOIN coordinacion co
+                          ON (co.id_coord=d.id_coord
+                              OR co.id_coord=l.id_coord)
+                          LEFT JOIN divisiones dv
+                          ON (dv.id_div=co.id_div
+                             OR d.id_div=dv.id_div )) n
+                ON n.lab=e.id_lab
+			    WHERE n.id_div=";
 			
             switch ($_GET['orden']){
  			case "descripcion":
@@ -233,8 +287,6 @@ if ($_GET['mod']=='invg' ){
          $bandera1=1;  
     
 
-
- 
      ?>
     </td>
 
@@ -399,68 +451,118 @@ if ( $_SESSION['id_div']==NULL)
 		 
 	if($_GET['lab']!=NULL ){
     if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
-	
 	    $tabla="dispositivo";
-		$query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                 from " . $tabla . " e 
-
-                 left join cat_dispositivo cd
-                 on e.dispositivo_clave=cd.dispositivo_clave
-                 left join cat_familia cf
-                 on e.familia_clave=cf.id_familia
-                 left join cat_tipo_ram ctr
-                 on e.tipo_ram_clave=ctr.id_tipo_ram
-                 left join cat_tecnologia ct
-                 on e.tecnologia_clave=ct.id_tecnologia
-                 left join cat_sist_oper cso
-                 on  e.sist_oper=cso.id_sist_oper
-				 left join cat_usuario_final cuf
-			     on cuf.usuario_final_clave=e.usuario_final_clave
-                 left join cat_marca cm
-                 on cm.id_marca=e.id_marca
-                 left join cat_memoria_ram cmr
-                 on e.id_mem_ram=cmr.id_mem_ram
-                 left join bienes_inventario bi
-                 on  e.bn_id = bi.bn_id
-                 join laboratorios l
-                 on  l.id_lab=e.id_lab
-                 where l.id_lab=";}
+		$query= "SELECT  e.*, n.nomlab AS laboratorio, bi.*,* 
+                 FROM " . $tabla . " e 
+                 LEFT JOIN cat_dispositivo cd
+                 ON e.dispositivo_clave=cd.dispositivo_clave
+                 LEFT JOIN cat_familia cf
+                 ON e.familia_clave=cf.id_familia
+                 LEFT JOIN cat_tipo_ram ctr
+                 ON e.tipo_ram_clave=ctr.id_tipo_ram
+                 LEFT JOIN cat_tecnologia ct
+                 ON e.tecnologia_clave=ct.id_tecnologia
+                 LEFT JOIN cat_sist_oper cso
+                 ON  e.sist_oper=cso.id_sist_oper
+				 LEFT JOIN cat_usuario_final cuf
+			     ON cuf.usuario_final_clave=e.usuario_final_clave
+                 LEFT JOIN cat_marca cm
+                 ON cm.id_marca=e.id_marca
+                 LEFT JOIN cat_memoria_ram cmr
+                 ON e.id_mem_ram=cmr.id_mem_ram
+                 LEFT JOIN bienes_inventario bi
+                 ON  e.bn_id = bi.bn_id
+				 LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                            ac.id_acad,ac.nombre AS academia, 
+                            d.id_dep, d.nombre AS depto, 
+                            co.id_coord,co.nombre AS coord, 
+                            dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                            FROM laboratorios l
+                            LEFT JOIN academia ac
+                            ON ac.id_acad=l.id_acad
+                            LEFT JOIN departamentos d
+                            ON (ac.id_dep=d.id_dep
+                                OR l.id_dep=d.id_dep)
+                            LEFT JOIN coordinacion co
+                            ON (co.id_coord=d.id_coord
+                                OR co.id_coord=l.id_coord)
+                            LEFT JOIN divisiones dv
+                            ON (dv.id_div=co.id_div
+                                OR d.id_div=dv.id_div )) n
+                            ON n.lab=e.id_lab
+				WHERE n.lab=";
+				 
+						 
+				 }
                  elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
                         {$tabla="dispositivo";
-			             $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                          from " . $tabla . " e 
-
-                          left join cat_dispositivo cd
-                          on e.dispositivo_clave=cd.dispositivo_clave
-                          left join cat_familia cf
+			             $query= "SELECT  e.*, n.nomlab as laboratorio, bi.*,* 
+                          FROM " . $tabla . " e 
+                          LEFT JOIN cat_dispositivo cd
+                          ON e.dispositivo_clave=cd.dispositivo_clave
+                          LEFT JOIN cat_familia cf
                           on e.familia_clave=cf.id_familia
-                          left join cat_tipo_ram ctr
+                          LEFT JOIN cat_tipo_ram ctr
                           on e.tipo_ram_clave=ctr.id_tipo_ram
-                          left join cat_tecnologia ct
+                          LEFT JOIN cat_tecnologia ct
                           on e.tecnologia_clave=ct.id_tecnologia
-                          left join cat_sist_oper cso
+                          LEFT JOIN cat_sist_oper cso
                           on  e.sist_oper=cso.id_sist_oper
-						  left join cat_usuario_final cuf
+						  LEFT JOIN cat_usuario_final cuf
 			              on cuf.usuario_final_clave=e.usuario_final_clave
-                          left join cat_marca cm
+                          LEFT JOIN cat_marca cm
                           on cm.id_marca=e.id_marca
-                          left join cat_memoria_ram cmr
+                          LEFT JOIN cat_memoria_ram cmr
                           on e.id_mem_ram=cmr.id_mem_ram
-                          left join bienes_inventario bi
+                          LEFT JOIN bienes_inventario bi
                           on  e.bn_id = bi.bn_id
-                          join laboratorios l
-                          on  l.id_lab=e.id_lab
-                          where l.id_lab=";}
+						  LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                                    ac.id_acad,ac.nombre AS academia, 
+                                    d.id_dep, d.nombre AS depto, 
+                                    co.id_coord,co.nombre AS coord, 
+                                    dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                                    FROM laboratorios l
+                                    LEFT JOIN academia ac
+                                    ON ac.id_acad=l.id_acad
+                                    LEFT JOIN departamentos d
+                                    ON (ac.id_dep=d.id_dep
+                                       OR l.id_dep=d.id_dep)
+                                    LEFT JOIN coordinacion co
+                                    ON (co.id_coord=d.id_coord
+                                       OR co.id_coord=l.id_coord)
+                                    LEFT JOIN divisiones dv
+                                    ON (dv.id_div=co.id_div
+                                       OR d.id_div=dv.id_div )) n
+                                    ON n.lab=e.id_lab
+							        WHERE n.lab=";
+						
+                        						  
+						  }
                         else 
                              { $tabla="equipo";
-			                   $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                               from " . $tabla . " e 
-
-                               left join bienes_inventario bi
-                               on  e.bn_id = bi.bn_id
-                               join laboratorios l
-                               on  l.id_lab=e.id_lab
-                               where l.id_lab=";} 
+			                   $query= "SELECT  e.*, n.nomlab as laboratorio, bi.*,* 
+                                FROM " . $tabla . " e 
+                                LEFT JOIN bienes_inventario bi
+                                ON  e.bn_id = bi.bn_id
+                                LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                                          ac.id_acad,ac.nombre AS academia, 
+                                          d.id_dep, d.nombre AS depto, 
+                                          co.id_coord,co.nombre AS coord, 
+                                          dv.id_div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                                          FROM laboratorios l
+                                          LEFT JOIN academia ac
+                                          ON ac.id_acad=l.id_acad
+                                          LEFT JOIN departamentos d
+                                          ON (ac.id_dep=d.id_dep
+                                              OR l.id_dep=d.id_dep)
+                                          LEFT JOIN coordinacion co
+                                          ON (co.id_coord=d.id_coord
+                                              OR co.id_coord=l.id_coord)
+                                          LEFT JOIN divisiones dv
+                                          ON (dv.id_div=co.id_div
+                                              OR d.id_div=dv.id_div )) n
+                                          ON n.lab=e.id_lab
+							              WHERE n.lab=";} 
 
               switch ($_GET['orden']){
  			  case "descripcion":
@@ -481,67 +583,95 @@ if ( $_SESSION['id_div']==NULL)
       }else{
 	     if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
 			 
-			 $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],$_SESSION['tipo_lab']);
+			// $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],$_SESSION['tipo_lab']);
 			 
-	        /*$tabla="dispositivo";
-		     $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                      from " . $tabla . " e 
-
-                      left join cat_dispositivo cd
-                      on e.dispositivo_clave=cd.dispositivo_clave
-                      left join cat_familia cf
-                      on e.familia_clave=cf.id_familia
-                      left join cat_tipo_ram ctr
-                      on e.tipo_ram_clave=ctr.id_tipo_ram
-                      left join cat_tecnologia ct
-                      on e.tecnologia_clave=ct.id_tecnologia
-                      left join cat_sist_oper cso
-                      on  e.sist_oper=cso.id_sist_oper
-					  left join cat_usuario_final cuf
-			          on cuf.usuario_final_clave=e.usuario_final_clave
-                      left join cat_marca cm
-                      on cm.id_marca=e.id_marca
-                      left join cat_memoria_ram cmr
-                      on e.id_mem_ram=cmr.id_mem_ram
-                      left join bienes_inventario bi
-                      on  e.bn_id = bi.bn_id
-                      left join laboratorios l
-                      on  l.id_lab=e.id_lab
-                      left join departamentos dp
-                      on dp.id_dep=l.id_dep
-                      where id_div=";
-					  */}
+	         $tabla="dispositivo";
+		     $query= "SELECT  e.*, n.nomlab AS laboratorio, bi.*,* 
+                      FROM  " . $tabla . " e 
+                      LEFT JOIN cat_dispositivo cd
+                      ON e.dispositivo_clave=cd.dispositivo_clave
+                      LEFT JOIN cat_familia cf
+                      ON e.familia_clave=cf.id_familia
+                      LEFT JOIN cat_tipo_ram ctr
+                      ON e.tipo_ram_clave=ctr.id_tipo_ram
+                      LEFT JOIN cat_tecnologia ct
+                      ON e.tecnologia_clave=ct.id_tecnologia
+                      LEFT JOIN cat_sist_oper cso
+                      ON  e.sist_oper=cso.id_sist_oper
+					  LEFT JOIN cat_usuario_final cuf
+			          ON cuf.usuario_final_clave=e.usuario_final_clave
+                      LEFT JOIN cat_marca cm
+                      ON cm.id_marca=e.id_marca
+                      LEFT JOIN cat_memoria_ram cmr
+                      ON e.id_mem_ram=cmr.id_mem_ram
+                      LEFT JOIN bienes_inventario bi
+                      ON  e.bn_id = bi.bn_id
+                      LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                                 ac.id_acad,ac.nombre AS academia, 
+                                 d.id_dep, d.nombre AS depto, 
+                                 co.id_coord,co.nombre AS coord, 
+                                 dv.id_div as div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                                 FROM laboratorios l
+                                 LEFT JOIN academia ac
+                                 ON ac.id_acad=l.id_acad
+                                 LEFT JOIN departamentos d
+                                 ON (ac.id_dep=d.id_dep
+                                     OR l.id_dep=d.id_dep)
+                                 LEFT JOIN coordinacion co
+                                 ON (co.id_coord=d.id_coord
+                                     OR co.id_coord=l.id_coord)
+                                 LEFT JOIN divisiones dv
+                                 ON (dv.id_div=co.id_div
+                                     OR d.id_div=dv.id_div )) n
+                                 ON n.lab=e.id_lab
+					 WHERE  n.div=";
+					  
+					  }
                           elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
                                  {
-								  $query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],$_SESSION['tipo_lab']);	 
-									/*$tabla= "dispositivo";
-			                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                                           from " . $tabla . " e 
-
-                                           left join cat_dispositivo cd
-                                           on e.dispositivo_clave=cd.dispositivo_clave
-                                           left join cat_familia cf
-                                           on e.familia_clave=cf.id_familia
-                                           left join cat_tipo_ram ctr
-                                           on e.tipo_ram_clave=ctr.id_tipo_ram
-                                           left join cat_tecnologia ct
-                                           on e.tecnologia_clave=ct.id_tecnologia
-										   left join cat_usuario_final cuf
-			                               on cuf.usuario_final_clave=e.usuario_final_clave
-                                           left join cat_sist_oper cso
-                                           on  e.sist_oper=cso.id_sist_oper
-                                           left join cat_marca cm
-                                           on cm.id_marca=e.id_marca
-                                           left join cat_memoria_ram cmr
-                                           on e.id_mem_ram=cmr.id_mem_ram
-                                           left join bienes_inventario bi
-                                           on  e.bn_id = bi.bn_id
-                                           left join laboratorios l
-                                           on  l.id_lab=e.id_lab
-                                           left join departamentos dp
-                                            on dp.id_dep=l.id_dep
-                                           where id_div=";
-										   */}
+								  //$query=$consulta->adapta($_GET['mod'],$_SESSION['nivel'],$_SESSION['tipo_lab']);
+								  	 
+								  $tabla= "dispositivo";
+			                       $query= "SELECT  e.*, n.nomlab AS laboratorio, bi.*,* 
+                                           FROM " . $tabla . " e 
+                                           LEFT JOIN cat_dispositivo cd
+                                           ON e.dispositivo_clave=cd.dispositivo_clave
+                                           LEFT JOIN cat_familia cf
+                                           ON e.familia_clave=cf.id_familia
+                                           LEFT JOIN cat_tipo_ram ctr
+                                           ON e.tipo_ram_clave=ctr.id_tipo_ram
+                                           LEFT JOIN cat_tecnologia ct
+                                           ON e.tecnologia_clave=ct.id_tecnologia
+										   LEFT JOIN cat_usuario_final cuf
+			                               ON cuf.usuario_final_clave=e.usuario_final_clave
+                                           LEFT JOIN cat_sist_oper cso
+                                           ON  e.sist_oper=cso.id_sist_oper
+                                           LEFT JOIN cat_marca cm
+                                           ON cm.id_marca=e.id_marca
+                                           LEFT JOIN cat_memoria_ram cmr
+                                           ON e.id_mem_ram=cmr.id_mem_ram
+                                           LEFT JOIN bienes_inventario bi
+                                           ON  e.bn_id = bi.bn_id
+                                           LEFT JOIN (SELECT l.id_lab AS lab,l.nombre AS nomlab, l.id_responsable,
+                                                     ac.id_acad,ac.nombre AS academia, 
+                                                     d.id_dep, d.nombre AS depto, 
+                                                     co.id_coord,co.nombre AS coord, 
+                                                     dv.id_div as div,dv.nombre AS nombdivision,id_cac,tipo_lab
+                                                     FROM laboratorios l
+                                                     LEFT JOIN academia ac
+                                                     ON ac.id_acad=l.id_acad
+                                                     LEFT JOIN departamentos d
+                                                     ON (ac.id_dep=d.id_dep
+                                                         OR l.id_dep=d.id_dep)
+                                                     LEFT JOIN coordinacion co
+                                                     ON (co.id_coord=d.id_coord
+                                                         OR co.id_coord=l.id_coord)
+                                                     LEFT JOIN divisiones dv
+                                                     ON (dv.id_div=co.id_div
+                                                         OR d.id_div=dv.id_div )) n
+                                                     ON n.lab=e.id_lab
+					                       WHERE  n.div=";
+										   }
                                
 
                     switch ($_GET['orden']){
@@ -682,9 +812,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
  { 
  
   $bandera=0;
- 
-
-		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
+    while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
 		
 		 //print_r($lab_invent);

@@ -13,14 +13,14 @@ $this->datos=array();
 function tblXls($idlab,$mod,$tabla){
 	
 
-		if ($_SESSION['tipo_lab']!='e' && $mod=='invc' )	
+	   if ($_SESSION['tipo_lab']!='e' && $mod=='invc' )	
              $tabla="dispositivo";
            elseif ($_SESSION['tipo_lab']=='e' && $mod=='invc' )
                $tabla="dispositivo";
               else 
                 $tabla="equipo";	   
 	
-	if ($mod=='serv'||$mod=='servi'){
+	   if ($mod=='serv'||$mod=='servi'){
 
 
 				if ($mod=='serv'){
@@ -95,9 +95,9 @@ function tblXls($idlab,$mod,$tabla){
          LEFT JOIN cat_familia cf
          ON e.familia_clave=cf.id_familia
          LEFT JOIN cat_tipo_ram ctr
-on e.tipo_ram_clave=ctr.id_tipo_ram
-left join cat_tecnologia ct
-on e.tecnologia_clave=ct.id_tecnologia
+         ON e.tipo_ram_clave=ctr.id_tipo_ram
+         LEFT JOIN cat_tecnologia ct
+         ON e.tecnologia_clave=ct.id_tecnologia
 left join cat_sist_oper cso
 on  e.sist_oper=cso.id_sist_oper
 left join cat_marca cm
@@ -213,7 +213,7 @@ function DispXls(){
 
 
 }
-
+/*
 		
 function CensoECNoMacXls($tipousu,$div,$lab){
 	
@@ -468,6 +468,8 @@ if ( $tipousu==10 && $div ==""){
 
 
 } //fin censoecMac
+*/
+
 
 }
 

@@ -39,8 +39,8 @@ require_once('../inc/encabezado.inc.php');
 
 
     <td><?php 
-		//echo 'En inicio.html REQUEST';
-		//print_r ($_REQUEST);
+		/*echo 'En inicio.html REQUEST';
+		print_r ($_REQUEST);*/
 		
 		if (!isset($_GET['mod']) || $_GET['mod']=='def')
 		include_once("../inc/inicio.inc.php");
