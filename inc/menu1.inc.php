@@ -1,10 +1,16 @@
 <link rel="stylesheet"  type="text/css" href="../css/menu_1.css">  
+<link rel="stylesheet"  type="text/css" href="../css/menu_usr.css">  
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
 		/*echo 'SESSIONen menu1.inc';
 	print_r($_SESSION);	
 	echo 'GETen menu1.inc';
 	print_r($_REQUEST);	*/
+	//Nuevos cambios menu inicio 
+	if ( $_SESSION['id_div']==NULL  )
+	     $_SESSION['id_div']=$_GET['div'];
+	 else  if ( $_SESSION['tipo_usuario']==10  )
+		 $_SESSION['id_div']="" ;
 	?>
 
 <div id="header">
@@ -13,7 +19,18 @@
  
  	<!-- Boton cedula -->
     <?php $tipo=$labNom->getLaboratorio($_GET['lab']);?>
-     <?php  
+    <?php 
+	
+	//Nuevos cambios menu inicio 
+ 	   if (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) {
+		        ?>
+              <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >**Inicio</a></li>
+ 	<?php }elseif ($_GET['lab']!=''|| $_GET['div']!=''){ 
+	            if ( $_SESSION['id_div']==NULL  )
+	               $_SESSION['id_div']=""?>
+       	       <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" >Inicio</a></li>
+             
+        <?php }
  	   if ($_GET['mod']=='ced') {?>
  	           <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>" class="actual">Cédula de Información</a></li>
  	<?php }else{ ?>
