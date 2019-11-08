@@ -121,6 +121,7 @@ function getLaboratorio($idlab){
       and l.id_dep=de.id_dep
       and de.id_div=di.id_div
       and l.id_responsable=u.id_usuario order by laboratorio";
+	 // echo $query;
     }
 
 				    
@@ -150,7 +151,7 @@ function getLaboratorio($idlab){
 
 
 function getDivision($iddiv){
-
+echo $iddiv;
 			if ($iddiv==NULL||$iddiv==0)
 			
 			$salidar="Ninguno"; 

@@ -18,40 +18,65 @@ echo 'Div en carga censo RQ';
 print_r ($_REQUEST);
 */
 if ($_SESSION['tipo_usuario']==10)
-    $_SESSION['id_div']=$_REQUEST['div'];
+  $_SESSION['id_div']=$_REQUEST['div'];
+if ($_SESSION['tipo_usuario']==9)
+  $_SESSION['id_div']=$_REQUEST['div'];
+
    
  if ($_GET['mod']=='ceneceq' ){
  ?>
-<br \>
 
+<br>
 
-<div style="text-align:center;">
+<!--<div style="text-align:center;">-->
+
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
-		      <form action="../inc/exportaxls_censoeqc.inc.php" method="post" name="ceneceq" >
-	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+       <legend align="right"> <h3>Estado del equipo</h3>
+             <br>
+              <form action="../inc/exportaxls_censoeqc.inc.php" method="post" name="ceneceq" >
+	               <input name="enviar" type="submit" value="Exportar a Excel" />
+                   <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+              
+            
    </tr>  
    </table>
-      
+    
    <br>
    <table>  
    <tr>
        <legend align="center"><h3>Anteriores a Pentium 4 o equivalentes</h3></legend>
      <!-- <td align="center" ><h3>Anteriores a Pentium 4 o equivalentes</h3></td>-->
     </tr>
-    <tr>  </tr>  
-   <tr>  </tr>
+   
 </table>
   <br>
-  <br>
+
   
 		<?php 
+	if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
+	
+	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND l.id_lab=" . $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
 		
+	}else
 	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -72,7 +97,7 @@ if ($_SESSION['tipo_usuario']==10)
 			GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 			
-	}
+	}else
 	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] !="" ){	
 	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -94,9 +119,9 @@ if ($_SESSION['tipo_usuario']==10)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 		
-	}
-	if ( $_SESSION['tipo_usuario']!=10  && $_SESSION['id_div'] !="" ){
-			
+	}else
+	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1)   && $_SESSION['id_div'] !="" ){
+	
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -115,7 +140,7 @@ if ($_SESSION['tipo_usuario']==10)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}else if ( $_SESSION['tipo_usuario']!=10  && $_SESSION['id_div'] =="" )
+	}else if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1)   && $_SESSION['id_div'] =="" )
 	{ 
 	
 	$query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -137,8 +162,7 @@ if ($_SESSION['tipo_usuario']==10)
 			ORDER BY cuenta DESC";
 	}
 	
-	//echo 'query en censo';
-	//echo $query;		       
+		       
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
@@ -173,14 +197,15 @@ $inventario= pg_num_rows($datos);
             </tr>
             
          </table>    
-       <?php 
-      $cuenta=$cuenta+$lab_invent['cuenta'];
+     
+	 <?php  
+         $cuenta=$cuenta+$lab_invent['cuenta'];
           
 		 }//  procesador  ?>
-   
-
+    
    
     <?php
+
     } // while equipos anteriores a Pentium 4
 
 ?>
@@ -245,7 +270,8 @@ $inventario= pg_num_rows($datos);
              </table> 
 <?php 
  $cuenta=$cuenta+$lab_invent['cuenta'];
-          
+ 
+
 }// procesador 
 
 
@@ -367,12 +393,13 @@ $inventario= pg_num_rows($datos);
                <td width="15%" ><?php echo $lab_invent['fecha_factura'];?></td>
                <td width="1%"><?php echo $lab_invent['cuenta'];?></td>
             </tr>
+           
+
             </table>
-<?php 
+ <?php           
  $cuenta=$cuenta+$lab_invent['cuenta'];
           
 } // procesador 
-
 
 } // while equipos  Intel Core i5 o equivalentes
 ?>
@@ -518,6 +545,27 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </tr>
 </table>
 <?php
+if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+			
+	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}else
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -560,9 +608,9 @@ if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 		
-	}
-	if ( $_SESSION['tipo_usuario']!=10  && $_SESSION['id_div'] !="" ){
-			
+	}else
+	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div'] !="" ){
+		echo 'usu!=10  and usu!=1 and div!=NULL';	
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -581,9 +629,9 @@ if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}else if ( $_SESSION['tipo_usuario']!=10  && $_SESSION['id_div'] =="" )
+	}else if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1)  && $_SESSION['id_div'] =="" )
 	{ 
-	//echo 'usu!=10,div!=null OTRO';
+	
 	$query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -662,9 +710,15 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
    <td width="1%" ><strong><?php echo $cuenta;?></strong></td>
 </tr>
 </table>
+</form>
+</legend>
+ <br>
+ <br>
 
-<?php
- } // fin de censo de equipo
+	
+ <?php     
+ }
+ // fin de censo de equipo
  
  
  if ($_GET['mod']=='cenecso' ){
@@ -674,13 +728,15 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Sistema Operativo&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
-		      <form action="../inc/exportaxls_censoeqcso.inc.php" method="post" name="ceneceq" >
-	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+  <legend align="right">
+  
+      <h3>Sistema Operativo</h3>
+         <br>
+             <form action="../inc/exportaxls_censoeqcso.inc.php" method="post" name="ceneceq" >
+	             <input name="enviar" type="submit" value="Exportar a Excel" />
+                 <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+             
    </tr>  
    </table>
     <br>  
@@ -696,6 +752,29 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
    
 
 		<?php 
+		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC ";
+	}else
+		
 		if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -739,9 +818,9 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC ";
-	}
+	}else
 	
-	if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -762,7 +841,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			AND (sist_oper<>3 AND sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
-	}else if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	
+	}else if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']!=""){	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -1183,6 +1262,29 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
    <br>
 
 		<?php 
+		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+	
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_sist_oper cso
+			ON ec.sist_oper=cso.id_sist_oper 
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta,l.nombre DESC";	
+	}else
 	if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
@@ -1202,6 +1304,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND (sist_oper=3 OR sist_oper=7)
+			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
@@ -1226,9 +1329,9 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC ";
-	}
+	}else
 	
-	if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -1249,7 +1352,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			AND (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
-	}else if ( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	
+	}else if (  ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -1339,13 +1442,14 @@ $inventario= pg_num_rows($datos);
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Usuario Final</h3>
+          <br>
+  
 		      <form action="../inc/exportaxls_censoeqcuf.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+           
    </tr>  
    </table>
    <br>  
@@ -1361,6 +1465,28 @@ $inventario= pg_num_rows($datos);
         
    
 		<?php 
+	if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}else
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
@@ -1404,8 +1530,8 @@ $inventario= pg_num_rows($datos);
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -1427,7 +1553,7 @@ $inventario= pg_num_rows($datos);
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	
+	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -1827,7 +1953,28 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
    
    
 		<?php 
-		
+		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND i.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}else
 		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
@@ -1871,8 +2018,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -1894,7 +2041,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	
+	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -1975,13 +2122,14 @@ $inventario= pg_num_rows($datos);
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo de Cómputo Usuario Final Bibliotecas&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Usuario Final Bibliotecas</h3>
+        <br>
+
 		      <form action="../inc/exportaxls_censoeqcufb.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+            
    </tr>  
    </table>
    <br>  
@@ -1997,7 +2145,29 @@ $inventario= pg_num_rows($datos);
    <br>
   
 		<?php 
-		
+if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND tipo_lab='b'
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}else		
 if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
@@ -2043,8 +2213,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	} else
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -2067,7 +2237,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){			
+	else if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']!=""){			
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -2435,8 +2605,29 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </tr>
 </table>
 		<?php 
-		
-		
+	if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND tipo_lab='b'
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}else	
 if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
@@ -2482,8 +2673,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -2596,13 +2787,14 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Impresoras&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Impresoras</h3>
+   <br>
+ 
 		      <form action="../inc/exportaxls_censoeqimp.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+             
    </tr>  
    </table>
    <br>  
@@ -2611,6 +2803,22 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
  
     
 		<?php 
+		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND l.id_lab=".$_REQUEST['lab']  . "
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";
+	}else
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
@@ -2641,8 +2849,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			AND id_div=".$_SESSION['id_div']  . "
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp 
@@ -2657,7 +2865,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){
+	else if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
 
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
             FROM dispositivo dp 
@@ -2673,6 +2881,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";
 	}
+	
+	
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
     ?>
@@ -2729,12 +2939,14 @@ $inventario= pg_num_rows($datos);
   <br>        
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipo Digital&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
-   
-  <td  align="center">
+      <legend align="right"><h3>Equipo Digital
+      </h3>
+       <br>
+  
 		      <form action="../inc/exportaxls_censoeqdig.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
    </td>           
    </tr>  
    </table>
@@ -2743,8 +2955,21 @@ $inventario= pg_num_rows($datos);
 
 
 		<?php
-		
-		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=0 )
+            AND l.id_lab=".$_REQUEST['lab']  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+			ORDER BY cuenta ASC";
+	}else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp
@@ -2773,8 +2998,7 @@ $inventario= pg_num_rows($datos);
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta ASC";
-	}
-			if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else if (($_SESSION['tipo_usuario']!=10  && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp
@@ -2789,7 +3013,7 @@ $inventario= pg_num_rows($datos);
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre ASC";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	 
+	else if (($_SESSION['tipo_usuario']!=10  && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']!=""){	 
   $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp
             LEFT JOIN cat_dispositivo cd
@@ -2858,13 +3082,14 @@ $inventario= pg_num_rows($datos);
   <br>
   <br>        
  <table>
-  <tr>
-      <td align="center" ><h2>Censo de Redes y Telecomunicaciones&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+  <tr><legend align="right">
+      <h3>Redes y Telecomunicaciones</h3>
    
-  <td  align="center">
+    <br>
 		      <form action="../inc/exportaxls_censoeqryt.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
    </td>           
    </tr>  
    </table>
@@ -2873,6 +3098,21 @@ $inventario= pg_num_rows($datos);
    
  
 		<?php 
+		if ($_SESSION['tipo_usuario']==1 &&  $_REQUEST['lab'] !=NULL ){	 
+  $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+            FROM dispositivo dp
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=0 )
+            AND l.id_lab=".$_REQUEST['lab']  . "
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+			ORDER BY cuenta ASC";
+	 }else
 		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
@@ -2903,7 +3143,7 @@ $inventario= pg_num_rows($datos);
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta ASC";
 	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp
@@ -2918,7 +3158,7 @@ $inventario= pg_num_rows($datos);
 			GROUP BY nombre_dispositivo,estadoBien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre ASC";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){	 
+	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){	 
   $query= " SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp
             LEFT JOIN cat_dispositivo cd
@@ -2988,22 +3228,36 @@ $inventario= pg_num_rows($datos);
 
  <table>
   <tr>
-      <td align="center" ><h2>Censo de Equipos de Alto Rendimiento&nbsp;&nbsp;&nbsp;&nbsp;</h2></td>
+      <legend align="right"><h3>Equipos de Alto Rendimiento</h3></td>
    
-  <td  align="center">
+  <br>
 		      <form action="../inc/exportaxls_censoeqcar.inc.php" method="post" name="ceneceq" >
 	          <input name="enviar" type="submit" value="Exportar a Excel" />
-	          </form>
-   </td>           
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
+	          </form></legend>
+           
    </tr>  
    </table>
 <br>
 <br>
 
- 
-  
 		<?php 
-		
+		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
+
+  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
+	        FROM dispositivo dp
+            LEFT JOIN cat_marca cm
+            ON cm.id_marca=dp.id_marca
+			LEFT JOIN laboratorios l
+			ON dp.id_lab=l.id_lab
+            LEFT JOIN cat_sist_oper cso
+            ON cso.id_sist_oper=dp.sist_oper
+			LEFT JOIN departamentos d 
+			ON d.id_dep=l.id_dep
+            WHERE equipoaltorend='Si'
+			AND l.id_lab=". $_REQUEST['lab']  . "
+			ORDER BY marca_p,l.nombre ASC";
+	}
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query=" SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
@@ -3034,8 +3288,8 @@ $inventario= pg_num_rows($datos);
             WHERE equipoaltorend='Si'
 			AND id_div=". $_SESSION['id_div']  . "
 			ORDER BY marca_p,l.nombre ASC";
-	}
-		if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+		if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query=" SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre,l.nombre
 	        FROM dispositivo dp
@@ -3050,7 +3304,7 @@ $inventario= pg_num_rows($datos);
             WHERE equipoaltorend='Si'
 			ORDER BY marca_p,l.nombre ASC";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){
+	else if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
 
   $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,inventario,sist_oper,nombre_so,fecha_factura,l.nombre
 	        FROM dispositivo dp

@@ -15,17 +15,27 @@ header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
 
-if ( $_SESSION['tipo_usuario']!=10 ){
-	
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
+	 
+	$querylab="SELECT nombre FROM laboratorios
+           WHERE id_lab=" . $_REQUEST['lab'] ;
+    $registrolab = pg_query($con,$querylab);
+    $nomblab= pg_fetch_array($registrolab);
+    //echo 'consulta'.$querylab;
+    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+
+}
+
+if ( $_SESSION['tipo_usuario']==9 && $_SESSION['id_div']!=NULL && $_REQUEST['lab']==NULL ){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
 $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
-
 $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 
-}	
+}
+
 
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 $querydiv="SELECT nombre FROM divisiones
@@ -51,8 +61,23 @@ header($texto);
    
     
 		<?php 
-		
-if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+	if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
+
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+            FROM dispositivo dp 
+            LEFT JOIN cat_dispositivo cd
+            ON dp.dispositivo_clave=cd.dispositivo_clave
+            LEFT JOIN laboratorios l
+            ON dp.id_lab=l.id_lab
+            LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND l.id_lab=".$_REQUEST['id_lab']  . "
+			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			ORDER BY cuenta";
+	}else
+	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp 
@@ -82,8 +107,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 			AND id_div=".$_SESSION['id_div']  . "
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
             FROM dispositivo dp 
@@ -98,7 +123,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre";	
 	}
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){
+	else if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
 
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
             FROM dispositivo dp 
@@ -121,7 +146,7 @@ $inventario= pg_num_rows($datos);
     
     	 <table class='material' width=50%>
 		 <tr>
-                  <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+                  <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="30%" scope="col">Dispositivo</th>
               <th width="30%" scope="col">Uso/Desuso</th>
               <th width="30%" scope="col">Total</th>

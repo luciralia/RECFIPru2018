@@ -1,18 +1,35 @@
 <?php 
-require_once('../inc/encabezado.inc.php'); ?>
-<!--  <tr>
-  <td><?php //require('../inc/menu.inc.php'); ?>&nbsp;</td>
-  </tr> -->
+require_once('../inc/encabezado.inc.php'); 
+//require_once('../inc/sesion.inc.php'); 
+
+?>
   <tr>
   <td><?php require_once('../inc/menu1.inc.php'); ?>      &nbsp;</td>
   </tr>
    <tr>
     <td><?php 
-	
+	if ($_SESSION['id_div']==NULL && ($_SESSION['tipo_usuario']!=10 ))
+     {
+		  //obtener la división
+
+     $querydiv="SELECT d.id_div FROM laboratorios l
+                JOIN departamentos dp
+                ON l.id_dep=dp.id_dep
+                JOIN divisiones d
+                 ON d.id_div=dp.id_div
+                WHERE l.id_lab=" .$_GET['lab'];
+				
+               $datosdiv=pg_query($con,$querydiv);
+               // echo 'query inicio.html'.$querydiv;
+     $div = pg_fetch_array($datosdiv);
+     $_SESSION['id_div']=$div[0];
+   
+	 }
+     
 	
    
     if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act' )
-    require_once('../inc/menu_usr.inc.php'); 
+            require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>
 
@@ -22,8 +39,8 @@ require_once('../inc/encabezado.inc.php'); ?>
 
 
     <td><?php 
-		echo 'En inicio.html SESSION';
-		print_r ($_SESSION);
+		//echo 'En inicio.html SESSION';
+		//print_r ($_SESSION);
 		
 		if (!isset($_GET['mod']) || $_GET['mod']=='def')
 		include_once("../inc/inicio.inc.php");
@@ -55,7 +72,7 @@ require_once('../inc/encabezado.inc.php'); ?>
 		else if (isset($_GET['lab'])  && $_GET['mod']=='invg'){
 		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='imp')
-		include_once("../view/importamoderror.inc.php");	//modificado para deteectar errores ant importar.html.php
+		include_once("../view/importar.html.php");	
 		else if ($_GET['mod']=='act')
 		include_once("../view/actualizar.html.php");	
 		else if ($_GET['mod']=='cot')

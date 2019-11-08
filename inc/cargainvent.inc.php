@@ -1,4 +1,4 @@
-﻿
+﻿<strong></strong>
 <?php
 // version que no toma equipoexperimentaL PARA VER
 require_once('../conexion.php');
@@ -21,8 +21,7 @@ $bandera1=0;
 
 if ($_GET['mod']=='invg' ){
 	
-	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']?>
-
+	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
 
 <tr>
 <td align="center">
@@ -39,8 +38,8 @@ if ($_GET['mod']=='invg' ){
 <div class="block" id="necesidades_content">    
       
           <form action="../view/inicio.html.php" method="get" name="orderby">
-        Ordenar por: <select name="orden">
-          <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...         </option>
+          Ordenar por: <select name="orden">
+          <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...          </option>
           <option value="descripcion" <?php echo $sel=($_GET['orden']=='descripcion')? 'selected="selected"': "";?>>Descripción</option>
           <option value="clave" <?php echo $sel=($_GET['orden']=='clave')? 'selected="selected"': "";?>>No. Inventario</option>
           <option value="marca" <?php echo $sel=($_GET['orden']=='marca')? 'selected="selected"': "";?>>Marca</option>
@@ -50,15 +49,17 @@ if ($_GET['mod']=='invg' ){
 
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
-    
+   
 <input name="bOrden" type="submit" value="ordenar" />
+
+
 </form>
 <!--</td>-->
 
 
               
-<?php if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-        <tr>
+<?php // if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
+        <!--<tr>
         <td align="right">  <h3> Inventario por División</h3> </td>
        
         </tr>
@@ -90,9 +91,9 @@ if ($_GET['mod']=='invg' ){
               </form>
               </legend>
             </td>
-            </tr> 
+            </tr> -->
             
- <?php } ?>
+ <?php //} ?>
 
 </td>
 </tr>
@@ -193,17 +194,71 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
    }
-  // echo 'consulta';
-  //echo $query;
+  // echo 'consulta en cargainv'. $query;
+
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
+    if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
+        <tr>
+        <td align="right">  <h3> Inventario por División</h3> </td>
+       
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        
+         <tr>
+        <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>
+        <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
+	          <input name="enviar" type="submit" value="Con identificador" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            </tr> 
+            
+           <tr>
+           <td>
+            
+           <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
+	          <input name="enviar" type="submit" value="Con nombre" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
+            </td>
+            </tr> 
+            
+             <tr>
+           <td>
+           <br>
+           <legend align="right">
+          <?php $action="../inc/exportainvDGTIC.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
+	          <input name="enviar" type="submit" value="DGTIC" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
+            </td>
+            </tr> 
+            
+ <?php } ?>
 
- 
-     if (($inventario!=0 ) && $bandera1==0 ) { 
+</td>
+</tr>
+<br>
+ <?php
+     if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  
-     }
+    
 
-     $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod'];
+
  
      ?>
     </td>
@@ -212,12 +267,12 @@ if ($_GET['mod']=='invg' ){
  
  	<?php   
 
-     if (isset($_GET['lab']) && isset($_GET['mod']))
+    /* if (isset($_GET['lab']) || isset($_GET['mod']))
        { 
   
 			   $titulo=' de cómputo ';
 		   
-           if ($inventario!=0 ) {
+           if ($inventario!=0   ) {
 			   
             // para poner titulo del inventario, si hay tuplas
 		   
@@ -233,22 +288,23 @@ if ($_GET['mod']=='invg' ){
   <br \>
  
   
- <?php  }  ?>
+ <?php  } */  ?>
  
-   
+    <br>
   <?php 
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
 		
-       
-            if ( $inventario!=0 
+          //print_r($lab_invent);
+		   	if (count($lab_invent > 0 )){
+        
                 //&& $lab_invent['bn_notas']=='COMPUTO' 
-            ){
-   
-             ?>
-   
+           ?>
+	 
+
+  
             <table class='material'>
-           <tr>
+            <tr>
                <th width="20%" scope="col">No. Inventario</th>
                <th width="20%" scope="col">No. Inventario Área</th>
                <th width="20%" scope="col">Área</th>
@@ -260,9 +316,7 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Procesador</th>
                <th width="20%" scope="col">Número de  Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
-               
-               
-               
+            
            </tr>
           <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -290,6 +344,7 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>  
                <th width="20%" scope="col">Estado</th>  
+               <th width="20%" scope="col">      </th>  
              </tr>
             
              <tr>   
@@ -307,26 +362,23 @@ if ($_GET['mod']=='invg' ){
           </tr>
          
           
-   <?php  } //fin elseif 
-		 ?>
-<?php
+<?php //}
+
 	    foreach ($lab_invent as $campo => $valor) {
 				       
 		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				
 		} // fin foreach
-	 //print_r ($lab_invent); 
+	
 		?>
         
  <?php  if (($_SESSION['tipo_usuario']!=10)) {
-
- ?>
-      <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
-      <!--
-      <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
+     
+     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+      <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
 
-            <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>
+           <!-- <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>-->
  
  <?php 
 
@@ -337,52 +389,39 @@ if ($_GET['mod']=='invg' ){
 		
 		 ?>
          </form>
-        -->
-    <?php      
-     }//fin if equipoc	para boton de editar	
-		?>
+      
+       <?php      
+            }//fin if equipoc	para boton de editar	
+	?>
           
    <table>
-<!--<table>-->
-     <?php   
-		 
-   
-     } //isset($_GET['lab']) && isset($_GET['mod']) ?>
-     
-  <?php   
-  } // while
 
+     <?php  } else {
+	 //$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];
+	
+	  //isset($_GET['lab']) && isset($_GET['mod']) 
+	 }
+	 } //while
 
-?>
-<!--<table>-->
-<table>
-<?php 
 //}  fin del for que recorre cada inventarios experimental y cómputo
 
-?>
-<br \>
-<br \>
-</div>
-<?php 
-/*if (($inventario==0 ) && $bandera1==0 ) { ?>
 
-<table>
-   <tr>
-      <td align="rigth"><h3>No existen equipos registrados en la división  </h3></td>
-   </tr>
-    </table>
-
+ if (($inventario==0 ) && $bandera1==0 ) { ?>
+<br>
+<br>
+<legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
 
 <?php
-} ?>*/
-
+}
 
 }// fin del inventario general
-
-
-
 else 
-{ //&& $_SESSION['tipo_usuario']!=10
+{ 
+
+if ( $_SESSION['id_div']==NULL)
+	     $_SESSION['id_div']=$_REQUEST['div'];
+		 
+		 
 	if($_GET['lab']!=NULL ){
     if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
 	
@@ -539,34 +578,34 @@ else
 			
         } // fin de switch
 }
-	  
-	//echo 'el query es inv';
-	//echo  $query;
-	  
+
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); //lHH
 
-//echo $query . "</br>"; 
-//print_r($_REQUEST);
-//print_r($_SESSION);
-/*si y solo si hay registros muestra*/
-
 if ($inventario!=0) { ?>
    
-<?php $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']?>
+<?php $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];?>
 <!-- <form action="<?php echo $action1; ?>" method="post" name="fbusqueda">
 <p style="text-align: right"> <input name="accion" type="submit" value="buscar" id="botonblu"/>
 </form>-->
 
-<div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscar';?>">Búsqueda</a></div></div>
+<tr>
+<td align="center">
+<div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscar';?>">Búsqueda</a></div>
+<br/>
+<br/>
+<!--New-->
+</td>
+ </tr>
+
+
+<tr> 
+<td>
 
 <div class="block" id="necesidades_content">      
 
 
 
- 
-<table>
-<tr><td>
 
 <form action="../view/inicio.html.php" method="get" name="orderby">
         Ordenar por: <select name="orden">
@@ -581,12 +620,11 @@ if ($inventario!=0) { ?>
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
 	
+	
 		?>
 
 <input name="bOrden" type="submit" value="ordenar" />
 </form>
-
-
 
 
 <?php		
@@ -599,9 +637,14 @@ if ($inventario!=0) { ?>
 		          $action="../inc/exportaxls_inv.inc.php"; 
 				  }
 			  ?>
+              
+              
+        <tr></tr>
+        <tr></tr>
               <tr>
               <td>
-              <legend align="right"><h4>Exportar a Excel</h4></legend>
+              <legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <br>
               <legend align="right">
          
               <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
@@ -609,7 +652,7 @@ if ($inventario!=0) { ?>
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
               <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
               </form>
-              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              </td>
             </tr> 
             <tr>
@@ -622,10 +665,11 @@ if ($inventario!=0) { ?>
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
               <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
               </form>
-              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </legend>
             </td>
+             
+           
             </tr>
-            
            
 
      <?php } elseif ($_GET['mod']=='invc' ) {// if(inventario ==0 )?> 
@@ -635,35 +679,23 @@ if ($inventario!=0) { ?>
      
                   <td align="center">
     
-                  <h3> No hay dispositivos registrados </h3>
+                  <h3> No hay dispositivos registrados. </h3>
                   </td>
                   </tr>
  
              <?php } 
 	           /*elseif ($_GET['mod']=='inv' ) { */?>
-	            <br/>
-                <br/>
-    <!-- <tr>  
+	           
+     <tr>  
      
-     <td align="center">
-    
-     <h3> No hay equipos experimentales registrados </h3>
-     </td>
-     </tr> -->
+     <td align="center"> 
  
-  
-    <?php //}
-  
-    ?>
 
-</table> 
-    
-
-<br/>
-<br/>
+<br>
+<br>
 
 <?php
-	 // fin de eauipos existentes
+	 // fin de equipos existentes
 if (isset($_GET['lab']) && isset($_GET['mod']))
  { 
  
@@ -679,7 +711,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 		 else 
 		 {$etiqServidor='No';} 
 	      
-         if ($inventario!=0) { ?>
+         if (count($lab_invent > 0 )){?>
          
 		<table class='material'>
          
@@ -761,7 +793,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-                 <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
@@ -779,7 +811,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
-                 <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
@@ -810,8 +842,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
-               
-           </tr>
+              
            
      <?php     
 			
@@ -828,6 +859,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+              
            </tr>
            
          
@@ -848,6 +880,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                
          </tr>
          
          <?php   
@@ -866,6 +899,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                 
                   
           </tr>
          
@@ -883,22 +917,18 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
  <?php  if (($_SESSION['tipo_lab']=='c' || $_SESSION['tipo_lab']=='o' || $_SESSION['tipo_lab']=='e' || $_SESSION['tipo_lab']=='u'||$_SESSION['tipo_lab']=='s' ||$_SESSION['tipo_lab']=='a'||$_SESSION['tipo_lab']=='b'||$_SESSION['tipo_lab']=='t') && $_GET['mod']=='invc' && $_SESSION['tipo_usuario']!=10 ){
 
  ?>
-      <?php //echo $form=$lab_invent['id_lab'] ."_".$lab_invent['id_equipo'];?>
+   
       
-      <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+      <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
       
-      <form action="<?php echo $action; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
+      <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
  
-            <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
+       <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
  
- <?php 
- 
- ?>
-
- 	<?php
+        <?php
 	
-		foreach ($lab_invent as $campo => $valor) {
-				        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
+		 foreach ($lab_invent as $campo => $valor) {
+				      
 		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				
 		}?>
@@ -906,17 +936,13 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
       </form>    
         
 	        <?php	
-		
-			} // fin del while?> 
-       <!-- </table> -->   
+		    } // fin del while
+			?> 
+      </table>
 	 <?php		
- } //isset($_GET['lab']) && isset($_GET['mod'])
+   } //isset($_GET['lab']) && isset($_GET['mod'])
 
-?>
-</table>
- <?php 
- 	
- }
+  }
 
 } //fin del if-else si en inventario general
 

@@ -23,7 +23,9 @@ $nombdiv= pg_fetch_array($registrodiv);
 $texto='Content-Disposition: attachment;filename="erroresbn_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
 header($texto);
 
-if ($_POST['actbn']=='Exportar a Excel'){
+print_r ($_POST);
+
+if ($_POST['tipo']=='actbn'){
 	$titulo='Errores al actualizar';
 	$etiqueta='ba';
 }
@@ -48,12 +50,12 @@ else {
 		<?php 
 		
 	    $queryerror="SELECT * FROM registroerror re
-	                  JOIN cat_dispositivo cd
+	                  LEFT JOIN cat_dispositivo cd
 				      ON re.clave_dispositivo=cd.dispositivo_clave
 	                  WHERE date(fecharegistro)= current_date
 					  AND tipoerror="."'".$etiqueta."'"."
 				      AND id_div=" . $_SESSION['id_div']  ;	
-			
+			//echo $queryerror;
 	    
 $datoserror = pg_query($con,$queryerror);
 $registros= pg_num_rows($datoserror); 

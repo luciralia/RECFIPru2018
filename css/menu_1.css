@@ -61,8 +61,8 @@ border-bottom-style:none;
  float:left;
 }
 .nav li ul {
- display:none;
- position:absolute;
+display:none;
+position:absolute;
 /* min-width:100px;*/
 min-width:160px;
 }
@@ -78,7 +78,7 @@ min-width:160px;
 .nav li ul li ul {
 right:-160px;
 /* left: -140px;*/
- top:0px;
+top:0px;
 }
 
 

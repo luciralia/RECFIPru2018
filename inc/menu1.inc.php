@@ -35,8 +35,8 @@
  	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
  	      
       	  <ul>
-          <?php if ( $_SESSION['id_div']!='' || $_GET['div']!='' || $_GET['lab']!='' )	 {
-			
+          <?php if ( $_SESSION['id_div']!='' || $_GET['lab']!='' )	 {
+			 //if ( $_GET['lab']!='' )	 {
 				 ?>
              <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_REQUEST['div'];?> ">General</a></li>
            <?php } ?>   
@@ -52,7 +52,7 @@
                     <li><a href="../view/inicio.html.php?mod=imp">Importar</a></li>
          <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']!=10 )	 {?>
-                 <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li> 
+                <!-- <li><a href="../view/inicio.html.php?mod=act">Actualizar</a></li> -->
          <?php } ?> 
           </ul>
 	   </li>

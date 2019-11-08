@@ -10,6 +10,40 @@
 </head>
 
 <body>
+<?php
+/*
+function getBrowser($user_agent){
+
+if(strpos($user_agent, 'MSIE') !== FALSE) //'Internet explorer'
+   return 1;
+ elseif(strpos($user_agent, 'Edge') !== FALSE) //Microsoft Edge
+   return 2;
+ elseif(strpos($user_agent, 'Trident') !== FALSE) //IE 11
+    return 3;
+ elseif(strpos($user_agent, 'Opera Mini') !== FALSE) //Opera Mini
+   return 4;
+ elseif(strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR') !== FALSE) //Opera
+   return 5;
+ elseif(strpos($user_agent, 'Firefox') !== FALSE)//Mozilla FireFox
+   return 6;
+ elseif(strpos($user_agent, 'Chrome') !== FALSE)//Google Chrome
+   return 7;
+ elseif(strpos($user_agent, 'Safari') !== FALSE) // Safari
+   return 8;
+ else
+   return 0;
+
+
+}
+
+$navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
+
+echo $navegador;
+*/
+
+if ($navegador!=7) {
+	?>
+   
 
 <?php //require_once('inc/encabezado.inc.php');  ?>
 <table width="1024" border="0" cellpadding="1" class="principal">
@@ -33,6 +67,7 @@
         $usuario='';      
  
          }
+		
        ?>
 
          <form action="mod/autentica.mod.php" method="post" name="formlog">
@@ -56,7 +91,11 @@
 <?php if ($estado=='visible'){ ?>
         <div  id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>El nombre de usuario o contraseña son incorrectos</p><div id="boton1"><a href="./?usr=<?php echo $rusuario; ?>">Cerrar</a></div></div>
         
-<?php }?>
+<?php }
+  } else {
+	  ?>
+<!-- <div  id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Para una mejor visualización se recomienda NO utilizar Google Chrome. </p></div> -->
+<?php } ?>
 
          </form>
         

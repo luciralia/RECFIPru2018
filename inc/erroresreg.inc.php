@@ -24,7 +24,7 @@ $nombdiv= pg_fetch_array($registrodiv);
 $texto='Content-Disposition: attachment;filename="erroresreg_' . date("Ymd-His") . "_" . $nombdiv[0]. '.xls"';
 header($texto);
 
-if ($_POST['actreg']=='Exportar a Excel'){
+if ($_POST['tipo']=='actreg'){
 	$titulo='Errores al actualizar';
 	$etiqueta='ra';
 }
@@ -49,13 +49,15 @@ else {
 		<?php 
 	
 	    $queryerror="SELECT * FROM registroerror re
-		             JOIN cat_dispositivo cd
-					 ON re.clave_dispositivo=cd.dispositivo_clave
-	                  WHERE date(fecharegistro)= current_date
-					   AND tipoerror="."'".$etiqueta."'"."
-				      AND id_div=" . $_SESSION['id_div']
-					  ;	
-			
+                     LEFT JOIN errorinserta ei
+                     ON re.inventario=ei.inventario
+					 LEFT JOIN cat_dispositivo cd
+                     ON cd.dispositivo_clave=re.clave_dispositivo
+                     WHERE date(fecharegistro)= current_date
+					 AND tipoerror="."'".$etiqueta."'"."
+					 AND bnid!=0
+				     AND id_div=" . $_SESSION['id_div'] ;	
+			echo $queryerror;
 	    
 $datoserror = pg_query($con,$queryerror);
 $registros= pg_num_rows($datoserror); 
@@ -88,11 +90,10 @@ $registros= pg_num_rows($datoserror);
 		 }
 		 $reporter=1;
 		   if ($reporter==1){
-		      $queryerror="DELETE FROM registroerror re
+		     $queryerror="DELETE FROM registroerror re
 	                  WHERE date(fecharegistro)= current_date
 					   AND tipoerror="."'".$etiqueta."'"."
-				      AND id_div=" . $_SESSION['id_div']
-					  ;	
+				      AND id_div=" . $_SESSION['id_div'];
 			
 	      $datoserror = pg_query($con,$queryerror);
 			  }

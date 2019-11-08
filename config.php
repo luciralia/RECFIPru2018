@@ -7,10 +7,10 @@
  * 
  */
  define('TITULO','RECFI v');
- define('VERSION', '0.9.0.9');
-// define('db_server','132.248.52.241');
+ define('VERSION', '0.9.0.4.8');
+//define('db_server','132.248.52.241');
  define('db_server','localhost');
- define('db_name', 'recfi_pru2018');
+ define('db_name', 'recfi_2019');
 
  define('db_user', 'sieldi_user');
  define('db_password','s13ld1');

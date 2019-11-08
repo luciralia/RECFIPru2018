@@ -14,16 +14,27 @@ header("Content-type: application/x-msdownload");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
-if ( $_SESSION['tipo_usuario']!=10 ){
-	
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
+	 
+	$querylab="SELECT nombre FROM laboratorios
+           WHERE id_lab=" . $_REQUEST['lab'] ;
+    $registrolab = pg_query($con,$querylab);
+    $nomblab= pg_fetch_array($registrolab);
+    //echo 'consulta'.$querylab;
+    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+
+}
+
+if ( $_SESSION['tipo_usuario']==9 && $_SESSION['id_div']!=NULL && $_REQUEST['lab']==NULL ){
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
 $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
-
 $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
-}	
+
+}
+
 
 if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 $querydiv="SELECT nombre FROM divisiones
@@ -62,8 +73,30 @@ header($texto);
     </tr>
     
 		<?php 
-		
-		if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+		if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND tipo_lab='b'
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper<>3 AND sist_oper<>7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}else	
+if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -82,7 +115,7 @@ header($texto);
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND (sist_oper<>3 AND  sist_oper<>7)
+			AND (sist_oper<>3 AND sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -104,12 +137,12 @@ header($texto);
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper<>3 AND  sist_oper<>7)
+			AND (sist_oper<>3 AND sist_oper<>7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -128,11 +161,11 @@ header($texto);
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper<>3 AND  sist_oper<>7)
+			AND (sist_oper<>3 AND sist_oper<>7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
-	else if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!=""){			
+	else if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 ) && $_SESSION['id_div']!=""){			
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -150,18 +183,19 @@ header($texto);
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper<>3 AND  sist_oper<>7)
+			AND (sist_oper<>3 AND sist_oper<>7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 	}
+	
 
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
 	    <table  class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -218,7 +252,7 @@ $inventario= pg_num_rows($datos);
 
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -272,7 +306,7 @@ $inventario= pg_num_rows($datos);
     </tr>
   <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -324,7 +358,7 @@ $inventario= pg_num_rows($datos);
     </tr>
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -373,7 +407,7 @@ $inventario= pg_num_rows($datos);
     </tr>
   <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -429,7 +463,7 @@ $inventario= pg_num_rows($datos);
     </tr>
    <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
@@ -475,8 +509,30 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 </tr>
 </table>
 		<?php 
-		
-if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){		
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+            FROM dispositivo ec 
+            LEFT JOIN laboratorios l
+            ON ec.id_lab=l.id_lab
+	        LEFT JOIN cat_familia cf
+            ON ec.familia_clave=cf.id_familia
+            LEFT JOIN cat_usuario_final cuf
+            ON ec.usuario_final_clave=cuf.usuario_final_clave
+            LEFT JOIN cat_dispositivo cd
+            ON ec.dispositivo_clave=cd.dispositivo_clave
+			LEFT JOIN cat_marca cm
+			ON cm.id_marca=ec.id_marca
+	        LEFT JOIN departamentos d
+            ON d.id_dep=l.id_dep
+            WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
+            AND tipo_lab='b'
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
+			AND l.id_lab=". $_REQUEST['lab'] . "
+            GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
+			ORDER BY cuenta DESC";
+	}	else
+	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -495,7 +551,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper=3 OR sist_oper=7)
+			AND (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -517,12 +573,12 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper=3 OR sist_oper=7)
+			AND (sist_oper=3 OR sist_oper=7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}
-	if ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==""){
+	}else
+	if (($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
@@ -540,8 +596,8 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             ON d.id_dep=l.id_dep
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
-           AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper=3 OR sist_oper=7)
+            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+			AND (sist_oper=3 OR sist_oper=7)
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}	
@@ -563,7 +619,7 @@ if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND tipo_lab='b'
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND  (sist_oper=3 OR sist_oper=7)
+			AND (sist_oper=3 OR sist_oper=7)
 			AND id_div=". $_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
@@ -578,7 +634,7 @@ $inventario= pg_num_rows($datos);
     </tr>
     <table class='material' width=50%>
 		 <tr>
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Laboratorio</th> <?php }?>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="20%" scope="col">Usuario Final</th>
               <th width="20%" scope="col">Dispositivo</th>
               <th width="20%" scope="col">Alto Rendimiento</th>
