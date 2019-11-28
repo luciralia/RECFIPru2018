@@ -139,7 +139,7 @@ function utf8_string_array_encode(&$array){
       $cuenta=$cuenta+1;
 	   } //while para insertar en dispositivotemporal
 	   
-	   $buscaerror->detectaError();
+	  // $buscaerror->detectaError();
 	  
 	   // echo 'Ingresando en dispositivotemp...';
 	   
@@ -309,7 +309,7 @@ function utf8_string_array_encode(&$array){
          $sinlab= pg_num_rows($result); 
 		 
 		// if ($total!=0){
-		   $error->importaError();
+		 //  $error->importaError();
 		// }
 
 		//}//no se importo
@@ -338,7 +338,7 @@ function utf8_string_array_encode(&$array){
 		 }
 		 
 		 if ($noseimporto==0)
-		     $disperror->guardaDispErrorAct();
+		   //  $disperror->guardaDispErrorAct();
 		 
 		 
 		  if ($sinlab>0 ){
