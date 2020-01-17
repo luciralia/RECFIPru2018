@@ -148,7 +148,7 @@ if ($_GET['mod']=='invg' ){
 	    	break;
 			
            } // fin de switch
-        }else{
+        }else if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='')) {
         
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
@@ -193,9 +193,80 @@ if ($_GET['mod']=='invg' ){
 	    	break;
 			
         } // fin de switch
-   }
-  // echo 'consulta en cargainv'. $query;
+   } else if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='')) {
+        
+               $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+               from dispositivo e 
+               left join cat_dispositivo cd
+               on e.dispositivo_clave=cd.dispositivo_clave
+               left join cat_familia cf
+               on e.familia_clave=cf.id_familia
+               left join cat_tipo_ram ctr
+               on e.tipo_ram_clave=ctr.id_tipo_ram
+               left join cat_tecnologia ct
+               on e.tecnologia_clave=ct.id_tecnologia
+               left join cat_sist_oper cso
+               on  e.sist_oper=cso.id_sist_oper
+			   left join cat_usuario_final cuf
+			   on cuf.usuario_final_clave=e.usuario_final_clave
+               left join cat_marca cm
+               on cm.id_marca=e.id_marca
+               left join cat_memoria_ram cmr
+               on e.id_mem_ram=cmr.id_mem_ram
+               left join bienes_inventario bi
+               on  e.bn_id = bi.bn_id
+               left join laboratorios l
+               on  l.id_lab=e.id_lab
+               left join departamentos dp
+               on dp.id_dep=l.id_dep
+               ";
+   } else if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) {
+ 
+        
+               $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+               from dispositivo e 
+               left join cat_dispositivo cd
+               on e.dispositivo_clave=cd.dispositivo_clave
+               left join cat_familia cf
+               on e.familia_clave=cf.id_familia
+               left join cat_tipo_ram ctr
+               on e.tipo_ram_clave=ctr.id_tipo_ram
+               left join cat_tecnologia ct
+               on e.tecnologia_clave=ct.id_tecnologia
+               left join cat_sist_oper cso
+               on  e.sist_oper=cso.id_sist_oper
+			   left join cat_usuario_final cuf
+			   on cuf.usuario_final_clave=e.usuario_final_clave
+               left join cat_marca cm
+               on cm.id_marca=e.id_marca
+               left join cat_memoria_ram cmr
+               on e.id_mem_ram=cmr.id_mem_ram
+               left join bienes_inventario bi
+               on  e.bn_id = bi.bn_id
+               left join laboratorios l
+               on  l.id_lab=e.id_lab
+               left join departamentos dp
+               on dp.id_dep=l.id_dep
+               where id_div=";
+             
+               
 
+            switch ($_GET['orden']){
+ 			case "descripcion":
+			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
+			break;
+ 			case "clave":
+			     $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
+			break;
+			case "marca":
+			    $query.= $_SESSION['id_div']. " ORDER BY bi.bn_marca ASC";
+			break;
+ 			default:
+			    $query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
+	    	break;
+			
+        } // fin de switch
+  }
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>

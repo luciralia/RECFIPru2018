@@ -21,7 +21,7 @@ if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSIO
     $registrolab = pg_query($con,$querylab);
     $nomblab= pg_fetch_array($registrolab);
     //echo 'consulta'.$querylab;
-    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+    $texto='Content-Disposition: attachment;filename="censoeqcuf_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
 
 }
 
@@ -31,7 +31,7 @@ $querydiv="SELECT nombre FROM divisiones
 $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$texto='Content-Disposition: attachment;filename="censoeqcuf_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 
 }
 
@@ -43,11 +43,11 @@ $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
 
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$texto='Content-Disposition: attachment;filename="censoeqcuf_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 }
 else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 $titulo='FacultadIngenieria';	
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
+$texto='Content-Disposition: attachment;filename="censoeqcuf_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
 }	
 
 header($texto);
@@ -511,7 +511,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND (sist_oper=3 OR sist_oper=7)
-			AND i.id_lab=". $_REQUEST['lab'] . "
+			AND l.id_lab=". $_REQUEST['lab'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 	}else

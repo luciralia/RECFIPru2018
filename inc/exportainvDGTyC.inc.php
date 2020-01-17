@@ -36,7 +36,7 @@ header($texto);
 
 <table>
    <tr>
-       <td align="center" ><h2>Inventario para DGTyC por División</h2></td>
+       <td align="center" ><h2>Inventario para DGTIC por División</h2></td>
    </tr>
   
 

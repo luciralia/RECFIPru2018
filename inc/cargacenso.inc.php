@@ -16,12 +16,12 @@ echo 'Div en carga censo';
 print_r ($_SESSION);
 echo 'Div en carga censo RQ';
 print_r ($_REQUEST);
-*/
+
 if ($_SESSION['tipo_usuario']==10)
   $_SESSION['id_div']=$_REQUEST['div'];
 if ($_SESSION['tipo_usuario']==9)
   $_SESSION['id_div']=$_REQUEST['div'];
-
+*/
    
  if ($_GET['mod']=='ceneceq' ){
  ?>
@@ -610,7 +610,7 @@ if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 		
 	}else
 	if ( ($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1) && $_SESSION['id_div'] !="" ){
-		echo 'usu!=10  and usu!=1 and div!=NULL';	
+		//echo 'usu!=10  and usu!=1 and div!=NULL';	
 	 $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
             FROM dispositivo ec 
             LEFT JOIN laboratorios l
@@ -1304,7 +1304,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND (sist_oper=3 OR sist_oper=7)
-			AND id_div=". $_SESSION['id_div'] . "
+			
             GROUP BY nombre_dispositivo,nombre_familia,nombre_so,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta,l.nombre DESC";	
 	}
@@ -1971,7 +1971,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND (sist_oper=3 OR sist_oper=7)
-			AND i.id_lab=". $_REQUEST['lab'] . "
+			AND l.id_lab=". $_REQUEST['lab'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,tipo_usuario,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 	}else
@@ -2066,7 +2066,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
-    
+    echo $query;
 ?>
 
  <table  class='material' width=50%>

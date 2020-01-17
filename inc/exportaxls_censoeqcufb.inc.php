@@ -21,7 +21,7 @@ if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSIO
     $registrolab = pg_query($con,$querylab);
     $nomblab= pg_fetch_array($registrolab);
     //echo 'consulta'.$querylab;
-    $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+    $texto='Content-Disposition: attachment;filename="censoeqcufb_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
 
 }
 
@@ -31,7 +31,7 @@ $querydiv="SELECT nombre FROM divisiones
 $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$texto='Content-Disposition: attachment;filename="censoeqcufb_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 
 }
 
@@ -43,11 +43,11 @@ $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
 
 
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$texto='Content-Disposition: attachment;filename="censoeqcufb_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
 }
 else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 $titulo='FacultadIngenieria';	
-$texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
+$texto='Content-Disposition: attachment;filename="censoeqcufb_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
 }	
 
 
