@@ -2,17 +2,24 @@
 <link rel="stylesheet"  type="text/css" href="../css/menu_usr.css">   
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
-/*		
+	/*	
  echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
+	
 	echo 'GET en menu1.inc';
 	print_r($_GET);	
-	*/
+	
 	if ( $_SESSION['id_div']==NULL  )
 	               $_SESSION['id_div']=$_GET['div'];
 				 else  if ( $_SESSION['tipo_usuario']==10  )
 				 $_SESSION['id_div']="" ;
+	*/
 	
+	if ( $_SESSION['id_div']==NULL  )
+	       $_SESSION['id_div']=$_GET['div'];
+	 elseif ( $_SESSION['tipo_usuario']==10 )
+		   $_SESSION['id_div']="";
+
 	?>
 
 <div id="header">
@@ -25,10 +32,12 @@
  	   if (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) {
 		        ?>
               <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >**Inicio</a></li>
- 	<?php }elseif ($_GET['lab']!=''|| $_GET['div']!=''){ 
+           
+         <?php      
+ 	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){ 
 	            if ( $_SESSION['id_div']==NULL  )
 	               $_SESSION['id_div']=""?>
-       	       <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" >Inicio</a></li>
+       	      <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
              
         <?php }
 		 

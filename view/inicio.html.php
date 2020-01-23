@@ -8,7 +8,24 @@ require_once('../inc/encabezado.inc.php');
   </tr>
    <tr>
     <td><?php 
-	if ($_SESSION['id_div']==NULL && ($_SESSION['tipo_usuario']!=10 ))
+	
+	if  ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==NULL)
+     {
+	 $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+               JOIN departamentos d
+               ON l.id_dep=d.id_dep
+               JOIN divisiones dv
+               ON dv.id_div=d.id_div
+               JOIN usuarios u
+		       ON l.id_responsable=u.id_usuario
+               WHERE l.id_responsable=" .$_SESSION['id_usuario'];
+   $datosdiv=pg_query($con,$querydiv);
+ // echo 'query inicio.html'.$querydiv;
+   $div = pg_fetch_array($datosdiv);
+   $_SESSION['id_div']=$div[0];
+	
+	 }
+	/*if ($_SESSION['id_div']==NULL && ($_SESSION['tipo_usuario']!=10 ))
      {
 		  //obtener la división
 
@@ -20,11 +37,11 @@ require_once('../inc/encabezado.inc.php');
                 WHERE l.id_lab=" .$_GET['lab'];
 				
                $datosdiv=pg_query($con,$querydiv);
-               // echo 'query inicio.html'.$querydiv;
+               echo 'query inicio.html'.$querydiv;
      $div = pg_fetch_array($datosdiv);
      $_SESSION['id_div']=$div[0];
    
-	 }
+	 }*/
      
 	
    

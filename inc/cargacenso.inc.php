@@ -16,12 +16,13 @@ echo 'Div en carga censo';
 print_r ($_SESSION);
 echo 'Div en carga censo RQ';
 print_r ($_REQUEST);
-
-if ($_SESSION['tipo_usuario']==10)
+*/
+if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='')
   $_SESSION['id_div']=$_REQUEST['div'];
 if ($_SESSION['tipo_usuario']==9)
   $_SESSION['id_div']=$_REQUEST['div'];
-*/
+
+
    
  if ($_GET['mod']=='ceneceq' ){
  ?>
@@ -115,7 +116,7 @@ if ($_SESSION['tipo_usuario']==9)
             WHERE (ec.dispositivo_clave<>9 AND ec.dispositivo_clave<>10 AND ec.dispositivo_clave<>11)
             AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
 			AND (sist_oper<>3 AND sist_oper<>7)
-			AND id_div=" . $_SESSION['id_div'] . "
+			AND id_div=" .$_SESSION['id_div'] . "
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
 		
@@ -162,7 +163,7 @@ if ($_SESSION['tipo_usuario']==9)
 			ORDER BY cuenta DESC";
 	}
 	
-		       
+	
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
@@ -2066,7 +2067,8 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
-    echo $query;
+   // echo $query;
+   
 ?>
 
  <table  class='material' width=50%>

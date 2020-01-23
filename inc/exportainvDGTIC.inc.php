@@ -61,6 +61,7 @@ header($texto);
   
 <?php
 if (($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']!=''){
+	
 $query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
 cequ.nombre_esquema as esquemauno,
          ceqd.nombre_esquema as esquemados, 
@@ -126,6 +127,7 @@ where div.id_div=" . $_SESSION['id_div'] .
 and (cd.dispositivo_clave between 1 and 8)
 order by laboratorio" ;
 } elseif  ($_SESSION['tipo_usuario']==10  && $_SESSION['id_div']=='' ) {
+	
 $query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
 cequ.nombre_esquema as esquemauno,
          ceqd.nombre_esquema as esquemados, 
@@ -167,7 +169,6 @@ join cat_usuario_perfil up
 on up.id_usuario_perfil=e.usuario_perfil
 join cat_usuario_sector us
 on us.id_usuario_sector=e.usuario_sector
-
 left join cat_esquema cequ
 on e.esquema_uno=cequ.id_esquema
 left join cat_esquema ceqd
@@ -186,10 +187,10 @@ left join cat_tecnologia ctc
 on e.tec_cuatro=ctc.id_tecnologia
 left join cat_tec_com ctcom
 on ctcom.id_tec_com=e.tec_com
-
 and (cd.dispositivo_clave between 1 and 8)
 order by laboratorio" ;
 }  elseif  ($_SESSION['tipo_usuario']==10  && $_SESSION['id_div']!='' ) {
+	
 	$query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
 cequ.nombre_esquema as esquemauno,
          ceqd.nombre_esquema as esquemados, 

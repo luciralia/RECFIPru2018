@@ -16,8 +16,22 @@ $madq = new inventario();
 $logger->putLog(7,2);
 
 $bandera1=0;
-//echo'datos en cargaInv';
-//print_r($_SESSION);
+/*
+echo'Session en cargaInv';
+print_r($_SESSION);
+
+echo'GET en cargaInv';
+print_r($_GET); 
+*/
+	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+		   $_SESSION['id_div']=$_REQUEST['div'];
+		   /*
+if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='') !=NULL
+  $_SESSION['id_div']=$_REQUEST['div'];
+if ($_SESSION['tipo_usuario']==9)
+  $_SESSION['id_div']=$_REQUEST['div'];
+*/
+
 
 if ($_GET['mod']=='invg' ){
 	
@@ -267,6 +281,7 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
   }
+  // echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
