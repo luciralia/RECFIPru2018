@@ -8,17 +8,12 @@
 	
 	echo 'GET en menu1.inc';
 	print_r($_GET);	
-	
-	if ( $_SESSION['id_div']==NULL  )
-	               $_SESSION['id_div']=$_GET['div'];
-				 else  if ( $_SESSION['tipo_usuario']==10  )
-				 $_SESSION['id_div']="" ;
 	*/
 	
 	if ( $_SESSION['id_div']==NULL  )
 	       $_SESSION['id_div']=$_GET['div'];
-	 elseif ( $_SESSION['tipo_usuario']==10 )
-		   $_SESSION['id_div']="";
+	 elseif ( $_SESSION['tipo_usuario']==10  && $_GET['mod']=='ced')
+		 $_SESSION['id_div']='';
 
 	?>
 

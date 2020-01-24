@@ -11,19 +11,27 @@ require_once('../clases/log.class.php');
 $logger=new Log();
 
 $logger->putLog(7,2);
+
+
 /*
-echo 'Div en carga censo';
+ if ($_SESSION['tipo_usuario']==10 && ( $_GET['div']!='' ))	
+     $_SESSION['id_div']=$_GET['div'];
+if ($_SESSION['tipo_usuario']==9)
+  $_SESSION['id_div']=$_REQUEST['div'];
+ */
+ if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+		   $_SESSION['id_div']=$_REQUEST['div'];
+if ($_SESSION['tipo_usuario']==9)
+  $_SESSION['id_div']=$_REQUEST['div'];
+  
+/*
+  echo 'Div en carga censo SESION';
 print_r ($_SESSION);
 echo 'Div en carga censo RQ';
 print_r ($_REQUEST);
-*/
-if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='')
-  $_SESSION['id_div']=$_REQUEST['div'];
-if ($_SESSION['tipo_usuario']==9)
-  $_SESSION['id_div']=$_REQUEST['div'];
-
-
-   
+echo 'Div en carga censo GET';
+print_r ($_GET);
+ */  
  if ($_GET['mod']=='ceneceq' ){
  ?>
 

@@ -20,8 +20,7 @@ $dep = new departamentos();
     <?php }else if($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1){?>
     <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
     <?php } else if($_SESSION['tipo_usuario']==10){?>
-     
-    <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
+             <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
     <?php } ?>
      
   </tr>

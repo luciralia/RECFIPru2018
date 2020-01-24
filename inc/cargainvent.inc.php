@@ -23,9 +23,9 @@ print_r($_SESSION);
 echo'GET en cargaInv';
 print_r($_GET); 
 */
-	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
-		   /*
+/*		 
 if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='') !=NULL
   $_SESSION['id_div']=$_REQUEST['div'];
 if ($_SESSION['tipo_usuario']==9)

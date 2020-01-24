@@ -34,7 +34,8 @@ require_once('../conexion.php');
 ?>
  <?php 
 		if ($_SESSION['id_div']!='' && $_SESSION['mod']!='')
-                $_SESSION['id_div']=''; 
+               /* $_SESSION['id_div']=''; */
+			   echo 'cambia';
 		else 		
 		        $_SESSION['id_div']=$division['id_div'];
 	 
