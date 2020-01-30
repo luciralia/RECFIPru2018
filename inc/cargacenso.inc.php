@@ -196,8 +196,9 @@ $inventario= pg_num_rows($datos);
 		?>
           <table class='material' width=50%>
           <tr >
-              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
-              <td width="15%"><?php echo ucwords(strtolower($lab_invent['nombre_familia']));?></td>
+              <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> 
+               <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
+               <td width="15%"><?php echo ucwords(strtolower($lab_invent['nombre_familia']));?></td>
                <td width="15%"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                <td width="15%"><?php echo ucwords(strtolower($lab_invent['estadobien']));?></td>
                <td width="15%"  ><?php echo ucwords(strtolower($lab_invent['equipoaltorend']));?></td>

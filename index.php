@@ -46,12 +46,23 @@ if ($navegador!=7) {
    
 
 <?php //require_once('inc/encabezado.inc.php');  ?>
+
+
 <table width="1024" border="0" cellpadding="1" class="principal">
   <tr>
     <td><img src="images/banner_principalsin.jpg" width="1024" height="103" /></td>
   </tr>
-  <tr>
-    <td align="center"><table width="400" cellspacing="0" cellpadding="0" class="login">
+   <td>&nbsp;</td>
+      <table align="center" width="900" border="1" cellspacing="5" cellpadding="5" class="login">
+      
+        <td>
+            El sistema RECFI apoya al comité de cómputo a realizar la gestión de Inventarios y el Censo de Cómputo de la Facultad de Ingeniería.
+        </td>
+        </table>
+ <td>&nbsp;</td>
+  <td>&nbsp;</td>
+   <!-- <td align="center">-->
+    <table align="center" width="400" cellspacing="0" cellpadding="0" class="login">
       <tr>
         <td align="center" valign="middle">
        <?php $estado='oculto'; ?>        
@@ -70,6 +81,7 @@ if ($navegador!=7) {
 		
        ?>
 
+      
          <form action="mod/autentica.mod.php" method="post" name="formlog">
         <p>&nbsp;</p>
            
@@ -99,10 +111,14 @@ if ($navegador!=7) {
 
          </form>
         
-        </td>
+      <!--  </td>
       </tr>
     </table></td>
+ 
   </tr>
-</table>
+
+</table>-->
+
+
 </body>
 </html>
