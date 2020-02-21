@@ -14,13 +14,8 @@ $div = new departamentos();
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
     <?php 
 		  
-		  if ($_GET['mod']=='inv')
-	      {$titulo=' experimental ';}
-		  elseif ($_GET['mod']=='invg')
-		  {$titulo=' general';}
-		  elseif ($_GET['mod']=='invc') {$titulo=' de cómputo';}
-		  elseif ($_GET['mod']=='invear') {
-			  {$titulo='Equipo de Alto Rendimiento';}
+		 if ($_GET['mod']=='invear') {
+			  {$titulo='Equipo de Alto Rendimientojj';}
 		  }
 		  
 		  ?>
@@ -47,15 +42,10 @@ $div = new departamentos();
 <?php
 
 
-if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invg'  ) {
+if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invear'   ) {
 	//echo 'entra a invnetario sin lab1';
-	require('../inc/inventario.inc.php');
+	require('../inc/inventarioear.inc.php');
 	}
-	else if ($_GET['mod']=='invc'  ) { //echo 'entra a invnetario con lab2';
-	    require('../inc/inventario.inc.php');}
-	  else if ( $_GET['mod']=='invear'  ) {
-	      require('../inc/inventario.inc.php');}
-	
 	
 ?>
 

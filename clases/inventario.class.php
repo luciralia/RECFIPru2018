@@ -1458,8 +1458,97 @@ function radialservidor($servidor)
     	}
 			
 } //fin radial servidor
-
-	
+function radialCluster($clst)   
+{        
+          $query="Select * from  cat_servidor order by id_servidor desc";
+		  
+		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
+		 
+		  while ($datosc = pg_fetch_array($result))
+		  {
+			       $salida='<input type="radio" name="cluster" '; 
+					
+					if ($datosc['id_servidor']==1)
+						$etiqueta='No';
+					else 
+						$etiqueta='Si';
+						
+		       
+		        if($datosc['servidor']==$clst){
+					
+					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".$etiqueta ;
+					
+		        } else { 
+					
+					$salida.= " value='" . $etiqueta . "'>" .$etiqueta;
+					
+				}
+		
+		echo $salida;
+    	}
+			
+} 
+function radialConInt($cint)   
+{        
+          $query="Select * from  cat_servidor order by id_servidor desc";
+		  
+		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
+		 
+		  while ($datosc = pg_fetch_array($result))
+		  {
+			       $salida='<input type="radio" name="conexion" '; 
+					
+					if ($datosc['id_servidor']==1)
+						$etiqueta='No';
+					else 
+						$etiqueta='Si';
+						
+		       
+		        if($datosc['servidor']==$cint){
+					
+					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".$etiqueta ;
+					
+		        } else { 
+					
+					$salida.= " value='" . $etiqueta . "'>" .$etiqueta;
+					
+				}
+		
+		echo $salida;
+    	}
+			
+}
+function radialSalida($sal)   
+{        
+          $query="Select * from  cat_servidor order by id_servidor desc";
+		  
+		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
+		 
+		  while ($datosc = pg_fetch_array($result))
+		  {
+			       $salida='<input type="radio" name="salida" '; 
+					
+					if ($datosc['id_servidor']==1)
+						$etiqueta='No';
+					else 
+						$etiqueta='Si';
+						
+		       
+		        if($datosc['servidor']==$sal){
+					
+					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".$etiqueta ;
+					
+		        } else { 
+					
+					$salida.= " value='" . $etiqueta . "'>" .$etiqueta;
+					
+				}
+		
+		echo $salida;
+    	}
+			
+} 	
+ 	
 function verificaTipoEquipo($bien)
 		{
 			if($bien<>9 && $bien<>10 && $bien<>11 && $bien<>12)

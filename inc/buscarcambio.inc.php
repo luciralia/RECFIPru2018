@@ -785,7 +785,7 @@ if ($inventario!=0){?>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tipo_ram'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['cantidad_ram'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['memoria_ram'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_elementos_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tecnologia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>
@@ -1069,7 +1069,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tipo_ram'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['cantidad_ram'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['memoria_ram'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_elementos_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tecnologia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>

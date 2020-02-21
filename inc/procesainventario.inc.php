@@ -653,6 +653,13 @@ else
 							  
               $registrom= pg_query($con,$querym);
               $marca= pg_fetch_array($registrom);
+			  
+			  
+if (isset($_POST['id_mem_ram']))
+
+   $memram= "select cantidad_ram from cat_memoria_ram where id_mem_ram=" . $_POST['id_mem_ram'];	
+   	$result = pg_query($memram) or die('Hubo un error con la base de datos cat_memoria_ram');
+   $datosram=pg_fetch_array($result,NULL,PGSQL_ASSOC);	  
 	
 $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
                                     tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
@@ -661,6 +668,7 @@ $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_fin
                                     modelo_p='%s',proveedor_p='%s',fecha_factura='%s',familia_especificar='%s',
                                     modelo_procesador='%s',cantidad_procesador='%s',nucleos_totales='%s',
                                     nucleos_gpu='%s',id_mem_ram=%d,ram_especificar='%s',
+									memoria_ram='%s',
                                     num_elementos_almac=%d,total_almac='%s', num_arreglos=%d,
                                     esquema_uno=%d,esquema_dos=%d,esquema_tres=%d,esquema_cuatro=%d,
                                     tec_uno=%d,tec_dos=%d,tec_tres=%d,tec_cuatro=%d,
@@ -678,6 +686,7 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           $_POST['id_usuario_sector'],$marca[0],$no_factura,
                           $_POST['modelo_p'],$proveedor_p,$fecha_factura,$_POST['familia_especificar'],$_POST['modelo_procesador'],$cantidad_procesador,$nucleos_totales,
                           $nucleos_gpu,$_POST['id_mem_ram'],$_POST['ram_especificar'],
+						  $datosram['cantidad_ram'],
                           $_POST['id_elemento'],$totalalmac,$_POST['id_arreglo'],
                           $_POST['esquema_uno'],$_POST['esquema_dos'],$_POST['esquema_tres'],$_POST['esquema_cuatro'],
 						  $tec_uno,$tec_dos,$tec_tres,$tec_cuatro,
@@ -687,7 +696,8 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),
 						  $_POST['equipoaltorend'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
 						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod']);	
-
+						  
+echo $queryud;
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en dispositivo: ' . pg_last_error());
 
 if (isset($_POST['idsoper']))
@@ -775,14 +785,55 @@ $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
     header($direccion);
 
 }
-/*
-if( $_POST['accionn']=='Cancelar'){ 
 
-   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-   echo $direccion;
-   header($direccion);
+if( $_POST['accionear']=='Guardar'){ ?>
+
+<h1>GUARDAR</h1>
+
+<?php
+if (isset($_POST['cluster']))
+
+	$cluster=1;
+else 
+    $cluster=0;
+	
+if (isset($_POST['conexion']))
+
+	$conexion=1;
+else 
+    $conexion=0;	
+if (isset($_POST['salida']))
+
+	$sal=1;
+else 
+    $sal=0;	
+	
+?>
+	<?php
+$strqueryd="UPDATE equipoarendimientor SET  cluster=%d, cache='%s',
+                                           videotipo='%s',modelovideo='%s',
+										   videomem='%s',conexion=%d,
+                                           velocidad='%s',salida=%d,
+                                           velocidadInt='%s',terminal='%s',
+										   criticidad='%s',adquision='%s'
+               WHERE id_dispositivo=". $_POST['id_dispositivo'];
+	
+
+
+$queryud=sprintf($strqueryd,$cluster, $_POST['cache'], 
+                            $_POST['videotipo'],$_POST['modelovideo'],
+							$_POST['videomem'],$conexion,
+							$_POST['velocidad'],$sal,
+							$_POST['velocidadInt'],$_POST['terminal'],
+							$_POST['criticidad'],$_POST['adquision']
+);	
+echo $queryud;
+
+ $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en equipoarendimiento: ' . pg_last_error());
+ $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&div=' . $_SESSION['id_div'];
+    echo $direccion;
+    header($direccion);
 }
-*/
 ob_end_flush();
 ?>
 

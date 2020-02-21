@@ -71,44 +71,6 @@ if ($_GET['mod']=='invg' ){
 <!--</td>-->
 
 
-              
-<?php // if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-        <!--<tr>
-        <td align="right">  <h3> Inventario por División</h3> </td>
-       
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        
-       
-         <tr>
-        <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <br>
-        <legend align="right">
-          <?php $action="../inc/exportainvgendivxls.inc.php";?>
-         
-              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
-	          <input name="enviar" type="submit" value="Con identificador" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
-              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </td>
-            </tr> 
-            <tr>
-           <td>
-           <legend align="right">
-          <?php $action="../inc/exportainvgendivxls.inc.php";?>
-         
-              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
-	          <input name="enviar" type="submit" value="Con nombre" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
-              </legend>
-            </td>
-            </tr> -->
-            
- <?php //} ?>
-
 </td>
 </tr>
 
@@ -351,30 +313,7 @@ if ($_GET['mod']=='invg' ){
 
     <td>
  
- 	<?php   
 
-    /* if (isset($_GET['lab']) || isset($_GET['mod']))
-       { 
-  
-			   $titulo=' de cómputo ';
-		   
-           if ($inventario!=0   ) {
-			   
-            // para poner titulo del inventario, si hay tuplas
-		   
-		   ?>
-       <br \>         		   	  
-       <table>
-           <tr>
-           <!--
-             <legend align="center"><h2>Inventario de equipo  <?php //echo $titulo;?> </h2></legend>
-               <td align="rigth"><h2>Inventario de equipo <?php //echo $titulo;?> </h2></td>-->
-           </tr>
-        </table>
-  <br \>
- 
-  
- <?php  } */  ?>
  
     <br>
   <?php 
@@ -437,7 +376,7 @@ if ($_GET['mod']=='invg' ){
                 <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tipo_ram'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['cantidad_ram'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['memoria_ram'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_elementos_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tecnologia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>
@@ -501,7 +440,8 @@ if ($_GET['mod']=='invg' ){
 }
 
 }// fin del inventario general
-else 
+else if ($_GET['mod']=='invc' )
+
 { 
 
 if ( $_SESSION['id_div']==NULL)
@@ -770,7 +710,7 @@ if ($inventario!=0) { ?>
                   </tr>
  
              <?php } 
-	           /*elseif ($_GET['mod']=='inv' ) { */?>
+	       ?>
 	           
      <tr>  
      
@@ -858,23 +798,10 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 
 <?php } //fin de si y solo hay registros 
 
-	    /* if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='inv' //&& $lab_invent['bn_notas']=='EQUIPO'
-		  ) { */?>
-        <!-- 
-          <tr>
-               <td width="20%" scope="col"><?php // echo $lab_invent['bn_clave'];?></td>
-               <td width="20%" scope="col"><?php // echo $lab_invent['inventario'];?></td>
-               <td width="20%" scope="col"><?php // echo $lab_invent['bn_desc'];?></td>
-               <td width="20%" scope="col"><?php // echo $lab_invent['bn_marca'];?></td>
-               <td width="20%" scope="col"><?php // echo $lab_invent['bn_modelo'];?></td>
-               <td width="20%" scope="col"><?php // echo $lab_invent['bn_serie'];?></td>
-         </tr>
-          -->
-          <?php
-		    
+	 
            $bandera=1;
 		   
-		//	} else 
+		
 			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) { /**/ ?>
            
            <tr>
@@ -978,7 +905,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tipo_ram'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['cantidad_ram'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['memoria_ram'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_elementos_almac'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tecnologia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['total_almac'];?></td>
@@ -1028,9 +955,419 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 	 <?php		
    } //isset($_GET['lab']) && isset($_GET['mod'])
 
-  }
+ }
+}else {
+	
+	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
 
-} //fin del if-else si en inventario general
+<tr>
+<td align="center">
+
+<div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div>
+<br/>
+<br/>
+</td>
+ </tr>
+
+<tr> 
+<td>
+
+<div class="block" id="necesidades_content">    
+      
+          <form action="../view/inicio.html.php" method="get" name="orderby">
+          Ordenar por: <select name="orden">
+          <option value="orden" <?php echo $sel=(!isset($_GET['orden'])||$_GET['orden']=='orden') ? 'selected="selected"':''; ?>>Seleccione...          </option>
+          <option value="descripcion" <?php echo $sel=($_GET['orden']=='descripcion')? 'selected="selected"': "";?>>Descripción</option>
+          <option value="clave" <?php echo $sel=($_GET['orden']=='clave')? 'selected="selected"': "";?>>No. Inventario</option>
+          <option value="marca" <?php echo $sel=($_GET['orden']=='marca')? 'selected="selected"': "";?>>Marca</option>
+           </select>
+    
+<?php
+
+	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
+	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
+   
+<input name="bOrden" type="submit" value="ordenar" />
+
+
+</form>
+<!--</td>-->
+
+
+</td>
+</tr>
+
+<?php	
+if ($_SESSION['tipo_usuario']==9)
+   $_SESSION['id_div']=$_REQUEST['div'];
+  
+ if($_GET['lab']!=NULL && $_GET['mod']=='invear' )
+           {
+
+              // echo'$_GET[lab]!=NULL && $_GET[mod]==invear )';
+                     $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+                              from dispositivo e 
+                              left join cat_dispositivo cd
+                              on e.dispositivo_clave=cd.dispositivo_clave
+                              left join cat_familia cf
+                              on e.familia_clave=cf.id_familia
+                              left join cat_tipo_ram ctr
+                              on e.tipo_ram_clave=ctr.id_tipo_ram
+                              left join cat_tecnologia ct
+                              on e.tecnologia_clave=ct.id_tecnologia
+                              left join cat_sist_oper cso
+							  on  e.sist_oper=cso.id_sist_oper
+							  left join cat_usuario_final cuf
+			                  on cuf.usuario_final_clave=e.usuario_final_clave
+                              left join cat_marca cm
+                              on cm.id_marca=e.id_marca
+                              left join cat_memoria_ram cmr
+                              on e.id_mem_ram=cmr.id_mem_ram
+                              left join bienes_inventario bi
+                              on  e.bn_id = bi.bn_id
+                              left join laboratorios l
+                              on  l.id_lab=e.id_lab
+							  join equipoarendimiento ear
+				              on ear.inventario=e.inventario 
+                              where l.id_lab=";
+                       
+                      
+  
+            switch ($_GET['orden']){
+ 			case "descripcion":
+			    $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
+			break;
+ 			case "clave":
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
+			break;
+			case "marca":
+			    $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
+			break;
+ 			default:
+			    $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
+	    	break;
+			
+           } // fin de switch
+        }else if($_GET['mod']=='invear'  &&  $_SESSION['id_div']!='') {
+        
+		//echo '$_GET[mod]==invear   &&  $_SESSION[id_div]!=NULL ';
+               $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+               from dispositivo e 
+               left join cat_dispositivo cd
+               on e.dispositivo_clave=cd.dispositivo_clave
+               left join cat_familia cf
+               on e.familia_clave=cf.id_familia
+               left join cat_tipo_ram ctr
+               on e.tipo_ram_clave=ctr.id_tipo_ram
+               left join cat_tecnologia ct
+               on e.tecnologia_clave=ct.id_tecnologia
+               left join cat_sist_oper cso
+               on  e.sist_oper=cso.id_sist_oper
+			   left join cat_usuario_final cuf
+			   on cuf.usuario_final_clave=e.usuario_final_clave
+               left join cat_marca cm
+               on cm.id_marca=e.id_marca
+               left join cat_memoria_ram cmr
+               on e.id_mem_ram=cmr.id_mem_ram
+               left join bienes_inventario bi
+               on  e.bn_id = bi.bn_id
+               left join laboratorios l
+               on  l.id_lab=e.id_lab
+               left join departamentos dp
+               on dp.id_dep=l.id_dep
+			   join equipoarendimiento ear
+			   on ear.inventario=e.inventario
+               where id_div=";
+             
+               
+
+            switch ($_GET['orden']){
+ 			case "descripcion":
+			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
+			break;
+ 			case "clave":
+			     $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
+			break;
+			case "marca":
+			    $query.= $_SESSION['id_div']. " ORDER BY bi.bn_marca ASC";
+			break;
+ 			default:
+			    $query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
+	    	break;
+			
+        } // fin de switch
+   } else if(($_GET['mod']=='invear' && $_SESSION['id_div']!='' ) ) {
+       // echo '($_GET[mod]==invear  && $_SESSION[id_div]!=NULL)';
+               $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+               from dispositivo e 
+               left join cat_dispositivo cd
+               on e.dispositivo_clave=cd.dispositivo_clave
+               left join cat_familia cf
+               on e.familia_clave=cf.id_familia
+               left join cat_tipo_ram ctr
+               on e.tipo_ram_clave=ctr.id_tipo_ram
+               left join cat_tecnologia ct
+               on e.tecnologia_clave=ct.id_tecnologia
+               left join cat_sist_oper cso
+               on  e.sist_oper=cso.id_sist_oper
+			   left join cat_usuario_final cuf
+			   on cuf.usuario_final_clave=e.usuario_final_clave
+               left join cat_marca cm
+               on cm.id_marca=e.id_marca
+               left join cat_memoria_ram cmr
+               on e.id_mem_ram=cmr.id_mem_ram
+               left join bienes_inventario bi
+               on  e.bn_id = bi.bn_id
+               left join laboratorios l
+               on  l.id_lab=e.id_lab
+               left join departamentos dp
+			   on dp.id_dep=l.id_dep
+			    join equipoarendimiento ear
+				      on ear.inventario=e.inventario
+               
+               ";
+   } else if($_GET['mod']=='invear' && $_SESSION['id_div']!='') {
+  //echo '$_GET[mod]==invear && $_SESSION[id_div]!=NULL';
+        
+               $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+               from dispositivo e 
+               left join cat_dispositivo cd
+               on e.dispositivo_clave=cd.dispositivo_clave
+               left join cat_familia cf
+               on e.familia_clave=cf.id_familia
+               left join cat_tipo_ram ctr
+               on e.tipo_ram_clave=ctr.id_tipo_ram
+               left join cat_tecnologia ct
+               on e.tecnologia_clave=ct.id_tecnologia
+               left join cat_sist_oper cso
+               on  e.sist_oper=cso.id_sist_oper
+			   left join cat_usuario_final cuf
+			   on cuf.usuario_final_clave=e.usuario_final_clave
+               left join cat_marca cm
+               on cm.id_marca=e.id_marca
+               left join cat_memoria_ram cmr
+               on e.id_mem_ram=cmr.id_mem_ram
+               left join bienes_inventario bi
+               on  e.bn_id = bi.bn_id
+               left join laboratorios l
+               on  l.id_lab=e.id_lab
+               left join departamentos dp
+               on dp.id_dep=l.id_dep
+			   join equipoarendimiento ear
+			   on ear.inventario=e.inventario
+               where id_div=";
+             
+               
+
+            switch ($_GET['orden']){
+ 			case "descripcion":
+			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
+			break;
+ 			case "clave":
+			     $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
+			break;
+			case "marca":
+			    $query.= $_SESSION['id_div']. " ORDER BY bi.bn_marca ASC";
+			break;
+ 			default:
+			    $query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
+	    	break;
+			
+        } // fin de switch
+  }
+//echo $query;
+   $datos = pg_query($con,$query);
+   $inventario= pg_num_rows($datos); 
+    if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
+        <tr>
+        <td align="right">  <h3> Inventario por División</h3> </td>
+       
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        
+         <tr>
+        <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>
+        <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
+	          <input name="enviar" type="submit" value="Con identificador" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            </tr> 
+            
+           <tr>
+           <td>
+            
+           <legend align="right">
+          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
+	          <input name="enviar" type="submit" value="Con nombre" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
+            </td>
+            </tr> 
+            
+             <tr>
+           <td>
+           <br>
+           <legend align="right">
+          <?php $action="../inc/exportainvDGTIC.inc.php";?>
+         
+              <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
+	          <input name="enviar" type="submit" value="DGTIC" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              </form>
+              </legend>
+            </td>
+            </tr> 
+            
+ <?php } ?>
+
+</td>
+</tr>
+<br>
+ <?php
+     if (($inventario!=0 ) && $bandera1==0 ) 
+         $bandera1=1;  
+    
+ 
+     ?>
+    </td>
+
+    <td>
+ 
+
+ 
+    <br>
+  <?php 
+		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
+		{ 
+		
+          //print_r($lab_invent);
+		   	if (count($lab_invent > 0 )){
+        
+                //&& $lab_invent['bn_notas']=='COMPUTO' 
+           ?>
+	 
+
+  
+            <table class='material'>
+            <tr>
+               <th width="20%" scope="col">No. Inventario</th>
+               <th width="20%" scope="col">No. Inventario Área</th>
+               <th width="20%" scope="col">Área</th>
+               <th width="20%" scope="col">Usuario Final</th>
+               <th width="20%" scope="col">Descripción del equipo</th>
+               <th width="20%" scope="col">Marca</th>
+               <th width="20%" scope="col">Modelo</th>
+               <th width="20%" scope="col">Serie</th>
+               <th width="20%" scope="col">Procesador</th>
+               <th width="20%" scope="col">Número de  Procesadores</th>
+               <th width="20%" scope="col">Núcleos GPU</th>
+            
+           </tr>
+          <tr>
+                  <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['laboratorio'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
+                  
+           </tr>
+   
+           <tr>
+               <th width="20%" scope="col">Sistema Operativo</th>
+               <th width="20%" scope="col">Versión SO</th>
+               <th width="20%" scope="col">Clúster</th>
+               <th width="20%" scope="col">Caché</th>
+               <th width="20%" scope="col">Tipo de video</th>
+               <th width="20%" scope="col">Modelo video</th>
+               <th width="20%" scope="col">Memoria video</th>
+               <th width="20%" scope="col">Conexión a Internet</th>
+               <th width="20%" scope="col">Velocidad</th>
+               <th width="20%" scope="col">Salida Internet</th>  
+               
+               <th width="20%" scope="col">Criticidad</th>  
+             </tr>
+            
+             <tr>   
+                <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['cluster'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['cache'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['videotipo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['modelovideo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['videomem'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['conexion'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['velocidad'];?></td> 
+                  <td width="20%" scope="col"><?php echo $lab_invent['salida'];?></td>
+                  
+                 <td width="20%" scope="col"><?php echo $lab_invent['criticidad'];?></td>
+          </tr>
+         
+          
+<?php //}
+
+	    foreach ($lab_invent as $campo => $valor) {
+				       
+		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
+				
+		} // fin foreach
+	
+		?>
+        
+ <?php  if (($_SESSION['tipo_usuario']==9)) {
+     
+     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+   
+    <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
+          <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>
+ 
+ <?php 
+
+		foreach ($lab_invent as $campo => $valor) {
+			echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
+			
+		}
+		
+		 ?>
+         </form>
+      
+       <?php      
+            }//fin if equipoc	para boton de editar	
+	?>
+          
+   <table>
+
+     <?php  } else {
+	 //$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];
+	
+	  //isset($_GET['lab']) && isset($_GET['mod']) 
+	 }
+	 } //while
+
+ if (($inventario==0 ) && $bandera1==0 ) { ?>
+<br>
+<br>
+<legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
+
+<?php
+}
+
+}
 
 
 

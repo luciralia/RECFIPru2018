@@ -45,7 +45,7 @@ require_once('../inc/encabezado.inc.php');
      
 	
    
-    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act' )
+    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act'  && $_GET['mod']!='invear')
             require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>
@@ -77,6 +77,8 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/inventario.html.php");		
 		else if (!isset($_GET['mod'])|| $_GET['mod']=='invc')
 		include_once("../view/inventario.html.php");	
+		else if (!isset($_GET['mod'])|| $_GET['mod']=='invear'){
+		include_once("../view/inventario.html.php");}
 		else if (!isset($_GET['mod'])|| ($_GET['mod']=='invg' && $_GET['lab']!=NULL)){
 		include_once("../view/inventario.html.php");}
 		else if (!isset($_GET['mod'])|| ($_GET['mod']=='invg' && $_GET['lab']==NULL)){
@@ -90,6 +92,10 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='imp')
 		include_once("../view/importar.html.php");	
+		else if ($_GET['mod']=='impear')
+		include_once("../inc/importaraltorend.inc.php");	
+		else if (!isset($_GET['mod']) || $_GET['mod']=='invear'){
+		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='act')
 		include_once("../view/actualizar.html.php");	
 		else if ($_GET['mod']=='cot')

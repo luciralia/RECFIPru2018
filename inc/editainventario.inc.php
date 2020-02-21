@@ -153,7 +153,7 @@ function validaNum(formulario) {
 </script>
 
 <?php  
-//echo 'hace solicitud a editainventario.inc'; print_r($_POST);
+
 require_once('../clases/inventario.class.php');
 require_once('../clases/laboratorios.class.php');
 
@@ -745,5 +745,7 @@ if ($_POST['accion']=='editar'){
 </form>
   
 <?php 
+}elseif ($_POST['accion']=='editarG'){  
+echo 'hace solicitud a editainventario.inc'; print_r($_POST);
 }
 ?>

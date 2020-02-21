@@ -11,7 +11,7 @@
 
 <body>
 <?php
-/*
+
 function getBrowser($user_agent){
 
 if(strpos($user_agent, 'MSIE') !== FALSE) //'Internet explorer'
@@ -38,13 +38,10 @@ if(strpos($user_agent, 'MSIE') !== FALSE) //'Internet explorer'
 
 $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
 
-echo $navegador;
-*/
+//echo $navegador;
 
-if ($navegador!=7) {
-	?>
-   
 
+?>
 <?php //require_once('inc/encabezado.inc.php');  ?>
 
 
@@ -52,15 +49,15 @@ if ($navegador!=7) {
   <tr>
     <td><img src="images/banner_principalsin.jpg" width="1024" height="103" /></td>
   </tr>
+  
    <td>&nbsp;</td>
-      <table align="center" width="900" border="1" cellspacing="5" cellpadding="5" class="login">
+      <!--<table align="center" width="900" border="1" cellspacing="5" cellpadding="5" class="login2">
       
         <td>
-            El sistema RECFI apoya al comité de cómputo a realizar la gestión de Inventarios y el Censo de Cómputo de la Facultad de Ingeniería.
+            El sistema RECFI permite la gestión de recursos de equipo de cómputo de la Facultad de Ingeniería.
         </td>
-        </table>
- <td>&nbsp;</td>
-  <td>&nbsp;</td>
+        </table>-->
+ <td>&nbsp;</td><td>&nbsp;</td> <td>&nbsp;</td><td>&nbsp;</td>
    <!-- <td align="center">-->
     <table align="center" width="400" cellspacing="0" cellpadding="0" class="login">
       <tr>
@@ -100,17 +97,50 @@ if ($navegador!=7) {
             <td><input type="submit" name="entrar" id="entrar" value="Entrar" /></td>
           </tr>
         </table>
+        </table>
+          </form>
 <?php if ($estado=='visible'){ ?>
         <div  id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>El nombre de usuario o contraseña son incorrectos</p><div id="boton1"><a href="./?usr=<?php echo $rusuario; ?>">Cerrar</a></div></div>
-        
+       
 <?php }
-  } else {
-	  ?>
-<!-- <div  id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Para una mejor visualización se recomienda NO utilizar Google Chrome. </p></div> -->
-<?php } ?>
 
-         </form>
+
+	  ?>
+
         
+       <?php if ($navegador==7) {
+		  // $estado='visible'; 
+	   ?>
+        <td>&nbsp;</td>  
+        <td>&nbsp;</td>
+       <table align="center">
+      
+         <td >
+          <div id="resaltado">
+              Para una mejor visualización se recomienda evitar el uso de Google Chrome. 
+          </div>  
+         
+       </td>
+       
+        </table>
+         <!-- <div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>
+              Para una mejor visualización se recomienda evitar el uso de Google Chrome.
+              </p>
+              </div>
+              
+               <div id="advertencia2" style="box-shadow: 10px 10px 30px #000000;">
+        
+            Para una mejor visualización se recomienda evitar el uso de Google Chrome.
+         
+          </div> 
+          
+          <td>
+            El sistema RECFI apoya al comité de cómputo a realizar la gestión de Inventarios y el Censo de Cómputo de la Facultad de Ingeniería.
+        </td>-->
+          
+<?php }
+ ?>
+ 
       <!--  </td>
       </tr>
     </table></td>

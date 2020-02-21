@@ -136,4 +136,5 @@
 <file name="censoeqdig_20181116-162759_Coordinación de Planeación y Desarrollo.xls" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137290000000" remote="132005137290000000" Dst="1" />
 <file name="menudesp.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137300000000" remote="132005137300000000" Dst="1" />
 <file name="Recfi.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132059724190000000" remote="132059724190000000" Dst="1" />
+<file name="exportaFaltantes.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132254860614397294" remote="132253175060000000" Dst="1" />
 </dwsync>

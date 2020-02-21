@@ -223,7 +223,7 @@
 <file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137270000000" remote="132005137270000000" Dst="1" />
 <file name="actualizarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137200000000" remote="132005137200000000" Dst="1" />
 <file name="buscarcambio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132044165940000000" remote="132044165940000000" Dst="1" />
-<file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132044175850000000" remote="132044175850000000" Dst="1" />
+<file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132265344129073401" remote="132266848130000000" Dst="1" />
 <file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132035441330000000" remote="132035441330000000" Dst="1" />
 <file name="exportainvDGTyC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
 <file name="cargainventse.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
@@ -234,4 +234,5 @@
 <file name="exportacompara.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132170280440000000" remote="132170280440000000" Dst="1" />
 <file name="importaPatrimonio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132170121180000000" remote="132170121180000000" Dst="1" />
 <file name="comparaRECFI_pat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132176369490000000" remote="132176369490000000" Dst="1" />
+<file name="importaraltorend.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132267059192501038" remote="132267064580000000" Dst="1" />
 </dwsync>
