@@ -1,5 +1,4 @@
-
-  <?php 
+<?php 
 
 require_once('../conexion.php');
 require_once('../clases/importa.class.php');
@@ -130,7 +129,7 @@ $guardaPatrimonio=new importa();
 				     '%s',%d,
 				     '%s',%d, 
 				     '%s','%s', 
-				     '%s','%s')";
+				      %d,%d)";
 				   
                  $queryid=sprintf($queryd, 
                  $iddisp,$datosdec[0],
@@ -143,7 +142,12 @@ $guardaPatrimonio=new importa();
 				// echo $queryid;
                
               $result=pg_query($con,$queryid) ;
-               $inserta++;
+			  
+		 $updatequery= "UPDATE dispositivo SET equipoaltorend='Si' WHERE inventario='" . $datosdec[0] ."'";
+
+         $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');	  
+			  
+              $inserta++;
         }else{?>
 			 <legend align="left"> <strong><?php echo "No se ha importado en RECFI  el dispositivo con número de inventario " . $datosdec[0]; ?></strong></legend> 
 			

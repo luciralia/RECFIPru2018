@@ -1250,6 +1250,71 @@ function comboelementos($elemento)
 					
 	}//fin del metodo combo	num disco	
 	
+function comboAdqu($adq)
+					{
+                  
+				    $query="Select * from  cat_adq order by id_adq asc";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_adq');
+					
+					$salida='<select name="id_adq" id="id_adq">';
+					         //<option value="0" >Ninguno</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_adq']==$adq){
+					
+						  $salida.= "<option value='" . $datosc['id_adq'] . "' selected='selected'>" . $datosc['nombAdq']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_adq'] . "'>" . $datosc['nombAdq']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	num disco	
+	
+function comboCrit($crit)
+					{
+                  
+				    $query="Select * from  cat_crit order by id_crit asc";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_crit');
+					
+					$salida='<select name="id_crit" id="id_crit">';
+					         //<option value="0" >Ninguno</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_crit']==$crit){
+					
+						  $salida.= "<option value='" . $datosc['id_crit'] . "' selected='selected'>" . $datosc['nombcrit']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_crit'] . "'>" . $datosc['nombcrit']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	num disco	
 	
 function comboarreglo($arreglo)
 					{
@@ -1369,8 +1434,8 @@ function radialtorendimiento($altorend)
 		  }
 		  
 		  	  
-		  $salida='<label><input type="radio" name="equipoaltorend" value="Si" '. $auxcheck . ">Sí</label>";  
-		  $salida.='<label><input type="radio" name="equipoaltorend" value="No" '. $auxcheck2 . ">No</label>";  
+		  $salida='<label><input type="radio" name="equipoaltorend"  disabled="disabled" value="Si" '. $auxcheck . ">Sí</label>";  
+		  $salida.='<label><input type="radio" name="equipoaltorend"  disabled="disabled" value="No" '. $auxcheck2 . ">No</label>";  
 		  
 		  echo $salida;
           

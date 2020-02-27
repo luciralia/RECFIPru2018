@@ -170,7 +170,7 @@ if($size > 0){
 		   <?php 
 				}
 		} else { 
-	     
+	       if ($datosdec[15]!=NULL){
 	      //muestra errores y verifica valor en catálogo
 	      //print_r($datos);
 		  //$marca->marcaError($datos);
@@ -631,7 +631,7 @@ if($size > 0){
 					   
 					  }
 				  }
-			
+			 }
 			 }
        
 

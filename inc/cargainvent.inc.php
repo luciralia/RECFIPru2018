@@ -956,14 +956,22 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
    } //isset($_GET['lab']) && isset($_GET['mod'])
 
  }
+  if (($inventario==0 ) && $bandera1==0 ) { ?>
+<br>
+<br>
+<legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
+
+<?php
+}
+ 
 }else {
 	
-	 $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+	// $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
 
 <tr>
 <td align="center">
-
-<div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div>
+<!--
+<div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div> -->
 <br/>
 <br/>
 </td>
@@ -984,8 +992,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
     
 <?php
 
-	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
-	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
+//	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
+//	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
    
 <input name="bOrden" type="submit" value="ordenar" />
 
@@ -1029,6 +1037,8 @@ if ($_SESSION['tipo_usuario']==9)
                               on  l.id_lab=e.id_lab
 							  join equipoarendimiento ear
 				              on ear.inventario=e.inventario 
+							  left join cat_crit cc
+			                  on cc.id_crit=ear.criticidad
                               where l.id_lab=";
                        
                       
@@ -1077,6 +1087,8 @@ if ($_SESSION['tipo_usuario']==9)
                on dp.id_dep=l.id_dep
 			   join equipoarendimiento ear
 			   on ear.inventario=e.inventario
+			   left join cat_crit cc
+			   on cc.id_crit=ear.criticidad
                where id_div=";
              
                
@@ -1122,8 +1134,10 @@ if ($_SESSION['tipo_usuario']==9)
                on  l.id_lab=e.id_lab
                left join departamentos dp
 			   on dp.id_dep=l.id_dep
-			    join equipoarendimiento ear
-				      on ear.inventario=e.inventario
+			   join equipoarendimiento ear
+			   on ear.inventario=e.inventario
+		   	   left join cat_crit cc
+			   on cc.id_crit=ear.criticidad
                
                ";
    } else if($_GET['mod']=='invear' && $_SESSION['id_div']!='') {
@@ -1155,6 +1169,8 @@ if ($_SESSION['tipo_usuario']==9)
                on dp.id_dep=l.id_dep
 			   join equipoarendimiento ear
 			   on ear.inventario=e.inventario
+			   left join cat_crit cc
+			   on cc.id_crit=ear.criticidad
                where id_div=";
              
                
@@ -1179,54 +1195,25 @@ if ($_SESSION['tipo_usuario']==9)
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
-        <tr>
-        <td align="right">  <h3> Inventario por División</h3> </td>
-       
-        </tr>
-        <tr></tr>
-        <tr></tr>
         
-         <tr>
-        <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <br>
-        <legend align="right">
-          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+        
+                    
+            <tr>
+              <td>
+              
+              <legend align="right">
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
-	          <input name="enviar" type="submit" value="Con identificador" />
+              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
+	          <input name="enviar" type="submit" value="Exportar" />
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+              <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
               </form>
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </td>
+             </td>
             </tr> 
             
-           <tr>
-           <td>
             
-           <legend align="right">
-          <?php $action="../inc/exportainvgendivxls.inc.php";?>
-         
-              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
-	          <input name="enviar" type="submit" value="Con nombre" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
-              </legend>
-            </td>
-            </tr> 
             
-             <tr>
-           <td>
-           <br>
-           <legend align="right">
-          <?php $action="../inc/exportainvDGTIC.inc.php";?>
-         
-              <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
-	          <input name="enviar" type="submit" value="DGTIC" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
-              </legend>
-            </td>
-            </tr> 
             
  <?php } ?>
 
@@ -1253,7 +1240,7 @@ if ($_SESSION['tipo_usuario']==9)
           //print_r($lab_invent);
 		   	if (count($lab_invent > 0 )){
         
-                //&& $lab_invent['bn_notas']=='COMPUTO' 
+               
            ?>
 	 
 
@@ -1315,7 +1302,7 @@ if ($_SESSION['tipo_usuario']==9)
                   <td width="20%" scope="col"><?php echo $lab_invent['velocidad'];?></td> 
                   <td width="20%" scope="col"><?php echo $lab_invent['salida'];?></td>
                   
-                 <td width="20%" scope="col"><?php echo $lab_invent['criticidad'];?></td>
+                 <td width="20%" scope="col"><?php echo $lab_invent['nombcrit'];?></td>
           </tr>
          
           

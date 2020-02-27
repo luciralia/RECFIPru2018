@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 
-function palomeado(){ 
+function palomeadoLic(){ 
     if(licencia.checked){ 
         licencia_ini.disabled=true; 
 	    licencia_fin.disabled=true;
@@ -12,6 +12,18 @@ function palomeado(){
     } 
 } 
 
+
+
+
+function palomeadoSal(){ 
+    if(salida.checked) 
+        velocidadInt.disabled=true; 
+	    
+    else
+        velocidadInt.disabled=false; 
+	   
+     
+} 
      function myFunctionFamilia() {
 		  var x = document.getElementById("id_familia").value;
 		  
@@ -156,6 +168,7 @@ function validaNum(formulario) {
 
 <?php  
 //echo 'hace solicitud a editainventario.inc'; print_r($_POST);
+
 require_once('../clases/inventario.class.php');
 require_once('../clases/laboratorios.class.php');
 
@@ -191,7 +204,8 @@ if ($_POST['accion']=='editar'){
    </tr>
    <tr>
        <td><label>Descripción Extensa</label></td>
-       <td><label><input type="text" name="descextensa" id="descextensa"size="55" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
+      <!-- <td><label><input type="text" name="descextensa" id="descextensa" size="55" value="<?php  echo $_POST['descextensa'];?>" required></label></td>-->
+         <td><textarea  name="descextensa" id="descextensa" value="<?php  echo $_POST['descextensa'];?>" required> </textarea></td>
     </tr>
      <tr>
         <td><label>Área</label></td>
@@ -276,7 +290,7 @@ if ($_POST['accion']=='editar'){
      </tr>
      <tr>
          <td><label>Factura</label></td>
-         <td><label><input type="text" name="no_factura" size="25" value="<?php echo $_POST['no_factura'];  ?>" ></label></td>
+         <td><label><input type="text" name="no_factura" size="40" value="<?php echo $_POST['no_factura'];  ?>" ></label></td>
          <td colspan="1">&nbsp;</td>
          <td><label>Proveedor</label></td>
          <td><input type="text" name="proveedor_p" size="35" value="<?php echo $_POST['proveedor_p'];  ?>"  ></td>
@@ -685,11 +699,11 @@ if ($_POST['accion']=='editar'){
 	
     <form id="form1" name="form1" method="post" action="">
     <!-- <td >  <input type="checkbox" name="licencia" id="licencia" onChange="palomeado(this);" value="<?php //echo $lic;?>"  /></td>-->
-         <td ><input type="checkbox" name="licencia" id="licencia"  <?php echo $checked ?> onChange="palomeado(this);" value="<?php echo $_POST['licencia'];?>"  /> <label for="licencia"></label>
+         <td ><input type="checkbox" name="licencia" id="licencia"  <?php echo $checked ?> onChange="palomeadoLic(this);" value="<?php echo $_POST['licencia'];?>"  /> <label for="licencia"></label>
      
         <label for="licencia"><strong>&nbsp;&nbsp;&nbsp;Licencia Permanente</strong></label></td>
-        </tr>
-        <tr>
+         </tr>
+         <tr>
          <td colspan="2">&nbsp;</td>
          
        <?php if ( $_POST['licencia']==1 ) { ?>
@@ -710,7 +724,9 @@ if ($_POST['accion']=='editar'){
 
      <td colspan="2" align="left">Equipo alto rendimiento</td>
      <td ><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
-     <td colspan="1">&nbsp;</td>
+     <?php  //$retorno="../inc/edicion.inc.php" ?>
+	   <td><input type="submit"  name="accioneee" value="editarG" /> </td>
+ 
      <td  align="left" >Arquitectura</td>
      <td ><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
    </tr>
@@ -760,8 +776,20 @@ if ($_POST['accion']=='editar'){
 
 }
 
-elseif ($_POST['accion']=='editarG'){  ?>
-<form action="../inc/procesainventario.inc.php" method="post" id="formedi" name="form_edita" class="formul" onSubmit="return validaNum(this);"  >
+elseif ($_POST['accion']=='editarG' || $_POST['accioneee']=='editarG' ){  echo 'entra aeu';?>
+
+<script type="text/javascript">
+function palomeadoCon(){ 
+    if(conexion.checked)
+        velocidad.disabled=true; 
+	    
+   else
+        velocidad.disabled=false; 
+
+} 
+</script>
+
+<form action="../inc/procesainventario.inc.php" method="post" id="formedi" name="form_edita" class="formul"  >
 
  <br>  <br> 
           
@@ -770,23 +798,23 @@ elseif ($_POST['accion']=='editarG'){  ?>
    <br/>
      <tr>
         <td><label>No.de serie/etiqueta de servicio</label></td>
-        <td><label><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" ></label></td>
+        <td><label><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" / ></label></td>
      </tr>
      <tr>
         <td><label>No.Inventario UNAM</label></td>
-        <td><label><input type="text" name="bn_clave" size="13" value="<?php echo $_REQUEST['bn_clave']; ?>" disabled="disabled"></label></td>
+        <td><label><input type="text" name="bn_clave" size="13" value="<?php echo $_REQUEST['bn_clave']; ?>" disabled="disabled" /></label></td>
         <td colspan="1">&nbsp;</td>
         <td><label>No.Inventario del Área</label></td>
         <td><label><input type="text" name="inventario" size="13" value="<?php echo $REQUEST['inventario'];  ?>" disabled="disabled"></label></td>
     </tr>
     <tr>
         <td><label>Marca </label></td>
-         <td><input type="text" name="marca" size="20" value="<?php echo $_POST['marca_p'];  ?>" disabled="disabled"</label></td>
+         <td><input type="text" name="marca" size="20" value="<?php echo $_POST['marca_p'];  ?>" disabled="disabled"  /></label></td>
         
      </tr> 
      <tr>
           <td><label>Modelo</label></td>
-          <td><input type="text" name="modelo_p" size="20" value="<?php echo $_POST['modelo_p'];  ?>" disabled="disabled" </label></td>
+          <td><input type="text" name="modelo_p" size="20" value="<?php echo $_POST['modelo_p'];  ?>" disabled="disabled" /></label></td>
           <td colspan="2">&nbsp;</td>
      </tr>
      
@@ -805,54 +833,85 @@ elseif ($_POST['accion']=='editarG'){  ?>
          }else {   $checked = ' ';
        }
 	   ?>
-        <!-- <td ><?php // $radial->radialCluster($_POST['cluster'])?></td>-->
-         <td ><input type="checkbox" name="cluster" id="cluster"  <?php echo $checked ?> value="<?php echo $_POST['cluster'];?>"  /> <label for="cluster"></label></td>
+ 
+       
+        <td ><input type="checkbox" name="cluster" id="cluster"  <?php echo $checked ?>   value="<?php echo $_POST['cluster'];?>"  /> <label for="cluster"></label> </td>
+       
     
         <td><label>Memoria Caché</label></td>
         <td><label><input type="text" name="cache" size="13" value="<?php echo $_POST['cache']; ?>"></label></td>
         <td colspan="1">&nbsp;</td>
         </tr>
-      <tr>  
+        <tr>  
         <td><label>Tipo de video</label></td>
         <td><label><input type="text" name="videotipo" size="13" value="<?php echo $_POST['videotipo'];  ?>" ></label></td>
     
           <td><label>Modelo de video</label></td>
-          <td><input type="text" name="modelovideo" size="20" value="<?php echo $_POST['modelovideo'];  ?>" </label></td>
+          <td><input type="text" name="modelovideo" size="20" value="<?php echo $_POST['modelovideo'];  ?>" /></label></td>
           <td><label>Memoria de video</label></td>
-          <td><input type="text" name="videomem" size="20" value="<?php echo $_POST['videomem'];  ?>"  </label></td>
+          <td><input type="text" name="videomem" size="20" value="<?php echo $_POST['videomem'];  ?>"  /></label></td>
           <td colspan="2">&nbsp;</td>
-     </tr><tr>
-        <td><label>Conexión a Internet</label></td>
+     </tr>
+     <tr>
+     
+         <td><label>Conexión a Internet</label></td>
          <?php  if ( $_POST['conexion']==1 ) { 
 	      $checked = 'checked="checked" '; 
          }else {   $checked = ' ';
        }
 	   ?>
-      
-         <!-- <td><?php  $radial->radialConInt($_POST['conexion'])?></td>-->
-         <td ><input type="checkbox" name="conexion" id="conexion"  <?php echo $checked ?> value="<?php echo $_POST['conexion'];?>"  /> <label for="conexion"></label>
-         <!--<td ><?php //$radial->radialConInt($_POST['conexion'])?></td>-->
-            <td><label>Velocidad de la conexión</label></td>
-            <td><label><input type="text" name="velocidad" size="13" value="<?php echo $_POST['velocidad'];  ?>" ></label></td>
+      <form id="formCon" name="formCon" method="post" action="">
+       
+         <td ><input type="checkbox" name="conexion" id="conexion"  <?php echo $checked ?>  onChange="palomeadoCon(this);" value="<?php echo $_POST['conexion'];?>"  /> <label for="conexion"></label> </td>
+        
+          <?php if ($_POST['conexion']==1){ ?>
+         <td>  <label for="conexion">Velocidad de la conexión</label></td>
+         <td>  <label><input type="text" name="velocidad" size="13" value="<?php echo $_POST['velocidad'];  ?>" /></label></td>
+          
+     <?php } else  { ?>
+	      <td>  <label for="velocidad">Velocidad de la conexión</label></td>
+         <td>   <label><input type="text" name="velocidad" size="13" value="<?php echo $_POST['velocidad'];  ?>"  disabled="disabled" / ></label></td>
+          
+      <?php } ?>
+        
+          </form>  
+          </tr> 
         <td colspan="1">&nbsp;</td>
       </tr>
+       
         <tr>
         <td><label>Salida a Internet</label></td>
          <?php if ( $_POST['salida']==1 ) { 
 	      $checked = 'checked="checked" '; 
          }else {   $checked = ' ';
        }  ?>  
-        <td ><input type="checkbox" name="salida" id="salida"  <?php echo $checked ?> value="<?php echo $_POST['salida'];?>"  /> <label for="salida"></label></td>
-       <!--  <td ><?php //$radial->radialSalida($_POST['salida'])?></td>-->
-        
-        <td><label>Velocidad de Internet</label></td>
-        <td><label><input type="text" name="velocidadInt" size="13" value="<?php echo $_POST['velocidadInt'];  ?>" ></label></td>
-    </tr>
+      <!-- <form id="formSal" name="formSal" method="post" action="">-->
+        <td ><input type="checkbox" name="salida" id="salida"  <?php echo $checked ?>  value="<?php echo $_POST['salida'];?>"  /> <label for="salida"></label></td>
+         <?php //if ( $_POST['salida']==1 ) { ?>
+           <td><label>Velocidad de Internet</label></td>
+           <td><label><input type="text" name="velocidadInt" size="13" value="<?php echo $_POST['velocidadInt'];  ?>" / ></label></td>
+          
+     <?php //} else  { ?>
+	     <!--  <td><label>Velocidad de Internet</label></td>
+           <td><label><input type="text" name="velocidadInt" size="13" value="<?php echo $_POST['velocidadInt'];  ?>" disabled="disabled" /></label></td>-->
+          
+      <?php //} ?>
+          
+      
+        <!--</form>-->
+        <td colspan="1">&nbsp;</td>
+      </tr>
+   
      <tr>  
         <td><label>Terminal</label></td>
         <td><label><input type="text" name="terminal" size="13" value="<?php echo $_POST['terminal'];  ?>" ></label></td>
-        <td><label>Criticidad</label></td>
-        <td><label><input type="text" name="criticidad" size="13" value="<?php echo $_POST['criticidad'];  ?>" ></label></td>
+        <td  colspan="1"><label>Criticidad</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label><?php $combo->comboCrit($_POST['criticidad'])?></label>
+        &nbsp;</td>
+        <td><label>Adquisición</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label><?php $combo->comboAdqu($_POST['adquision'])?></label>
+        </td>
+       
     </tr>
    </table>
    
@@ -864,7 +923,7 @@ elseif ($_POST['accion']=='editarG'){  ?>
         <input type="submit" name="accionear" value="Guardar" />
         <input type="reset" name="accionear"  value="Limpiar" />
 	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab']."&div=". $_SESSION['id_div'];?>
-	    <input type="button" name="accionec" value="Cancelar" onClick="window.parent.location='<?php echo  $retorno;?>' "/>
+	    <input type="button" name="accionear" value="Cancelar" onClick="window.parent.location='<?php echo  $retorno;?>' "/>
      </td>
   </tr>    
      </table>

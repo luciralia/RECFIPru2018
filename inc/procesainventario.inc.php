@@ -675,7 +675,7 @@ $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_fin
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-licencia_ini='%s',licencia_fin='%s',equipoaltorend='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d
+licencia_ini='%s',licencia_fin='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
@@ -694,7 +694,7 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           $arregloTotal,$_POST['id_tec_com'],$_POST['tec_com_otro'],
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,
                           date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),
-						  $_POST['equipoaltorend'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
+						  $_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
 						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod']);	
 						  
 echo $queryud;
@@ -791,31 +791,45 @@ if( $_POST['accionear']=='Guardar'){ ?>
 <h1>GUARDAR</h1>
 
 <?php
-if (isset($_POST['cluster']))
+echo 'Valores a editar';
+print_r ($_REQUEST);
 
-	$cluster=1;
+if (isset($_POST['cluster']))
+    $cluster=1;
 else 
     $cluster=0;
 	
 if (isset($_POST['conexion']))
-
-	$conexion=1;
+    $conexion=1;
 else 
     $conexion=0;	
-if (isset($_POST['salida']))
-
-	$sal=1;
-else 
+/*if (isset($_POST['salida']))
+    $sal=1;
+elseif ($_POST['salida']==1)
+    $sal=1;	
+elseif ($_POST['salida']==0)
+    $sal=0;		*/
+	if (isset($_POST['salida']))
+    $sal=1;
+else
     $sal=0;	
+	
+if (isset($_POST['id_crit']))
+{
+   $criticidad= "select nombCrit from cat_crit where id_crit=" . $_POST['id_crit'];
+   $result = pg_query($criticidad) or die('Hubo un error con la base de datos cat_crit');
+   $datoscrit=pg_fetch_array($result,NULL,PGSQL_ASSOC);
+}
+	
 	
 ?>
 	<?php
-$strqueryd="UPDATE equipoarendimientor SET  cluster=%d, cache='%s',
+$strqueryd="UPDATE equipoarendimiento SET  cluster=%d, cache='%s',
                                            videotipo='%s',modelovideo='%s',
 										   videomem='%s',conexion=%d,
                                            velocidad='%s',salida=%d,
                                            velocidadInt='%s',terminal='%s',
-										   criticidad='%s',adquision='%s'
+										   criticidad=%d,adquision=%d
                WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
@@ -825,8 +839,9 @@ $queryud=sprintf($strqueryd,$cluster, $_POST['cache'],
 							$_POST['videomem'],$conexion,
 							$_POST['velocidad'],$sal,
 							$_POST['velocidadInt'],$_POST['terminal'],
-							$_POST['criticidad'],$_POST['adquision']
-);	
+							$_POST['id_crit'],$_POST['id_adq']);	
+							
+							
 echo $queryud;
 
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en equipoarendimiento: ' . pg_last_error());
@@ -834,6 +849,7 @@ echo $queryud;
     echo $direccion;
     header($direccion);
 }
+
 ob_end_flush();
 ?>
 
