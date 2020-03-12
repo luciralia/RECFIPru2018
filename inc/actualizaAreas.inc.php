@@ -22,7 +22,7 @@ function utf8_string_array_encode(&$array){
     return $array;
 } 
 
-$titulo='Importar Áreas';
+$titulo='Actualizar Áreas';
  ?>
  
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -74,8 +74,7 @@ $titulo='Importar Áreas';
    
      // Procesamos linea a linea el archivo CSV y 
      // lo insertamos en la base de datos
-	 
-	
+
 	 ?>
       <table>
       <?php 
@@ -149,9 +148,4 @@ $titulo='Importar Áreas';
  
   ?>      
              
-
-
-
-
-
 

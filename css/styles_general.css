@@ -402,7 +402,44 @@ font-size:12pt;
 border: 2px ridge #FF0000;
 max-width: 450px;*/
 }
+/*-------------*/
+.cssToolTip {
+    position: relative; /* Esta clase tiene que tener posicion relativa */
+    color: #48474F  /* Color del texto */
+    
+}
+/* El tooltip */
 
+.cssToolTip span {
+	background: #fff6bf  center no-repeat;
+    border: 2px solid #ffd324;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #AAAAAA;
+    /*color: #87cefa;*/
+	color: #48474F;
+    display: none; /* El tooltip por defecto estara oculto */
+
+    font-size: 0.8em;
+    padding: 10px 10px 10px 25px;
+    max-width: 5000px;
+    position: absolute; /* El tooltip se posiciona de forma absoluta para no modificar el aspecto del resto de la pagina */
+
+    top: 15px; /* Posicion apartir de la parte superior del primer elemento padre con posicion relativa */
+
+    left: 1o0px; /* Posicion apartir de la parte izquierda del primer elemento padre con posicion relativa */
+
+    z-index: 100; /* Poner un z-index alto para que aparezca por encima del resto de elementos */
+
+}
+
+/* El tooltip cuando se muestra */
+
+.cssToolTip:hover span {
+    display: inline; /* Para mostrarlo simplemente usamos display block por ejemplo */
+
+}
+
+/*--------------*/
 #advertencia
 {
 /*display: table-cell;*/

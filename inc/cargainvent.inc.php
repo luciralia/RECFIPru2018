@@ -387,13 +387,13 @@ if ($_GET['mod']=='invg' ){
           </tr>
          
           
-<?php //}
+<?php /*
 
 	    foreach ($lab_invent as $campo => $valor) {
 				       
 		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				
-		} // fin foreach
+		}  fin foreach*/
 	
 		?>
         
@@ -403,8 +403,7 @@ if ($_GET['mod']=='invg' ){
       <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
 
-           <!-- <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>-->
- 
+        
  <?php 
 
 		foreach ($lab_invent as $campo => $valor) {
@@ -921,11 +920,12 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 
         <?php
 		
-         foreach ($lab_invent as $campo => $valor) {
+        /* foreach ($lab_invent as $campo => $valor) {
              // echo "\$usuario[$campo] => $valor.\n" . "</br>";
               echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 
-         }?>
+         }
+		 */?>
 
  <?php  if (($_SESSION['tipo_lab']=='c' || $_SESSION['tipo_lab']=='o' || $_SESSION['tipo_lab']=='e' || $_SESSION['tipo_lab']=='u'||$_SESSION['tipo_lab']=='s' ||$_SESSION['tipo_lab']=='a'||$_SESSION['tipo_lab']=='b'||$_SESSION['tipo_lab']=='t') && $_GET['mod']=='invc' && $_SESSION['tipo_usuario']!=10 ){
 
@@ -1198,19 +1198,19 @@ if ($_SESSION['tipo_usuario']==9)
         
         
                     
-            <tr>
+          <!--  <tr>
               <td>
               
               <legend align="right">
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
+              <form action=<?php  // echo $action; ?> method="post" name="expgendiv" >
 	          <input name="enviar" type="submit" value="Exportar" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
+	          <input name="mod" type="hidden" value="<?php // echo $_GET['mod'] ?>" />
+              <input name="lab" type="hidden" value="<?php //echo $_GET['lab'] ?>" />
               </form>
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              </td>
-            </tr> 
+            </tr> -->
             
             
             
@@ -1286,41 +1286,28 @@ if ($_SESSION['tipo_usuario']==9)
                <th width="20%" scope="col">Conexión a Internet</th>
                <th width="20%" scope="col">Velocidad</th>
                <th width="20%" scope="col">Salida Internet</th>  
-               
                <th width="20%" scope="col">Criticidad</th>  
              </tr>
             
              <tr>   
                 <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['cluster'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['cache'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['videotipo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['modelovideo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['videomem'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['conexion'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['velocidad'];?></td> 
-                  <td width="20%" scope="col"><?php echo $lab_invent['salida'];?></td>
-                  
-                 <td width="20%" scope="col"><?php echo $lab_invent['nombcrit'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['cluster'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['cache'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['videotipo'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['modelovideo'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['videomem'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['conexion'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['velocidad'];?></td> 
+                <td width="20%" scope="col"><?php echo $lab_invent['salida'];?></td>
+                <td width="20%" scope="col"><?php echo $lab_invent['nombcrit'];?></td>
           </tr>
-         
-          
-<?php //}
-
-	    foreach ($lab_invent as $campo => $valor) {
-				       
-		    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
-				
-		} // fin foreach
-	
-		?>
-        
+ 
  <?php  if (($_SESSION['tipo_usuario']==9)) {
      
      $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
    
-    <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
+    <form action="<?php echo $action1; ?>" method="post" name="edi_inv_AR<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
           <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>
  
  <?php 

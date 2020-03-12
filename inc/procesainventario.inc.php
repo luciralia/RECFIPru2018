@@ -1,7 +1,6 @@
 <?php
 ob_start();
-?>
-<?php 
+ 
 session_start();
 require_once('../conexion.php');
 ?>
@@ -525,8 +524,8 @@ $inventarioexp= pg_num_rows($datosexp);
 //echo $queryexp;
 
 if ($inventarioexp>0) { // pertenece a la División
-		  echo 'entra ';
-		  echo 'importa', $reg[11];
+		  /*echo 'entra ';
+		  echo 'importa', $reg[11];*/
 		   if($reg[11]==1){   
                $updatequery= "UPDATE equipo SET id_lab=NULL WHERE  bn_id=" . $_REQUEST['bn_id'];
 
@@ -564,8 +563,8 @@ header($direccion);
 <?php if($_POST['accioned']=='Guardar'){ ?>
 <h1>GUARDAR</h1>
 <?php 
-//Salvar una edición de inventarios
-echo 'valores para guardar registros:';
+echo 'Salvar una edición de inventarios';
+//echo 'valores para guardar registros:';
 print_r ($_REQUEST);
 
 if ($_POST['servidor']=='Si'){
@@ -813,32 +812,42 @@ elseif ($_POST['salida']==0)
     $sal=1;
 else
     $sal=0;	
-	
+/*	
 if (isset($_POST['id_crit']))
 {
    $criticidad= "select nombCrit from cat_crit where id_crit=" . $_POST['id_crit'];
    $result = pg_query($criticidad) or die('Hubo un error con la base de datos cat_crit');
    $datoscrit=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
-	
+*/	
 	
 ?>
 	<?php
-$strqueryd="UPDATE equipoarendimiento SET  cluster=%d, cache='%s',
-                                           videotipo='%s',modelovideo='%s',
-										   videomem='%s',conexion=%d,
-                                           velocidad='%s',salida=%d,
-                                           velocidadInt='%s',terminal='%s',
+$strqueryd="UPDATE equipoarendimiento SET  cluster=%d, num_proc='%s',
+                                           tipo_proc='%s', vel_proc='%s',
+										   cache='%s', ram_cant='%s',
+										   ram_tipo='%s', videotipo='%s',
+										   modelovideo='%s',videomem='%s',
+										   num_dd=%d,interf_dd='%s',
+										   cap_dd='%s',cap_sec='%s',
+										   conexion=%d,velocidad='%s',
+										   salida=%d,velocidadint='%s',
+										   uso='%s',terminal='%s',
 										   criticidad=%d,adquision=%d
                WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
 
-$queryud=sprintf($strqueryd,$cluster, $_POST['cache'], 
-                            $_POST['videotipo'],$_POST['modelovideo'],
-							$_POST['videomem'],$conexion,
-							$_POST['velocidad'],$sal,
-							$_POST['velocidadInt'],$_POST['terminal'],
+$queryud=sprintf($strqueryd,$cluster,$_POST['num_proc'], 
+                            $_POST['tipo_proc'], $_POST['vel_proc'], 
+                            $_POST['cache'], $_POST['ram_cant'], 
+							$_POST['ram_tipo'],$_POST['videotipo'],
+							$_POST['modelovideo'],$_POST['videomem'],
+							$_POST['num_dd'],$_POST['interf_dd'],
+							$_POST['cap_dd'],$_POST['cap_sec'],
+							$conexion,$_POST['velocidad'],
+							$sal,$_POST['velocidadint'],
+							$_POST['uso'],$_POST['terminal'],
 							$_POST['id_crit'],$_POST['id_adq']);	
 							
 							

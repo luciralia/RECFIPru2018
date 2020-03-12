@@ -51,7 +51,7 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invg'  ) {
 	//echo 'entra a invnetario sin lab1';
 	require('../inc/inventario.inc.php');
 	}
-	else if ($_GET['mod']=='invc'  ) { //echo 'entra a invnetario con lab2';
+	else if ($_GET['mod']=='invc') { //echo 'entra a invnetario con lab2';
 	    require('../inc/inventario.inc.php');}
 	  else if ( $_GET['mod']=='invear'  ) {
 	      require('../inc/inventario.inc.php');}

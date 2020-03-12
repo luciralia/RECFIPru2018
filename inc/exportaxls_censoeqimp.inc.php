@@ -61,10 +61,12 @@ header($texto);
    
     
 		<?php 
-	if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9) &&  $_REQUEST['lab'] !=NULL ){	
+	if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
 
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
+            LEFT JOIN equipoc ec
+            ON ec.inventario=dp.inventario
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -72,15 +74,17 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			AND l.id_lab=".$_REQUEST['id_lab']  . "
+           
+			AND l.id_lab=".$_REQUEST['lab']  . "
 			GROUP BY nombre_dispositivo,estadobien,fecha_factura
 			ORDER BY cuenta";
 	}else
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
+            LEFT JOIN equipoc ec
+            ON ec.inventario=dp.inventario
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -88,14 +92,15 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre";	
+            GROUP BY nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
+	        ORDER BY cuenta,l.nombre";	
 	}
 	else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
+            LEFT JOIN equipoc ec
+            ON ec.inventario=dp.inventario
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -103,15 +108,17 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+            
 			AND id_div=".$_SESSION['id_div']  . "
-			GROUP BY nombre_dispositivo,estadobien,fecha_factura
-			ORDER BY cuenta";
+			GROUP BY nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
+	        ORDER BY cuenta,l.nombre";
 	}else
 	if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura,l.nombre
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
+            LEFT JOIN equipoc ec
+            ON ec.inventario=dp.inventario
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -119,14 +126,16 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
-			GROUP BY nombre_dispositivo,estadobien,fecha_factura,l.nombre
-			ORDER BY cuenta,l.nombre";	
+           
+			GROUP BY nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
+	        ORDER BY cuenta,l.nombre";	
 	}
 	else if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
 
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,estadoBien,fecha_factura
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
+            LEFT JOIN equipoc ec
+            ON ec.inventario=dp.inventario
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -134,10 +143,10 @@ header($texto);
             LEFT JOIN departamentos d
             ON d.id_dep=l.id_dep
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
-            AND  (estadoBien='USO' OR estadoBien='DESUSO' OR estadoBien='')
+          
 			AND id_div=".$_SESSION['id_div']  . "
-			GROUP BY nombre_dispositivo,estadobien,fecha_factura
-			ORDER BY cuenta";
+			GROUP BY nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
+	        ORDER BY cuenta,l.nombre";
 	}
 	
 $datos = pg_query($con,$query);
@@ -148,6 +157,7 @@ $inventario= pg_num_rows($datos);
 		 <tr>
                   <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <th width="20%" scope="col">Área</th> <?php }?>
               <th width="30%" scope="col">Dispositivo</th>
+              <th width="30%" scope="col">Descripción extensa</th>
               <th width="30%" scope="col">Uso/Desuso</th>
               <th width="30%" scope="col">Total</th>
          </tr>
@@ -164,6 +174,7 @@ $inventario= pg_num_rows($datos);
 		    <tr>
                <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9) { ?> <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
                <td width="30%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
+               <td width="30%" scope="col"><?php echo $lab_invent['descextensa'];?></td>
                <td width="30%" scope="col"><?php echo ucwords(strtolower($lab_invent['estadobien']));?></td>
                <td width="30%" scope="col"><?php echo $lab_invent['cuenta'];?></td>
             </tr>

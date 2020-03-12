@@ -46,7 +46,7 @@ function utf8_string_array_encode(&$array){
 $titulo='Importar equipo alto rendimiento ';
 $guardaPatrimonio=new importa();
  ?>
- 
+        
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
     
   <tr>
@@ -74,8 +74,10 @@ $guardaPatrimonio=new importa();
      <input type="reset" value="Cancelar">
    </td>
  </tr>
+ 
+ 
 </form>
-
+</table>
 
 
 
@@ -115,40 +117,70 @@ $guardaPatrimonio=new importa();
 		
 		if( $iddisp!=0){
 			
+			$queryb="SELECT id_dispositivo
+							  FROM equipoarendimiento 
+			                  WHERE inventario="."'".$datosdec[0]."'";
+			// echo $queryb;
+			 			  
+		 $registroe= @pg_query($queryb) or die('ERROR  en errorinserta'); 
+         $equipoar= pg_fetch_array($registroe);
+		 $ear=$equipoar[0];
+			if( $ear==0){
    	  $queryd="INSERT INTO equipoarendimiento (
-	           id_dispositivo,inventario,
-	           cluster,cache,
-	           videotipo, modelovideo,
-	           videomem,conexion,
-	           velocidad, salida,
-	           velocidadInt,terminal,
-	           criticidad,adquision )
-               VALUES (%d,'%s',
-			          %d,'%s',
-					 '%s','%s',
-				     '%s',%d,
-				     '%s',%d, 
-				     '%s','%s', 
-				      %d,%d)";
+	            id_dispositivo,inventario, 
+                cluster,num_proc, 
+                tipo_proc,vel_proc,
+                cache,ram_cant,
+                ram_tipo,videotipo,
+				modelovideo,videomem,
+				num_dd,interf_dd,
+				cap_dd,cap_sec,
+				conexion,velocidad,
+				salida,velocidadInt,
+				uso,terminal,
+				criticidad,adquision)
+               VALUES (
+			           %d,'%s',
+			           %d,%d,
+					  '%s','%s',
+					  '%s','%s',
+					  '%s','%s',
+					  '%s','%s',
+					  '%s','%s',
+				      '%s',%d,
+				      '%s',%d, 
+				      '%s','%s',
+					  '%s','%s',
+				       %d,%d)";
 				   
                  $queryid=sprintf($queryd, 
                  $iddisp,$datosdec[0],
-				 $datosdec[1],$datosdec[2], 
-				 $datosdec[3],$datosdec[4],                 
-				 $datosdec[5],$datosdec[6],                 
+				 $datosdec[1],$datosdec[2],
+				 $datosdec[3],$datosdec[4],
+				 $datosdec[5],$datosdec[6],
 				 $datosdec[7],$datosdec[8],
 				 $datosdec[9],$datosdec[10],
-				 $datosdec[11],$datosdec[12]);
-				// echo $queryid;
-               
-              $result=pg_query($con,$queryid) ;
+				 $datosdec[11],$datosdec[12],
+				 $datosdec[13],$datosdec[14],
+				 $datosdec[15],$datosdec[16],
+				 $datosdec[17],$datosdec[18],
+				 $datosdec[19],$datosdec[20],
+				 $datosdec[21],$datosdec[22]);
+				
+               // echo $queryid;
+				
+         $result=pg_query($con,$queryid) ;
 			  
 		 $updatequery= "UPDATE dispositivo SET equipoaltorend='Si' WHERE inventario='" . $datosdec[0] ."'";
 
          $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');	  
 			  
               $inserta++;
-        }else{?>
+			}else{
+				$previo++; ?>
+				 <legend align="left"> <strong><?php echo "Se ha importado previamente como  equipo de alto rendimiento el dispositivo con número de inventario " . $datosdec[0]; ?></strong></legend> 
+			<?php }
+       }else{?>
 			 <legend align="left"> <strong><?php echo "No se ha importado en RECFI  el dispositivo con número de inventario " . $datosdec[0]; ?></strong></legend> 
 			
 		<?php }
@@ -158,18 +190,40 @@ $guardaPatrimonio=new importa();
 	  
 	
 	 fclose($fp);
-	 ?>
-		
-	
-	      <legend align="left"> <h3><?php echo "Se importaron  ". $inserta. "/".$cuenta .  " dispositivos "; ?></legend> 
+	 
+		if ($inserta==0) { ?>
+	<br/>
+	      <legend align="left"> <h3><?php echo "Se importaron previamente  ". $previo. "/".$cuenta .  " dispositivos "; ?></h3></legend> 
+        <?php
+		}else {
+			?>
+            <br/>
+            <legend align="left"> <h3><?php echo "Se importaron  ". $inserta. "/".$cuenta .  " dispositivos "; ?></h3></legend>  
+        
 <?php
+		}
+
   }
  ?>
  
-     
-</div></td>          
-</tr>
-</table>
+    <br/>
+        <br/>
+</div>
+
+
+ <table align="center" >
+       <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+       <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+       
+         <td align="center">
+          <div id="resaltado">
+                Es necesario importar primero el equipo de alto rendimiento en el inventario.
+          </div>  
+         
+       </td>
+      
+        </table> 
+        
 <?php
 
  require('../inc/pie.inc.php');

@@ -26,7 +26,7 @@
      <?php  
  	   if (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) {
 		        ?>
-              <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >**Inicio</a></li>
+              <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
            
          <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){ 
@@ -71,7 +71,7 @@
 				
 			 if ($_SESSION['tipo_lab']!='e' && $_GET['lab']!=''  )	 {?>
              
-                   <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">*Equipos de c&oacute;mputo</a></li>
+                   <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Equipos de c&oacute;mputo</a></li>
                    
 			<?php } elseif ($_SESSION['tipo_lab']=='e'  && $_GET['lab']!=''  ) {?>
                 <!--<li><a href="../view/inicio.html.php?mod=inv&lab=<?php  //echo $_GET['lab'];?>">Equipos experimentales</a></li>-->
@@ -84,8 +84,7 @@
                     <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
          <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-              <!--<li><a href="../view/inicio.html.php?mod=act&lab=<?php // echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li>-->
-         <?php } ?> 
+              <li><a href="../view/inicio.html.php?mod=act&lab=<?php  echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li>         <?php } ?> 
           </ul>
 	   </li>
     
@@ -117,7 +116,8 @@
     </li>  
      <?php }?>  
 <!-- MENU DE EQUIPOS DE ALTO RENDIMIENTO-->
-   <?php $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>
+  <?php if ($_SESSION['tipo_usuario']==9)	 {
+     $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>
        
  	      <li><a href="#" <?php echo $clase;?>>Equipo Alto Rendimiento</a>
  	      
@@ -130,10 +130,14 @@
                 <li><a href="../view/inicio.html.php?mod=impear&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Importar</a></li>
              <?php 
 				 }
+				
 		?>
           </ul>
 	   </li>
-
+      <?php 
+				 }
+				
+		?>
 <!-- Fin de menu-->
 
     <?php if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
