@@ -48,7 +48,7 @@ $div = new departamentos();
 
 
 if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invg'  ) {
-	//echo 'entra a invnetario sin lab1';
+	
 	require('../inc/inventario.inc.php');
 	}
 	else if ($_GET['mod']=='invc') { //echo 'entra a invnetario con lab2';

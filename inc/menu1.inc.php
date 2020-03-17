@@ -1,3 +1,4 @@
+
 <link rel="stylesheet"  type="text/css" href="../css/menu_1.css">
 <link rel="stylesheet"  type="text/css" href="../css/menu_usr.css">   
   <?php require_once('../clases/laboratorios.class.php');

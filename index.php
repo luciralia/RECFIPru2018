@@ -80,17 +80,18 @@ $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
 
       
          <form action="mod/autentica.mod.php" method="post" name="formlog">
-        <p>&nbsp;</p>
+         
+         <p>&nbsp;</p>
            
            
-        <table width="300" border="0" cellspacing="5" cellpadding="5">
-          <tr>
-            <td align="right">Usuario:</td>
-            <td><input name="login" type="text" id="login" value="<?php echo $_GET['usr'];  ?>" placeholder="nombre de usuario"/></td>
-          </tr>
-          <tr>
-            <td align="right">Contraseña:</td>
-            <td><input type="password" name="pwd" id="pwd" placeholder="escriba su contraseña"/></td>
+         <table width="300" border="0" cellspacing="5" cellpadding="5">
+           <tr>
+             <td align="right">Usuario:</td>
+             <td><input name="login" type="text" id="login" value="<?php echo $_GET['usr'];  ?>" placeholder="nombre de usuario"/></td>
+           </tr>
+           <tr>
+             <td align="right">Contraseña:</td>
+             <td><input type="password" name="pwd" id="pwd" placeholder="escriba su contraseña"/></td>
           </tr>
           <tr>
             <td>&nbsp;</td>

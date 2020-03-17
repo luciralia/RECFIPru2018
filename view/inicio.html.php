@@ -1,3 +1,4 @@
+
 <?php 
 require_once('../inc/encabezado.inc.php'); 
 //require_once('../inc/sesion.inc.php'); 
