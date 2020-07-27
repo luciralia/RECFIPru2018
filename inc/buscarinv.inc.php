@@ -12,8 +12,8 @@ $division= new laboratorios();
 	if ( $_SESSION['id_div']==NULL)
 	     $_SESSION['id_div']=$_REQUEST['div'];
 
-//echo 'en buscar inv';
-//print_r($_SESSION);
+echo 'en buscar inv';
+print_r($_SESSION);
 
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&div='. $_SESSION['id_div'];
@@ -158,7 +158,7 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	
 	// fin de Asignar
 
-//echo $query; // revisar la sesión donde viene para cambiar el inventario si es de qeuipo cambia tabla
+echo $query; // revisar la sesión donde viene para cambiar el inventario si es de qeuipo cambia tabla
 
 switch ($_GET['bn_id']){
  			case "descripcion":

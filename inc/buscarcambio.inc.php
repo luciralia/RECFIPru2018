@@ -43,7 +43,7 @@ if ($_SESSION['tipo_usuario']==1){
 	if ( $_SESSION['id_div']==NULL)
 	     $_SESSION['id_div']=$_REQUEST['div'];
 
-//echo 'en buscarcambio REQUEST';
+echo 'en buscarcambio REQUEST';
 //print_r($_REQUEST);
 
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
@@ -245,8 +245,6 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 			
         } // fin de switch
 
-
-	 	
 	}
 	
 	
@@ -254,7 +252,8 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
      $datos = pg_query($con,$query); 
      $inventario= pg_num_rows($datos);
 	
- //echo 'exhibe consulta buscarinv ';
+ echo 'exhibe consulta buscarinv ';
+ echo $query;
 
 if ( ($_GET['mod']=='invg' && $_GET['lab']!='') ){
 
@@ -707,7 +706,7 @@ if ($inventario!=0){?>
                   <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>

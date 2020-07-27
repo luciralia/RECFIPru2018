@@ -697,7 +697,6 @@ if ($_POST['accion']=='editar'){
  </tr>
   
   <tr>  
-
      <td colspan="2" align="left">Equipo alto rendimiento</td>
      <td ><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
      <td  align="left" >Arquitectura</td>

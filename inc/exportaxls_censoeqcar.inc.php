@@ -231,12 +231,9 @@ $inventario= pg_num_rows($datos); ?>
       <?php  
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-	
-		  ?>
-          
-         <tr>
-
-             <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
+	   ?>
+          <tr>
+ <?php if ( $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==9){ ?> <td width="20%"><?php echo $lab_invent['nombre'];?></td> <?php }?>
                <td width="20%" scope="col"><?php echo ucwords(strtolower($lab_invent['descmarca']));?></td>
                <td width="20%" scope="col"><?php echo ucwords(strtolower($lab_invent['modelo_p']));?></td>
                <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>

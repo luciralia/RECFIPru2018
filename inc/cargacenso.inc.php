@@ -3306,7 +3306,7 @@ $inventario= pg_num_rows($datos);
 	}
 	else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 
-  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,idp.nventario,sist_oper,nombre_so,fecha_factura,l.nombre,
+  $query= " SELECT  equipoaltorend,descmarca,modelo_p,serie,dp.inventario,sist_oper,nombre_so,fecha_factura,l.nombre,
              cluster,ear.velocidad,cantidad_procesador,cache,memoria_ram,videotipo, modelovideo,videomem,
 			 num_elementos_almac,total_almac,conexion,salida,velocidadInt
 	        FROM dispositivo dp
@@ -3362,6 +3362,7 @@ $inventario= pg_num_rows($datos);
             WHERE id_div=". $_SESSION['id_div']  . "
 			ORDER BY marca_p,l.nombre ASC";
 	}
+	//echo $query;
 	
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 

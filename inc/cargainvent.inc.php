@@ -70,7 +70,6 @@ if ($_GET['mod']=='invg' ){
 </form>
 <!--</td>-->
 
-
 </td>
 </tr>
 
@@ -349,7 +348,7 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['laboratorio'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
@@ -373,7 +372,7 @@ if ($_GET['mod']=='invg' ){
              </tr>
             
              <tr>   
-                <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['nombre_so'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['version_sist_oper'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_tipo_ram'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['memoria_ram'];?></td>
@@ -704,7 +703,7 @@ if ($inventario!=0) { ?>
      
                   <td align="center">
     
-                  <h3> No hay dispositivos registrados. </h3>
+                  <h3> No existen dispositivos registrados. </h3>
                   </td>
                   </tr>
  
@@ -826,7 +825,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['descmarca'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>

@@ -171,9 +171,9 @@ $guardaPatrimonio=new importa();
 				
          $result=pg_query($con,$queryid) ;
 			  
-		 $updatequery= "UPDATE dispositivo SET equipoaltorend='Si' WHERE inventario='" . $datosdec[0] ."'";
+		// $updatequery= "UPDATE dispositivo SET equipoaltorend='Si' WHERE inventario='" . $datosdec[0] ."'";
 
-         $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');	  
+        // $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');	  
 			  
               $inserta++;
 			}else{
@@ -188,9 +188,9 @@ $guardaPatrimonio=new importa();
 				 
 	 }
 	  
-	
+
 	 fclose($fp);
-	 
+	
 		if ($inserta==0) { ?>
 	<br/>
 	      <legend align="left"> <h3><?php echo "Se importaron previamente  ". $previo. "/".$cuenta .  " dispositivos "; ?></h3></legend> 
@@ -205,12 +205,9 @@ $guardaPatrimonio=new importa();
 
   }
  ?>
- 
-    <br/>
+     <br/>
         <br/>
 </div>
-
-
  <table align="center" >
        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
