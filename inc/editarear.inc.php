@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 function palomeadoCon(){ 
     if(conexion.checked)
@@ -6,7 +5,6 @@ function palomeadoCon(){
 	 else
         velocidad.disabled=false; 
 } 
-
 function palomeadoSal(){ 
     if(salida.checked) 
         velocidadint.disabled=true; 
@@ -86,21 +84,19 @@ $datos = pg_query($con,$query);
      
    </table>
   <br />
-   
 <br />
 
 <table class="formulario" style="width:100%">
         <tr ><legend align="center"><h3>Características de Equipo </h3></legend></tr>
    <br/>
      <tr>
-        <td><label>Clúster</label></td>
-        <?php if ( $inventAR['cluster']==1 ) { 
-	      $checked = 'checked="checked" '; 
-         }else {   $checked = ' ';
-       }
-	   ?>
+         <td><label>Clúster</label></td>
+         <?php if ( $inventAR['cluster']==1 ) { 
+	         $checked = 'checked="checked" '; 
+           }else {   $checked = ' ';
+         }
+	    ?>
  
-       
         <td ><label><input type="checkbox" name="cluster" id="cluster"  <?php echo $checked ?>   value="<?php echo $inventAR['cluster'];?>"  /> <label for="cluster"></label> </td>
         </tr>
         <tr><td><legend ><h4>Procesador </h4></legend></td></tr>
@@ -129,30 +125,27 @@ $datos = pg_query($con,$query);
            <td><label>Tipo de video</label></td>
            <td><label><input type="text" name="videotipo" size="13" value="<?php echo $inventAR['videotipo'];  ?>" ></label></td>
            <td><label>Modelo de video</label></td>
-            <td><input type="text" name="modelovideo" size="20" value="<?php echo $inventAR['modelovideo'];  ?>" /></label></td>
-         </tr>
+           <td><input type="text" name="modelovideo" size="20" value="<?php echo $inventAR['modelovideo'];  ?>" /></label></td>
+        </tr>
         <tr>  
-          
           <td><label>Memoria de video</label></td>
           <td><label><input type="text" name="videomem" size="20" value="<?php echo $inventAR['videomem'];  ?>"  /></label></td>
           <td colspan="2">&nbsp;</td>
-     </tr>
-     
-     
+       </tr>
       <tr>  
            <tr><td><legend ><h4>Disco Duro </h4></legend></td></tr>
            <td><label>Número de DD</label></td>
            <td><label><input type="text" name="num_dd" size="13" value="<?php echo $inventAR['num_dd'];  ?>" ></label></td>
            <td><label>Interfaz</label></td>
-            <td><label><input type="text" name="interf_dd" size="20" value="<?php echo $inventAR['interf_dd'];  ?>" /></label></td>
-         </tr>
+           <td><label><input type="text" name="interf_dd" size="20" value="<?php echo $inventAR['interf_dd'];  ?>" /></label></td>
+      </tr>
       <tr>  
            <td><label>Capacidad de DD</label></td>
            <td><label><input type="text" name="cap_dd" size="13" value="<?php echo $inventAR['cap_dd'];  ?>" ></label></td>
            <td><label>Capacidad Secundaria</label></td>
             <td><label><input type="text" name="cap_sec" size="20" value="<?php echo $inventAR['cap_sec'];  ?>" /></label></td>
-         </tr>
-         <tr><td><legend ><h4>Conexiones</h4></legend></td></tr>
+        </tr>
+        <tr><td><legend ><h4>Conexiones</h4></legend></td></tr>
      <tr>
      
          <td><label>Conexión a Internet</label></td>
@@ -192,7 +185,7 @@ $datos = pg_query($con,$query);
           
      <?php //} else  { ?>
 	   <!-- <td ><label for="salida">Velocidad de Internet</label></td>
-           <td><label><input type="text" name="velocidadint" size="13" value="<?php echo $inventAR['velocidadint'];  ?>" disabled="disabled" /></label></td> -->
+           <td><label><input type="text" name="velocidadint" size="13" value="<?php //echo $inventAR['velocidadint'];  ?>" disabled="disabled" /></label></td> -->
           
       <?php //} ?>
         
@@ -250,8 +243,7 @@ $datos = pg_query($con,$query);
 
 </form>
 
-<?php 
-		}
+<?php   }
 		}else
 		if ($_REQUEST['accion']=='editarG'){ ?>
 	
@@ -382,7 +374,7 @@ $datos = pg_query($con,$query);
         <td><label>Salida a Internet</label></td>
          <?php if ($_POST['salida']==1 ) { 
 	      $checked = 'checked="checked" '; 
-         }else {   $checked = ' ';
+         }else {   $checked=' ';
        }  ?>  
        <!--<form id="formSal" name="formSal" method="post" action="">-->
         <td><label><input type="checkbox" name="salida" id="salida"  <?php echo $checked ?> onChange="palomeadoSal(this);" value="<?php echo $_POST['salida'];?>" /> <label for="salida"></label></td>

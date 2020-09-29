@@ -20,12 +20,15 @@ $bandera1=0;
 echo'Session en cargaInv';
 print_r($_SESSION);
 
-echo'GET en cargaInv';
-print_r($_GET); 
-*/
+echo'-REQUEST en cargaInv';
+print_r($_REQUEST); */
+
 	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
-/*		 
+		   if ($_SESSION['tipo_usuario']==9)
+                $_SESSION['id_div']=$_REQUEST['div'];
+		  
+/*	 
 if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='') !=NULL
   $_SESSION['id_div']=$_REQUEST['div'];
 if ($_SESSION['tipo_usuario']==9)
@@ -66,22 +69,17 @@ if ($_GET['mod']=='invg' ){
    
 <input name="bOrden" type="submit" value="ordenar" />
 
-
 </form>
 <!--</td>-->
 
 </td>
 </tr>
-
 <?php	
-
-//for ($x=0;$x<count($listatablas);$x++)
-//{
-	
-          if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10)
-           ){
-
-               
+/*
+         if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10))
+		
+           {
+           echo 'lab dif null usuario df 10';
                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                               from dispositivo e 
                               left join cat_dispositivo cd
@@ -105,9 +103,7 @@ if ($_GET['mod']=='invg' ){
                               left join laboratorios l
                               on  l.id_lab=e.id_lab
                               where l.id_lab=";
-                       
-                      
-  
+           
             switch ($_GET['orden']){
  			case "descripcion":
 			    $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
@@ -123,8 +119,10 @@ if ($_GET['mod']=='invg' ){
 	    	break;
 			
            } // fin de switch
-        }else if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='')) {
-        
+        }*/
+		 if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']=='' )) {
+        //else if( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!='') {
+			//echo 'usuario dif 10 y la div dif null';
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
                left join cat_dispositivo cd
@@ -151,8 +149,7 @@ if ($_GET['mod']=='invg' ){
                on dp.id_dep=l.id_dep
                where id_div=";
              
-               
-
+           
             switch ($_GET['orden']){
  			case "descripcion":
 			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
@@ -168,8 +165,51 @@ if ($_GET['mod']=='invg' ){
 	    	break;
 			
         } // fin de switch
-   } else if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='')) {
-        
+		
+   }else  if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
+   { 
+			 $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
+                              from dispositivo e 
+                              left join cat_dispositivo cd
+                              on e.dispositivo_clave=cd.dispositivo_clave
+                              left join cat_familia cf
+                              on e.familia_clave=cf.id_familia
+                              left join cat_tipo_ram ctr
+                              on e.tipo_ram_clave=ctr.id_tipo_ram
+                              left join cat_tecnologia ct
+                              on e.tecnologia_clave=ct.id_tecnologia
+                              left join cat_sist_oper cso
+							  on  e.sist_oper=cso.id_sist_oper
+							  left join cat_usuario_final cuf
+			                  on cuf.usuario_final_clave=e.usuario_final_clave
+                              left join cat_marca cm
+                              on cm.id_marca=e.id_marca
+                              left join cat_memoria_ram cmr
+                              on e.id_mem_ram=cmr.id_mem_ram
+                              left join bienes_inventario bi
+                              on  e.bn_id = bi.bn_id
+                              left join laboratorios l
+                              on  l.id_lab=e.id_lab
+                              where l.id_lab=";
+           
+            switch ($_GET['orden']){
+ 			case "descripcion":
+			    $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
+			break;
+ 			case "clave":
+			     $query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
+			break;
+			case "marca":
+			    $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
+			break;
+ 			default:
+			    $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
+	    	break;
+        } // fin de switch
+  }else 
+   if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='')) {
+	   
+       // echo 'usuario =10 y div =10';
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
                left join cat_dispositivo cd
@@ -195,8 +235,9 @@ if ($_GET['mod']=='invg' ){
                left join departamentos dp
                on dp.id_dep=l.id_dep
                ";
-   } else if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) {
- 
+   } elseif(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) 
+  {
+        echo 'otro';
         
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
@@ -242,10 +283,11 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
   }
-  // echo $query;
+  
+  //echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
-    if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
+    if (($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 )&& $_GET['lab']==NULL){ ?>
         <tr>
         <td align="right">  <h3> Inventario por División</h3> </td>
        
@@ -303,17 +345,10 @@ if ($_GET['mod']=='invg' ){
  <?php
      if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  
-    
-
-
- 
+  
      ?>
     </td>
-
-    <td>
- 
-
- 
+<td>
     <br>
   <?php 
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
@@ -384,7 +419,6 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
                  
           </tr>
-         
           
 <?php /*
 

@@ -722,16 +722,20 @@ if ($_POST['accion']=='editar'){
       </form>
  </tr>
    <tr>  
-     
-     <td>Equipo alto rendimiento</td>
-     <td><?php $radial->radialtorendimiento($_POST['equipoaltorend'])?></td>
-     <?php if ($_POST['equipoaltorend']=='Si'){
+      <?php if ($_POST['equipoaltorend']=='No'){
 	 ?>
+     <td>Equipo alto rendimiento: <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp;No</font> </td>
+     
+     <?php } elseif ($_POST['equipoaltorend']=='Si'){ ?>
+     <td>Equipo alto rendimiento: <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp;Si</font> </td>
+     
      <?php $retorno="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'].'&accion=editarAR'."&inv=".$_POST['inventario']; ?>
+     
+  
          <!--<td> <div id="botonblu" > <a href="<?php //echo $retorno . '&accion=editarAR&inv='.$_POST['inventario'];?>">Editar</a></div></td>              <td><input  type="button"  name="accion" value="editarAR" /> </td>-->
-                     <td><div class="cssToolTip"><input type="button" name="accion" value="editarAR" onClick="window.parent.location='<?php echo  $retorno;?>' " /> </input>
+                     <td><div class="cssToolTip">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="accion" value="editarAR" onClick="window.parent.location='<?php echo  $retorno;?>' " /> </input>
                        <span> Si desea editar valores del equipo de alto rendimiento, pulse aquí</span> 
-</div>
+
                     </td>
       <?php }
 	  ?>

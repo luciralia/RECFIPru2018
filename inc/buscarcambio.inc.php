@@ -32,19 +32,16 @@ if ($_SESSION['tipo_usuario']==1){
 		            ON l.id_responsable=u.id_usuario
                     WHERE l.id_responsable=" .$_SESSION['id_usuario'];
          $datosdiv=pg_query($con,$querydiv);
-
          $div = pg_fetch_array($datosdiv);
-        $_SESSION['id_div']=$div[0];
+         $_SESSION['id_div']=$div[0];
       }
-
-
 
 
 	if ( $_SESSION['id_div']==NULL)
 	     $_SESSION['id_div']=$_REQUEST['div'];
-
+/*
 echo 'en buscarcambio REQUEST';
-//print_r($_REQUEST);
+print_r($_REQUEST);*/
 
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&div='. $_SESSION['id_div']. $_REQUEST['orden'];
@@ -121,7 +118,6 @@ if($_REQUEST['accion']=='buscarg' )
  $action1="../view/inicio.html.php?mod=". $_GET['mod']  ."&bn_id=". $_REQUEST['bn_id'] ."&lab=". $_REQUEST['lab'].'&div='. $_SESSION['id_div']. '&orden='.$_REQUEST['orden'];
 
 ?>
-
 <form action="<?php echo $action1; ?>" method="post" name="formbusca">
 
         <table width="800" cellpadding="2" class="formulario">
@@ -155,8 +151,6 @@ if($_REQUEST['accion']=='buscarg' )
             <input type="submit" name="bbuscarg" id="Cancelar" value="Cancelar" /></td>
           </tr>
         </table>
-
-
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="bn_id" type="hidden" value="<?php echo $_GET['bn_id']; ?>" />
 </form>
@@ -164,12 +158,11 @@ if($_REQUEST['accion']=='buscarg' )
 <?php
 }
 ?>
-<br />
-<br />
+<!--<br />
+<br />-->
 
 
 <?php 
-
 
 if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_serie']|| $_REQUEST['_marca'] || $_REQUEST['_no_inv_ant']){
 	if ($_REQUEST['bbuscar']=='Buscar')   {
@@ -252,8 +245,8 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
      $datos = pg_query($con,$query); 
      $inventario= pg_num_rows($datos);
 	
- echo 'exhibe consulta buscarinv ';
- echo $query;
+ /*echo 'exhibe consulta buscarinv ';
+ echo $query;*/
 
 if ( ($_GET['mod']=='invg' && $_GET['lab']!='') ){
 
@@ -348,12 +341,10 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
            </tr>
   
    
-	   
- 
  <?php
 
          foreach ($lab_invent as $campo => $valor) {
-           //  echo "\n$lab_invent[$campo] => $valor.\n" . "</br>";
+          // echo "\n$lab_invent[$campo] => $valor.\n" . "</br>";
               echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 
          }?>
@@ -375,10 +366,16 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 	 }else if ($_SESSION['tipo_lab']!='e'  && $_SESSION['tipo_usuario']!=10 && $lab_invent['bn_notas']=='COMPUTO' || $lab_invent['bn_notas']=='') { ?>
         <input name="ecasignar" type="submit" value="Asignar" />
 	 <?php 
-	 }
- //{
+	 }else { ?>
+		 
+		 
+		   <font color="blue"><?php echo 'El equipo no se identifica correctamente, aún así desea:';?></font>
+
+                   <input name="basignarc" type="submit" value="Asignar a Cómputo" /> <font color="blue"><?php //echo  ó ?> </font>
+                   <!--<input name="basignare" type="submit" value="Asignar a Equipo" /> -->
 	
-	    /*
+ <?php } ?>
+  <?php /*
          if ($_SESSION['tipo_lab']=='e' &&  $_SESSION['tipo_usuario']!=10) {?>
  
               <?php if ($lab_invent['bn_notas']=='EQUIPO' ) { ?>
@@ -396,9 +393,11 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
                    <!--<input name="basignare" type="submit" value="Asignar a Equipo" /> -->
 	
 	       <?php } // fin del si es de equipo/cómputo u otro
+		 }
 		 
-            } //fin if ($_SESSION['tipo_lab']=='e' &&  $_SESSION['tipo_usuario']!=10) {
-            if ($_SESSION['tipo_lab']!='e'  && $_SESSION['tipo_usuario']!=10) {
+          
+			//fin if ($_SESSION['tipo_lab']=='e' &&  $_SESSION['tipo_usuario']!=10) {
+      }  if ($_SESSION['tipo_lab']!='e'  && $_SESSION['tipo_usuario']!=10) {
 				 if ($lab_invent['bn_notas']=='COMPUTO' ) { ?>
                    <input name="ecasignar" type="submit" value="Asignar" />
             <?php } elseif ($lab_invent['bn_notas']=='EQUIPO' ) { ?>   
@@ -412,6 +411,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 	} // fin if ($_SESSION['tipo_lab']!='e'  && $_SESSION['tipo_usuario']!=10) 
 
 */
+
   }//if ($labasig=='Ninguno' && $_GET['lab'] != NULL ){
    else { 
    $querydis="SELECT * FROM dispositivo d
@@ -448,7 +448,7 @@ $inventarioexp= pg_num_rows($datosexp);
                   <input name="dasignarc" type="submit" value="Desasignar" />
    <?php    
      } elseif ($_SESSION['tipo_lab']!='e'  && $_SESSION['tipo_usuario']!=10 && $inventarioexp!=0) {?>
-                  <input name="eedasignar" type="submit" value="Desasignare" />
+                  <input name="eedasignar" type="submit" value="Desasignar" />
    <?php     
      }
    }

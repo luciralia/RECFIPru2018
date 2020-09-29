@@ -15,30 +15,31 @@ $div = new departamentos();
     <?php 
 		  
 		  if ($_GET['mod']=='inv')
-	      {$titulo=' experimental ';}
+	      {$titulo=' experimental';}
 		  elseif ($_GET['mod']=='invg')
 		  {$titulo=' general';}
 		  elseif ($_GET['mod']=='invc') {$titulo=' de cómputo';}
 		  elseif ($_GET['mod']=='invear') {
-			  {$titulo='Equipo de Alto Rendimiento';}
+			  {$titulo='equipo de alto rendimiento';}
 		  }
 		  
 		  ?>
   <tr>
-    <td align="center"><h2>Inventario <?php echo $titulo ;?> </h2></td>
+    <td align="center"><h2>Inventario <?php echo $titulo;?> </h2></td>
   </tr>
   <tr>
-    <?php if($_SESSION['tipo_usuario']!=10){?>
+    <?php if($_SESSION['tipo_usuario']!=10 && $_REQUEST['lab']!='' && ($_REQUEST['div']==NULL || $_GET['mod']=='invear')){?>
     <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
-    <?php } else {?>
-     
-    <td align="center"><?php echo $div->getDivision($_SESSION['id_div']);?></td>
+  
+    <?php }elseif($_SESSION['tipo_usuario']!=10 && $_REQUEST['lab']!='' && $_REQUEST['div']!=NULL && ($_GET['mod']=='invg' || $_GET['mod']=='invear')){?>
+	      <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
+    <?php }elseif($_REQUEST['div']!=NULL && $_REQUEST['lab']=='' && ($_GET['mod']=='invg' || $_GET['mod']=='invear') ){ ?>
+            <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
+    <?php }elseif($_REQUEST['div']!=NULL && ($_GET['mod']=='invc' || $_GET['mod']=='invear') ){  ?>
+          <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
     <?php } ?>
-  </tr>
-
-
-
-
+    
+    </tr>
 <tr>
 
 <td><div class="centrado"> 
@@ -47,11 +48,14 @@ $div = new departamentos();
 <?php
 
 
-if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_GET['mod']=='invg'  ) {
-	
+if ((!isset($_GET['lab']) || $_GET['lab']=='') && $_GET['mod']=='invg'  ) {
+	//echo 'entra aquí';
 	require('../inc/inventario.inc.php');
-	}
-	else if ($_GET['mod']=='invc') { //echo 'entra a invnetario con lab2';
+	}else if ($_SESSION['id_div']!='' && $_GET['lab']!='' ){
+	  // echo 'entra a invnetario con div';
+	   require('../inc/inventario.inc.php');		
+	}else if ($_GET['mod']=='invc') { 
+	 // echo 'entra a invnetario con lab2';
 	    require('../inc/inventario.inc.php');}
 	  else if ( $_GET['mod']=='invear'  ) {
 	      require('../inc/inventario.inc.php');}

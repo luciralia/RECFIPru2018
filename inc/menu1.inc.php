@@ -1,15 +1,14 @@
-
 <link rel="stylesheet"  type="text/css" href="../css/menu_1.css">
 <link rel="stylesheet"  type="text/css" href="../css/menu_usr.css">   
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
-	/*	
- echo 'SESSION en menu1.inc';
+/*	
+    echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
 	
 	echo 'GET en menu1.inc';
 	print_r($_GET);	
-	*/
+*/	
 	
 	if ( $_SESSION['id_div']==NULL  )
 	       $_SESSION['id_div']=$_GET['div'];
@@ -31,11 +30,14 @@
            
          <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){ 
-	            if ( $_SESSION['id_div']==NULL  )
-	               $_SESSION['id_div']=""?>
+	          //  if ( $_SESSION['id_div']==NULL  )
+	            //   $_SESSION['id_div']=''
+				   ?>
        	      <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
              
-        <?php }
+        <?php }//if ( $_SESSION['id_div']==NULL  )
+	           //    $_SESSION['id_div']='';
+				  
 		 
  	   if ($_GET['mod']=='ced') {?>
        
@@ -62,9 +64,7 @@
                <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">General</a></li> 
              <?php 
 				 }
-			     else if (( $_GET['div']!='' || $_GET['lab']!='' ) && !isset($_GET['mod']) ){
-				
-						
+			        else if (( $_GET['div']!='' || $_GET['lab']!='' ) && !isset($_GET['mod']) ){
 			?>
              <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">**General</a></li>
             <?php 
@@ -79,7 +79,7 @@
                 <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Equipos de c&oacute;mputo</a></li>
     	 <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-                  <!--  <li><a href="../view/inicio.html.php?mod=invear&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipos de Alto Rendimiento</a></li> -->
+                  <!--  <li><a href="../view/inicio.html.php?mod=invear&lab=<?php // echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Equipos de Alto Rendimiento</a></li> -->
          <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
                     <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
@@ -88,8 +88,7 @@
               <li><a href="../view/inicio.html.php?mod=act&lab=<?php  echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li>         <?php } ?> 
           </ul>
 	   </li>
-    
-     <?php //}
+    <?php //}
    ?>
     <?php if($_SESSION['tipo_usuario']!=1  ){ ?>
 	<?php $clase=($_GET['mod']=='cen' || $_GET['mod']=='ceni' || $_GET['mod']=='cened'|| $_GET['mod']=='cenert'|| $_GET['mod']=='ceneceq'|| $_GET['mod']=='cenecso' || $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb'|| $_GET['mod']=='cenecar')?'" class="actual"':$clase='"'; ?>

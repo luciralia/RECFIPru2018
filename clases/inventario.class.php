@@ -1417,21 +1417,23 @@ function combotecom($teccom)
 
 function radialtorendimiento($altorend)
 {  
-	      
+	     /* echo 'altorend';
+		  echo $altorend;*/
 
-		  if ($altorend == 'Si'){ 
+		 if ($altorend == 'Si'){ 
 
 			$auxcheck= ' checked="checked"';	
 			
 				 
-		  } elseif ($altorend == 'No'){ 
-		  			
-		  $auxcheck2=' checked="checked"';
+		  } else
 		 
-		  
-		  } else {
+		  if ($altorend == 'No'){ 
+		  			
+		     $auxcheck2=' checked="checked"';
+		 
+		  } //else {
 			 
-		  }
+		 // }
 		  
 		  	  
 		  $salida='<label><input type="radio" name="equipoaltorend"  disabled="disabled" value="Si" '. $auxcheck . ">Sí</label>";  
