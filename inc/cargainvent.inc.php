@@ -1,4 +1,5 @@
-﻿<strong></strong>
+﻿
+<strong></strong>
 <?php
 // version que no toma equipoexperimentaL PARA VER
 require_once('../conexion.php');

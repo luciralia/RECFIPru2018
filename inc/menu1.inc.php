@@ -84,8 +84,8 @@
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
                     <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
          <?php } ?> 
-         <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-              <li><a href="../view/inicio.html.php?mod=act&lab=<?php  echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li>         <?php } ?> 
+         <?php // if ($_SESSION['tipo_usuario']==9)	 {?>
+            <!--  <li><a href="../view/inicio.html.php?mod=act&lab=<?php  echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li> -->        <?php  // } ?> 
           </ul>
 	   </li>
     <?php //}
@@ -116,26 +116,26 @@
     </li>  
      <?php }?>  
 <!-- MENU DE EQUIPOS DE ALTO RENDIMIENTO-->
-  <?php if ($_SESSION['tipo_usuario']==9)	 {
-     $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>
+  <?php  //if ($_SESSION['tipo_usuario']==9)	 {
+    // $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>
        
- 	      <li><a href="#" <?php echo $clase;?>>Equipo Alto Rendimiento</a>
+ 	    <!--  <li><a href="#" <?php echo $clase;?>>Equipo Alto Rendimiento</a>
  	      
       	  <ul>
            <?php 
-				if (isset($_GET['mod']) || isset($_GET['div'] ) ) {
+				//if (isset($_GET['mod']) || isset($_GET['div'] ) ) {
 			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
 			?>
                <li><a href="../view/inicio.html.php?mod=invear&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Edición</a></li> 
-                <li><a href="../view/inicio.html.php?mod=impear&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Importar</a></li>
+                <li><a href="../view/inicio.html.php?mod=impear&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Importar</a></li> 
              <?php 
-				 }
+				// }
 				
 		?>
-          </ul>
-	   </li>
+          </ul> 
+	   </li> -->
       <?php 
-				 }
+				// }
 				
 		?>
 <!-- Fin de menu-->
