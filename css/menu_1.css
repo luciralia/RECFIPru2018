@@ -5,8 +5,7 @@ margin:0px;
 
 #header {
 /*margin: auto;*/
-
-width:1024px;
+ width:1024px;
 font-family:arial;
 
 }
@@ -22,24 +21,25 @@ ul {
  text-decoration:none;
  padding: 10px 15px;
  display:block;*/
+ background-color:#069
 list-style-type: none;
 display:block;
-font:12px arial,sans-serif;
+font:15px arial,sans-serif;
 font-weight:bold;
 color:#FFFFFF;
+
 text-shadow:1px 1px #000000;
 background-image: url('../images/fondo_boton_az_25.jpg');
-height: 15px;
+height: 20px;
 /*text-align:right;*/
 /*text-align:center;*/
 text-decoration:none;
-
 cursor:pointer;
 padding: 5px 5px; 
 }
 
 .nav li a:hover {
-/*background-color:#FF3300; /*cambaie*/
+background-color:#FF3300; 
  
 /* background-image: url('../images/fondo_boton_30_on.jpg');*/
 background-image: url('../images/fondo_boton_az_25_on.jpg');
@@ -50,9 +50,9 @@ border-bottom-style:none;
  /*background-color:#FF3300;*/
  
 /* background-image: url('../images/fondo_boton_30_on.jpg');*/
-
+font:15px arial,sans-serif;
 padding: 5px 5px;
-height: 15px;
+height: 20px;
 background-image: url('../images/fondo_boton_az_25_on.jpg');
 border-bottom-style:none;
 }
@@ -92,7 +92,7 @@ position:relative;
 border-bottom-style:none;
 background-color: #0f8df1;
 background-image: url('../images/fondo_boton_az_25.jpg');
-height: 15px;
+height: 20px;
 
 }
 

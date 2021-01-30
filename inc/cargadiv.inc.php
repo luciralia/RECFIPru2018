@@ -5,7 +5,6 @@
 
 require_once('../conexion.php');
 
-
   echo $division['id_div'];
 	 
   

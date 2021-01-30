@@ -1,5 +1,5 @@
 ﻿
-<strong></strong>
+
 <?php
 // version que no toma equipoexperimentaL PARA VER
 require_once('../conexion.php');
@@ -342,7 +342,7 @@ if ($_GET['mod']=='invg' ){
 
 </td>
 </tr>
-<br>
+
  <?php
      if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  

@@ -19,14 +19,15 @@ color:#FFFFFF;
  text-decoration:none;
  padding: 10px 15px;
  display:block;*/
+
 list-style-type: none;
 display:block;
-font:12px arial,sans-serif;
+font:15px arial,sans-serif;
 font-weight:bold;
 color:#FFFFFF;
 text-shadow:1px 1px #000000;
 background-image: url('../images/fondo_boton_az_25.jpg');
-height: 15px;
+height: 20px;
 /*text-align:center;*/
 text-decoration:none;
 cursor:pointer;
@@ -43,7 +44,7 @@ border-bottom-style:none;
 
 .navu li a.actual {
 padding: 5px 5px;
-height: 15px;
+height: 20px;
 background-image: url('../images/fondo_boton_az_25_on.jpg');
 border-bottom-style:none;
 }
@@ -75,11 +76,10 @@ background-color: #0e84e4;
 }
 .navu li ul li a:hover {
 position:relative;
-
 border-bottom-style:none;
 /*background-color: #ccb9bc; */
 background-image: url('../images/fondo_boton_az_25.jpg');
-height: 15px;
+height: 20px;
 z-index:199;
 }
 
@@ -123,7 +123,7 @@ background-color: #0e84e4;
 	opacity: 0;
 	pointer-events: none;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 12px;
 	position: absolute;
 	top: 50%;
 	margin-top: -25px;
@@ -162,7 +162,7 @@ background-color: #0e84e4;
 	padding: 0 15px;
 	color: #444;
 	/*font-weight: bold;*/
-	font-size: 14px;
+	font-size: 12px;
 	letter-spacing: 1px;
 	/*text-transform: uppercase;*/
 	font-family: 'Raleway', sans-serif;
@@ -175,7 +175,7 @@ background-color: #0e84e4;
 
 #primary-menu ul li i {
 	position: relative;
-	font-size: 14px !important;
+	font-size: 12px !important;
 	top: 1px;
 	line-height: 99px;
 	width: 14px;

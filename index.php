@@ -50,13 +50,17 @@ $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
     <td><img src="images/banner_principalsin.jpg" width="1024" height="103" /></td>
   </tr>
   
-   <td>&nbsp;</td>
-      <!--<table align="center" width="900" border="1" cellspacing="5" cellpadding="5" class="login2">
-      
-        <td>
-            El sistema RECFI permite la gestión de recursos de equipo de cómputo de la Facultad de Ingeniería.
-        </td>
-        </table>-->
+   <td>&nbsp;</td> <td>&nbsp;</td>
+      <table align="center" width="1000" border="1" cellspacing="5" class="login2">
+        <tr>
+          <td font-size="11pt" >
+           <p> Bienvenido al Registro de Equipos de Cómputo de la  Facultad de Ingeniería (RECFI), sistema que facilita la gestión de inventarios de las diferentes áreas y la realización del censo de cómputo anual de la Facultad de Ingeniería de la Universidad Nacional Autónoma de México.<br />
+Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó como miembro del Comité de Cómputo de la Facultad de Ingeniería.</p>
+         </td>
+         </tr>
+        </table>
+        <br />
+        
  <td>&nbsp;</td><td>&nbsp;</td> <td>&nbsp;</td><td>&nbsp;</td>
    <!-- <td align="center">-->
     <table align="center" width="400" cellspacing="0" cellpadding="0" class="login">
@@ -78,7 +82,6 @@ $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
 		
        ?>
 
-      
          <form action="mod/autentica.mod.php" method="post" name="formlog">
          
          <p>&nbsp;</p>
@@ -105,39 +108,27 @@ $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
        
 <?php }
 
-
 	  ?>
-
-        
-       <?php if ($navegador==7) {
+    <?php if ($navegador==7) {
 		  // $estado='visible'; 
 	   ?>
+     
+       <br />
         <td>&nbsp;</td>  
-        <td>&nbsp;</td>
-       <table align="center">
+        
+        
+         <table align="center">
       
          <td >
           <div id="resaltado">
               Para una mejor visualización se recomienda evitar el uso de Google Chrome. 
           </div>  
          
-       </td>
-       
-        </table>
-         <!-- <div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>
-              Para una mejor visualización se recomienda evitar el uso de Google Chrome.
-              </p>
-              </div>
-              
-               <div id="advertencia2" style="box-shadow: 10px 10px 30px #000000;">
+         </td>
+           </table>
         
-            Para una mejor visualización se recomienda evitar el uso de Google Chrome.
-         
-          </div> 
-          
-          <td>
-            El sistema RECFI apoya al comité de cómputo a realizar la gestión de Inventarios y el Censo de Cómputo de la Facultad de Ingeniería.
-        </td>-->
+        
+    
           
 <?php }
  ?>

@@ -43,7 +43,7 @@ return $salidac;
 
 function getDivision($iddiv){
 	
-			if ($iddiv==NULL||$iddiv==0)
+			if ($iddiv==NULL||$iddiv==0 ||$iddiv=='')
 			
 			$salidac="Facultad de Ingeniería"; 
 			

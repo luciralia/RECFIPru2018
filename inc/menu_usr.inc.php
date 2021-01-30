@@ -32,9 +32,9 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 //echo 'Menú para rcacfi';
 
 
-	  if ((!isset($_GET['id_div']) || $_GET['id_div']=="" ) && $_SESSION['tipo_usuario']==10) { 
+	 // if ((!isset($_GET['id_div']) || $_GET['id_div']=="" ) && $_SESSION['tipo_usuario']==10 ) { 
 //echo 'es rcacfi';
-	 
+	 if ((!isset($_GET['div']) || $_GET['div']=="" ) && $_SESSION['tipo_usuario']==10 ) {
 	   $estado='visible';
 	  
  ?>

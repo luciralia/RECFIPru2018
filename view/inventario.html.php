@@ -24,19 +24,21 @@ $div = new departamentos();
 		  }
 		  
 		  ?>
-  <tr>
-    <td align="center"><h2>Inventario <?php echo $titulo;?> </h2></td>
-  </tr>
+  <tr> <td align="center"><h2>Inventario <?php echo $titulo;?> </h2></td></tr>
+  
+  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
   <tr>
     <?php if($_SESSION['tipo_usuario']!=10 && $_REQUEST['lab']!='' && ($_REQUEST['div']==NULL || $_GET['mod']=='invear')){?>
-    <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
+    <td align="center"><strong><h3><?php echo $lab->getLaboratorio($_GET['lab']);?></h3></strong></td>
   
     <?php }elseif($_SESSION['tipo_usuario']!=10 && $_REQUEST['lab']!='' && $_REQUEST['div']!=NULL && ($_GET['mod']=='invg' || $_GET['mod']=='invear')){?>
-	      <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
+	      <td align="center"><strong><h3><?php echo $lab->getLaboratorio($_GET['lab']);?></h3></strong></td>
     <?php }elseif($_REQUEST['div']!=NULL && $_REQUEST['lab']=='' && ($_GET['mod']=='invg' || $_GET['mod']=='invear') ){ ?>
-            <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
+            <td align="center"><strong><h3><?php echo $div->getDivision($_REQUEST['div']);?></h3></strong></td>
     <?php }elseif($_REQUEST['div']!=NULL && ($_GET['mod']=='invc' || $_GET['mod']=='invear') ){  ?>
-          <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
+          <td align="center"><strong><h3><?php echo $lab->getLaboratorio($_GET['lab']);?></h3></strong></td>
+    <?php }elseif($_REQUEST['div']==NULL && $_REQUEST['lab']=='' && $_GET['mod']=='invg' ){ ?>
+            <td align="center"><strong><h3><?php echo $div->getDivision($_REQUEST['div']);?></h3></strong></td>
     <?php } ?>
     
     </tr>

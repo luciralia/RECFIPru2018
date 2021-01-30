@@ -43,10 +43,8 @@ require_once('../inc/encabezado.inc.php');
      $_SESSION['id_div']=$div[0];
    
 	 }*/
-     
-	
-   
-    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act'  && $_GET['mod']!='invear' && $_GET['mod']!='impear')
+    
+    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act'  && $_GET['mod']!='invear' && $_GET['mod']!='impear'  &&  $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred')
             require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>
@@ -111,8 +109,8 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/quejas.html.php");
 		else if ($_GET['mod']=='ceneceq' || $_GET['mod']=='ceni' || $_GET['mod']=='cened' || $_GET['mod']=='cenert'|| $_GET['mod']=='cenecso'|| $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb' || $_GET['mod']=='cenecar')
 		include_once("../view/censo.html.php");
-		//else if ($_GET['mod']=='adm')
-		//include_once("../view/formularioed.php");
+		else if ($_GET['mod']=='cred')
+		include_once("../view/creditos.html.php");
 		else if ($_GET['mod']=='ace'){
 		include_once("../view/acercade.html.php");
 		}else{
