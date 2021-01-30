@@ -993,7 +993,6 @@ if($size > 0){
 						 
 		            $botonBien->exportaErrorBien();
 	
-
  }else {?>
    <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></legend></div></div>
  <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
