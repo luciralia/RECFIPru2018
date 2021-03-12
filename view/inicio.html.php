@@ -109,6 +109,8 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/quejas.html.php");
 		else if ($_GET['mod']=='ceneceq' || $_GET['mod']=='ceni' || $_GET['mod']=='cened' || $_GET['mod']=='cenert'|| $_GET['mod']=='cenecso'|| $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb' || $_GET['mod']=='cenecar')
 		include_once("../view/censo.html.php");
+		else if ($_GET['mod']=='censo')
+		include_once("../view/censoDGTIC.html.php");
 		else if ($_GET['mod']=='cred')
 		include_once("../view/creditos.html.php");
 		else if ($_GET['mod']=='ace'){

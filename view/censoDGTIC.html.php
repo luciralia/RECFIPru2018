@@ -12,7 +12,7 @@ $dep = new departamentos();
 
    
   <tr>
-              <td align="center"><h2>Censo</h2></td>
+              <td align="center"><h2>Censo CATIC</h2></td>
   </tr>
   <tr><?php if($_SESSION['tipo_usuario']==1 && $_REQUEST['lab'] !=NULL){?>
     <td align="center"><?php echo $lab->getLaboratorio($_REQUEST['lab']);?></td>
@@ -29,7 +29,7 @@ $dep = new departamentos();
   </tr>
   
 <tr>
-<td><div class="centrado"> <?php require('../inc/cargacenso.inc.php'); ?></div></td>
+<td><div class="centrado"> <?php require('../inc/cargacensoDGTIC.inc.php'); ?></div></td>
 </tr>
 
 

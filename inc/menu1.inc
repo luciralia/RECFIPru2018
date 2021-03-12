@@ -65,7 +65,12 @@
        	<li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>" >inventario</a></li>
     <?php } ?>
         
-	
+	<!-- Boton equipamiento -->
+    <?php if($_SESSION['tipo_usuario']!=9 || $_SESSION['tipo_usuario']!=10){ ?>
+
+	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+	<li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>" <?php echo $clase;?>>Equipamiento</a></li>
+	<?php }?>
 
 
 

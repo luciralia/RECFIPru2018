@@ -638,6 +638,7 @@ if ($inventario!=0){?>
                <th width="20%" scope="col">Procesador</th>
                <th width="20%" scope="col">Número de  Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
+            
                
            </tr>
        
@@ -656,6 +657,7 @@ if ($inventario!=0){?>
                <th width="20%" scope="col">Procesador</th>
                <th width="20%" scope="col">Número de Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
+              
                
            </tr>
            
@@ -695,6 +697,7 @@ if ($inventario!=0){?>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
                   
+                  
                  
          </tr>
          
@@ -712,6 +715,7 @@ if ($inventario!=0){?>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
+                  
                  
            </tr>
            
@@ -734,6 +738,8 @@ if ($inventario!=0){?>
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+               <th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>
               
            
      <?php     
@@ -751,6 +757,9 @@ if ($inventario!=0){?>
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+               <th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>
+                
               
            </tr>
            
@@ -772,7 +781,8 @@ if ($inventario!=0){?>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
-                
+                  <td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>
          </tr>
          
          <?php   
@@ -791,6 +801,8 @@ if ($inventario!=0){?>
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>
                  
                   
           </tr>
@@ -922,6 +934,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                <th width="20%" scope="col">Procesador</th>
                <th width="20%" scope="col">Número de  Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
+            
                
            </tr>
        
@@ -940,6 +953,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                <th width="20%" scope="col">Procesador</th>
                <th width="20%" scope="col">Número de Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
+               
                
            </tr>
            
@@ -979,6 +993,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
                   
+                  
                  
          </tr>
          
@@ -996,6 +1011,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
+                 
                  
            </tr>
            
@@ -1018,6 +1034,8 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+               <th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>
               
            
      <?php     
@@ -1035,6 +1053,9 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+               <th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>
+               
               
            </tr>
            
@@ -1056,6 +1077,8 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>
                 
          </tr>
          
@@ -1075,7 +1098,8 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
-                 
+                  <td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>
                   
           </tr>
          
@@ -1119,8 +1143,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
 			?> 
      </table>
  <?php	  
-      
- 
+     
      } //fin elseif ( $_GET['mod']=='invc' || $_GET['mod']=='inv')  {
  
   }

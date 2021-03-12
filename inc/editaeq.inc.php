@@ -23,8 +23,11 @@ if ($_REQUEST['accion']=='nuevo'){
     &nbsp;<span style="color: #900; font-size: x-small;">(El costo debe ser expresado en dólares americanos USD)</span></td>
   </tr>
   <tr>
-    <td align="right">Descripción</td>
-    <td colspan="3"><input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" /></td>
+   <td align="right">Descripción</td>
+   <!--<td colspan="3"> <input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" /></td>-->
+   <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3"></textarea></td>
+  
+   
   </tr>
   <tr>
     <td align="right">Prioridad</td>
@@ -42,7 +45,8 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
     <td align="right">Justificación ampliada</td>
-    <td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" /></td>
+    <!--<td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" /></td>-->
+    <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8"></textarea></td>
   </tr>
   <tr>
     <td colspan="4" align="right">
@@ -74,7 +78,9 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
     <td align="right">Descripción</td>
-    <td colspan="3"><input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" value="<?php echo $_POST['descripcion']; ?>"/></td>
+   <!-- <td colspan="3"><input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" value="<?php //echo $_POST['descripcion']; ?>"/></td>-->
+     <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3" value="<?php echo $_POST['descripcion']; ?>"></textarea></td>
+    
   </tr>
   <tr>
     <td align="right">Prioridad</td>
@@ -92,7 +98,8 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
     <td align="right">Justificación ampliada</td>
-    <td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" value="<?php echo $_POST['justificacion']; ?>"/></td>
+   <!--<td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" value="<?php // echo $_POST['justificacion']; ?>"/></td>-->
+     <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8" value="<?php echo $_POST['justificacion'];  ?>"/></textarea></td>
   </tr>
   <tr>
     <td colspan="4" align="right">

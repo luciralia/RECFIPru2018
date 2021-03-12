@@ -684,44 +684,7 @@ if($size > 0){
 	   }
 	    if (!$result) 
 				 $errorinserta++;
-				
-		//valida identificadores de catálogos';	
-		/*$queryerror="SELECT * FROM errorinserta 
-	                 WHERE tupla=" . $cuenta .
-				   " AND  (
-				   columna1=3 AND columna2=3 AND columna3=3 AND columna4=3 AND columna5=3
-				     AND columna9!=0
-				     AND columna10=3 
-					 AND columna16!=0 AND columna17!=0
-					 AND columna18!=0 AND columna19!=0
-					 AND columna21!=0 AND columna22!=0
-					 AND columna30!=2 AND columna31!=2
-			         AND columna32!=2 AND columna33!=2 
-					 AND columna34!=2 AND columna35!=2
-				     AND columna36!=2 AND columna37!=2 
-					 AND columna43=3  AND columna45=3
-					 AND columna46!=0 AND columna47!=0
-					 AND columna48!=0 AND columna49!=0
-					 AND columna50!=0 AND columna51=1
-					 )";
-					 $queryerror="SELECT * FROM errorinserta 
-	                 WHERE tupla=" . $cuenta .
-				   " AND columna1=3 AND columna2=3 
-				     AND columna3=3 AND columna4=3 
-					 AND columna5=3
-				     AND columna10=3 AND columna11=3
-					 AND columna16!=0 AND columna17!=0
-					 AND columna18!=0 AND columna19!=0
-					 AND columna21!=0 AND columna22!=0
-					 AND columna30!=2 AND columna31!=2
-			         AND columna32!=2 AND columna33!=2 
-					 AND columna34!=2 AND columna35!=2
-				     AND columna36!=2 AND columna37!=2 
-					
-					 AND columna46!=0 AND columna47!=0
-					 AND columna48!=0 AND columna49!=0
-					 AND columna50!=0 AND columna51=1
-					 ";*/
+		
 					$queryerror="SELECT * FROM errorinserta 
 	                 WHERE tupla=" . $cuenta .
 				   " AND columna1=3 AND columna2=3 
@@ -862,7 +825,7 @@ if($size > 0){
               accesorios,garantiamanten,arquitectura ,
               estadobien,servidor,descextensa , 
               id_marca , marca, marca_esp,
-              id_mem_ram,importa)
+              id_mem_ram,importa,accesored,salidainternet)
 
 		      VALUES (%d,%d,%d,
 		           %d,%d,%d,
@@ -886,7 +849,7 @@ if($size > 0){
 				   '%s','%s','%s',  
 				   '%s','%s','%s',  
 				   %d,'%s','%s', 
-				   %d,%d )";
+				   %d,%d,'%s','%s')";
 				   
                  $queryid=sprintf($strqueryd,$ultimo,$busca,$lab, 
                  $datosdec[0],$datosdec[1],$datosdec[2], 
@@ -910,7 +873,9 @@ if($size > 0){
                  $equipoc[7],$equipoc[8],$equipoc[9], 
 				 $equipoc[10],$equipoc[11],$equipoc[12], 
                  $marca[0],$disp['marca'],'', 
-                 $ram[0],1);
+                 $ram[0],1,$datosdec[51],$datosdec[52]);
+				 
+				 echo $queryid; 
                
                 $result=pg_query($queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
 				if ($result)

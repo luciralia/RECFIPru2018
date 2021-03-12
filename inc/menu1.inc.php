@@ -105,7 +105,8 @@
             <li><a href="../view/inicio.html.php?mod=ceni&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Impresoras </a></li>
             <li><a href="../view/inicio.html.php?mod=cened&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Digital</a></li>
             <li><a href="../view/inicio.html.php?mod=cenert&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Redes y Telecomunicaciones</a></li>
-         </ul>  
+            <li><a href="../view/inicio.html.php?mod=censo&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">CATIC</a></li> 
+        </ul>  
          <?php } ?>
     </li>  
      <?php }?>  
@@ -145,6 +146,18 @@
     <!--<li><a href="#">Documentos</a></li>
       	
    	<li><a href="#">Administración</a></li>-->
+    <!-- Boton equipamiento -->
+    <?php if($_SESSION['tipo_usuario']!=9 || $_SESSION['tipo_usuario']!=10){ ?>
+
+	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+	<li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>" <?php echo $clase;?>>Equipamiento</a></li>
+	<?php }?>
+	
+    <!-- Botón cotizaciones-->
+   <?php if($_SESSION['tipo_usuario']==9){ ?>
+	<?php $actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
+    <li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
+<?php }?>
     
      <li><a href="../view/inicio.html.php?mod=cred">Créditos</a></li>
     
