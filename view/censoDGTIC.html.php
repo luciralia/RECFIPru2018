@@ -5,7 +5,7 @@ require_once('../clases/laboratorios.class.php');
 require_once('../clases/divisiones.class.php');
 $lab = new laboratorios();
 $div = new departamentos();
-$dep = new departamentos();
+//$dep = new departamentos();
  ?>
  
 
@@ -29,7 +29,20 @@ $dep = new departamentos();
   </tr>
   
 <tr>
-<td><div class="centrado"> <?php require('../inc/cargacensoDGTIC.inc.php'); ?></div></td>
+ <?php if ( $_GET['lab']==''){
+ //( !isset($_GET['div'])|| !isset($_REQUEST['id_div']) ){ ?>
+<td><div class="centrado"> <?php  require('../inc/cargaCensoDGTIC.inc.php'); ?></div></td>
+<?php } else{ ?>
+
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    
+ <tr><td align="center"><h3> Este censo se obtiene únicamente a nivel Secretaría o División</h3></td> </tr>
+
+
+ <?php } ?>
+ 
+ 
 </tr>
 
 
@@ -37,9 +50,10 @@ $dep = new departamentos();
 
 <tr>
 
-<td><div class="centrado"> <?php if (!isset($_GET['lab']) || $_GET['lab']==""){} else {require('../inc/censo.inc.php');}
+<td><div class="centrado"> <?php //if (!isset($_GET['lab']) || $_GET['lab']==""){} else {require('../inc/censo.inc.php');}
+                            //if (isset($_GET['lab'])){require('../view/inicio.html.php');}  ?>
 
-?>
+
 
 </div></td>          
 </tr>

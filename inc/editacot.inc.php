@@ -11,6 +11,8 @@ if ($_REQUEST['accion']=='nuevo'){
 
 //print_r($_POST);
 ?>
+<br />
+<br />
 <div class="formulario">
 
 <form action="../inc/subir_archivopdf.inc.php" method="post" enctype="multipart/form-data" class="formul">

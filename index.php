@@ -51,19 +51,26 @@ $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
   </tr>
   
    <td>&nbsp;</td> <td>&nbsp;</td>
+ <tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
+ 
+   
       <table align="center" width="1000" border="1" cellspacing="5" class="login2">
+     
         <tr>
           <td font-size="11pt" >
            <p> Bienvenido al Registro de Equipos de Cómputo de la  Facultad de Ingeniería (RECFI), sistema que facilita la gestión de inventarios de las diferentes áreas y la realización del censo de cómputo anual de la Facultad de Ingeniería de la Universidad Nacional Autónoma de México.<br />
-Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó como miembro del Comité de Cómputo de la Facultad de Ingeniería.</p>
+Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó como miembro del Comité Asesor de Cómputo de la Facultad de Ingeniería.</p>
          </td>
          </tr>
         </table>
         <br />
         
- <td>&nbsp;</td><td>&nbsp;</td> <td>&nbsp;</td><td>&nbsp;</td>
+         <td>&nbsp;</td><td>&nbsp;</td> <td>&nbsp;</td><td>&nbsp;</td>
+ 
+  
+          
    <!-- <td align="center">-->
-    <table align="center" width="400" cellspacing="0" cellpadding="0" class="login">
+    <table align="center" width="200" cellspacing="0" cellpadding="0" class="login">
       <tr>
         <td align="center" valign="middle">
        <?php $estado='oculto'; ?>        
@@ -81,28 +88,53 @@ Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó c
          }
 		
        ?>
-
-         <form action="mod/autentica.mod.php" method="post" name="formlog">
-         
-         <p>&nbsp;</p>
-           
-           
-         <table width="300" border="0" cellspacing="5" cellpadding="5">
+       
+   
+       
+       <form action="mod/autentica.mod.php" method="post" name="formlog">
+        <p>&nbsp;</p>
+          <table width="300" border="0" cellspacing="5" cellpadding="5">
            <tr>
-             <td align="right">Usuario:</td>
-             <td><input name="login" type="text" id="login" value="<?php echo $_GET['usr'];  ?>" placeholder="nombre de usuario"/></td>
+              <td align="right">Usuario:</td>
+              <td><input name="login" type="text" id="login" value="<?php echo $_GET['usr'];  ?>" placeholder="nombre de usuario"/> </td>
            </tr>
            <tr>
-             <td align="right">Contraseña:</td>
-             <td><input type="password" name="pwd" id="pwd" placeholder="escriba su contraseña"/></td>
-          </tr>
+              <td align="right">Contraseña:</td>
+              <td><input type="password" name="pwd" id="pwd" placeholder="escriba su contraseña"/></td>
+           </tr>
           <tr>
             <td>&nbsp;</td>
             <td><input type="submit" name="entrar" id="entrar" value="Entrar" /></td>
           </tr>
         </table>
+        
+        
         </table>
           </form>
+           <p>&nbsp;&nbsp;</p>
+          <tr>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td align="left"> <img src="images/offices-1181385_1280.jpg" width="200" height="170" alt="Imagen"/></td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  
+             <td align="right"><img src="images/compu.jpg" width="200" height="170" alt="Imagen"/></td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  
+             <td align="right"><img src="images/classroom.jpg" width="200" height="170" alt="Imagen"/></td>
+         </tr> 
+        
 <?php if ($estado=='visible'){ ?>
         <div  id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>El nombre de usuario o contraseña son incorrectos</p><div id="boton1"><a href="./?usr=<?php echo $rusuario; ?>">Cerrar</a></div></div>
        
@@ -115,32 +147,18 @@ Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó c
      
        <br />
         <td>&nbsp;</td>  
-        
-        
-         <table align="center">
-      
+        <table align="center">
          <td >
           <div id="resaltado">
               Para una mejor visualización se recomienda evitar el uso de Google Chrome. 
           </div>  
          
          </td>
-           </table>
-        
-        
-    
-          
+         </table>
+         
 <?php }
  ?>
- 
-      <!--  </td>
-      </tr>
-    </table></td>
- 
-  </tr>
-
-</table>-->
-
+  <p>&nbsp;&nbsp;</p>
 
 </body>
 </html>

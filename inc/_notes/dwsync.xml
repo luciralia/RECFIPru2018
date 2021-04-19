@@ -174,7 +174,7 @@
 <file name="material.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280753080000000" remote="131790350990000000" Dst="2" />
 <file name="menu.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130210730100000000" remote="131790350990000000" Dst="2" />
 <file name="menu1.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131576607030869460" remote="131790350990000000" Dst="2" />
-<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132458682946404022" remote="132458694960000000" Dst="2" />
+<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132633251070960520" remote="132633251240000000" Dst="2" />
 <file name="menu1ANT.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131354539911674141" remote="131790350990000000" Dst="2" />
 <file name="menu2.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130210730100000000" remote="131790350990000000" Dst="2" />
 <file name="menu_usr.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137280000000" remote="132005137280000000" Dst="1" />
@@ -235,4 +235,6 @@
 <file name="importaPatrimonio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132170121180000000" remote="132170121180000000" Dst="1" />
 <file name="comparaRECFI_pat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132176369490000000" remote="132176369490000000" Dst="1" />
 <file name="importaraltorend.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132289481090103332" remote="132289481140000000" Dst="1" />
+<file name="cargaCensoDGTIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624764809620892" remote="132633255440000000" Dst="2" />
+<file name="exportaxls_censoCATIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624744538121770" remote="132633256830000000" Dst="2" />
 </dwsync>

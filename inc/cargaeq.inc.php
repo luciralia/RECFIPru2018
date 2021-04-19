@@ -10,7 +10,7 @@ $obj_req= new Requerimiento();
 
 
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
-print_r ($_SESSION);
+//print_r ($_SESSION);
 /*$query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa, di.nombre as div
 from laboratorios l, departamentos de, divisiones di, usuarios u where l.id_responsable =" . $_SESSION['id_usuario'] . " 
 and id_lab=" . $_REQUEST['lab'] . "
@@ -31,7 +31,8 @@ and justificacion=cjn.id
 and ne.id_lab=" . $_GET['lab'] . 
 "order by id_nec desc";
 
- echo $query; ?>
+// echo $query;
+  ?>
 
 <div class="block" id="necesidades_content">   
 
@@ -41,7 +42,9 @@ and ne.id_lab=" . $_GET['lab'] .
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/></p>
 </form>-->
 <div style="text-align: right"> <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nueva solicitud</a></div><?php // }?></div>
-<div class="block" id="necesidades_content">      
+<div class="block" id="necesidades_content">   
+<br>
+<br>   
 <table>
 <tr><td>
 <br />
@@ -73,16 +76,16 @@ and ne.id_lab=" . $_GET['lab'] .
                         <th width="10%">Prioridad</th>
                         <th width="14%">Año</th>
                         <th width="20%">Motivo</th>
-                        <th width="12%">Justificación</th>
+                        
                       </tr>
-                      <!--<tr ><td colspan="9"></td></tr>-->
+                      <tr ><td colspan="9"></td></tr>
 
 	<tr>
                         <td align="center"><?php echo $lab_nec['cant'];?></td>
                          <?php //if($_SESSION['permisos'][2] % 3 == 0){ ?>
                   		<td align="left"><a href="#necesidades" onClick="javascript:editLabNecesidades(<?php echo $k?>);"><?php echo $lab_nec['descripcion'];?></a></td>
                         <?php //}else{ ?>
-                        <td align="left"><?php echo $lab_nec['descripcion'];?></td>
+                        <!--<td align="left"><?php echo $lab_nec['descripcion'];?></td>-->
                         <?php // } ?>
                         <td align="left">$<?php echo $lab_nec['cto_unitario'];?></td>
                         <td align="left">$<?php echo $lab_nec['cant']*$lab_nec['cto_unitario'];?></td>
@@ -110,10 +113,10 @@ and ne.id_lab=" . $_GET['lab'] .
 			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
 			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab'] ."_".$lab_nec['id_nec'];?>">
 			
-			  <tr ><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" />
-              
-              
-              </td><td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php //if (($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /><?php //}?></td></tr>
+			  <tr ><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td>
+                   <td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php //if (($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /><?php //}?>
+                   </td>
+              </tr>
 	
 				
 				<?php

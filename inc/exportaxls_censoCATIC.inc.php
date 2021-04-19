@@ -1,46 +1,80 @@
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
 <?php
 session_start(); 
-require_once('../conexion.php');
-
+require_once('../conexion.php'); 
 require_once('../clases/censo.class.php');
 
-require_once('../clases/log.class.php');
 
-
-$logger=new Log();
-
-$logger->putLog(7,2);
+header("Pargma:public");
+header("Expires:0");
+header("Content-type: application/x-msdownload");
+header("Pargma:no-cache");
+header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
 
 $censo = new censo();
 
+$exporta=$_POST;
+//echo 'exporta'.$exporta;
 
- if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
-		   $_SESSION['id_div']=$_REQUEST['div'];
-if ($_SESSION['tipo_usuario']==9)
-  $_SESSION['id_div']=$_REQUEST['div'];
-  
-//if ($_GET['mod']=='censo'  ){
+
+if ( ($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
+	 
+	$querylab="SELECT nombre FROM laboratorios
+           WHERE id_lab=" . $_REQUEST['lab'] ;
+    $registrolab = pg_query($con,$querylab);
+    $nomblab= pg_fetch_array($registrolab);
+    //echo 'consulta'.$querylab;
+    $texto='Content-Disposition: attachment;filename="censoCATIC_' . date("Ymd-His") . "_" . $nomblab[0] . '.xls"';
+	 $nombre=$nomblab[0];
+
+}
+
+if ( $_SESSION['tipo_usuario']==9 && $_SESSION['id_div']!=NULL && $_REQUEST['lab']==NULL ){
+$querydiv="SELECT nombre FROM divisiones
+           WHERE id_div=" . $_SESSION['id_div'] ;
+$registrodiv = pg_query($con,$querydiv);
+$nombdiv= pg_fetch_array($registrodiv);
+
+$texto='Content-Disposition: attachment;filename="censoCATIC_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$nombre=$nombdiv[0];
+}
+
+
+if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
+$querydiv="SELECT nombre FROM divisiones
+           WHERE id_div=" . $_SESSION['id_div'] ;
+$registrodiv = pg_query($con,$querydiv);
+$nombdiv= pg_fetch_array($registrodiv);
+
+
+$texto='Content-Disposition: attachment;filename="censoCATIC_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
+$nombre=$nombdiv[0];
+}
+else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+$titulo='FacultadIngenieria';	
+$texto='Content-Disposition: attachment;filename="censoCATIC_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
+$nombre=$titulo;
+}	
+
+header($texto);
 ?>
 
-<br>
-
-<!--<div style="text-align:center;">-->
-
- <table>
+  
+<table>
   <tr>
-       <legend align="right"> <h3></h3>
-             <br>
-              <form action="../inc/exportaxls_censoCATIC.inc.php" method="post" name="ceneceq" >
-	               <input name="enviar" type="submit" value="Exportar a Excel" />
-                   <input name="lab" type="hidden" value="<?php echo $_GET['lab'];?>" />
-              
-            
-   </tr>  
+       <legend align="right"> <h3>Censo CATIC</h3>
+       
+</tr>  
+ <tr>
+       <legend align="right"> <h3><?php echo $nombre; ?></h3>
+       
+</tr>  
    </table>
-   
-   		
-    
+       
    <br> <br>
    
    <table class="material">
@@ -51,7 +85,7 @@ if ($_SESSION['tipo_usuario']==9)
               <th width="15%" >Académicos</th>
               <th width="15%" >Investigadores</th>
               <th width="15%" >Administrativos</th>
-              <th width="5%" >Total</th>
+              <th width="1%" >Total</th>
     </tr>
     </table>  
     <?php
@@ -133,10 +167,8 @@ if ($_SESSION['tipo_usuario']==9)
 				                                  $censo->Cantidad($_SESSION['id_div'],2,4)+
 												  $censo->Cantidad($_SESSION['id_div'],1,4)+
 				                                  $censo->EAR($_SESSION['id_div'],4)?></td>
-                
-           
-           
-            <td width="20%" right><strong><?php echo $censo->Cantidad($_SESSION['id_div'],3,1)+
+                                                  
+                <td width="20%" right><strong><?php echo $censo->Cantidad($_SESSION['id_div'],3,1)+
 				                                  $censo->Cantidad($_SESSION['id_div'],2,1)+
 												  $censo->Cantidad($_SESSION['id_div'],1,1)+
 												  $censo->EAR($_SESSION['id_div'],1)+
@@ -153,13 +185,11 @@ if ($_SESSION['tipo_usuario']==9)
 												  $censo->Cantidad($_SESSION['id_div'],1,4)+
 				                                  $censo->EAR($_SESSION['id_div'],4)
 												  ?></strong></td>
-         
-            
-             </tr>
-            
+                                            
+                
+            </tr>
 </table>
-  <br>
-  <br>
+
 
 
   <table>
@@ -179,8 +209,8 @@ if ($_SESSION['tipo_usuario']==9)
 		   {?>
           <table>
 		 <tr>
-      <!-- <legend align="left"> <h4>No hay laboratorios con equipos registrado en esta división</h4></legend > -->
-         </tr> 
+      <!-- <legend align="left"> <h4>No hay laboratorios con equipos registrado en esta división</h4></legend >-->
+   </tr> 
    </table> 
    <?php
    
@@ -259,23 +289,26 @@ if ($_SESSION['tipo_usuario']==9)
 		   {?>
           <table>
 		 <tr>
-      <!-- <legend align="left"> <h4>No hay aulas con equipos registrado </h4></legend > -->
+      <!-- <legend align="left"> <h4>No hay aulas con equipos registrado </h4></legend >-->
    </tr> 
    </table> 
    <?php
    
 		}else{ ?>
         <table>
-		  <tr>
-             <legend align="left"><h4>Aulas con equipo registrado:</h4></legend >
-          </tr> 
-        </table> 
+		 <tr>
+          <legend align="left"> <h4>Aulas con equipo registrado </h4></legend >
+        </tr> 
+   </table> 
    <br>
    <br>
       <table class='material' width=50%>
-         <tr>
+      
+      
+		<tr>
               <th width="20%" scope="col">Aula</th>
-              <th width="20%" scope="col">Cantidad</th>
+              <th  width="20%" scope="col">Cantidad</th>
+       
          </tr>
    </table>
    
@@ -290,7 +323,9 @@ if ($_SESSION['tipo_usuario']==9)
 		  ?>
           
 		    <table class='material' width=100%>
-		    <tr>
+		 
+            <tr>
+            
                <td  width="20%" ><?php echo ucwords(strtolower($lab_invent['lab']));?></td>
                <td  width="20%" ><?php echo $lab_invent['cuenta'];?></td>
            </tr>
@@ -298,7 +333,7 @@ if ($_SESSION['tipo_usuario']==9)
              </table> 
 <?php 
 			}
-       $cuenta=$cuenta+$lab_invent['cuenta']; 
+    $cuenta=$cuenta+$lab_invent['cuenta']; 
          } 
 		 ?>
          
@@ -317,9 +352,3 @@ if ($_SESSION['tipo_usuario']==9)
    
   <br/>
 <br/> 
-   
-   
-   
- </div>
-<br/>
-<br/>

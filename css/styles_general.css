@@ -209,10 +209,12 @@ font-size:10pt;
 
 table.login
 {
-color: #000033;
+color: #808080;
 max-width:450px;
-background-image: url('../images/bkg_02.gif');
-background-color: #CCCCCC;
+/*background-image: url('../images/bkg_02.gif'); lhh 15 abril 2021*/
+/*background-color: #CCCCCC;*/
+/*background-color: #1B4F72;*/
+background: linear-gradient(#000046, #1cb5e0);
 border:2px ridge #D3d3d3;
 border-radius:10px;
 text-shadow:1px 1px #FFFFFF;
@@ -252,7 +254,8 @@ input{
 border-radius:4px;
 border-style:solid;
 border-width:1px;
-border-color:#369;
+/*border-color:#369;*/
+border-color:#808080;
 padding:2px;	
 	}
 
@@ -282,9 +285,10 @@ margin:20px 0 0 -20px;
 
 table.menu
 {
-background-image: url('../images/fondo_boton_30.jpg');
+/*background-image: url('../images/fondo_boton_30.jpg');*/
 /*background-color: #DDDDDD;*/
-/*border:2px none #FF0000;*/
+background-color: #DAF7A6;
+border:2px none #FF0000;
 border-radius:4px;
 height:23px;
 }
@@ -292,8 +296,8 @@ height:23px;
 td.menu
 {
 /*background-image: url('../images/bkg_02.gif');*/
-/*background-color: #DDDDDD;*/
-background-image: url('../images/fondo_boton_30.jpg');
+background-color: #DAF7A6;
+/*background-image: url('../images/fondo_boton_30.jpg');*/
 border-right-style:solid;
 border-right-color:#b3b3b3;
 border-right-width:thin;
@@ -502,10 +506,10 @@ max-width: 450px;
 
 input:focus{
 
-background-color:#D3E1F0;
-/*background-color:#D8D8D8;*/
+/*background-color:#D3E1F0;*/
+background-color:#D8D8D8;
 border: 1px outset #246BB2;
-
+/*border: 1px outset #808080;*/
 }
 
 

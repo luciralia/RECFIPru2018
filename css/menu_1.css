@@ -1,3 +1,4 @@
+
 * {
 padding:0px;
 margin:0px; 
@@ -7,7 +8,6 @@ margin:0px;
 /*margin: auto;*/
  width:1024px;
 font-family:arial;
-
 }
 
 ul {
@@ -21,15 +21,16 @@ ul {
  text-decoration:none;
  padding: 10px 15px;
  display:block;*/
- background-color:#069
+/*background-color:#069;*/
+background-color:#FFE4B5;
 list-style-type: none;
 display:block;
 font:15px arial,sans-serif;
 font-weight:bold;
-color:#FFFFFF;
-
+/*color:#FFFFFF;*/
+color:#808080;
 text-shadow:1px 1px #000000;
-background-image: url('../images/fondo_boton_az_25.jpg');
+/*background-image: url('../images/fondo_boton_az_25.jpg');*/
 height: 20px;
 /*text-align:right;*/
 /*text-align:center;*/
@@ -39,10 +40,11 @@ padding: 5px 5px;
 }
 
 .nav li a:hover {
-background-color:#FF3300; 
+/*background-color:#FF3300; */
+background-color: #BDB76B;
  
-/* background-image: url('../images/fondo_boton_30_on.jpg');*/
-background-image: url('../images/fondo_boton_az_25_on.jpg');
+/* background-image: url('../images/fondo_boton_30_on.jpg');
+background-image: url('../images/fondo_boton_az_25_on.jpg');*/
 border-bottom-style:none;
 }
 
@@ -53,7 +55,8 @@ border-bottom-style:none;
 font:15px arial,sans-serif;
 padding: 5px 5px;
 height: 20px;
-background-image: url('../images/fondo_boton_az_25_on.jpg');
+/*background-image: url('../images/fondo_boton_az_25_on.jpg');*/
+background-color: #BDB76B;
 border-bottom-style:none;
 }
 
@@ -76,22 +79,29 @@ min-width:160px;
  
 }
 .nav li ul li ul {
-right:-160px;
+right:-188px;
 /* left: -140px;*/
 top:0px;
 }
 
+.nav li ul li ul li ul{
+right:-170px;
+/* left: -140px;*/
+top:0px;
+}
 
 .nav li ul li a {
-background-image: url('../images/fondo_boton_az_25_onx.jpg');
-background-color: #0e84e4;
+/*background-image: url('../images/fondo_boton_az_25_onx.jpg');
+background-color: #0e84e4;*/
+background-color:  #FFE4B5;
 }
 .nav li ul li a:hover {
 position:relative;
 /*position:absolute;*/
 border-bottom-style:none;
-background-color: #0f8df1;
-background-image: url('../images/fondo_boton_az_25.jpg');
+background-color: #BDB76B;
+/*background-color: #0f8df1;
+background-image: url('../images/fondo_boton_az_25.jpg');*/
 height: 20px;
 
 }

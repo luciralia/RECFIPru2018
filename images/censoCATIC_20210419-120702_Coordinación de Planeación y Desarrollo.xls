@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<strong></strong>
+
+  
+<table>
+  <tr>
+       <legend align="right"> <h3>Censo CATIC</h3>
+       
+</tr>  
+ <tr>
+       <legend align="right"> <h3>Coordinación de Planeación y Desarrollo</h3>
+       
+</tr>  
+   </table>
+       
+   <br> <br>
+   
+   <table class="material">
+
+   <tr>
+              <th width="15%" scope="col">&nbsp;&nbsp;&nbsp;</th>
+              <th width="15%" >Estudiantes</th>
+              <th width="15%" >Académicos</th>
+              <th width="15%" >Investigadores</th>
+              <th width="15%" >Administrativos</th>
+              <th width="1%" >Total</th>
+    </tr>
+    </table>  
+    
+        
+         <table class="material">
+
+             <tr>
+                
+                <th width="15%">Computadoras</th>
+               
+                <td width="20%" center>1</td>
+                <td width="20%" center>7</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>8</td>
+                <td width="20%" center>16</td>
+            </tr>
+            <tr>
+                
+                <th width="15%">Portátiles</th>
+                <td width="20%" center>0</td>
+                <td width="20%" center>1</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>3</td>
+                <td width="20%" center>4</td>
+            </tr>
+            
+            <tr>
+                
+                <th width="15%">Tabletas</th>
+                <td width="20%" center>0</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>1</td>
+                <td width="20%" center>1</td>
+            </tr>
+           <tr>
+                
+                <th width="15%">Equipo Alto R</th>
+                <td width="20%" center>0</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>0</td>
+            </tr>
+             <tr>
+                
+                <th width="15%">Total</th>
+                <td width="20%" center>1</td>
+                                                          
+                <td width="20%" center>8</td>
+                <td width="20%" center>0</td>
+                <td width="20%" center>12</td>
+                                                  
+                <td width="20%" right><strong>21</strong></td>
+                                            
+                
+            </tr>
+</table>
+
+
+
+  <table>
+  <tr>
+       <legend align="left"> <h4>Laboratorios y áreas de cómputo: 0</h4></tr></legend >
+     
+   </tr>   
+   <br>
+   <br>
+    
+   </table>
+               <table>
+		 <tr>
+       <legend align="left"> <h4>No hay laboratorios con equipos registrado en esta división</h4></legend >
+   </tr> 
+   </table> 
+      
+<br/>
+<br/>
+
+
+ <table>
+  <tr>
+       <legend align="left"> <h4>Aulas con equipo de cómputo 0</h4></tr></legend >
+     
+   </tr>  
+    <br>
+    <br>
+   </table>
+   
+   
+              <table>
+		 <tr>
+       <legend align="left"> <h4>No hay aulas con equipos registrado </h4></legend >
+   </tr> 
+   </table> 
+      
+  <br/>
+<br/> 
