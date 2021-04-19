@@ -1,3 +1,5 @@
+
+
 <?php  
 require_once('cargaced.inc.php');
 require_once('../clases/laboratorios.class.php');
@@ -5,11 +7,15 @@ $lab = new laboratorios();
 
  ?>
 
-<?php //print_r ($_GET); ?>
+<?php 
+
+//echo 'session en cedula.inc.php';
+/*print_r($laboratorio);
+print_r ($_GET); */?>
 <div class="block2">
 <table class="cedula" width="100%" border="0" cellpadding="5">
                         <tr>
-                          <th colspan="6" class="titulo"><?php echo $laboratorio['div'];  ?></th>
+                          <th colspan="6" class="titulo"><?php echo $laboratorio['division'];  ?></th>
                         </tr>
                         <tr>
                           <th colspan="6" class="titulo"><?php  echo $laboratorio['depa']; ?></th>
@@ -127,3 +133,6 @@ $lab = new laboratorios();
                         <?php } ?>
   </table>
                     </div>
+                    <br>
+                    <br>
+                    

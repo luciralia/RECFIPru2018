@@ -6,11 +6,36 @@
 require_once('../conexion.php');
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
  
-  echo $laboratorio['id_lab'];
+  //echo $laboratorio['id_lab'];
+  
+  echo 'session en cargaldd';
+ print_r($_SESSION);
 	 
-    if ($_SESSION['tipo_usuario']==1){
+if ($_SESSION['tipo_usuario']==1){
+//obtener el departamento 
+	
+   $querydepto="SELECT DISTINCT l.id_dep from laboratorios l
+                JOIN usuarios u
+				ON l.id_responsable=u.id_usuario
+                where l.id_responsable=" .$_SESSION['id_usuario'];
+   $datosdepto=pg_query($con,$querydepto);
 
+   $depto = pg_fetch_array($datosdepto);
+   $_SESSION['id_dep']=$depto[0];
+   
+   //obtener division
+    $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+               JOIN departamentos d
+               ON l.id_dep=d.id_dep
+               JOIN divisiones dv
+               ON dv.id_div=d.id_div
+               JOIN usuarios u
+		       ON l.id_responsable=u.id_usuario
+               WHERE l.id_responsable=" .$_SESSION['id_usuario'];
+   $datosdiv=pg_query($con,$querydiv);
 
+   $div = pg_fetch_array($datosdiv);
+   $_SESSION['id_div']=$div[0];
 
        $query="select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,   di.nombre as div
         from laboratorios l
@@ -23,6 +48,9 @@ require_once('../conexion.php');
         where l.id_responsable =". $_SESSION['id_usuario'] . " 
         order by laboratorio";
        $datos = pg_query($con,$query);
+	   
+	   
+	   
       }
 
       if ($_SESSION['tipo_usuario']==2){
@@ -61,12 +89,16 @@ require_once('../conexion.php');
       }
 	  
       if ($_SESSION['tipo_usuario']==9 ){ //se agrego el id_div LHH 7/dic/2017
+	  
+	  
       $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,       di.nombre as div, di.id_div 
       from laboratorios l, departamentos de, divisiones di, usuarios u where " . $consultacomp  . $_SESSION['id_usuario'] . "
       and l.id_dep=de.id_dep
       and de.id_div=di.id_div
       and l.id_responsable=u.id_usuario order by laboratorio";
-      $datos = pg_query($con,$query);}
+      $datos = pg_query($con,$query);
+	  
+	  }
 
       if ($_SESSION['tipo_usuario']==10 ){
       $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,       di.nombre as div, di.id_div 
@@ -169,8 +201,7 @@ order by laboratorio";*/
 	        echo " <li><a href='../view/inicio.html.php?mod=". $_GET['mod'] . "&lab=". $laboratorio['id_lab'] . "&accion=". $_REQUEST['accion'] . "'>" . $laboratorio['laboratorio'] . "</a></li>";
 	 
 		 }         
-     
-
+    
          echo "</ul>
 			 
         </li>";
@@ -184,11 +215,9 @@ if ($_SESSION['tipo_usuario']==9){
          <ul>';
 	while ($laboratorio = pg_fetch_array($datos)) 
 		 { 
-		 	
-	        echo " <li><a href='../view/inicio.html.php?mod=".  $_GET['mod'] . "&lab=". $laboratorio['id_lab'] . "&accion=". $_REQUEST['accion'] . "&div=" . $laboratorio['id_div'] . "'>" . $laboratorio['laboratorio'] .  "</a></li>";
+		 	 echo " <li><a href='../view/inicio.html.php?mod=".  $_GET['mod'] . "&lab=". $laboratorio['id_lab'] . "&accion=". $_REQUEST['accion'] . "&div=" . $laboratorio['id_div'] . "'>" . $laboratorio['laboratorio'] .  "</a></li>";
 	 
 		 }         
-         
          echo "</ul>
 			 
         </li>";
@@ -207,18 +236,15 @@ if ($_SESSION['tipo_usuario']==4 || $_SESSION['tipo_usuario']==5 || $_SESSION['t
 	      
 		 }         
      
-
          echo "</ul>
 			 
         </li>";
 }
- 
-//}
 
-?>
- <?php if ($_SESSION['lab']!=''&& $_SESSION['mod']!='')
-      $_SESSION['lab']=''; ?>
- </ul>
-    
-    
+if ($_SESSION['lab']!='' && $_SESSION['mod']!='')
+          $_SESSION['lab']=''; ?>
+ 
+ 
+   </ul>
+       
 </div>

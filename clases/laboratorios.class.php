@@ -13,7 +13,8 @@ $db=conexion_db::getInstance();
 
 var $_table = 'laboratorios';*/
 
- class laboratorios {
+
+class laboratorios {
 
 
 function getResponsable($idresp){
@@ -60,9 +61,97 @@ function getLaboratorio($idlab){
 			
 			return $salidar;
 	}
+	
+ function combolabdiv($id_lab,$usuario)
+ {
+	    $querytipo="SELECT tipo_usuario FROM usuarios
+	             WHERE id_usuario=".$usuario;	
+		$resulttipo= @pg_query($querytipo) or die('Hubo un error con la base de datos en usuarios');	
+		$tipo= pg_fetch_array($resulttipo);
+	    $usutipo=$tipo[0];                  	 
+		
+			
+    if ($usutipo==1){
+          $query="select id_lab,  l.nombre as laboratorio
+                  from laboratorios l
+                  join departamentos de
+                  on l.id_dep=de.id_dep
+                  join divisiones di
+                  on de.id_div=di.id_div
+                  join usuarios u
+                  on l.id_responsable=u.id_usuario
+                  where l.id_responsable =". $usuario . " 
+                  order by laboratorio";
+				 
+        }
+	    if ($usutipo==2){
+             $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,  di.nombre as div
+          from laboratorios l
+          join departamentos de
+          on l.id_dep=de.id_dep
+          join divisiones di
+          on de.id_div=di.id_div
+          join  usuarios u
+          on l.id_responsable=u.id_usuario
+          where de.id_responsable =" . $usuario . " 
+          order by laboratorio";
+        
+      }
+	  
+      if ($usutipo==7){ $consultacomp="di.id_comite=";} 
+         else if($usutipo==3){$consultacomp="di.id_responsable=";}
+              else if($usutipo==6){$consultacomp="di.id_secacad=";}
+			  else if($usutipo==9 ){$consultacomp=" di.id_cac=";} 
+
+					
+
+
+       if ($usutipo==3 || $usutipo==6 || $usutipo==7){
+          $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,                     di.nombre as div
+                    from laboratorios l, departamentos de, divisiones di, usuarios u where " . $consultacomp  . $usuario . " 
+                    and l.id_dep=de.id_dep
+                    and de.id_div=di.id_div
+                    and l.id_responsable=u.id_usuario order by laboratorio";
+                   
+      }
+	  
+      if ($usutipo==9 ){ //se agrego el id_div LHH 7/dic/2017
+      $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,       di.nombre as div, di.id_div 
+      from laboratorios l, departamentos de, divisiones di, usuarios u where " . $consultacomp  . $usuario. "
+      and l.id_dep=de.id_dep
+      and de.id_div=di.id_div
+      and l.id_responsable=u.id_usuario order by laboratorio";
+	 // echo $query;
+    }
+
+				    
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en laboratoriosmmm');
+					
+					$salida='<select name="id_lab" id="id_lab">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_lab']==$id_lab)
+					      $salida.= "<option value='" . $datosc['id_lab'] . "' selected='selected'>" . $datosc['laboratorio']. "</option>";
+					 else 
+					      $salida.= "<option value='" . $datosc['id_lab'] . "'>" . $datosc['laboratorio']. "</option>";
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dispositivo		
+
+
 
 function getDivision($iddiv){
-
+echo $iddiv;
 			if ($iddiv==NULL||$iddiv==0)
 			
 			$salidar="Ninguno"; 
@@ -139,7 +228,6 @@ function cmbEdif($idedif)
 				
 					$sele=($datosc['id']==$idedif)?" selected='selected'":"";
 					$salida.= "<option value='" . $datosc['id'] . "'" .$sele. ">" . $datosc['descripcion'] . "</option>";
-					
 					
 						}
 				//	return $salida;

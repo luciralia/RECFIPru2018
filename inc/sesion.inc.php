@@ -1,6 +1,6 @@
 <?php 
 session_start(); 
-//echo "la sesion es: " . $_SESSION['id_usuario'];
+//echo "la division es: " . $_SESSION['id_div'];
 if(!isset($_SESSION['id_usuario'])){
 header("Location:../");
 }else{
@@ -11,6 +11,5 @@ $txtheader="location:../view/inicio.html.php?mod=".$mod;
 //header($txtheader);
 
 }
-
 
 ?>

@@ -14,15 +14,15 @@ header("Content-type: application/x-msdownload");
 //header("Content-Disposition:attachment;filename=$filename");
 header("Pargma:no-cache");
 header("Cache-Control: must_revalidate,post-check=0,pre-check=0");
-
+/*
 $querydiv="SELECT nombre FROM divisiones
            WHERE id_div=" . $_SESSION['id_div'] ;
 $registrodiv = pg_query($con,$querydiv);
 $nombdiv= pg_fetch_array($registrodiv);
-
-$texto='Content-Disposition: attachment;filename="catalogoedificio_' . date("Ymd-His") .'.xls"';
+*/
+$texto='Content-Disposition: attachment;filename="catalogoedificio_' . date("Ymd-His") .'_FI.xls"';
 header($texto);
-$nombre=$nombdiv[0];
+//$nombre=$nombdiv[0];
 ?>
 
 

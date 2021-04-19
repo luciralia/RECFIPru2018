@@ -419,7 +419,8 @@ function utf8_string_array_encode(&$array){
 			  
 			  $querym="SELECT id_marca 
 							  FROM cat_marca
-			                  WHERE descmarca="."'".$disp['marca_p']."'";
+			                  WHERE descmarca="."'".strtoupper($disp['marca_p']."'");
+		
 							  
               $registrom= pg_query($con,$querym);
               $marca= pg_fetch_array($registrom);
@@ -449,7 +450,14 @@ function utf8_string_array_encode(&$array){
 			  $queryu=sprintf($updatequery, $detalle[0]|| ' ' || $disp['usuario_ubicacion'] ); 
 			   
               $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR laboratorios');
-              
+			  
+			  if ($disp['fecha_factura']==0) 
+			      $disp['fecha_factura']= date("Y-m-d", strtotime($disp['fecha_factura']));
+			  if ($disp['licencia_ini']==0) 
+			      $disp['licencia_ini']= date("Y-m-d", strtotime($disp['licencia_ini']));	  
+              if ($disp['licencia_fin']==0) 
+			      $disp['licencia_fin']= date("Y-m-d", strtotime($disp['licencia_fin']));	
+				  
               if ($bienes[0]!=NULL ){
 			  //echo 'clave_dispositivo'.$disp['clave_dispositivo'];
               $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,--3
@@ -502,11 +510,11 @@ function utf8_string_array_encode(&$array){
 				   
                  $queryid=sprintf($strqueryd,$ultimo,$bienes[0],$lab, //3
                  $disp['dispositivo_clave'],$disp['usuario_final_clave'],$disp['familia_clave'], //6
-				 $disp['tipo_ram_clave'], $disp['tecnologia_clave'],$disp['nombre_resguardo'], $disp['resguardo_no_empleado'] ,//10
-                 $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuarioperfil'], //13
+				 $disp['tipo_ram_clave'], $disp['tecnologia_clave'],$disp['resguardo_nombre'], $disp['resguardo_no_empleado'] ,//10
+                 $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuario_perfil'], //13
 				 $disp['usuario_sector'], $disp['serie'], $disp['marca_p'], //16
 				 $disp['no_factura'], $disp['anos_garantia'], $disp['inventario'], //19
-                 $disp['modelo_p'], $disp['proveedor_p'],date("Y-m-d", strtotime($disp['fecha_factura'])), //22
+                 $disp['modelo_p'], $disp['proveedor'],$disp['fecha_factura'], //22 date("Y-m-d", strtotime($disp['fecha_factura']))
 			     $disp['familia_especificar'], $disp['modelo_procesador'], $disp['cantidad_procesador'], //25
 			     $disp['nucleos_totales'], $disp['nucleos_gpu'], $disp['memoria_ram'], //28
                  $disp['ram_especificar'], $disp['num_elementos_almac'], //30 
@@ -516,8 +524,7 @@ function utf8_string_array_encode(&$array){
 				 $disp['subtotal_uno'], $disp['subtotal_dos'], $disp['subtotal_tres'], $disp['subtotal_cuatro'], //44
                  $disp['arreglo_total'], $disp['tec_com'], $disp['tec_com_otro'], //47
 			     $disp['sist_oper'], $disp['version_sist_oper'], //49
-			     $disp['licencia'], date("Y-m-d", strtotime($disp['licencia_ini'])),date("Y-m-d",
-				 strtotime($disp['licencia_fin'])),date('Y-m-d'), //53
+			     $disp['licencia'],$disp['licencia_ini'],$disp['licencia_fin'],date('Y-m-d'), //53
 				 $equipoc[1],$equipoc[2],$equipoc[3], //56
 				 $equipoc[4],$equipoc[5],$equipoc[6], //59
                  $equipoc[7],$equipoc[8],$equipoc[9], //62
@@ -607,11 +614,11 @@ function utf8_string_array_encode(&$array){
 				   
                  $queryid=sprintf($strqueryd,$ultimoreg,$bienes[0],$lab, //3
                  $disp['dispositivo_clave'],$disp['usuario_final_clave'],$disp['familia_clave'], //6
-				 $disp['tipo_ram_clave'], $disp['tecnologia_clave'],$disp['nombre_resguardo'], $disp['resguardo_no_empleado'] ,//10
-                 $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuarioperfil'], //13
+				 $disp['tipo_ram_clave'], $disp['tecnologia_clave'],$disp['resguardo_nombre'], $disp['resguardo_no_empleado'] ,//10
+                 $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuario_perfil'], //13
 				 $disp['usuario_sector'], $disp['serie'], $disp['marca_p'], //16
 				 $disp['no_factura'], $disp['anos_garantia'], $disp['inventario'], //19
-                 $disp['modelo_p'], $disp['proveedor_p'],date("Y-m-d", strtotime($disp['fecha_factura'])), //22
+                 $disp['modelo_p'], $disp['proveedor'],$disp['fecha_factura'], //22
 			     $disp['familia_especificar'], $disp['modelo_procesador'], $disp['cantidad_procesador'], //25
 			     $disp['nucleos_totales'], $disp['nucleos_gpu'], $disp['memoria_ram'], //28
                  $disp['ram_especificar'], $disp['num_elementos_almac'], //30 
@@ -621,8 +628,8 @@ function utf8_string_array_encode(&$array){
 				 $disp['subtotal_uno'], $disp['subtotal_dos'], $disp['subtotal_tres'], $disp['subtotal_cuatro'], //44
                  $disp['arreglo_total'], $disp['tec_com'], $disp['tec_com_otro'], //47
 			     $disp['sist_oper'], $disp['version_sist_oper'], //49
-			     $disp['licencia'], date("Y-m-d", strtotime($disp['licencia_ini'])),date("Y-m-d",
-				 strtotime($disp['licencia_fin'])),date('Y-m-d'), //53
+			     $disp['licencia'], $disp['licencia_ini'],
+				 $disp['licencia_fin'],date('Y-m-d'), //53
 				 $equipoc[1],$equipoc[2],$equipoc[3], //56
 				 $equipoc[4],$equipoc[5],$equipoc[6], //59
                  $equipoc[7],$equipoc[8],$equipoc[9], //62

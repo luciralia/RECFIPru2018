@@ -2,21 +2,32 @@
 
 require_once('../inc/sesion.inc.php');
 require_once('../clases/laboratorios.class.php');
-
+require_once('../clases/divisiones.class.php');
 $lab = new laboratorios();
+$div = new departamentos();
+$dep = new departamentos();
  ?>
  
 
-<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
    
-  <!--<tr>
-    <td align="center"><h2>Censo<?php //echo $titulo ;?> </h2></td>
-  </tr>
   <tr>
-    <td align="center"><?php //echo $lab->getLaboratorio($_GET['lab']);?></td>
-  </tr>-->
+              <td align="center"><h2>Censo</h2></td>
+  </tr>
+  <tr><?php if($_SESSION['tipo_usuario']==1 && $_REQUEST['lab'] !=NULL){?>
+    <td align="center"><?php echo $lab->getLaboratorio($_REQUEST['lab']);?></td>
 
-
+    <?php }else if($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 &&  $_REQUEST['lab'] !=NULL){?>
+     <td align="center"><?php echo $lab->getLaboratorio($_REQUEST['lab']);?></td>
+  
+     <?php }else if($_SESSION['tipo_usuario']!=10 && $_SESSION['tipo_usuario']!=1 &&  $_REQUEST['lab'] ==NULL){?>
+    <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
+    <?php } else if($_SESSION['tipo_usuario']==10){?>
+             <td align="center"><?php echo $div->getDivision($_REQUEST['div']);?></td>
+    <?php } ?>
+     
+  </tr>
+  
 <tr>
 <td><div class="centrado"> <?php require('../inc/cargacenso.inc.php'); ?></div></td>
 </tr>

@@ -10,6 +10,7 @@ require_once('../config.php');?>
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="../css/styles_general.css">
 
+
 	<!-- link calendar resources -->
 	<link rel="stylesheet" type="text/css" href="../lib/tigra_calendar2/tcal.css" />
 	<script type="text/javascript" src="../lib/tigra_calendar2/tcal.js"></script> 

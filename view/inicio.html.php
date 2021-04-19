@@ -1,16 +1,51 @@
+
 <?php 
-require_once('../inc/encabezado.inc.php'); ?>
-<!--  <tr>
-  <td><?php //require('../inc/menu.inc.php'); ?>&nbsp;</td>
-  </tr> -->
+require_once('../inc/encabezado.inc.php'); 
+//require_once('../inc/sesion.inc.php'); 
+
+?>
   <tr>
   <td><?php require_once('../inc/menu1.inc.php'); ?>      &nbsp;</td>
   </tr>
    <tr>
     <td><?php 
+	
+	if  ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==NULL)
+     {
+	 $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+               JOIN departamentos d
+               ON l.id_dep=d.id_dep
+               JOIN divisiones dv
+               ON dv.id_div=d.id_div
+               JOIN usuarios u
+		       ON l.id_responsable=u.id_usuario
+               WHERE l.id_responsable=" .$_SESSION['id_usuario'];
+   $datosdiv=pg_query($con,$querydiv);
+ // echo 'query inicio.html'.$querydiv;
+   $div = pg_fetch_array($datosdiv);
+   $_SESSION['id_div']=$div[0];
+	
+	 }
+	/*if ($_SESSION['id_div']==NULL && ($_SESSION['tipo_usuario']!=10 ))
+     {
+		  //obtener la división
+
+     $querydiv="SELECT d.id_div FROM laboratorios l
+                JOIN departamentos dp
+                ON l.id_dep=dp.id_dep
+                JOIN divisiones d
+                 ON d.id_div=dp.id_div
+                WHERE l.id_lab=" .$_GET['lab'];
+				
+               $datosdiv=pg_query($con,$querydiv);
+               echo 'query inicio.html'.$querydiv;
+     $div = pg_fetch_array($datosdiv);
+     $_SESSION['id_div']=$div[0];
    
-    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg' )
-    require_once('../inc/menu_usr.inc.php'); 
+	 }*/
+    
+    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act'  && $_GET['mod']!='invear' &&        $_GET['mod']!='impear'  &&  $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred'  )
+            require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>
 
@@ -20,7 +55,7 @@ require_once('../inc/encabezado.inc.php'); ?>
 
 
     <td><?php 
-		//echo 'En inicio.html';
+		//echo 'En inicio.html SESSION';
 		//print_r ($_SESSION);
 		
 		if (!isset($_GET['mod']) || $_GET['mod']=='def')
@@ -41,6 +76,8 @@ require_once('../inc/encabezado.inc.php'); ?>
 		include_once("../view/inventario.html.php");		
 		else if (!isset($_GET['mod'])|| $_GET['mod']=='invc')
 		include_once("../view/inventario.html.php");	
+		else if (!isset($_GET['mod'])|| $_GET['mod']=='invear'){
+		include_once("../view/inventario.html.php");}
 		else if (!isset($_GET['mod'])|| ($_GET['mod']=='invg' && $_GET['lab']!=NULL)){
 		include_once("../view/inventario.html.php");}
 		else if (!isset($_GET['mod'])|| ($_GET['mod']=='invg' && $_GET['lab']==NULL)){
@@ -53,7 +90,13 @@ require_once('../inc/encabezado.inc.php'); ?>
 		else if (isset($_GET['lab'])  && $_GET['mod']=='invg'){
 		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='imp')
-		include_once("../view/importamoderror.inc.php");	//modificado para deteectar errores ant importar.html.php
+		include_once("../view/importar.html.php");	
+		else if ($_GET['mod']=='impear')
+		include_once("../inc/importaraltorend.inc.php");	
+		else if (!isset($_GET['mod']) || $_GET['mod']=='invear'){
+		include_once("../view/inventario.html.php");}
+		else if ($_GET['mod']=='act')
+		include_once("../view/actualizar.html.php");	
 		else if ($_GET['mod']=='cot')
 		include_once("../view/cotizaciones.html.php");
 		else if ($_GET['mod']=='infr')
@@ -66,8 +109,11 @@ require_once('../inc/encabezado.inc.php'); ?>
 		include_once("../view/quejas.html.php");
 		else if ($_GET['mod']=='ceneceq' || $_GET['mod']=='ceni' || $_GET['mod']=='cened' || $_GET['mod']=='cenert'|| $_GET['mod']=='cenecso'|| $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb' || $_GET['mod']=='cenecar')
 		include_once("../view/censo.html.php");
-		//else if ($_GET['mod']=='adm')
-		//include_once("../view/formularioed.php");
+		//else if (!isset($_GET['mod'])|| $_GET['mod']=='censo'  && !isset($_GET['lab']))
+		else if ($_GET['mod']=='censo' )
+		    include_once("../view/censoDGTIC.html.php");
+		else if ($_GET['mod']=='cred')
+		include_once("../view/creditos.html.php");
 		else if ($_GET['mod']=='ace'){
 		include_once("../view/acercade.html.php");
 		}else{

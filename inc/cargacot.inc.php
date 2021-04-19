@@ -19,7 +19,7 @@ and plazo=cpn.id
 and justificacion=cjnm.id
 and l.id_lab=";*/
 
-$query="select * from cotizaciones where id_lab=";
+$query="SELECT * FROM cotizaciones WHERE id_lab=";
 
 switch ($_GET['orden']){
  			case "proveedor":
@@ -69,7 +69,8 @@ switch ($_GET['orden']){
 
 <input name="bOrden" type="submit" value="ordenar" />
 </form>
-
+ <br>
+ <br>
 
 <?php
 
@@ -90,6 +91,7 @@ while ($datos = pg_fetch_array($result))
 <?php //$action="../inc/borrarcot.inc.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 
  <form name="cotiza<?php echo $datos['id_cotizacion']; ?>" method="post" action="<?php echo $action; ?>">
+
 <table class="cotizaciones">
   <tr>
     <th width="100" >Folio</th>
@@ -100,7 +102,7 @@ while ($datos = pg_fetch_array($result))
     <th width="160" >&nbsp;</th>
   </tr>
 
-      <tr>
+  <tr>
     <td ><?php echo $datos['folio']; ?></td>
     <td ><?php echo $datos['proveedor']; ?></td>
     <td ><?php echo $datos['tipo']; ?></td>

@@ -5,7 +5,7 @@ require_once('../conexion.php');
 
 <?php //print_r($_REQUEST);?>
 <?php if(!isset($_POST['resp'])){ ?>
-				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
+				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden']?>
               <table class="login"><tr><td><p>&iquest;Realmente desea borrar el registro?</p></td></tr>
                 <form action="<?php echo $action; ?>" method="post" name="borrado">
                 
@@ -28,14 +28,12 @@ require_once('../conexion.php');
 
 <?php } else if ($_POST['resp']=='Si') { ?>
 
-
-
 <?php
 $id_cotizacion=$_POST['id_cotizacion'];
 
 if($_POST['accion']=='Borrar'){
 
-$query="delete from cotizaciones where id_cotizacion=" . $id_cotizacion;
+$query="DELETE FROM cotizaciones WHERE id_cotizacion=" . $id_cotizacion;
 echo $query;
 $result = pg_query ($con, $query) or die('No se pudo borrar');
 unlink($_POST['ruta']);
@@ -44,7 +42,6 @@ echo "Coti borrada </br>";
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . $_REQUEST['orden'];
 echo "</br>" . $direccion . "</br>";
 header($direccion);
-
 } 
 
 	} else {
