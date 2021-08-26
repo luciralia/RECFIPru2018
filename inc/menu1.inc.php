@@ -155,13 +155,13 @@
     <?php if($_SESSION['tipo_usuario']!=9 || $_SESSION['tipo_usuario']!=10){ ?>
 
 	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
-	    <!-- <li><a href="../view/inicio.html.php?mod=eq&lab=<?php // echo  $_GET['lab'];?>" <?php  echo $clase;?>>Equipamiento</a></li>-->
+	    <li><a href="../view/inicio.html.php?mod=eq&lab=<?php  echo  $_GET['lab'];?>" <?php  echo $clase;?>>Equipamiento</a></li>
 	<?php }?>
 	
     <!-- Botón cotizaciones-->
    <?php if($_SESSION['tipo_usuario']==9){ ?>
 	<?php $actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
-    <!-- <li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>-->
+     <li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
 <?php }?>
  <?php if($_SESSION['tipo_usuario']==9  || $_SESSION['tipo_usuario']==10 ) { ?>
            <?php $actual=($_GET['mod']=='cred')? ' class="actual"':'';?>

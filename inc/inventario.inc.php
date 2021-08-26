@@ -9,7 +9,7 @@ if (($_REQUEST['accion']=='buscar'||$_REQUEST['bbuscar']=='Buscar'|| $_REQUEST['
 				else if (( $_REQUEST['lab']==NULL && !isset($_REQUEST['div'])) || (!isset($_REQUEST['lab'] )))
 				{//
 				echo 'buscar en invgensin';
-				require_once('cargainvent.inc.php');
+				    require_once('cargainvent.inc.php');
 				}
 				else if (!isset($_REQUEST['accion']) || $_REQUEST['accion']=='')
 				{ 

@@ -21,12 +21,12 @@ require_once('../conexion.php');
                 echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
                 }
                 ?>
-                <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
+               <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
                 <input name="accion" type="hidden" value="borrar" />
                 </form>
                 </table>
 
-  <?php } else if ($_POST['resp']=='Si') { ?>
+          <?php } else if ($_POST['resp']=='Si') { ?>
 
 
           <?php if($_POST['accion']=='borrar'){ 
@@ -34,16 +34,30 @@ require_once('../conexion.php');
                 $strquery="DELETE FROM necesidades_equipo WHERE id_nec=%d AND id_lab=%d";
                 $queryd=sprintf($strquery,$_POST['id_nec'],$_POST['id_lab']);
                 $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
-                $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-                header($direccion);
-                // echo $direccion . "</br>";
+               // $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+				$direccion="location: ../view/inicio.html.php?mod=" . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+				if (headers_sent()) {
+                      // las cabeceras ya se han enviado, no intentar añadir una nueva
+             }
+else {
+    // es posible añadir nuevas cabeceras HTTP
+	 header($direccion);
+}
+				
+				
+				
+               /* header($direccion);
+                 echo $direccion . "</br>";*/
                } 
          } else {
-		echo "No borrar";	
-		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&orden='. $_REQUEST['orden'];
+		/*echo "No borrar";	
+		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&orden='. $_REQUEST['orden'];*/
+		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
 		header($direccion);
-		//echo $direccion;
+		echo $direccion;
 		echo 'entra aqui';
 		
 }
 ?>
+
+

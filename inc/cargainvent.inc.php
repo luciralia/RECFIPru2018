@@ -385,7 +385,7 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
@@ -848,8 +848,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
