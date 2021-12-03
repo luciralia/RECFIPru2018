@@ -178,13 +178,19 @@ $cbox = new inventario();
 $verifica = new inventario();
 $combolab= new laboratorios();
 
+ /*if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
+		   $_SESSION['id_div']=$_REQUEST['div'];
+		   if ($_SESSION['tipo_usuario']==9)
+                $_SESSION['id_div']=$_REQUEST['div'];*/
+				echo 'Valores de session';
+print_r ($_SESSION);
 
 if ($_POST['accion']=='editar'){  
 
 //echo 'Valores a editar';
 //print_r ($_REQUEST);
-//echo 'Valores de session';
-//print_r ($_SESSION);
+echo 'Valores de session';
+print_r ($_SESSION);
 
 
 ?>
@@ -279,7 +285,7 @@ if ($_POST['accion']=='editar'){
         <td><label>Otra Marca </label></td>
         <?php
 	     if ($_POST['id_marca']==''){  ?>
-		 <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];  ?>" required ></label></td>
+		 <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];   ?>" required ></label></td>
         <?php } else {  ?>
          <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];  ?>" disabled="disabled" ></label></td>
      
@@ -769,7 +775,7 @@ if ($_POST['accion']=='editar'){
        <td colspan="3" align="center">
         <input type="submit" name="accioned" value="Guardar" />
         <input type="reset" name="accione"  value="Limpiar" />
-	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab'];?>
+	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab']."&div=" .$_REQUEST['div']?>
 	    <input type="button" name="accionec" value="Cancelar" onClick="window.parent.location='<?php echo  $retorno;?>' "/>
      </td>
   </tr>    

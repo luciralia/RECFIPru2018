@@ -165,8 +165,8 @@ $combolab= new laboratorios();
 
 if ($_POST['accion']=='editar'){  
 
-//echo 'Valores a editar';
-//print_r ($_REQUEST);
+echo 'Valores a editar';
+print_r ($_POST);
 //echo 'Valores de session';
 //print_r ($_SESSION);
 ?>

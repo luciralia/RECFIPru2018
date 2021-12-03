@@ -15,8 +15,12 @@ require_once('../conexion.php');
 <p>&nbsp;</p>
 <?php 
 //echo'Equipo que llega para asignar ';
+ if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
+		   $_SESSION['id_div']=$_REQUEST['div'];
+		   if ($_SESSION['tipo_usuario']==9)
+                $_SESSION['id_div']=$_REQUEST['div'];
 //print_r($_SESSION);
-print_r($_REQUEST); 
+//print_r($_REQUEST); 
 ?>
 
 <!-- asigna equipo a un laboratorio-->
@@ -53,7 +57,7 @@ $updatequery= "UPDATE bienes SET bn_notas='COMPUTO' WHERE bn_id=" . $_REQUEST['b
 $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR TABLA BIENES');
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 } else {?>
@@ -135,7 +139,7 @@ $result=pg_query($con,$queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg
 //Despues de hacer la asignacion regresa a inventarios
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden']. '&ecasignar='. $_REQUEST['ecasignar']. '&_no_inv='. $_REQUEST['_no_inv']. '&_no_inv_ant='. $_REQUEST['_no_inv_ant']. '&_marca='. $_REQUEST['_marca']. '&_descripcion='. $_REQUEST['_descripcion']. '&_no_serie='. $_REQUEST['_no_serie'];
 
-/*$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']; */
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] ."&div=" .$_REQUEST['div']; 
 echo $direccion;
 header($direccion);
 
@@ -197,7 +201,7 @@ $query=sprintf($strquery,$reg[0],$_REQUEST['bn_id'],$_REQUEST['lab'],date('Y-m-d
 			
 
 } // fin else
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']; 
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] ."&div=" .$_REQUEST['div']; 
 echo $direccion;
 header($direccion);
 
@@ -240,7 +244,7 @@ $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');
 
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 } else {
@@ -309,6 +313,8 @@ licencia,licencia_ini,licencia_fin,fecha)
 	         
 $queryid=sprintf($strqueryd,$ultimo[0]+1,$_REQUEST['bn_id'],$_REQUEST['lab'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_clave'],$_REQUEST['bn_modelo'],date('Y-m-d'));
 
+echo $queryid;
+
 $result=pg_query($con,$queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
 
 // actualizar Etiqueta COMPUTO en bn_notas.
@@ -318,7 +324,7 @@ $updatequery= "UPDATE bienes SET bn_notas='COMPUTO' WHERE bn_id=" . $_REQUEST['b
 $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR TABLA BIENES');
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'];
 echo $direccion;
 header($direccion);
 }
@@ -384,7 +390,7 @@ $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR bienes');
 
 }
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 
@@ -475,7 +481,7 @@ if ($inventario>0) {
  
 		  
 		  }
-		  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&orden='. $_REQUEST['orden'];
+		  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
           echo $direccion;
           header($direccion);
              
@@ -552,7 +558,7 @@ else { ?>
 
    }
   //Despues de hacer la asignacion regresa a inventarios
- $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']; 
+ $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div']; 
 echo $direccion;
 header($direccion);
  
@@ -644,22 +650,25 @@ else
 	
 				
 	//busca la marca en el catálogo de marcas...
-				
-	$querym="SELECT descmarca 
+	
+	    
+	  
+	  
+	      		
+	  $querym="SELECT descmarca 
 							  FROM cat_marca
 			                  WHERE id_marca=".$_POST['id_marca'];
 		
 							  
               $registrom= pg_query($con,$querym);
               $marca= pg_fetch_array($registrom);
-			  
-			  
-if (isset($_POST['id_mem_ram']))
-
-   $memram= "select cantidad_ram from cat_memoria_ram where id_mem_ram=" . $_POST['id_mem_ram'];	
+			
+if (isset($_POST['id_mem_ram'])){
+    $memram= "select cantidad_ram from cat_memoria_ram where id_mem_ram=" . $_POST['id_mem_ram'];	
    	$result = pg_query($memram) or die('Hubo un error con la base de datos cat_memoria_ram');
-   $datosram=pg_fetch_array($result,NULL,PGSQL_ASSOC);	  
-	
+    $datosram=pg_fetch_array($result,NULL,PGSQL_ASSOC);	  
+}
+
 $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
                                     tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
                                     usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,
@@ -779,7 +788,7 @@ $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
 
     $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'];
     echo $direccion;
     header($direccion);
 
@@ -854,7 +863,7 @@ $queryud=sprintf($strqueryd,$cluster,$_POST['num_proc'],
 echo $queryud;
 
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en equipoarendimiento: ' . pg_last_error());
- $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&div=' . $_SESSION['id_div'];
+ $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'];
     echo $direccion;
     header($direccion);
 }

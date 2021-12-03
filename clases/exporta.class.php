@@ -165,6 +165,40 @@ where e.id_lab=" . $idlab;
 	unset ($datos);
 
 	}//termina metodo rengXls
+	
+	function eqDivXls($div){
+		
+				if($div!=''){
+					
+				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
+				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				WHERE ne.id_lab=l.id_lab 
+				AND l.id_dep=de.id_dep 
+				AND de.id_div=dv.id_div 
+				AND plazo=cpn.id 
+				AND justificacion=cjn.id
+				AND dv.id_div=" . $div . 
+				"ORDER BY id_nec DESC";
+		    }else if($div==''){$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
+				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				WHERE ne.id_lab=l.id_lab 
+				AND l.id_dep=de.id_dep 
+				AND de.id_div=dv.id_div 
+				AND plazo=cpn.id 
+				AND justificacion=cjn.id
+				ORDER BY id_nec DESC";	
+		}
+
+	     $result = pg_query($query) or die('Hubo un error con la base de datos');
+		 while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
+		    // echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
+		       $this->datos[]=$datosr;	
+		
+	}
+	return $this->datos;
+	unset ($datos);
+
+	}
 
 function DispXls(){
 	$query="SELECT  e.inventario,e.serie,e.marca_p,modelo_p,nombre_dispositivo,nombre_so,version_sist_oper,usuario_nombre,nombre_sector,tipo_usuario,

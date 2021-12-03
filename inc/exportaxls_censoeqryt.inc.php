@@ -44,8 +44,7 @@ $nombdiv= pg_fetch_array($registrodiv);
 
 
 $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $nombdiv[0] . '.xls"';
-}
-else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+}else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 $titulo='FacultadIngenieria';	
 $texto='Content-Disposition: attachment;filename="censoeqcomp_' . date("Ymd-His") . "_" . $titulo . '.xls"';	
 }	

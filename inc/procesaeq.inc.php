@@ -27,8 +27,8 @@ $id_req_aux+=1;
 echo "despues id_req_aux: " . $id_req_aux . "</br>";
 
 
-$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion, prioridad, plazo, justificacion, impacto, cto_unitario, id_cotizacion) VALUES (%d,%d,%d,'%s',%d,%d,%d,'%s',%.2f,%d)";
-$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion']);
+$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion, prioridad, plazo, justificacion, impacto, cto_unitario, id_cotizacion,otrajust) VALUES (%d,%d,%d,'%s',%d,%d,%d,'%s',%.2f,%d,'%s')";
+$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['otrajust']);
 
 
 $result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
@@ -43,13 +43,14 @@ header($direccion);
 
 
 <!-- Guarda datos de edicion de registro -->
-<?php if($_POST['accionm']=='Guardar'){ ?>
+<?php if($_POST['accionm']=='Guardar'){ 
+//print_r($_POST);?>
 <h1>Edicion</h1>
 <?php 
 
 /* *******************  La buena solo que aqui no actualizo justificacion ni cotizacion ni plazo hasta que ponga los combos *********** */
-$strquery="UPDATE necesidades_equipo SET id_nec=%d, id_lab=%d, cant=%d, descripcion='%s', prioridad=%d, plazo=%d, justificacion=%d, impacto='%s', cto_unitario=%.2f, id_cotizacion=%d, ref=%d where id_nec=" . $_POST['id_nec'] . " and id_lab=" . $_POST['lab'];
-$queryu=sprintf($strquery,$_POST['id_nec'],$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['ref']);
+$strquery="UPDATE necesidades_equipo SET id_nec=%d, id_lab=%d, cant=%d, descripcion='%s', prioridad=%d, plazo=%d, justificacion=%d, impacto='%s', cto_unitario=%.2f, id_cotizacion=%d, ref=%d , otrajust='%s' where id_nec=" . $_POST['id_nec'] . " and id_lab=" . $_POST['lab'];
+$queryu=sprintf($strquery,$_POST['id_nec'],$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['ref'],$_POST['otrajust']);
 
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
