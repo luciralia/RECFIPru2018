@@ -10,6 +10,10 @@ require_once('../inc/encabezado.inc.php');
    <tr>
     <td><?php 
 	
+	
+	//echo 'En inicio.html SESSION';
+	//	print_r ($_SESSION);
+	
 	if  ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==NULL)
      {
 	 $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 

@@ -80,8 +80,7 @@
          <?php } ?> 
          <?php // if ($_SESSION['tipo_usuario']==9)	 {?>
             <!--  <li><a href="../view/inicio.html.php?mod=act&lab=<?php  //echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li> -->        <?php  // } ?> 
-          
-	    
+     
        </ul>
        </li>
        
@@ -154,8 +153,9 @@
     <!-- Boton equipamiento -->
     <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
 
-	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
-	    <li><a href="../view/inicio.html.php?mod=eq&lab=<?php  echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Equipamiento</a></li>
+	<?php //$clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+    <?php $actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
+	    <li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Equipamiento</a></li>
 	<?php }?>
 	
     <!-- Botón cotizaciones-->

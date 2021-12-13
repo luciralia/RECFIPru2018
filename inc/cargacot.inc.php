@@ -19,7 +19,9 @@ and plazo=cpn.id
 and justificacion=cjnm.id
 and l.id_lab=";*/
 
-$query="SELECT * FROM cotizaciones WHERE id_lab=";
+$query="SELECT * FROM cotizaciones WHERE id_lab=" ;
+
+
 
 switch ($_GET['orden']){
  			case "proveedor":
@@ -48,6 +50,13 @@ switch ($_GET['orden']){
 
 <div class="barra_boton" style="width:800px;"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nuevo</a></div></div>
 
+<?php  $datos = pg_query($con,$query);
+	
+$inventario= pg_num_rows($datos); 
+	
+if ($inventario!=0 ){ ?>
+
+
 <div class="block" id="necesidades_content">      
 
  <?php //echo "Responsable: " . $lab->getResponsable($_SESSION['id_usuario']); ?> 
@@ -72,25 +81,31 @@ switch ($_GET['orden']){
  <br>
  <br>
 
-<?php
-
-
-/*echo $query . "</br>";*/
-
-$result = pg_query ($con, $query) or die('Hubo un error con la base de datos');
-
- ?>  
 
  
 <?php
 
-while ($datos = pg_fetch_array($result)) 
- { ?>
+}
+
+$datos = pg_query($con,$query) or die('Hubo un error con la base de datos');
+
+	
+$inventario= pg_num_rows($datos); 
+  
+if ($inventario!=0 ){
+	
+while ($cot_lab = pg_fetch_array($datos, NULL, PGSQL_ASSOC)) 
+
+ { 
+
+
+ 
+ ?>
 
 <?php $action="../view/inicio.html.php?lab=". $_REQUEST['lab'] ."&mod=". $_REQUEST['mod'] .'&orden='. $_REQUEST['orden'];?>
 <?php //$action="../inc/borrarcot.inc.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 
- <form name="cotiza<?php echo $datos['id_cotizacion']; ?>" method="post" action="<?php echo $action; ?>">
+ <form name="cotiza<?php echo $cot_lab['id_cotizacion']; ?>" method="post" action="<?php echo $action; ?>">
 
 <table class="cotizaciones">
   <tr>
@@ -103,22 +118,22 @@ while ($datos = pg_fetch_array($result))
   </tr>
 
   <tr>
-    <td ><?php echo $datos['folio']; ?></td>
-    <td ><?php echo $datos['proveedor']; ?></td>
-    <td ><?php echo $datos['tipo']; ?></td>
-    <td ><a href="<?php echo $datos['ruta']; ?>" target="_blank"><?php echo substr($datos['ruta'],strpos($datos['ruta'],'_')+1); ?></a></td>
+    <td ><?php echo $cot_lab['folio']; ?></td>
+    <td ><?php echo $cot_lab['proveedor']; ?></td>
+    <td ><?php echo $cot_lab['tipo']; ?></td>
+    <td ><a href="<?php echo $cot_lab['ruta']; ?>" target="_blank"><?php echo substr($cot_lab['ruta'],strpos($cot_lab['ruta'],'_')+1); ?></a></td>
 <!--<td align="center" valign="middle" ><input type="radio" name="accion" value="mod"></td>-->
 <!--<td align="center" valign="middle" ><input type="radio" name="accion" value="ok" checked></td>-->
     <td align="center" valign="middle" ><input type="submit" name="accion" value="Borrar"></td>
   </tr>
   </table>
   <br />
-  <input name="id_cotizacion" type="hidden" value="<?php echo $datos['id_cotizacion']; ?>" />
-  <input name="folio" type="hidden" value="<?php echo $datos['folio']; ?>" />
-  <input name="proveedor" type="hidden" value="<?php echo $datos['proveedor']; ?>" />
-  <input name="tipo" type="hidden" value="<?php echo $datos['tipo']; ?>" />
-  <input name="ruta" type="hidden" value="<?php echo $datos['ruta']; ?>" />
-  <input name="id_lab" type="hidden" value="<?php echo $datos['id_lab']; ?>" />
+  <input name="id_cotizacion" type="hidden" value="<?php echo $cot_lab['id_cotizacion']; ?>" />
+  <input name="folio" type="hidden" value="<?php echo $cot_lab['folio']; ?>" />
+  <input name="proveedor" type="hidden" value="<?php  echo $cot_lab['proveedor']; ?>" />
+  <input name="tipo" type="hidden" value="<?php echo $cot_lab['tipo']; ?>" />
+  <input name="ruta" type="hidden" value="<?php echo $cot_lab['ruta']; ?>" />
+  <input name="id_lab" type="hidden" value="<?php echo $cot_lab['id_lab']; ?>" />
   
   <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>">
   <input name="dep" type="hidden" value="<?php echo $_GET['dep']; ?>">
@@ -128,8 +143,18 @@ while ($datos = pg_fetch_array($result))
   </form>
       
       
-<?php      
+<?php  
+ 
+    
  }
+
+ 
+}else { ?>
+             <br>
+             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+             <tr> <td align="center"> <h3>No existen cotizaciones registradas.</h3> </td></tr>
+			
+		<?php }
  pg_close($con);
  ?>
 
@@ -138,11 +163,10 @@ while ($datos = pg_fetch_array($result))
 
 
 
-<!--   Archivo antiguo de carga de material            -->
-
 <?php
+/*
 
-	/*
+	
 	
 	$datos = pg_query($con,$query);
 
@@ -172,7 +196,7 @@ while ($datos = pg_fetch_array($result))
     <td><?php echo $lab_necmat['medida'];?></td>
     <td><?php echo $lab_necmat['costo'];?></td>
     <td><?php echo $total=$lab_necmat['cant']*$lab_necmat['costo'];?></td>
-    <td><?php echo /*$lab_necmat['plazo'];*/ /*$obj_req->getPlazo($lab_necmat['id_plazo'],'descripcion');?></td>
+    <td><?php echo $lab_necmat['plazo'];$obj_req->getPlazo($lab_necmat['id_plazo'],'descripcion');?></td>
     <td align="right"><?php echo $lab_necmat['motivo'];?></td>
     <td align="right"><?php echo $lab_necmat['justificacion'];?></td>
     <td><?php echo $obj_cotiza->getCotiza($lab_necmat['id_cotizacion']); ?></td>

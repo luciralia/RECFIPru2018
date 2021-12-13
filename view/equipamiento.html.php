@@ -1,5 +1,5 @@
 <?php 
-//require_once('../inc/encabezado.inc.php'); 
+require_once('../inc/encabezado.inc.php'); 
 
 require_once('../inc/sesion.inc.php');
 require_once('../clases/laboratorios.class.php');
@@ -23,7 +23,9 @@ $div = new departamentos();
   <tr>
     <?php if($_GET['lab']!='' && $_GET['div']==NULL ){?>
             <td align="center"><strong><h3><?php echo $lab->getLaboratorio($_GET['lab']);?></h3></strong></td>
-    <?php }elseif($_GET['div']!=NULL && $_GET['lab']==''){ ?>
+    <?php }elseif ($_GET['lab']!='' && $_GET['div']!='' ){?>
+            <td align="center"><strong><h3><?php echo $lab->getLaboratorio($_GET['lab']);?></h3></strong></td>
+	<?php }elseif($_GET['div']!=NULL && $_GET['lab']==''){ ?>
             <td align="center"><strong><h3><?php echo $div->getDivision($_GET['div']);?></h3></strong></td>
     <?php }elseif($_GET['div']==NULL && $_GET['lab']=='' ){ ?>
             <td align="center"><strong><h3><?php echo $div->getDivision($_GET['div']);?></h3></strong></td>
@@ -33,24 +35,24 @@ $div = new departamentos();
  
    <?php //if (!isset($_GET['lab']) || $_GET['lab']==""){ } else{ 
           if($_GET['lab']!='' && $_GET['div']==NULL ){?>
-<tr>
-<td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
-</tr>
-<?php //} ?>
- <?php //if (!isset($_GET['div']) || $_GET['div']==""){ 
-      }elseif($_GET['div']!=NULL && $_GET['lab']==''){?>
+       <tr>
+          <td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
+       </tr>
+   <?php  }else if ($_GET['lab']!='' && $_GET['div']!='' ){?>
+       <tr>
+          <td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
+     </tr>
+	 <?php  }elseif($_GET['div']!=NULL && $_GET['lab']=='' && $_SESSION['tipo_usuario']==10){?>
 	 <tr>
-<td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
-</tr>
-	
+          <td><div class="centrado"> <?php 
+		  require('../inc/equipo.inc.php');?></div></td>
+      </tr>
 	<?php //   } else if{ }
 	 }elseif($_GET['div']==NULL && $_GET['lab']=='' ){?>
-<tr>
-<td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
-</tr>
-<?php  } ?>
-
-
+      <tr>
+           <td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
+      </tr>
+ <?php  } ?>
 
 
 <?php require('../inc/pie.inc.php'); ?>

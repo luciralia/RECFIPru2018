@@ -39,10 +39,21 @@ require_once('../conexion.php');
                 $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
               
 				$direccion="location: ../view/inicio.html.php?mod=" . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-				if (headers_sent()) {
+			    header($direccion);
+				
+				
+                   /* if($result)
+                     {
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";
+
+                     }*/
+				
+				
+				
+				/*if (headers_sent()) {
                       // las cabeceras ya se han enviado, no intentar añadir una nueva
-             }
-		 /* }else {
+             }*/
+		/* }else {
     es posible añadir nuevas cabeceras HTTP
 	$direccion="location: ../view/inicio.html.php?mod=" . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
 	 header($direccion);
@@ -57,7 +68,6 @@ require_once('../conexion.php');
 		header($direccion);*/
 		
 		
-		}
-?>
+		}?>
 
 
