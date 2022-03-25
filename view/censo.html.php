@@ -1,4 +1,4 @@
-<?php 
+v.1.0008v.1.0008<?php 
 
 require_once('../inc/sesion.inc.php');
 require_once('../clases/laboratorios.class.php');

@@ -197,7 +197,28 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 
 	} // frin de bbuscar
 	
-	else if ($_REQUEST['bbuscarg']=='Buscar' && $_GET['lab']!='' ){
+	else if ($_REQUEST['bbuscarg']=='Buscar' &&  $_GET['lab']!='' ){
+	
+     // realiza la consulta del inventario general de la facultad con la finalidad de poder buscar en el inventario y asignar/desasignar disp
+	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+	
+	switch ($_GET['orden']){
+ 			case "descripcion":
+			$query.=" order by bn_desc asc";
+            break;
+ 			case "clave":
+			$query.=" order by bn_clave asc";
+ 			break;
+			case "marca":
+			$query.=" order by bn_marca asc";
+ 			break;
+ 			default:
+			$query.=" order by bi.bn_id";
+	        break;
+	}
+		
+	}
+		else if ($_REQUEST['bbuscarg']=='Buscar' && $_SESSION['id_div']=='' ){
 	
      // realiza la consulta del inventario general de la facultad con la finalidad de poder buscar en el inventario y asignar/desasignar disp
 	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
@@ -245,10 +266,10 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
      $datos = pg_query($con,$query); 
      $inventario= pg_num_rows($datos);
 	
- /*echo 'exhibe consulta buscarinv ';
- echo $query;*/
+ echo 'exhibe consulta buscarinv ';
+ echo $query;
 
-if ( ($_GET['mod']=='invg' && $_GET['lab']!='') ){
+if  ($_GET['mod']=='invg' && $_GET['lab']!=''){
 
 ?>
 

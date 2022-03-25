@@ -39,9 +39,9 @@ if($_POST['accion']=='Borrar'){
    //echo $query;
    $result = pg_query ($con, $query) or die('No se pudo borrar');
    unlink($_POST['ruta']);
-   echo "Coti borrada </br>";
+   //echo "Coti borrada </br>";
  //  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .  '&orden='. $_REQUEST['orden'];
-  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'];
+  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&lab=' . $_REQUEST['lab'] ;
    //echo "</br>" . $direccion . "</br>";
   
    echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";
@@ -50,9 +50,9 @@ if($_POST['accion']=='Borrar'){
    } 
 
  } else {
-		echo "No borrar";	
-		$Luz='Lux';
-		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod']. $Luz;
+		//echo "No borrar";	
+		
+		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&lab=' . $_REQUEST['lab'] ;
 		
 		// header($direccion);
 	    echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";

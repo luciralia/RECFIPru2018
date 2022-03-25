@@ -12,7 +12,7 @@ require_once('../inc/encabezado.inc.php');
 	
 	
 	//echo 'En inicio.html SESSION';
-	//	print_r ($_SESSION);
+	//print_r ($_SESSION);
 	
 	if  ($_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']==NULL)
      {
@@ -45,10 +45,11 @@ require_once('../inc/encabezado.inc.php');
                echo 'query inicio.html'.$querydiv;
      $div = pg_fetch_array($datosdiv);
      $_SESSION['id_div']=$div[0];
-   
+	 && $_GET['mod']!='invg' 
+    &
 	 }*/
-    
-    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='invg'  && $_GET['mod']!='act'  && $_GET['mod']!='invear' &&        $_GET['mod']!='impear'  &&  $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred'    )
+    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred')
+   /* if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='act'  && $_GET['mod']!='invear' &&        $_GET['mod']!='impear'  &&  $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred'  && $_GET['mod']!='invg'    )*/
             require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
   </tr>

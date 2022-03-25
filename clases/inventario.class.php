@@ -217,6 +217,45 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
 		return $query;
 }	
 
+	
+function selectEquipoFac($desc, $serie, $inv, $marca, $inv_ant){
+ 		//$where=" WHERE bn_in != NULL";
+		
+ 		if($desc != ''){
+ 			$array['bn_desc']="bn_desc like '%".$desc."%'";
+ 		}
+ 		if($serie != ''){
+ 			$array['bn_serie']="bn_serie like '%".$serie."%'";
+ 		}
+ 		if($inv != ''){
+ 			$array['bn_clave']="bn_clave like '%".$inv."%'";
+ 		}
+ 		if($marca != ''){
+ 			$array['bn_marca']="bn_marca like '%".$marca."%'";
+ 		}
+		if($inv_ant != ''){
+ 			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
+ 		}
+		
+		$query ="SELECT bi.bn_id,bn_desc,bn_serie,bn_clave,bn_marca,bn_anterior,bn_notas,e.id_lab,d.id_lab,nombre_dispositivo, nombre_so FROM  
+                bienes bi
+                FULL OUTER JOIN equipo e
+                ON bi.bn_id=e.bn_id
+		        FULL OUTER JOIN dispositivo d
+		        ON bi.bn_id=d.bn_id
+				LEFT JOIN cat_dispositivo cd
+				ON cd.dispositivo_clave=d.dispositivo_clave
+				LEFT JOIN cat_sist_oper cso
+				ON cso.id_sist_oper=d.sist_oper
+                 
+				WHERE " .implode(" AND ",$array);
+		
+	
+		return $query;
+}	
+
+
+
 
 
 function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant){

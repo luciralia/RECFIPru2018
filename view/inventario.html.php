@@ -10,7 +10,6 @@ $div = new departamentos();
  ?>
  
 
-
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
     <?php 
 		  
@@ -49,20 +48,23 @@ $div = new departamentos();
 
 <?php
 
-
+/*
 if ((!isset($_GET['lab']) || $_GET['lab']=='') && $_GET['mod']=='invg'  ) {
 	//echo 'entra aquí';
 	require('../inc/inventario.inc.php');
-	}else if ($_SESSION['id_div']!='' && $_GET['lab']!='' ){
-	  // echo 'entra a invnetario con div';
+	}else if (($_SESSION['id_div']!=''  && $_GET['lab']!='' ){
+	  echo 'entra a invnetario con div';
 	   require('../inc/inventario.inc.php');		
-	}else if ($_GET['mod']=='invc') { 
+    }else if ($_GET['mod']=='invc') { 
 	 // echo 'entra a invnetario con lab2';
 	    require('../inc/inventario.inc.php');}
 	  else if ( $_GET['mod']=='invear'  ) {
 	      require('../inc/inventario.inc.php');}
-	
-	
+	  else if ( $_GET['mod']=='invg'){
+	require ('../inc/inventario.inc.php');
+}		  
+	*/
+	require('../inc/inventario.inc.php');
 ?>
 
 </div></td>          

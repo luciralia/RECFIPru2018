@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="menu.inc.php" server="C:/webs/SIELDIv2/" local="130192662425575199" remote="130192662420000000" Dst="-1" />
-<file name="menu1.inc.php" server="C:/webs/SIELDIv2/" local="130197628397429639" remote="130197628390000000" Dst="-1" />
 <file name="menu2.inc.php" server="C:/webs/SIELDIv2/" local="130197641249544738" remote="130197641240000000" Dst="-1" />
 <file name="cargausr.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130300826460000000" remote="130915658230000000" Dst="-1" />
 <file name="inicio.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130428343740000000" remote="130915658300000000" Dst="-1" />
@@ -11,7 +10,6 @@
 <file name="cargaced.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130301456780000000" remote="130915658230000000" Dst="-1" />
 <file name="encabezado.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130429548980000000" remote="130915658290000000" Dst="-1" />
 <file name="menu.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130210730100000000" remote="130915658240000000" Dst="-1" />
-<file name="menu1.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="131099713785775346" remote="131099924300000000" Dst="2" />
 <file name="menu2.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130210730100000000" remote="130915658240000000" Dst="-1" />
 <file name="pie.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130210730100000000" remote="130915658240000000" Dst="-1" />
 <file name="redirect.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130210730100000000" remote="130915658250000000" Dst="-1" />
@@ -63,7 +61,6 @@
 <file name="borrarmobi.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427536680000000" remote="130915658280000000" Dst="-1" />
 <file name="cargamobixls.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427519840000000" remote="130915658280000000" Dst="-1" />
 <file name="editamobprueba.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130427765320000000" remote="130915658290000000" Dst="-1" />
-<file name="cargadocs.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130925394218722599" remote="130925446760000000" Dst="-1" />
 <file name="documentos.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130428298540000000" remote="130915658280000000" Dst="-1" />
 <file name="bitacora.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130463764880000000" remote="130915658270000000" Dst="-1" />
 <file name="cargabit.inc.php" server="132.248.52.241//var/www/SIELDIv2/" local="130873593640000000" remote="130915658280000000" Dst="-1" />
@@ -107,8 +104,7 @@
 <file name="cargacensotodo.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131560131123487281" remote="131790350970000000" Dst="2" />
 <file name="cargacensoV1.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131559460133489163" remote="131790350970000000" Dst="2" />
 <file name="cargacot.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132834734836818122" remote="132834735280000000" Dst="1" />
-<file name="cargadocs.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132043307790000000" remote="132043307790000000" Dst="1" />
-<file name="cargaeq.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132834616372058926" remote="132834618970000000" Dst="1" />
+<file name="cargaeq.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132864962008028335" remote="132864962390000000" Dst="1" />
 <file name="cargainfra.inc.funci.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130411034940000000" remote="131790350970000000" Dst="2" />
 <file name="cargainfra.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131657068442247999" remote="131790350970000000" Dst="2" />
 <file name="cargainvent.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132745780146818178" remote="132745780310000000" Dst="2" />
@@ -122,7 +118,7 @@
 <file name="cargaquejas.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130927406840000000" remote="131790350980000000" Dst="2" />
 <file name="cargaserv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130915623103727964" remote="131790350980000000" Dst="2" />
 <file name="cargausr.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
-<file name="cedula.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
+<file name="cedula.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132924644175776963" remote="132924644460000000" Dst="1" />
 <file name="censo.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131697469740977620" remote="131790350980000000" Dst="2" />
 <file name="censo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131577455553929708" remote="131790350980000000" Dst="2" />
 <file name="cmb_cotiza.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130259069580000000" remote="131790350980000000" Dst="2" />
@@ -155,14 +151,14 @@
 <file name="excelquejas.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130927439400000000" remote="131790350990000000" Dst="2" />
 <file name="exportaxls_censo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131699207813640459" remote="131790350990000000" Dst="2" />
 <file name="exportaxls_censoAnt.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131790386990000000" remote="131790386990000000" Dst="1" />
-<file name="exportaxls_censoeqc.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196450000000" remote="132055196450000000" Dst="1" />
-<file name="exportaxls_censoeqcar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196880000000" remote="132055196880000000" Dst="1" />
-<file name="exportaxls_censoeqcso.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196950000000" remote="132055196950000000" Dst="1" />
-<file name="exportaxls_censoeqcuf.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196770000000" remote="132055196770000000" Dst="1" />
-<file name="exportaxls_censoeqcufb.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196730000000" remote="132055196730000000" Dst="1" />
-<file name="exportaxls_censoeqdig.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196640000000" remote="132055196640000000" Dst="1" />
-<file name="exportaxls_censoeqimp.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196690000000" remote="132055196690000000" Dst="1" />
-<file name="exportaxls_censoeqryt.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055196850000000" remote="132055196850000000" Dst="1" />
+<file name="exportaxls_censoeqc.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132458672677199503" remote="132924632260000000" Dst="1" />
+<file name="exportaxls_censoeqcar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971065041574" remote="132924632520000000" Dst="1" />
+<file name="exportaxls_censoeqcso.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971065241577" remote="132924632680000000" Dst="1" />
+<file name="exportaxls_censoeqcuf.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971065401533" remote="132924632770000000" Dst="1" />
+<file name="exportaxls_censoeqcufb.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971065571507" remote="132924632840000000" Dst="1" />
+<file name="exportaxls_censoeqdig.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971065781504" remote="132924633000000000" Dst="1" />
+<file name="exportaxls_censoeqimp.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971065971513" remote="132924633070000000" Dst="1" />
+<file name="exportaxls_censoeqryt.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971066161582" remote="132924633130000000" Dst="1" />
 <file name="exportaxls_equip.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132829705704063239" remote="132832830650000000" Dst="1" />
 <file name="exportaxls_inv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132458672677629901" remote="132458699290000000" Dst="2" />
 <file name="exportaxls_mat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130915773280000000" remote="131790350990000000" Dst="2" />
@@ -174,10 +170,9 @@
 <file name="material.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280753080000000" remote="131790350990000000" Dst="2" />
 <file name="menu.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130210730100000000" remote="131790350990000000" Dst="2" />
 <file name="menu1.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131576607030869460" remote="131790350990000000" Dst="2" />
-<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132828537048097817" remote="132832831630000000" Dst="1" />
 <file name="menu1ANT.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131354539911674141" remote="131790350990000000" Dst="2" />
 <file name="menu2.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130210730100000000" remote="131790350990000000" Dst="2" />
-<file name="menu_usr.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137280000000" remote="132005137280000000" Dst="1" />
+<file name="menu_usr.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971067121573" remote="132924617790000000" Dst="1" />
 <file name="mobiliario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427770640000000" remote="131790350990000000" Dst="2" />
 <file name="pie.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130210730100000000" remote="131790350990000000" Dst="2" />
 <file name="procesabit.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130911610026333066" remote="131790350990000000" Dst="2" />
@@ -207,7 +202,7 @@
 <file name="exportainvgendivxls.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132458707904070059" remote="132458708520000000" Dst="2" />
 <file name="exportainvgendivxls_inv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131698446246106902" remote="131790350990000000" Dst="2" />
 <file name="exportaxlsgenarea_inv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137240000000" remote="132005137240000000" Dst="1" />
-<file name="cargadiv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132247132618146448" remote="132247132820000000" Dst="1" />
+<file name="cargadiv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132921919120158415" remote="132924608810000000" Dst="1" />
 <file name="actualizar.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137190000000" remote="132005137190000000" Dst="1" />
 <file name="editainventarioAnt.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131790386980000000" remote="131790386980000000" Dst="1" />
 <file name="exportaxls_censoeqc.inc.php.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131790386990000000" remote="131790386990000000" Dst="1" />
@@ -237,4 +232,6 @@
 <file name="importaraltorend.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132289481090103332" remote="132289481140000000" Dst="1" />
 <file name="cargaCensoDGTIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624764809620892" remote="132633255440000000" Dst="2" />
 <file name="exportaxls_censoCATIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624744538121770" remote="132633256830000000" Dst="2" />
+<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132921908825939907" remote="132924609600000000" Dst="1" />
+<file name="cargadocs.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132924621766166615" remote="132924622470000000" Dst="1" />
 </dwsync>

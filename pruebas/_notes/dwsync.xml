@@ -137,4 +137,6 @@
 <file name="menudesp.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137300000000" remote="132005137300000000" Dst="1" />
 <file name="Recfi.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132059724190000000" remote="132059724190000000" Dst="1" />
 <file name="exportaFaltantes.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132254860614397294" remote="132253139060000000" Dst="2" />
+<file name="tabla.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132183268923441212" remote="132864915770000000" Dst="1" />
+<file name="alumno.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132249571695142667" remote="132924608480000000" Dst="1" />
 </dwsync>

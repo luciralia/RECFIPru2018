@@ -17,7 +17,7 @@ $div = new departamentos();
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
     
   <tr>
-    <td align="center"><h2>Necesidades de Equipamiento</h2></td>
+    <td align="center"><h2>Necesidades de EQUIPAMIENTO</h2></td>
   </tr>
     <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
   <tr>
@@ -35,18 +35,17 @@ $div = new departamentos();
  
    <?php //if (!isset($_GET['lab']) || $_GET['lab']==""){ } else{ 
           if($_GET['lab']!='' && $_GET['div']==NULL ){?>
-       <tr>
+     <tr>
           <td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
-       </tr>
+     </tr>
    <?php  }else if ($_GET['lab']!='' && $_GET['div']!='' ){?>
-       <tr>
+      <tr>
           <td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
      </tr>
 	 <?php  }elseif($_GET['div']!=NULL && $_GET['lab']=='' && $_SESSION['tipo_usuario']==10){?>
 	 <tr>
-          <td><div class="centrado"> <?php 
-		  require('../inc/equipo.inc.php');?></div></td>
-      </tr>
+          <td><div class="centrado"> <?php require('../inc/equipo.inc.php');?></div></td>
+     </tr>
 	<?php //   } else if{ }
 	 }elseif($_GET['div']==NULL && $_GET['lab']=='' ){?>
       <tr>

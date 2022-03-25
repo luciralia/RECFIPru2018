@@ -1,5 +1,4 @@
  
-
 <?php
 
 require_once('../conexion.php');
@@ -161,27 +160,24 @@ $datos = pg_query($con,$query);
                     <tr>
     	                  <td colspan="9" align="left"><strong>Justificación</strong></td>
 	                </tr>
-                      <tr>
-                        <td colspan="9" align="left" valign="top"><?php echo $lab_nec['impacto'];?><br /><hr /></td>
-                      </tr>
+                    <tr>
+                          <td colspan="9" align="left" valign="top"><?php echo $lab_nec['impacto'];?><br /><?php if($_SESSION['tipo_usuario']==9){ ?><hr /> <?php }?></td>
+                    </tr>
 
 			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
 			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab'] ."_".$lab_nec['id_nec'];?>">
 			<?php if ($_SESSION['tipo_usuario']==9){ ?>
 			      <tr><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td> 
-                   <td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php //if (($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /><?php }?>
-                   </td>
+                      <td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php //if (($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td><?php }?>
               </tr>
-	
-				
-				<?php
+	        <?php
 				foreach ($lab_nec as $campo => $valor) {
 				        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
 				echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				
 				}
 				?>
-				</form>
+			</form>
 </table> 
  <br>
 	<?php	

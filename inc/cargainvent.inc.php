@@ -18,23 +18,13 @@ $logger->putLog(7,2);
 
 $bandera1=0;
 
-echo'Session en cargaInv';
-print_r($_SESSION);
 
-echo'-REQUEST en cargaInv';
-print_r($_REQUEST); 
 
-/*	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
+ if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
 		   if ($_SESSION['tipo_usuario']==9)
-                $_SESSION['id_div']=$_REQUEST['div'];*/
+                $_SESSION['id_div']=$_REQUEST['div'];
 		  
-/*	 
-if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='') !=NULL
-  $_SESSION['id_div']=$_REQUEST['div'];
-if ($_SESSION['tipo_usuario']==9)
-  $_SESSION['id_div']=$_REQUEST['div'];
-*/
 
 
 if ($_GET['mod']=='invg' ){
@@ -43,8 +33,9 @@ if ($_GET['mod']=='invg' ){
 
 <tr>
 <td align="center">
-
+<?php if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='' ){ }else{?>
 <div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div>
+<?php}	?>	 
 <br/>
 <br/>
 </td>
@@ -76,10 +67,10 @@ if ($_GET['mod']=='invg' ){
 </td>
 </tr>
 <?php	
-/*
-         if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10))
-		
-           {
+
+        // if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10))
+		/*if ($_SESSION['id_div']!=NULL && $_GET['lab']!=NULL ) {
+           
            echo 'lab dif null usuario df 10';
                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                               from dispositivo e 
@@ -120,10 +111,10 @@ if ($_GET['mod']=='invg' ){
 	    	break;
 			
            } // fin de switch
-        }*/
-		 if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']=='' )) {
+        }else*/
+		 if( $_SESSION['tipo_usuario']!=10 && ($_SESSION['id_div']!='' && $_GET['lab']=='' )) {
         //else if( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!='') {
-			//echo 'usuario dif 10 y la div dif null';
+			echo 'usuario dif 10 y la div dif null';
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
                left join cat_dispositivo cd
@@ -167,8 +158,10 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
 		
-   }else  if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
+   }//else  if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
+	else  if( ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
    { 
+	   echo ' invg or usu dif 10';
 			 $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                               from dispositivo e 
                               left join cat_dispositivo cd
@@ -207,10 +200,9 @@ if ($_GET['mod']=='invg' ){
 			    $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
 	    	break;
         } // fin de switch
-  }else 
-   if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='')) {
+  }else if(($_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='' )) {
 	   
-       // echo 'usuario =10 y div =10';
+       echo 'usuario =10 y div =10';
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
                left join cat_dispositivo cd
@@ -236,7 +228,7 @@ if ($_GET['mod']=='invg' ){
                left join departamentos dp
                on dp.id_dep=l.id_dep
                ";
-   } elseif(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) 
+   } elseif(( $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) 
   {
         echo 'otro';
         
@@ -284,11 +276,12 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
   }
-  
-  //echo $query;
+
+  echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
-    if (($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 )&& $_GET['lab']==NULL){ ?>
+   // if (($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 )&& $_GET['lab']==NULL){ 
+        // if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 ){?>
         <tr>
         <td align="right">  <h3> Inventario por División</h3> </td>
        
@@ -338,8 +331,7 @@ if ($_GET['mod']=='invg' ){
             </td>
             </tr> 
             
- <?php } ?>
-
+ <?php // } ?>
 </td>
 </tr>
 
@@ -641,7 +633,7 @@ if ( $_SESSION['id_div']==NULL)
 			
         } // fin de switch
 }
-//echo $query;
+echo $query;
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); //lHH
 
