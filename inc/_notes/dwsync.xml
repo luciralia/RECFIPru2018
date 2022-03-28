@@ -107,7 +107,7 @@
 <file name="cargaeq.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132864962008028335" remote="132864962390000000" Dst="1" />
 <file name="cargainfra.inc.funci.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130411034940000000" remote="131790350970000000" Dst="2" />
 <file name="cargainfra.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131657068442247999" remote="131790350970000000" Dst="2" />
-<file name="cargainvent.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132745780146818178" remote="132745780310000000" Dst="2" />
+<file name="cargainvent.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132926942656016599" remote="132926943790000000" Dst="1" />
 <file name="cargainventtodo.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131560130633747419" remote="131790350970000000" Dst="2" />
 <file name="cargainventVant.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131348470925234613" remote="131790350970000000" Dst="2" />
 <file name="cargaldd.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
@@ -165,7 +165,7 @@
 <file name="exportaxls_serv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130915768720000000" remote="131790350990000000" Dst="2" />
 <file name="infraestructura.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130414525820000000" remote="131790350990000000" Dst="2" />
 <file name="inicio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131728701386720061" remote="131790350990000000" Dst="2" />
-<file name="inventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132044164050000000" remote="132044164050000000" Dst="1" />
+<file name="inventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132926937954481961" remote="132926938200000000" Dst="1" />
 <file name="inventarioEqu.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131377732466316675" remote="131790350990000000" Dst="2" />
 <file name="material.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280753080000000" remote="131790350990000000" Dst="2" />
 <file name="menu.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130210730100000000" remote="131790350990000000" Dst="2" />

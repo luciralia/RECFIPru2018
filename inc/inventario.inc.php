@@ -6,11 +6,11 @@ if (($_REQUEST['accion']=='buscar'||$_REQUEST['bbuscar']=='Buscar'|| $_REQUEST['
 				{ //echo 'buscar en invgen';
 				require_once('buscarcambio.inc.php');} 
 				//else if ( $_REQUEST['lab']==NULL || (!isset($_REQUEST['lab'] ) && $_REQUEST['div']==NULL))
-				//else if (( $_REQUEST['lab']==NULL && !isset($_REQUEST['div'])) || (!isset($_REQUEST['lab'] )))
-				//{
-				echo 'buscar en invgensin';
-				  //  require_once('cargainvent.inc.php');
-				//}
+				else if (( $_REQUEST['lab']==NULL && !isset($_REQUEST['div'])) || (!isset($_REQUEST['lab'] )))
+				
+				//echo 'buscar en invgensin';
+				 require_once('cargainvent.inc.php');
+				
 				 if (!isset($_REQUEST['accion']) || $_REQUEST['accion']=='')
 				{ 
 					require_once('cargainvent.inc.php');} 
@@ -18,7 +18,6 @@ if (($_REQUEST['accion']=='buscar'||$_REQUEST['bbuscar']=='Buscar'|| $_REQUEST['
 				    {require_once('edicion.inc.php');}
 				else if ( $_REQUEST['accion']=='editarAR' || $_REQUEST['accion']=='editarG') 
 				    {require_once('editarear.inc.php');}	
-					
 				else if ($_REQUEST['accion']=='nuevo') 
 				{require_once('editainventario.inc.php');}
              

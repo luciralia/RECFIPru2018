@@ -1,5 +1,5 @@
 ﻿
-<strong></strong>
+
 <?php
 // version que no toma equipoexperimentaL PARA VER
 require_once('../conexion.php');
@@ -17,24 +17,14 @@ $madq = new inventario();
 $logger->putLog(7,2);
 
 $bandera1=0;
-/*
-echo'Session en cargaInv';
-print_r($_SESSION);
 
-echo'-REQUEST en cargaInv';
-print_r($_REQUEST); */
 
-	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+
+ if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
 		   if ($_SESSION['tipo_usuario']==9)
                 $_SESSION['id_div']=$_REQUEST['div'];
 		  
-/*	 
-if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='') !=NULL
-  $_SESSION['id_div']=$_REQUEST['div'];
-if ($_SESSION['tipo_usuario']==9)
-  $_SESSION['id_div']=$_REQUEST['div'];
-*/
 
 
 if ($_GET['mod']=='invg' ){
@@ -43,8 +33,9 @@ if ($_GET['mod']=='invg' ){
 
 <tr>
 <td align="center">
-
+<?php if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']=='' ){ }else{?>
 <div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div>
+<?php}	?>	 
 <br/>
 <br/>
 </td>
@@ -76,10 +67,10 @@ if ($_GET['mod']=='invg' ){
 </td>
 </tr>
 <?php	
-/*
-         if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10))
-		
-           {
+
+        // if($_GET['lab']!=NULL && ($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10))
+		/*if ($_SESSION['id_div']!=NULL && $_GET['lab']!=NULL ) {
+           
            echo 'lab dif null usuario df 10';
                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                               from dispositivo e 
@@ -120,10 +111,10 @@ if ($_GET['mod']=='invg' ){
 	    	break;
 			
            } // fin de switch
-        }*/
-		 if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']=='' )) {
+        }else*/
+		 if( $_SESSION['tipo_usuario']!=10 && ($_SESSION['id_div']!='' && $_GET['lab']=='' )) {
         //else if( $_SESSION['tipo_usuario']!=10 && $_SESSION['id_div']!='') {
-			//echo 'usuario dif 10 y la div dif null';
+			echo 'usuario dif 10 y la div dif null';
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
                left join cat_dispositivo cd
@@ -167,8 +158,10 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
 		
-   }else  if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
+   }//else  if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']!=10) && ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
+	else  if( ($_SESSION['id_div']!='' && $_GET['lab']!='' ))
    { 
+	   echo ' invg or usu dif 10';
 			 $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                               from dispositivo e 
                               left join cat_dispositivo cd
@@ -207,10 +200,9 @@ if ($_GET['mod']=='invg' ){
 			    $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
 	    	break;
         } // fin de switch
-  }else 
-   if(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='')) {
+  }else if(($_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']=='' )) {
 	   
-       // echo 'usuario =10 y div =10';
+       echo 'usuario =10 y div =10';
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 
                left join cat_dispositivo cd
@@ -236,7 +228,7 @@ if ($_GET['mod']=='invg' ){
                left join departamentos dp
                on dp.id_dep=l.id_dep
                ";
-   } elseif(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) 
+   } elseif(( $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) 
   {
         echo 'otro';
         
@@ -284,11 +276,12 @@ if ($_GET['mod']=='invg' ){
 			
         } // fin de switch
   }
-  
-  //echo $query;
+
+  echo $query;
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
-    if (($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 )&& $_GET['lab']==NULL){ ?>
+   // if (($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 )&& $_GET['lab']==NULL){ 
+        // if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 ){?>
         <tr>
         <td align="right">  <h3> Inventario por División</h3> </td>
        
@@ -338,11 +331,10 @@ if ($_GET['mod']=='invg' ){
             </td>
             </tr> 
             
- <?php } ?>
-
+ <?php // } ?>
 </td>
 </tr>
-<br>
+
  <?php
      if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  
@@ -385,7 +377,7 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
@@ -404,7 +396,8 @@ if ($_GET['mod']=='invg' ){
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>  
                <th width="20%" scope="col">Estado</th>  
-               <th width="20%" scope="col">      </th>  
+               <!--<th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>-->
              </tr>
             
              <tr>   
@@ -418,6 +411,9 @@ if ($_GET['mod']=='invg' ){
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td> 
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
+                   <!-- <td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>-->
+                  
                  
           </tr>
           
@@ -433,7 +429,7 @@ if ($_GET['mod']=='invg' ){
         
  <?php  if (($_SESSION['tipo_usuario']!=10)) {
      
-     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_REQUEST['div'].'&orden='. $_REQUEST['orden'];?>
       <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; 
 	  ?>">
 
@@ -637,7 +633,7 @@ if ( $_SESSION['id_div']==NULL)
 			
         } // fin de switch
 }
-
+echo $query;
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); //lHH
 
@@ -764,7 +760,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
 		
-		 //print_r($lab_invent);
+		//print_r($lab_invent);
 		if ((integer)$lab_invent['servidor']==1)
 		 {$etiqServidor='Si';}
 		 else 
@@ -806,7 +802,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de  Procesadores</th>
                <th width="20%" scope="col">Núcleos GPU</th>
                
-           </tr>
+            </tr>
        
      <?php     
     
@@ -831,6 +827,10 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 
 <?php } //fin de si y solo hay registros 
 
+	/* if (isset($lab_invent['marca_p']))
+		$marcav=$lab_invent['marca_p'];
+	 else 
+	     $marcav=$lab_invent['marca_esp']; */
 	 
            $bandera=1;
 		   
@@ -842,12 +842,17 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['marca'];?></td>
-                  <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
+               <?php if ($lab_invent['id_marca']>0){ ?>  
+                  <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
+                   <?php }elseif ($lab_invent['id_marca']==0){ ?> 
+                   <td width="20%" scope="col"><?php echo $lab_invent['marca_esp'];?></td>
+                   <?php } ?>   
+                  <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
+                  
                   
                  
          </tr>
@@ -860,12 +865,17 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['inventario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
+                   <?php if ($lab_invent['id_marca']>0){ ?>  
                   <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
+                   <?php }elseif ($lab_invent['id_marca']==0){ ?> 
+                   <td width="20%" scope="col"><?php echo $lab_invent['marca_esp'];?></td>
+                   <?php } ?>   
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo_p'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
+                  
                  
            </tr>
            
@@ -888,6 +898,9 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
+               <!-- <th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>-->
+              
               
            
      <?php     
@@ -905,7 +918,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                <th width="20%" scope="col">Número de arreglos</th>
                <th width="20%" scope="col">Capacidad Total</th>
                <th width="20%" scope="col">Estado</th>
-              
+               <!--<th width="20%" scope="col">Acceso red</th>
+               <th width="20%" scope="col">Salida Internet</th>-->
            </tr>
            
          
@@ -926,8 +940,9 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
-                
-         </tr>
+                 <!--<td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>-->
+          </tr>
          
          <?php   
 			
@@ -945,8 +960,9 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['num_arreglos'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['arreglo_total'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['estadobien'];?></td>
-                 
-                  
+                 <!-- <td width="20%" scope="col"><?php echo $lab_invent['accesored'];?></td>
+                  <td width="20%" scope="col"><?php echo $lab_invent['salidainternet'];?></td>-->
+              
           </tr>
          
   <?php } //fin elseif ?> 
@@ -957,20 +973,21 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
         /* foreach ($lab_invent as $campo => $valor) {
              // echo "\$usuario[$campo] => $valor.\n" . "</br>";
               echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
-
-         }
-		 */?>
+         
+		 
+		  }
+		 */
+		 
+		 ?>
 
  <?php  if (($_SESSION['tipo_lab']=='c' || $_SESSION['tipo_lab']=='o' || $_SESSION['tipo_lab']=='e' || $_SESSION['tipo_lab']=='u'||$_SESSION['tipo_lab']=='s' ||$_SESSION['tipo_lab']=='a'||$_SESSION['tipo_lab']=='b'||$_SESSION['tipo_lab']=='t') && $_GET['mod']=='invc' && $_SESSION['tipo_usuario']!=10 ){
 
  ?>
-   
-      
-      <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+ <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_REQUEST['div'].'&orden='. $_REQUEST['orden'];?>
       
       <form action="<?php echo $action1; ?>" method="post" name="edi_inv_<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
  
-       <tr><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editar" /> </td></tr>
+       <tr><td style="text-align: right" colspan="12"><input name="accion" type="submit" value="editar" /> </td></tr>
  
         <?php
 	
@@ -1034,7 +1051,6 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 
 </form>
 <!--</td>-->
-
 
 </td>
 </tr>
@@ -1230,8 +1246,6 @@ if ($_SESSION['tipo_usuario']==9)
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
         
-        
-                    
           <!--  <tr>
               <td>
               
@@ -1245,10 +1259,7 @@ if ($_SESSION['tipo_usuario']==9)
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              </td>
             </tr> -->
-            
-            
-            
-            
+       
  <?php } ?>
 
 </td>
@@ -1339,7 +1350,7 @@ if ($_SESSION['tipo_usuario']==9)
  
  <?php  if (($_SESSION['tipo_usuario']==9)) {
      
-     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_REQUEST['orden'];?>
+     $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_REQUEST['div'].'&orden='. $_REQUEST['orden'];?>
    
     <form action="<?php echo $action1; ?>" method="post" name="edi_inv_AR<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
           <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>
@@ -1362,9 +1373,8 @@ if ($_SESSION['tipo_usuario']==9)
 
      <?php  } else {
 	 //$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];
-	
-	  //isset($_GET['lab']) && isset($_GET['mod']) 
-	 }
+	//isset($_GET['lab']) && isset($_GET['mod']) 
+	     }
 	 } //while
 
  if (($inventario==0 ) && $bandera1==0 ) { ?>
@@ -1373,12 +1383,9 @@ if ($_SESSION['tipo_usuario']==9)
 <legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
 
 <?php
-}
+         }
 
 }
-
-
-
 ?>
 <br/>
 <br/>

@@ -37,8 +37,12 @@ if ($_SESSION['tipo_usuario']==1){
       }
 
 
-	if ( $_SESSION['id_div']==NULL)
-	     $_SESSION['id_div']=$_REQUEST['div'];
+	/*if ( $_SESSION['id_div']==NULL)
+	     $_SESSION['id_div']=$_REQUEST['div'];*/
+if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+		   $_SESSION['id_div']=$_REQUEST['div'];
+		   if ($_SESSION['tipo_usuario']==9)
+                $_SESSION['id_div']=$_REQUEST['div'];
 /*
 echo 'en buscarcambio REQUEST';
 print_r($_REQUEST);*/
@@ -569,7 +573,7 @@ $inventarioexp= pg_num_rows($datosexp);
  elseif ( $_GET['mod']=='invg' && $_GET['lab']=='') {
 	 
 	 $bandera=0;
-	
+	echo 'invg y sin lab';
      
 if ($inventario!=0){?>
 
@@ -927,6 +931,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
 		 <?php
 		 if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='inv'   ) {
 		 //&& $lab_invent['bn_notas']=='EQUIPO'
+			echo 'labeinv';
 		?>
          
 		 <tr>
@@ -942,8 +947,9 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
 			
 			$bandera=1;
 			
-			} elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' ) { ?>
-            
+			} elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' ) { 
+            echo 'labeinvc';?>
+           
 			<tr>
                <th width="20%" scope="col">No. Inventarioeinvc</th>
                <th width="20%" scope="col">No. Inventario Área</th>
@@ -961,7 +967,8 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
        
      <?php     
     
-	 }elseif ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc') {   ?>
+	 }elseif ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc') { 
+            echo 'lab!einvc';  ?>
         
          <tr>
                <th width="20%" scope="col">No. Inventario!einvc</th>
@@ -1000,7 +1007,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
            $bandera=1;
 		   
 		//	} else 
-			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) {  ?>
+			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) { echo 'labeinvc'; ?>
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -1019,7 +1026,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
          </tr>
          
          <?php     
-         }  elseif ($_SESSION['tipo_lab']!='e' &&  $_GET['mod']=='invc'  ) { ?>
+         }  elseif ($_SESSION['tipo_lab']!='e' &&  $_GET['mod']=='invc'  ) { echo 'lab!einvc'; ?>
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -1042,7 +1049,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
           	<?php 
       
 		
-		if ($_SESSION['tipo_lab']=='e'  && $_GET['mod']=='invc' ) { ?>
+	if ($_SESSION['tipo_lab']=='e'  && $_GET['mod']=='invc' ) { ?>
         
            <tr>
                <th width="20%" scope="col">Sistema Operativoeinvc</th>
