@@ -66,6 +66,7 @@ if ($_GET['mod']=='invg' ){
 <?php
 
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
+	echo "<input name='div' type='hidden' value='". $_SESSION['id_div']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
    
 <input name="bOrden" type="submit" value="ordenar" />
@@ -238,7 +239,7 @@ if ($_GET['mod']=='invg' ){
                ";
    } elseif(($_GET['mod']=='invg' || $_SESSION['tipo_usuario']==10) && ($_SESSION['id_div']!='')) 
   {
-        echo 'otro';
+        //echo 'otro';
         
                $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
                from dispositivo e 

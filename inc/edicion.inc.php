@@ -182,15 +182,15 @@ $combolab= new laboratorios();
 		   $_SESSION['id_div']=$_REQUEST['div'];
 		   if ($_SESSION['tipo_usuario']==9)
                 $_SESSION['id_div']=$_REQUEST['div'];*/
-				echo 'Valores de session';
-print_r ($_SESSION);
+				//echo 'Valores de session';
+//print_r ($_SESSION);
 
 if ($_POST['accion']=='editar'){  
 
-//echo 'Valores a editar';
-//print_r ($_REQUEST);
+/*echo 'Valores a editar';
+print_r ($_REQUEST);
 echo 'Valores de session';
-print_r ($_SESSION);
+print_r ($_SESSION);*/
 
 
 ?>
@@ -214,6 +214,15 @@ print_r ($_SESSION);
        <td><label>Descripción Extensa</label></td>
        <td><label><input type="text" name="descextensa" id="descextensa" size="60" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
          <!--<td><textarea  name="descextensa" id="descextensa" value="<?php  echo $_POST['descextensa'];?>" required> </textarea></td>-->
+        <?php if ($_POST['dispositivo_clave']==10){ ?>
+         <td><label>Tipo Impresora:</label></td>
+         <td><label><?php $combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
+         <?php } ?>
+         
+         <?php if ($_POST['dispositivo_clave']==11){ ?>
+         <td><label>Tipo Digitalizador:</label></td>
+         <td><label><?php $combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>
+         <?php } ?>
     </tr>
      <tr>
         <td><label>Área</label></td>

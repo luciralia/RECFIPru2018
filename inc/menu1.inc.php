@@ -42,11 +42,8 @@
 	<!-- Boton quejas -->
 	<!--<?php $clase=($_GET['mod']=='que')?'" class="actual"':$clase='"'; ?>
 	<li><a href="../view/inicio.html.php?mod=que&lab=<?php echo $_GET['lab'];?>" <?php echo $clase;?>Quejas y sugerencias</a></li> -->
-
-         <!-- Botón inventario -->
-
-
-          <?php $clase=($_GET['mod']=='inv' || $_GET['mod']=='invc' || $_GET['mod']=='invg' || $_GET['mod']=='imp' )?'"  class="actual"':$clase='"'; ?>
+                <!-- Botón inventario -->
+                <?php $clase=($_GET['mod']=='inv' || $_GET['mod']=='invc' || $_GET['mod']=='invg' || $_GET['mod']=='imp' )?'"  class="actual"':$clase='"'; ?>
       
  	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
  	      
@@ -111,7 +108,8 @@
             <?php if(($_SESSION['tipo_usuario']==10  || $_SESSION['tipo_usuario']==9) && ( $_GET['lab']=='')){
 			//&& ( $_GET['div']!=''  ) ){ 
 			?>
-            <li><a href="../view/inicio.html.php?mod=censo&lab=<?php  echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC</a></li> 
+            <!--<li><a href="../view/inicio.html.php?mod=censo&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC</a></li>-->
+			<li><a href="../view/inicio.html.php?mod=censoC&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC 2021</a></li> 
           <?php } ?>
          
          </ul>  <!--Fin de equipo de Cómputo-->
@@ -160,6 +158,11 @@
 	<?php $actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
      <li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
 <?php }?>
+
+   
+
+
+
  <?php //if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
            <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
            <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Documentos</a></li>

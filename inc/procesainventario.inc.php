@@ -15,12 +15,14 @@ require_once('../conexion.php');
 <p>&nbsp;</p>
 <?php 
 //echo'Equipo que llega para asignar ';
- if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
+ if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
-		   if ($_SESSION['tipo_usuario']==9)
+		   if ($_SESSION['tipo_usuario']==9 && $_SESSION['id_div']=='')
                 $_SESSION['id_div']=$_REQUEST['div'];
-//print_r($_SESSION);
-//print_r($_REQUEST); 
+echo 'valores en procesainventario'	;
+print_r($_SESSION);
+	
+print_r($_REQUEST); 
 ?>
 
 <!-- asigna equipo a un laboratorio-->
@@ -34,13 +36,15 @@ $query="SELECT * FROM dispositivo d
 	    ON dep.id_dep=l.id_dep
 	    WHERE bn_id=". $_REQUEST['bn_id'] .
 		" AND (id_div=". $_SESSION['id_div']. 
-		" OR id_div is NULL)";
+		" OR id_div is NULL";
 
 
 
 $datos = pg_query($con,$query);
 $reg= pg_fetch_array($datos);
 $inventario= pg_num_rows($datos); 
+	
+	echo $query;
 
 if ($inventario > 0 )
 {   
@@ -57,7 +61,7 @@ $updatequery= "UPDATE bienes SET bn_notas='COMPUTO' WHERE bn_id=" . $_REQUEST['b
 $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR TABLA BIENES');
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 } else {?>
@@ -137,9 +141,9 @@ echo $queryid;
 $result=pg_query($con,$queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden']. '&ecasignar='. $_REQUEST['ecasignar']. '&_no_inv='. $_REQUEST['_no_inv']. '&_no_inv_ant='. $_REQUEST['_no_inv_ant']. '&_marca='. $_REQUEST['_marca']. '&_descripcion='. $_REQUEST['_descripcion']. '&_no_serie='. $_REQUEST['_no_serie'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_SESSION['id_div']. '&orden='. $_REQUEST['orden']. '&ecasignar='. $_REQUEST['ecasignar']. '&_no_inv='. $_REQUEST['_no_inv']. '&_no_inv_ant='. $_REQUEST['_no_inv_ant']. '&_marca='. $_REQUEST['_marca']. '&_descripcion='. $_REQUEST['_descripcion']. '&_no_serie='. $_REQUEST['_no_serie'];
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] ."&div=" .$_REQUEST['div']; 
+//$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] ."&div=" .$_SESSION['id_div']; 
 echo $direccion;
 header($direccion);
 
@@ -201,7 +205,7 @@ $query=sprintf($strquery,$reg[0],$_REQUEST['bn_id'],$_REQUEST['lab'],date('Y-m-d
 			
 
 } // fin else
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] ."&div=" .$_REQUEST['div']; 
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] ."&div=" .$_SESSION['id_div']; 
 echo $direccion;
 header($direccion);
 
@@ -244,7 +248,7 @@ $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');
 
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 } else {
@@ -292,7 +296,7 @@ tec_uno,tec_dos,tec_tres,tec_cuatro,
 subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro,
 arreglo_total,tec_com,tec_com_otro,
 sist_oper,version_sist_oper,
-licencia,licencia_ini,licencia_fin,fecha)
+licencia,licencia_ini,licencia_fin,fecha,tipo_impresora,tipo_digitaliza)
 		   VALUES (%d,%d,%d,
 		           3,NULL,NULL,
 				   NULL,NULL,NULL,NULL,
@@ -309,7 +313,7 @@ licencia,licencia_ini,licencia_fin,fecha)
 				   0,0,0,0,
 				   0,0,NULL,
 				   0,NULL,
-				   0,NULL,NULL,'%s')";
+				   0,NULL,NULL,'%s',%d,%d)";
 	         
 $queryid=sprintf($strqueryd,$ultimo[0]+1,$_REQUEST['bn_id'],$_REQUEST['lab'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_clave'],$_REQUEST['bn_modelo'],date('Y-m-d'));
 
@@ -324,7 +328,7 @@ $updatequery= "UPDATE bienes SET bn_notas='COMPUTO' WHERE bn_id=" . $_REQUEST['b
 $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR TABLA BIENES');
 
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'];
 echo $direccion;
 header($direccion);
 }
@@ -390,7 +394,7 @@ $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR bienes');
 
 }
 //Despues de hacer la asignacion regresa a inventarios
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'].'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 
@@ -481,7 +485,7 @@ if ($inventario>0) {
  
 		  
 		  }
-		  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'].'&orden='. $_REQUEST['orden'];
+		  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'].'&orden='. $_REQUEST['orden'];
           echo $direccion;
           header($direccion);
              
@@ -558,7 +562,7 @@ else { ?>
 
    }
   //Despues de hacer la asignacion regresa a inventarios
- $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div']; 
+ $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div']; 
 echo $direccion;
 header($direccion);
  
@@ -683,7 +687,7 @@ $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_fin
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-licencia_ini='%s',licencia_fin='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d
+licencia_ini='%s',licencia_fin='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
@@ -703,9 +707,10 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,
                           date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),
 						  $_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
-						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod']);	
+						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza']);	
 						  
 echo $queryud;
+	
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en dispositivo: ' . pg_last_error());
 
 if (isset($_POST['idsoper']))
@@ -863,7 +868,7 @@ $queryud=sprintf($strqueryd,$cluster,$_POST['num_proc'],
 echo $queryud;
 
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en equipoarendimiento: ' . pg_last_error());
- $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_REQUEST['div'];
+ $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'];
     echo $direccion;
     header($direccion);
 }

@@ -692,14 +692,12 @@ if($size > 0){
 					 AND columna5=3
 				     AND columna10=3 AND columna11=3
 					 AND columna16!=0 AND columna17!=0
-					 
 					 AND columna21!=0 AND columna22!=0
 					 AND columna30!=2 AND columna31!=2
 			         AND columna32!=2 AND columna33!=2 
 					 AND columna34!=2 AND columna35!=2
 				     AND columna36!=2 AND columna37!=2 
 					 AND columna46!=0 AND columna47!=0
-					
 					 AND columna50!=0 AND columna51=1
 					 ";
 			 
@@ -738,7 +736,7 @@ if($size > 0){
 							  ON dv.id_div=d.id_div
 			                  WHERE inventario="."'".$datosdec[15]."'".
 							  " AND dv.id_div=" .$_SESSION['id_div'];
-							 /*			 $querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
+							 /*$querye="SELECT ec.id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
 			                  memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
 							  estadobien,servidor,descextensa 
 							  FROM equipoc ec
@@ -825,7 +823,7 @@ if($size > 0){
               accesorios,garantiamanten,arquitectura ,
               estadobien,servidor,descextensa , 
               id_marca , marca, marca_esp,
-              id_mem_ram,importa,accesored,salidainternet)
+              id_mem_ram,importa,accesored,salidainternet,tipo_impresora,tipo_digitaliza)
 
 		      VALUES (%d,%d,%d,
 		           %d,%d,%d,
@@ -849,7 +847,7 @@ if($size > 0){
 				   '%s','%s','%s',  
 				   '%s','%s','%s',  
 				   %d,'%s','%s', 
-				   %d,%d,'%s','%s')";
+				   %d,%d,'%s','%s',%d,%d)";
 				   
                  $queryid=sprintf($strqueryd,$ultimo,$busca,$lab, 
                  $datosdec[0],$datosdec[1],$datosdec[2], 
@@ -873,20 +871,17 @@ if($size > 0){
                  $equipoc[7],$equipoc[8],$equipoc[9], 
 				 $equipoc[10],$equipoc[11],$equipoc[12], 
                  $marca[0],$disp['marca'],'', 
-                 $ram[0],1,$datosdec[51],$datosdec[52]);
-				 
-				 echo $queryid; 
-               
-                $result=pg_query($queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
-				if ($result)
+                 $ram[0],1,$datosdec[51],$datosdec[52],$datosdec[53],$datosdec[54]);
+		  
+// echo $queryid; 
+                  $result=pg_query($queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
+				 if ($result)
 			       $importa++;
 						
-	       }
+	         }
 			else {// busca bien si hubo error de registro lo almacena
-	        
-	         $errorbien++;
-		
-			}
+	              $errorbien++;
+		   }
 	   }else { //error
 		    $novalido++;
 	       //$error->errorReg();
@@ -962,9 +957,7 @@ if($size > 0){
    <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></legend></div></div>
  <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
 
-<?php 
-
- }
+<?php }
    
  }
  

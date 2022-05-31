@@ -258,7 +258,7 @@ function selectEquipoFac($desc, $serie, $inv, $marca, $inv_ant){
 
 
 
-function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant){
+function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant,$div){
  		//$where=" WHERE bn_in != NULL";
 		
  		if($desc != ''){
@@ -303,7 +303,7 @@ function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant){
                                            left join departamentos dp
                                             on dp.id_dep=l.id_dep
                                             where "
-                                            .implode( " AND ",$array). " AND id_div= " ;
+                                            .implode( " AND ",$array). " AND id_div=".$div ;
 		
 		return $query;
 }	
@@ -805,6 +805,73 @@ function combodispositivo($dispositivo)
 					echo $salida;
 					
 	}//fin del metodo combo	dispositivo	
+	
+	function comboImpresora($tipo)
+					{
+                    
+				    $query="Select * from  cat_impresora order by id_tipoi asc";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_impresora');
+					
+					$salida='<select name="id_tipoi" id="id_tipoi">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_tipoi']==$tipo){
+					
+						  $salida.= "<option value='" . $datosc['id_tipoi'] . "' selected='selected'>" . $datosc['tipoimpresora']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_tipoi'] . "'>" . $datosc['tipoimpresora']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dispositivo	
+	
+	function comboDigitaliza($tipo)
+					{
+                    
+				    $query="Select * from  cat_digitaliza order by tipo_digitaliza asc";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_digitaliza');
+					
+					$salida='<select name="id_digitaliza" id="id_digitaliza">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_digitaliza']==$tipo){
+					
+						  $salida.= "<option value='" . $datosc['id_digitaliza'] . "' selected='selected'>" . $datosc['tipo_digitaliza']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_digitaliza'] . "'>" . $datosc['tipo_digitaliza']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dispositivo	
+	
 	
 	function combomemoriaram($memoriaram)
 					{

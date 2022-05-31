@@ -744,7 +744,8 @@ print_r ($_POST);
 </form>
   
 <?php 
-}elseif ($_POST['accion']=='editarG'){  
-echo 'hace solicitud a editainventario.inc'; print_r($_POST);
+}elseif ($_POST['accion']=='editarG'){ 
+	
+      echo 'hace solicitud a editainventario.inc'; print_r($_POST);
 }
 ?>
