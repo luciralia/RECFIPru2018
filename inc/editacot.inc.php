@@ -8,8 +8,6 @@ $motivo = new Requerimiento();
 
 if ($_REQUEST['accion']=='nuevo'){  
 
-
-//print_r($_POST);
 ?>
 <br />
 <br />
@@ -50,11 +48,13 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
     <td><p align="left">
-    <input type="submit" name="accionn" value="Enviar" />    <input type="submit" name="accionn" value="Cancelar" />
+    <input type="submit" name="accionn" value="Enviar" />    
+    <input type="submit" name="accionn" value="Cancelar"/>
   </p>
 
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
+<input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" /></td>
     
     <td>&nbsp;</td>

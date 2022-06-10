@@ -10,17 +10,22 @@ echo "Folio: " . $_POST['folio'] . "<br/>";
 echo "Proveedor:" . $_POST['proveedor'] . "<br/>" ;
 echo "tipo:" . $_POST['tipo'] . " <br/>";*/
 
+
+
+
+
 if($_POST['accionm']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
 $_SESSION['error']['arch']='';
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div='. $_REQUEST['div'];
 echo $direccion;
+	
 echo " Se canceló el cargar cotización";
 header($direccion);
 															}
 
 if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
 	
-				$query="insert into cotizaciones(folio,proveedor,ruta,id_lab,tipo) values('".$_POST['folio']. "','" . $_POST['proveedor'] . "','../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .",'" . $_POST['tipo']."')";
+				$query="insert into cotizaciones (folio,proveedor,ruta,id_lab,tipo) values('".$_POST['folio']. "','" . $_POST['proveedor'] . "','../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .",'" . $_POST['tipo']."')";
 				
 				echo $query;
 				
@@ -31,7 +36,7 @@ if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
 				echo "Extension: " . $extension . "</br>";
 				if ($_FILES["file"]["type"] == "application/pdf" || $extension=="pdf" /*&& ($_FILES["file"]["size"] < 20000)*/
 				 /*&& in_array($extension, $allowedExts)*/)
-				   {
+				  {
 				   if ($_FILES["file"]["error"] > 0)
 					 {
 					 echo "código de error: " . $_FILES["file"]["error"] . "<br />";
@@ -47,7 +52,7 @@ if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
 					   {
 					   echo $_FILES["file"]["name"] . " ya existe. ";
 					   $_SESSION['error']['arch']='ea'; 
-					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&accion=nuevo' . '&folio="'.$_REQUEST['folio'] . '"'.'&proveedor="' . $_REQUEST['proveedor'] . '"';
+					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&accion=nuevo' . '&folio="' . $_REQUEST['folio'] . '"' . '&proveedor="'. $_REQUEST['proveedor'] . '"' . '&div=' . $_REQUEST['div'] ;
 						echo $direccion . "</br>";
 						echo $_SESSION['error']['arch'];
 						header($direccion);
@@ -61,9 +66,10 @@ if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
 					   move_uploaded_file($_FILES["file"]["tmp_name"],"../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"]);
 					   echo "Almacenado en: " . "cotizaciones/" . $_FILES["file"]["name"];
 					   
-					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
 						echo $direccion . "</br>";
 						header($direccion);
+						  
 					   
 					   }
 					 }
@@ -72,13 +78,17 @@ if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
 				   {
 				   echo "Archivo inv&aacute;lido, el formato de archivo debe ser .pdf";
 				   $_SESSION['error']['arch']='ai'; 
-					$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&accion=nuevo' . '&folio="'.$_REQUEST['folio'] . '"'.'&proveedor="' . $_REQUEST['proveedor'] . '"';
+					//$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&accion=nuevo' . '&folio="' . $_REQUEST['folio'] . '"' . '&proveedor="' . $_REQUEST['proveedor']  . '"' . '&div='. $_REQUEST['div'] ;
+					$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&accion=nuevo' . '&folio="' . $_REQUEST['folio'] . '"' . '&proveedor="' . $_REQUEST['proveedor']  . '"' . '&div='. $_REQUEST['div'] ;   
 					echo $direccion . "</br>";
 					header($direccion);
 				   }
 																	
-																	}
+	}
+					 
 echo "no hice nada";
 //$_SESSION['error']['arch']='';
-pg_close($con);
+//pg_close($con);
+
+
  ?>

@@ -150,7 +150,7 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
 			    else if($usutipo==9 ){$consultacomp=" di.id_cac=";}                          
 			      else if($usutipo==10){$consultacomp="tipo_lab not like 'e' ";}
 		
-		 if ($usutipo==9){
+		 if ($usutipo==9 && $lab==NULL){
 		
 		$query= "SELECT bi.bn_id,* FROM  
                 bienes bi
@@ -174,9 +174,35 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
                 on de.id_div=di.id_div
                 left join usuarios u
                 on l.id_responsable=u.id_usuario
-                where " . $consultacomp  . $usu . " AND " .implode(" AND ",$array);
+                where " . $consultacomp  . $usu .  " AND " .implode(" AND ",$array);
 		 }
-		//echo $query;
+	 if ($usutipo==9 && $lab!=NULL){
+		
+		$query= "SELECT bi.bn_id,* FROM  
+                bienes bi
+                left JOIN dispositivo e
+                ON bi.bn_id=e.bn_id
+                left JOIN cat_dispositivo cd
+                ON e.dispositivo_clave=cd.dispositivo_clave
+                left JOIN cat_familia cf
+                ON e.familia_clave=cf.id_familia
+                left JOIN cat_tipo_ram ctr
+                ON e.tipo_ram_clave=ctr.id_tipo_ram
+                left JOIN cat_tecnologia ct
+                ON e.tecnologia_clave=ct.id_tecnologia
+                left JOIN cat_sist_oper cso
+                ON  e.sist_oper=cso.id_sist_oper	
+                left join laboratorios l
+                on e.id_lab=l.id_lab
+                left join departamentos de
+                on l.id_dep=de.id_dep
+                left join divisiones di
+                on de.id_div=di.id_div
+                left join usuarios u
+                on l.id_responsable=u.id_usuario
+                where " . $consultacomp  . $usu . " AND l.id_lab=". $lab. " AND " .implode(" AND ",$array);
+		 }
+		
 		return $query;
 		
  	}	
@@ -213,7 +239,7 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
                  
 				WHERE " .implode(" AND ",$array);
 		
-	
+	echo 'en clase'. $query;
 		return $query;
 }	
 
@@ -258,7 +284,57 @@ function selectEquipoFac($desc, $serie, $inv, $marca, $inv_ant){
 
 
 
-function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant,$div){
+function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant, $divi){
+ 		//$where=" WHERE bn_in != NULL     $div;
+	
+		
+ 		if($desc != ''){
+ 			$array['bn_desc']="bn_desc like '%".$desc."%'";
+ 		}
+ 		if($serie != ''){
+ 			$array['bn_serie']="bn_serie like '%".$serie."%'";
+ 		}
+ 		if($inv != ''){
+ 			$array['bn_clave']="bn_clave like '%".$inv."%'";
+ 		}
+ 		if($marca != ''){
+ 			$array['bn_marca']="bn_marca like '%".$marca."%'";
+ 		}
+		if($inv_ant != ''){
+ 			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
+ 		}
+		
+		$query ="select  e.*, l.nombre as laboratorio, bi.*,* 
+                                           from dispositivo e 
+                                           left join cat_dispositivo cd
+                                           on e.dispositivo_clave=cd.dispositivo_clave
+                                           left join cat_familia cf
+                                           on e.familia_clave=cf.id_familia
+                                           left join cat_tipo_ram ctr
+                                           on e.tipo_ram_clave=ctr.id_tipo_ram
+                                           left join cat_tecnologia ct
+                                           on e.tecnologia_clave=ct.id_tecnologia
+										   left join cat_usuario_final cuf
+			                               on cuf.usuario_final_clave=e.usuario_final_clave
+                                           left join cat_sist_oper cso
+                                           on  e.sist_oper=cso.id_sist_oper
+                                           left join cat_marca cm
+                                           on cm.id_marca=e.id_marca
+                                           left join cat_memoria_ram cmr
+                                           on e.id_mem_ram=cmr.id_mem_ram
+                                           left join bienes_inventario bi
+                                           on  e.bn_id = bi.bn_id
+                                           left join laboratorios l
+                                           on  l.id_lab=e.id_lab
+                                           left join departamentos dp
+                                            on dp.id_dep=l.id_dep
+                                            where id_div= ". $divi . " AND "
+                                            .implode( " AND ",$array);
+		
+		return $query;
+}	
+
+function selectEquipoGenLab($desc, $serie, $inv, $marca, $inv_ant,$lab){
  		//$where=" WHERE bn_in != NULL";
 		
  		if($desc != ''){
@@ -303,11 +379,11 @@ function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant,$div){
                                            left join departamentos dp
                                             on dp.id_dep=l.id_dep
                                             where "
-                                            .implode( " AND ",$array). " AND id_div=".$div ;
+                                            .implode( " AND ",$array). " AND e.id_lab=".$lab ;
 		
 		return $query;
-}	
-
+}		
+	
 function getAsig($bnid){
 	//echo'bn_id'.$bnid;
 	 

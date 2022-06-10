@@ -1,15 +1,16 @@
 <?php
-
 require_once('../conexion.php');
 require_once('../clases/cotiza.class.php');
 require_once('../clases/requerimientos.class.php');
 require_once('../clases/laboratorios.class.php');
+
 $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 $obj_req= new Requerimiento();
 
 
 /* Consulta con catalogo de justificacion de equipo y no de materiales
+
 $query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
 from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_juztificacion_nec cjnm 
 where rm.id_lab=l.id_lab 
@@ -17,7 +18,8 @@ and l.id_dep=dp.id_dep
 and dp.id_div=di.id_div 
 and plazo=cpn.id 
 and justificacion=cjnm.id
-and l.id_lab=";*/
+and l.id_lab=";
+*/
 
 $query="SELECT * FROM cotizaciones WHERE id_lab=" ;
 
@@ -43,7 +45,7 @@ switch ($_GET['orden']){
 
 // echo $query; ?>
 
-<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'].'&div='. $_REQUEST['div'];?>
 <!--<form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/>
 </form>-->
@@ -73,7 +75,8 @@ if ($inventario!=0 ){ ?>
     
 <?php
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
-	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
+	echo "<input name='mod' type='hidden' value='". $_GET['mod']."' /> \n";
+	echo "<input name='div' type='hidden' value='". $_REQUEST['div']."' /> \n";
 		?>
 
 <input name="bOrden" type="submit" value="ordenar" />
@@ -82,7 +85,6 @@ if ($inventario!=0 ){ ?>
  <br>
 
 
- 
 <?php
 
 }
@@ -98,18 +100,17 @@ while ($cot_lab = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 
  { 
 
-
- 
  ?>
 
-<?php $action="../view/inicio.html.php?lab=". $_REQUEST['lab'] ."&mod=". $_REQUEST['mod'] .'&orden='. $_REQUEST['orden'];?>
-<?php //$action="../inc/borrarcot.inc.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
+<?php $action="../view/inicio.html.php?lab=". $_REQUEST['lab'] ."&mod=". $_REQUEST['mod'] .'&div='. $_REQUEST['div'] .'&orden='. $_REQUEST['orden'];?>
+
+<?php //$action="../inc/borrarcot.inc.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'] . '&div=' . $_REQUEST['div'];?>
 
  <form name="cotiza<?php echo $cot_lab['id_cotizacion']; ?>" method="post" action="<?php echo $action; ?>">
 
 <table class="cotizaciones">
   <tr>
-    <th width="100" >Folio</th>
+    <th width="100" >FolioNL</th>
     <th width="252" >Proveedor</th>
     <th width="80" >Para</th>
     <th width="180" >Ver</th>
@@ -130,25 +131,23 @@ while ($cot_lab = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
   <br />
   <input name="id_cotizacion" type="hidden" value="<?php echo $cot_lab['id_cotizacion']; ?>" />
   <input name="folio" type="hidden" value="<?php echo $cot_lab['folio']; ?>" />
-  <input name="proveedor" type="hidden" value="<?php  echo $cot_lab['proveedor']; ?>" />
+  <input name="proveedor" type="hidden" value="<?php echo $cot_lab['proveedor']; ?>" />
   <input name="tipo" type="hidden" value="<?php echo $cot_lab['tipo']; ?>" />
   <input name="ruta" type="hidden" value="<?php echo $cot_lab['ruta']; ?>" />
   <input name="id_lab" type="hidden" value="<?php echo $cot_lab['id_lab']; ?>" />
   
   <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>">
   <input name="dep" type="hidden" value="<?php echo $_GET['dep']; ?>">
-  <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>">
+  <input name="div" type="hidden" value="<?php echo $_REQUEST['div'];?>">
   
   
   </form>
       
       
 <?php  
- 
-    
+  
  }
 
- 
 }else { ?>
              <br>
              <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>

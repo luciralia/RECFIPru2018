@@ -14,7 +14,7 @@ $obj_cot=new Cotiza();
 
 /*  este for es para cargar los datos de los renglones*/
 
-print_r ($_REQUEST);
+//print_r ($_REQUEST);
 if ($_REQUEST['lab']!='') {
 	$tab='dispositivo';			
 	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$tab);

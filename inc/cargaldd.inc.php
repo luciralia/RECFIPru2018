@@ -25,7 +25,8 @@ if ($_SESSION['tipo_usuario']==1){
    
    //obtener division
     $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
-               JOIN departamentos d
+               JOIN departamentos 
+			   
                ON l.id_dep=d.id_dep
                JOIN divisiones dv
                ON dv.id_div=d.id_div
@@ -89,14 +90,14 @@ if ($_SESSION['tipo_usuario']==1){
       }
 	  
       if ($_SESSION['tipo_usuario']==9 ){ //se agrego el id_div LHH 7/dic/2017
-	  
-	  
+	 
       $query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa,       di.nombre as div, di.id_div 
       from laboratorios l, departamentos de, divisiones di, usuarios u where " . $consultacomp  . $_SESSION['id_usuario'] . "
       and l.id_dep=de.id_dep
       and de.id_div=di.id_div
       and l.id_responsable=u.id_usuario order by laboratorio";
       $datos = pg_query($con,$query);
+	
 	  
 	  }
 

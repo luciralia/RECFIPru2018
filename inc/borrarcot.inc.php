@@ -1,12 +1,17 @@
 <?php
 session_start();
 require_once('../conexion.php');
+
+/*error_reporting(E_ALL);
+echo 'Errores al guardar';
+echo ini_set('display_errors','On');*/
+
 ?>
 
-<?php //print_r($_REQUEST);?>
+
 
 <?php if(!isset($_POST['resp'])){ ?>
-				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden']?>
+				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden']. '&div='. $_REQUEST['div'];?>
               <table class="login"><tr><td><p>&iquest;Realmente desea borrar el registro?</p></td></tr>
               
                 <form action="<?php echo $action; ?>" method="post" name="borrado">
@@ -23,8 +28,8 @@ require_once('../conexion.php');
                 
                 }
                 ?>
-                <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
-                <input name="accion" type="hidden" value="Borrar" />
+               <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
+              <!--  <input name="accion" type="hidden" value="borrar" />-->
                 </form>
                 </table>
 
@@ -40,27 +45,25 @@ if($_POST['accion']=='Borrar'){
    $result = pg_query ($con, $query) or die('No se pudo borrar');
    unlink($_POST['ruta']);
    //echo "Coti borrada </br>";
- //  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .  '&orden='. $_REQUEST['orden'];
-  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&lab=' . $_REQUEST['lab'] ;
-   //echo "</br>" . $direccion . "</br>";
-  
-   echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";
-       // header($direccion);
+	
+  $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
+	
+  die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
+   
 		
    } 
 
  } else {
 		//echo "No borrar";	
 		
-		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&lab=' . $_REQUEST['lab'] ;
+		 $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
 		
-		// header($direccion);
-	    echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";
-	
-		
-		
-//echo "</br>" . $direccion . "</br>";
+		//header($direccion);
+	   die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
+
 }
+
+
 
 /*}else if ($_POST['accion']=='mod'){
 
@@ -73,3 +76,7 @@ header($url);
 		
 	}*/
 ?>
+
+
+
+

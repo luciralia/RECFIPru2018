@@ -17,6 +17,7 @@ $madq = new inventario();
 $logger->putLog(7,2);
 
 $bandera1=0;
+
 /*
 echo'Session en cargaInv';
 print_r($_SESSION);
@@ -43,8 +44,9 @@ if ($_GET['mod']=='invg' ){
 
 <tr>
 <td align="center">
-
+<?php if ($_SESSION['tipo_usuario']==9){ ?>
 <div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div>
+<?php } ?>
 <br/>
 <br/>
 </td>
@@ -814,7 +816,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 	 }elseif ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc') {   ?>
         
          <tr>
-               <th width="20%" scope="col">No. Inventario</th>
+               <th width="20%" scope="col">No. InventarioIvnc</th>
                <th width="20%" scope="col">No. Inventario Área</th>
                <th width="20%" scope="col">Usuario Final</th>
                <th width="20%" scope="col">Descripción del equipo</th>
@@ -1006,7 +1008,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
 <tr>
 <td align="center">
 <!--
-<div style="text-align: right"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div> -->
+<div style="text-align: right"> <div id="botonblu" > <a href="<?php //echo $action1 . '&accion=buscarg';?>">Búsqueda</a></div> -->
 <br/>
 <br/>
 </td>

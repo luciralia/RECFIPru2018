@@ -21,8 +21,7 @@ $div = new departamentos();
 		  elseif ($_GET['mod']=='invear') {
 			  {$titulo='equipo de alto rendimiento';}
 		  }
-		  
-		  ?>
+		   ?>
   <tr> <td align="center"><h2>Inventario <?php echo $titulo;?> </h2></td></tr>
   
   <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>

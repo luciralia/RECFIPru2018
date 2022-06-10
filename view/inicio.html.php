@@ -10,7 +10,6 @@ require_once('../inc/encabezado.inc.php');
    <tr>
     <td><?php 
 	
-	
 	//echo 'En inicio.html SESSION';
 	//print_r ($_SESSION);
 	
@@ -113,10 +112,10 @@ require_once('../inc/encabezado.inc.php');
 		else if ($_GET['mod']=='que')
 		include_once("../view/quejas.html.php");
 		else if ($_GET['mod']=='ceneceq' || $_GET['mod']=='ceni' || $_GET['mod']=='cened' || $_GET['mod']=='cenert'|| $_GET['mod']=='cenecso'|| $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb' || $_GET['mod']=='cenecar')
-		include_once("../view/censo.html.php");
+		       include_once("../view/censo.html.php");
 		//else if (!isset($_GET['mod'])|| $_GET['mod']=='censo'  && !isset($_GET['lab']))
 		//else if ($_GET['mod']=='censo' )
-		    //include_once("../view/censoDGTIC.html.php");
+		    // include_once("../view/censoDGTIC.html.php");
 		else if ($_GET['mod']=='censoC' )
 		    include_once("../view/censoDGTICC.html.php");
 		else if ($_GET['mod']=='cred')

@@ -16,11 +16,11 @@ $password=md5($_POST['pwd']);
 		  
 		  $query ="select  id_usuario,dv.id_div as dvdiv,d.id_div as div,d.id_dep as dep, tipo_usuario from usuarios u */
 	$query ="select * from usuarios u  
-full outer join departamentos d
-on d.id_dep=u.id_dep
-full join divisiones dv
-on dv.id_cac=u.id_usuario 
-where usuario= '" . $login . "' AND  password='" . $password."'";
+             full outer join departamentos d
+             on d.id_dep=u.id_dep
+             full join divisiones dv
+             on dv.id_cac=u.id_usuario 
+             where usuario= '" . $login . "' AND  password='" . $password."'";
 		  
 		  		  
 //$query = sprintf("SELECT * FROM usuarios WHERE usuario = '%s' AND pass='%s'", trim($_POST['usuario']), trim($_POST['pwd']));
@@ -43,13 +43,13 @@ foreach ($usuario as $campo => $valor) {
 
 
 //consulta permisos
-$query2="Select * from permisos where id_usuario=" . $usuario['id_usuario'];
+$query2="Select * from permisod where id_usuario=" . $usuario['id_usuario'];
 $datosp=pg_query($con,$query2);
 
 $usuariop = pg_fetch_array($datosp, NULL, PGSQL_ASSOC);
 foreach ($usuariop as $campo => $valor) {
 $_SESSION['permisos'][$campo]=$valor;
-//    echo "\$usuariop[$campo] => $valor.\n" . "</br>";
+   echo "\$usuariop[$campo] => $valor.\n" . "</br>";
 }
 
 //si usurio es tipo_usuario=1 obtener que depto y div

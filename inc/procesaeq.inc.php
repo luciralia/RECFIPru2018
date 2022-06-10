@@ -11,7 +11,11 @@ require_once('../conexion.php');
 
 <p>procesaeq</p>
 <p>&nbsp;</p>
-<?php print_r($_POST); ?>
+<?php 
+	echo 'Valores en procesa eq';
+	print_r($_POST); 
+	echo 'Valores en REQ procesa eq';
+	print_r($_REQUEST);?>
 
 <!-- /* Guarda datos de registro nuevo */-->
 <?php if($_POST['accionn']=='Guardar'){ ?>
@@ -34,7 +38,7 @@ $queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descr
 $result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 echo $queryn;
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&divG='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 
@@ -44,7 +48,7 @@ header($direccion);
 
 <!-- Guarda datos de edicion de registro -->
 <?php if($_POST['accionm']=='Guardar'){ 
-//print_r($_POST);?>
+echo 'En guardar'. print_r($_POST);?>
 <h1>Edicion</h1>
 <?php 
 
@@ -55,7 +59,7 @@ $queryu=sprintf($strquery,$_POST['id_nec'],$_POST['lab'],$_POST['cant'],$_POST['
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 echo $queryu;
@@ -71,7 +75,7 @@ $strquery="delete from req_mat where id_nec=%d and id_lab=%d";
 $queryd=sprintf($strquery,$_POST['id_nec'],$_POST['id_lab']);
 //$result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 echo $queryd;
@@ -82,7 +86,7 @@ echo $queryd;
 
 <?php if($_POST['accionm']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion;
 header($direccion);
 

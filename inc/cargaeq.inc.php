@@ -11,7 +11,8 @@ $obj_req= new Requerimiento();
 
 
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
-//print_r ($_SESSION);
+
+
 /*$query = "select id_lab, l.id_dep, l.id_responsable, l.nombre as laboratorio,  u.nombre, a_paterno, a_materno, de.nombre as depa, di.nombre as div
 from laboratorios l, departamentos de, divisiones di, usuarios u where l.id_responsable =" . $_SESSION['id_usuario'] . " 
 and id_lab=" . $_REQUEST['lab'] . "
@@ -73,13 +74,13 @@ and plazo=cpn.id
 and justificacion=cjn.id
 order by id_nec desc";	
 }
-//echo $query;
+//echo 'query'. $query;
   ?>
 
 <div class="block" id="necesidades_content">   
 
 
-<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_GET['div'];?>
 <!--<form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/></p>
 </form>-->
@@ -116,9 +117,8 @@ $datos = pg_query($con,$query);
 
    
 <?php
-   
-
-	$datos = pg_query($con,$query);
+	
+   $datos = pg_query($con,$query);
 	
     $inventario= pg_num_rows($datos); 
 	
@@ -161,15 +161,21 @@ $datos = pg_query($con,$query);
     	                  <td colspan="9" align="left"><strong>Justificación</strong></td>
 	                </tr>
                     <tr>
-                          <td colspan="9" align="left" valign="top"><?php echo $lab_nec['impacto'];?><br /><?php if($_SESSION['tipo_usuario']==9){ ?><hr /> <?php }?></td>
+                    <td colspan="9" align="left" valign="top"><?php echo $lab_nec['impacto'];?>
+						<?php if ($_SESSION['tipo_usuario']==9){ ?> <br /><hr /> </td> </tr><?php }?>
+                         
+	                         </td>
                     </tr>
-
-			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+<?php //if($_SESSION['tipo_usuario']==9){ ?> 
+			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=".   $_GET['div'];?>
 			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab'] ."_".$lab_nec['id_nec'];?>">
-			<?php if ($_SESSION['tipo_usuario']==9){ ?>
+			<?php if ($_SESSION['tipo_usuario']==9){ 
+				?>
+		          
 			      <tr><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td> 
-                      <td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php //if (($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td><?php }?>
+                      <td style="text-align: right"> <?php //if &nbsp;&nbsp;&nbsp;&nbsp;(($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td>
               </tr>
+              <?php }?>
 	        <?php
 				foreach ($lab_nec as $campo => $valor) {
 				        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
@@ -188,7 +194,7 @@ $datos = pg_query($con,$query);
              <br>
              <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
              <tr> <td align="center"> <h3>No existen necesidades registradas.</h3> </td></tr>
-			
+	
 		<?php }
 		//$_SESSION['id_usuario']=$usuario['id_usuario'];
 

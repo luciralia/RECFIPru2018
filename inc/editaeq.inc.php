@@ -87,6 +87,7 @@ if ($_REQUEST['accion']=='nuevo'){
 </table>
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
+<input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 
 </form>
 </div>
@@ -155,7 +156,7 @@ if ($_REQUEST['accion']=='nuevo'){
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="id_nec" type="hidden" value="<?php echo $_POST['id_nec']; ?>" />
 <input name="ref" type="hidden" value="<?php echo $_POST['ref']; ?>" />
-
+<input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 </form>
 <?php 
 

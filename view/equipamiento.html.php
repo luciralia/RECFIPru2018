@@ -17,7 +17,7 @@ $div = new departamentos();
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
     
   <tr>
-    <td align="center"><h2>Necesidades de EQUIPAMIENTO</h2></td>
+    <td align="center"><h2>Necesidades de Equipamiento</h2></td>
   </tr>
     <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
   <tr>

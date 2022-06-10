@@ -280,6 +280,44 @@ $ultimo= pg_fetch_array($registrod);
 
 
 
+/*$strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
+dispositivo_clave,usuario_final_clave,familia_clave,
+tipo_ram_clave,tecnologia_clave,resguardo_no_empleado,nombre_resguardo,
+usuario_nombre,usuario_ubicacion,usuario_perfil,
+usuario_sector,serie,marca_p,
+no_factura,anos_garantia,inventario,
+modelo_p,proveedor_p,
+familia_especificar,modelo_procesador,cantidad_procesador,
+nucleos_totales,nucleos_gpu, memoria_ram,
+ram_especificar, num_elementos_almac,
+total_almac,num_arreglos,esquema_uno,
+esquema_dos,esquema_tres, esquema_cuatro,
+tec_uno,tec_dos,tec_tres,tec_cuatro,
+subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro,
+arreglo_total,tec_com,tec_com_otro,
+sist_oper,version_sist_oper,
+licencia,licencia_ini,licencia_fin,fecha) 
+
+		   VALUES (%d,%d,%d,
+		           3,0,0,
+				   0,0,0,NULL,
+				   NULL,NULL,NULL,
+				   NULL,'%s','%s',
+				   NULL,1,'%s',
+				   '%s','', 
+				   '',NULL,'',	
+				   '',0,NULL,
+				   NULL,NULL,
+				   NULL,1,1,
+				   1,1,1,
+				   1,1,1,1,
+				   0,0,0,0,
+				   0,0,NULL,
+				   0,NULL,
+				   0,NULL,NULL,'%s')";*/
+	
+	
+	
 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
 dispositivo_clave,usuario_final_clave,familia_clave,
 tipo_ram_clave,tecnologia_clave,resguardo_no_empleado,nombre_resguardo,
@@ -296,15 +334,15 @@ tec_uno,tec_dos,tec_tres,tec_cuatro,
 subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro,
 arreglo_total,tec_com,tec_com_otro,
 sist_oper,version_sist_oper,
-licencia,licencia_ini,licencia_fin,fecha,tipo_impresora,tipo_digitaliza)
+licencia,licencia_ini,licencia_fin,fecha,id_marca)
 		   VALUES (%d,%d,%d,
-		           3,NULL,NULL,
-				   NULL,NULL,NULL,NULL,
-				   NULL,NULL,NULL,
-				   NULL,'%s','%s',
-				   NULL,1,'%s',
+		           3,0,0,
+				   0,0,0,NULL,
+				   NULL,NULL,0,
+				   0,'%s','%s',
+				   0,1,'%s',
 				   '%s','', 
-				   '',NULL,'',	
+				   '',0,'',	
 				   '',0,NULL,
 				   NULL,NULL,
 				   NULL,1,1,
@@ -313,9 +351,12 @@ licencia,licencia_ini,licencia_fin,fecha,tipo_impresora,tipo_digitaliza)
 				   0,0,0,0,
 				   0,0,NULL,
 				   0,NULL,
-				   0,NULL,NULL,'%s',%d,%d)";
+				   0,'2000/01/01','2000/01/01','%s',%d)";
 	         
-$queryid=sprintf($strqueryd,$ultimo[0]+1,$_REQUEST['bn_id'],$_REQUEST['lab'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_clave'],$_REQUEST['bn_modelo'],date('Y-m-d'));
+$queryid=sprintf($strqueryd,$ultimo[0]+1,$_REQUEST['bn_id'],$_REQUEST['lab'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_clave'],$_REQUEST['bn_modelo'],date('Y-m-d'),$idmarca);
+	         
+	/*tipo_impresora,tipo_digitaliza),%d,%d         
+$queryid=sprintf($strqueryd,$ultimo[0]+1,$_REQUEST['bn_id'],$_REQUEST['lab'],$_REQUEST['bn_serie'],$_REQUEST['bn_marca'],$_REQUEST['bn_clave'],$_REQUEST['bn_modelo'],date('Y-m-d'));*/
 
 echo $queryid;
 

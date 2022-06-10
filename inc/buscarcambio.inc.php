@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php  
 require_once('../conexion.php');
@@ -43,9 +45,9 @@ if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
 		   if ($_SESSION['tipo_usuario']==9 &&  $_SESSION['id_div']=='')
                 $_SESSION['id_div']=$_REQUEST['div'];
-/*
-echo 'en buscarcambio REQUEST';
-print_r($_REQUEST);*/
+
+//print_r($_REQUEST);
+
 
 if($_REQUEST['bbuscar']=='Cancelar' || $_REQUEST['bbuscarg']=='Cancelar'){ 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&div='. $_SESSION['id_div']. $_REQUEST['orden'];
@@ -172,11 +174,10 @@ if($_REQUEST['accion']=='buscarg' )
 if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_serie']|| $_REQUEST['_marca'] || $_REQUEST['_no_inv_ant']){
 	if ($_REQUEST['bbuscar']=='Buscar')   {
 	
-	if ( $_GET['mod']=='invc'){
-		
-		$query=$obj_inv->selectEquipoInvC(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab'],$_SESSION['id_usuario']);
-		
-	   
+	if ( $_GET['mod']=='invc' &&  $_GET['lab']!='' && $_SESSION['id_div']!=''){
+		//echo 'Busca en el inventario de la facultad';
+		$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+	 
 	} else if ( $_GET['mod']=='inv'){
 		
 		$query=$obj_inv->selectEquipoInvE(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_REQUEST['lab']);
@@ -202,10 +203,11 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 
 	} // frin de bbuscar
 	
-	else if ($_REQUEST['bbuscarg']=='Buscar' &&  $_GET['lab']!='' ){
+	else if ( $_GET['mod']=='invg' &&  $_GET['lab']=='' && $_SESSION['id_div']!='' ){
+	//echo 'busca en inv de la div';
 	
-     // realiza la consulta del inventario general de la facultad con la finalidad de poder buscar en el inventario y asignar/desasignar disp
-	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+     
+	$query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']), $_SESSION['id_div']);
 	
 	switch ($_GET['orden']){
  			case "descripcion":
@@ -223,10 +225,9 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	}
 		
 	}
-		else if ($_REQUEST['bbuscarg']=='Buscar' && $_SESSION['id_div']=='' ){
+		else if ($_GET['mod']=='invc' && $_SESSION['id_div']=='' &&  $_GET['lab']=='' ){
 	
-     // realiza la consulta del inventario general de la facultad con la finalidad de poder buscar en el inventario y asignar/desasignar disp
-	$query=$obj_inv->selectEquipoGen(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+	$query=$obj_inv->selectEquipoFac(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
 	
 	switch ($_GET['orden']){
  			case "descripcion":
@@ -244,11 +245,13 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	}
 	
 	
-	}else if ($_REQUEST['bbuscarg']=='Buscar' && $_GET['lab']=='' ){
-		
-    $query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),  strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']));
+	}
+	else if ( $_GET['mod']=='invg' &&  $_GET['lab']!='' && $_SESSION['id_div']!='' ){
+	//else if ($_REQUEST['bbuscarg']=='Buscar' && $_GET['lab']=='' ){
+
+$query=$obj_inv->selectEquipoGenDiv(strtoupper($_REQUEST['_descripcion']),strtoupper($_REQUEST['_no_serie']),strtoupper($_REQUEST['_no_inv']),strtoupper($_REQUEST['_marca']),strtoupper($_REQUEST['_no_inv_ant']),$_SESSION['id_div']);			
  
-   switch ($_GET['orden']){
+   /*switch ($_GET['orden']){
  			        case "descripcion":
 			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
 			        break;
@@ -263,6 +266,7 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
 	    	        break;
 			
         } // fin de switch
+		*/
 
 	}
 	
@@ -271,13 +275,12 @@ if ($_REQUEST['_no_inv']!=''|| $_REQUEST['_descripcion']  || $_REQUEST['_no_seri
      $datos = pg_query($con,$query); 
      $inventario= pg_num_rows($datos);
 	
- /*echo 'exhibe consulta buscarinv ';
- echo $query;*/
 
-if  ($_GET['mod']=='invg' && $_GET['lab']!=''){
+
+if  ($_GET['mod']=='invc' && $_GET['lab']!=''){
 
 ?>
-
+<br>
 <table> 
 
 <?php 
@@ -317,6 +320,7 @@ if ($inventario!=0){?>
 
   <br \>
   <br \>
+  
   <table>
 <?php
 
@@ -415,7 +419,6 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 	        <?php  } else { ?>
 			
 			                <font color="blue"><?php echo 'El equipo no se identifica correctamente, aún así desea:';?></font>
-
                    <input name="basignarc" type="submit" value="Asignar a Cómputo" /> <font color="blue"><?php //echo  ó ?> </font>
                    <!--<input name="basignare" type="submit" value="Asignar a Equipo" /> -->
 	
@@ -436,7 +439,6 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 			   <?php }  
              
 	} // fin if ($_SESSION['tipo_lab']!='e'  && $_SESSION['tipo_usuario']!=10) 
-
 */
 
   }//if ($labasig=='Ninguno' && $_GET['lab'] != NULL ){
@@ -489,11 +491,9 @@ $query="SELECT * FROM dispositivo d
 	    ON dep.id_dep=l.id_dep
 	    WHERE inventario="."'".$lab_invent['bn_clave']."'". " AND id_div=".$_SESSION['id_div'];
 	
-
 $datos = pg_query($con,$query);
 $reg= pg_fetch_array($datos);
 $inventariod= pg_num_rows($datos); 
-
 $queryexp="SELECT * FROM equipo d
            JOIN bienes b
            ON b.bn_id=d.bn_id
@@ -506,7 +506,6 @@ $datosexp = pg_query($con,$queryexp);
 $regexp= pg_fetch_array($datosexp);
 $inventarioexp= pg_num_rows($datosexp); 
 //echo 'canti'.$inventarioexp;
-
            //if ($_SESSION['tipo_lab']=='e'  && $_SESSION['tipo_usuario']!=10 && $inventarioexp!=0) { ?>
              <!-- <input name="eedasignar" type="submit" value="Desasignare" />-->
       
@@ -573,7 +572,8 @@ $inventarioexp= pg_num_rows($datosexp);
    </table>
  <?php
 }//fin de muestra todo lo de inventario general de toda la facultad
- elseif ( $_GET['mod']=='invg' && $_GET['lab']=='') {
+ elseif ( $_GET['mod']=='invg' //&& $_GET['lab']=='' 
+		) {
 	 
 	 $bandera=0;
 	//echo 'invg y sin lab';
@@ -1020,6 +1020,7 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
                   <td width="20%" scope="col"><?php echo $lab_invent['tipo_usuario'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_dispositivo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['marca_p'];?></td>
+
                   <td width="20%" scope="col"><?php echo $lab_invent['modelo'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['serie'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
@@ -1184,11 +1185,6 @@ while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) {
 
 <br />
 <br />
-
-
-
-
-
 
 
 

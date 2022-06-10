@@ -156,10 +156,10 @@
     <!-- Botón cotizaciones-->
    <?php if($_SESSION['tipo_usuario']==9){ ?>
 	<?php $actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
-     <li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo $_GET['lab'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
+     <li><li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
 <?php }?>
 
-   
+  	
 
 
 
