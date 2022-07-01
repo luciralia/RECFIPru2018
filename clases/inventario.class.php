@@ -32,7 +32,7 @@ function cmbEquipo($idlab,$bnid)
 				
 				//        $id_cot=$necArray[$_POST['_id_nec']]['id_equipo'];
 				if ($_SESSION['tipo_lab']!='e')	
-				   {$tabla="equipoc";}
+				   {$tabla="dispositivo";}
 				else 
 				   {$tabla="equipo";}
 				$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*
@@ -602,7 +602,7 @@ function tblEquipo($idlab)
 					
 						}
 				//	return $salida;
-					$salida.='</table> <input name="j" type="hidden" value="' .$j. '" />';
+					$salida.='</table><br><br> <input name="j" type="hidden" value="' .$j. '" />';
 					echo $salida;
 	}//finmetodo	
 

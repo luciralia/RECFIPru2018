@@ -13,7 +13,7 @@ $obj_cot=new Cotiza();
 
 /*  este for es para cargar los datos de los renglones*/
 				
-	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod']);
+	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$_REQUEST['div'],$_SESSION['tipo_usuario']);
 				
 				foreach ($renglon_xls as $reng) {
 			        					

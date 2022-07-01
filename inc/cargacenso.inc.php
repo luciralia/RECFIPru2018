@@ -2816,7 +2816,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 		<?php 
 		if (($_SESSION['tipo_usuario']==1 ||$_SESSION['tipo_usuario']==9)  &&  $_REQUEST['lab'] !=NULL  ){
 
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
             LEFT JOIN equipoc ec
             ON ec.inventario=dp.inventario
@@ -2829,12 +2829,12 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
             WHERE (dp.dispositivo_clave=10 OR dp.dispositivo_clave=11 )
            
 			AND l.id_lab=".$_REQUEST['lab']  . "
-			GROUP BY nombre_dispositivo,estadobien,fecha_factura
+			GROUP BY nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
 			ORDER BY cuenta";
 	}else
 	if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
 	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
             LEFT JOIN equipoc ec
             ON ec.inventario=dp.inventario
@@ -2850,7 +2850,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	}
 	else if ($_SESSION['tipo_usuario']==10 && $_SESSION['id_div']!=""){
 
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
             LEFT JOIN equipoc ec
             ON ec.inventario=dp.inventario
@@ -2868,7 +2868,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	}else
 	if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']==""){
 	
-	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
+	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
             LEFT JOIN equipoc ec
             ON ec.inventario=dp.inventario
@@ -2885,7 +2885,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	}
 	else if (($_SESSION['tipo_usuario']!=10 &&$_SESSION['tipo_usuario']!=1) && $_SESSION['id_div']!=""){
 
-  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadoBien,fecha_factura,l.nombre,dp.descextensa
+  $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
             LEFT JOIN equipoc ec
             ON ec.inventario=dp.inventario

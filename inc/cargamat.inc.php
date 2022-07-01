@@ -8,7 +8,7 @@ $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 $obj_req= new Requerimiento();
 
-
+if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 // Consulta con catalogo de justificacion de equipo y no de materiales
 $query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
 from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_juztificacion_nec cjnm 
@@ -18,15 +18,6 @@ and dp.id_div=di.id_div
 and plazo=cpn.id 
 and justificacion=cjnm.id
 and l.id_lab=";
-/*
-$query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
-from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_just_mat cjnm 
-where rm.id_lab=l.id_lab 
-and l.id_dep=dp.id_dep 
-and dp.id_div=di.id_div 
-and plazo=cpn.id 
-and justificacion=cjnm.id
-and l.id_lab=";*/
 
 
 switch ($_GET['orden']){
@@ -46,11 +37,47 @@ switch ($_GET['orden']){
  			break;
 }
 
+}
+else if ($_SESSION['tipo_usuario']==9 && $_GET['lab']=='' && $_GET['div']!=''){
+	$query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
+from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_juztificacion_nec cjnm 
+where rm.id_lab=l.id_lab 
+and l.id_dep=dp.id_dep 
+and dp.id_div=di.id_div 
+and plazo=cpn.id 
+and justificacion=cjnm.id
+and di.id_div=".$_REQUEST['div'];
+	
+}else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
+	$query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
+from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_juztificacion_nec cjnm 
+where rm.id_lab=l.id_lab 
+and l.id_dep=dp.id_dep 
+and dp.id_div=di.id_div 
+and plazo=cpn.id 
+and justificacion=cjnm.id
+and di.id_div=".$_REQUEST['div'];
+	
+}
+else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 
-// echo $query; ?>
+	$query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
+from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_juztificacion_nec cjnm 
+where rm.id_lab=l.id_lab 
+and l.id_dep=dp.id_dep 
+and dp.id_div=di.id_div 
+and plazo=cpn.id 
+and justificacion=cjnm.id";
+	
+}
 
-<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
-<?php $action2="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=servi";?>
+
+
+	
+ echo $query; ?>
+
+<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']. "&div=". $_REQUEST['div'];?>
+<?php $action2="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=servi" ."&div=". $_REQUEST['div'];?>
 <!--<form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/>
 </form>-->
@@ -74,8 +101,9 @@ switch ($_GET['orden']){
            </select>
     
 <?php
-	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
+	echo "<input name='lab' type='hidden' value='".$_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
+	echo "<input name='div' type='hidden' value='".$_REQUEST['div']."' /> \n";
 		?>
 
 <input name="bOrden" type="submit" value="ordenar" />
@@ -87,6 +115,7 @@ switch ($_GET['orden']){
 	<input name="enviar" type="submit" value="Exportar a excel" />
 	<input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
 	<input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+	<input name="div" type="hidden" value="<?php echo $_REQUEST['div']?>" />
 	</form>
     <br />
 </td>
@@ -127,7 +156,7 @@ switch ($_GET['orden']){
     <td><?php echo $obj_cotiza->getCotiza($lab_necmat['id_cotizacion']); ?></td>
         
   </tr>
-<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']. "&div=". $_REQUEST['div'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$lab_necmat['id_lab'] ."_".$lab_necmat['id_req'];?>">
 
   <tr ><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td><td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;<?php if (($_SESSION['permisos'][2]%3)==0){ ?><input name="accion" type="submit" value="editar" /><?php } ?></td></tr>
@@ -145,7 +174,7 @@ echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 
 </table>
     </br>                
-                        
+	</br>                    
     
 	
 	<?php	

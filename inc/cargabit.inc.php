@@ -11,12 +11,13 @@ $lab = new laboratorios();
 $obj_req= new Requerimiento();
 $logger=new Log();
 
-/*
+
 if ($_GET['mod']=='serv'){
 $tiposerv="(em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 } else {$tiposerv='TRUE';
 $tiposerv="em.tipo_serv IS TRUE";
 }
+
 
 $query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id
 FROM eventos_mantenimiento em, bitacora b, equipo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u
@@ -51,12 +52,11 @@ switch ($_GET['orden']){
  			break;
 }
 
-*/
 
 
-// echo $query; ?>
+ echo 'Query en cargaBit'. $query; ?>
 
-<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
+<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] . "&div=" . $_REQUEST['div'] . "&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
 <!-- <form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/>
 </form>-->
@@ -85,6 +85,7 @@ switch ($_GET['orden']){
 <?php
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
+	echo "<input name='div' type='hidden' value='".$_REQUEST['div']."' /> \n";	
 		?>
 
 <input name="bOrden" type="submit" value="ordenar" />

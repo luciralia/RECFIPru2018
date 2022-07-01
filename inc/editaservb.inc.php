@@ -130,7 +130,8 @@ if ($_GET['mod']=='serv') {
     <td align="right">Semestre:</td>
     <td colspan="2"><input name="semestre" type="text" id="semestre" size="6" maxlength="6" /></td>
   </tr>
-  <?php if ($_GET['mod']=='servibf'){$texto_etiq='Usuario que reporta la falla:';} elseif ($_GET['mod']=='servibp') {$texto_etiq='Persona que realiz&oacute; el manteniemiento:'; } ?>
+  <?php if ($_GET['mod']=='servibf'){$texto_etiq='Usuario que reporta la falla:';}
+	       elseif ($_GET['mod']=='servibp') {$texto_etiq='Persona que realiz&oacute; el manteniemiento:'; } ?>
   
   <tr>
     <td align="right"><?php echo $texto_etiq; ?></td>
@@ -172,8 +173,7 @@ if ($_GET['mod']=='serv') {
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" />
-
-
+<input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 <input name="fecha" type="hidden" value="<?php echo date('Y-m-d H:i:s'); ?>" />
 <input name="garantia" type="hidden" value="FALSE" />
 <input name="id_evento" type="hidden" value="<?php echo $_POST['id_evento']; ?>" />
@@ -319,15 +319,18 @@ print_r($_POST);*/?>
 	<input type="submit" name="accionm" value="Cancelar" /></td>
     </tr>
 </table>
+
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" />
+<input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 
 <input name="fecha" type="hidden" value="<?php echo date('Y-m-d H:i:s'); ?>" />
 <input name="garantia" type="hidden" value="FALSE" />
 <input name="id_evento" type="hidden" value="<?php echo $_POST['id_evento']; ?>" />
 
 </form>
+
 <?php 
 
 	}?>

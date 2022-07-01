@@ -10,15 +10,15 @@ function __construct() {
 $this->datos=array();
 }//termina constructor
 
-function tblXls($idlab,$mod,$tabla){
+function tblXls($idlab,$mod,$iddiv,$tipou){
 	
 
-		if ($_SESSION['tipo_lab']!='e' && $mod=='invc' )	
+		/*if ($_SESSION['tipo_lab']!='e' && $mod=='invc' )	
              $tabla="dispositivo";
            elseif ($_SESSION['tipo_lab']=='e' && $mod=='invc' )
                $tabla="dispositivo";
-              else 
-                $tabla="equipo";	   
+            else 
+               $tabla="equipo"*/;	   
 	
 	if ($mod=='serv'||$mod=='servi'){
 
@@ -37,9 +37,9 @@ function tblXls($idlab,$mod,$tabla){
 				} else {$tipomant=" ";}
 				
 		
-
-				$query="SELECT l.id_lab AS id_lab, em.id_evento AS id_evento, em.id_bitacora AS id_bitacora, em.tipo_mant AS tipo, em.fecha                 AS fregistro, em.tipo_falla AS falla, em.usuario_reporta AS reporta, em.fecha_salida AS fsalida, em.fecha_recepcion AS                 frecepcion, em.costo AS costo, em.fecha_prox_mant AS fprox, em.descripcion AS desc_serv, em.garantia AS garantia,                 bi.bn_desc AS bn_desc, bi.bn_marca AS marca, bi.bn_modelo AS modelo, bi.bn_serie AS serie, bi.bn_clave AS clave, procesador                 AS procesador, noprocesadores AS procesadores, velocidad AS velocidad, l.nombre AS laboratorio, dp.nombre AS departamento,                 dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion AS                 id_cotizacion, em.ok AS sitio, em.tipo_serv, e.bn_id AS bn_id, em.semestre AS semestre, em.actividad AS actividad,                 em.supervisor AS supervisor, em.detecto AS detecto 
-				 FROM eventos_mantenimiento em, bitacora b, ".$tabla." e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones                 dv, usuarios u 
+if ($tipou==9 && ($idlab!='' && $iddiv!='') ){
+				$query="SELECT l.id_lab AS id_lab, em.id_evento AS id_evento, em.id_bitacora AS id_bitacora, em.tipo_mant AS tipo, em.fecha                 AS fregistro, em.tipo_falla AS falla, em.usuario_reporta AS reporta, em.fecha_salida AS fsalida, em.fecha_recepcion AS                 frecepcion, em.costo AS costo, em.fecha_prox_mant AS fprox, em.descripcion AS desc_serv, em.garantia AS garantia,                 bi.bn_desc AS bn_desc, bi.bn_marca AS marca, bi.bn_modelo AS modelo, bi.bn_serie AS serie, bi.bn_clave AS clave, modelo_procesador                 AS procesador, cantidad_procesador AS procesadores, velocidad AS velocidad, l.nombre AS laboratorio, dp.nombre AS departamento,                 dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion AS                 id_cotizacion, em.ok AS sitio, em.tipo_serv, e.bn_id AS bn_id, em.semestre AS semestre, em.actividad AS actividad,                 em.supervisor AS supervisor, em.detecto AS detecto 
+				 FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones                 dv, usuarios u 
 				 WHERE em.id_bitacora = b.id_bitacora 
 				 AND bi.bn_id = e.bn_id 
 				 AND e.bn_id = em.id_equipo 
@@ -50,9 +50,53 @@ function tblXls($idlab,$mod,$tabla){
 				 AND l.id_responsable=u.id_usuario 
 				 AND " . $tiposerv . " 
 				 AND l.id_lab=" . $idlab . " ORDER BY fregistro DESC";
-		} //fin de if para servicios
-
-	if ($mod=="eq"){
+		 
+	
+	}else if ($tipou==9 && $idlab=='' && $iddiv!=''){
+	$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
+FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
+WHERE em.id_bitacora = b.id_bitacora 
+AND bi.bn_id = e.bn_id 
+AND e.bn_id = em.id_equipo 
+AND e.id_lab = b.id_lab 
+AND l.id_lab = e.id_lab 
+AND l.id_dep = dp.id_dep 
+AND dp.id_div = dv.id_div
+AND l.id_responsable=u.id_usuario" .$tipomant. " 
+AND " . $tiposerv . " 
+AND dv.id_div=".$_REQUEST['div'];
+}else if ($tipou==10 && $iddiv!='') {
+$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
+FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
+WHERE em.id_bitacora = b.id_bitacora 
+AND bi.bn_id = e.bn_id 
+AND e.bn_id = em.id_equipo 
+AND e.id_lab = b.id_lab 
+AND l.id_lab = e.id_lab 
+AND l.id_dep = dp.id_dep 
+AND dp.id_div = dv.id_div
+AND l.id_responsable=u.id_usuario" .$tipomant. " 
+AND " . $tiposerv . " 
+AND dv.id_div=".$_REQUEST['div'];
+}else if ($tipou==10 &&  $iddiv==NULL) {
+	$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
+FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
+WHERE em.id_bitacora = b.id_bitacora 
+AND bi.bn_id = e.bn_id 
+AND e.bn_id = em.id_equipo 
+AND e.id_lab = b.id_lab 
+AND l.id_lab = e.id_lab 
+AND l.id_dep = dp.id_dep 
+AND dp.id_div = dv.id_div
+AND l.id_responsable=u.id_usuario" .$tipomant. " 
+AND " . $tiposerv ;
+}
+	
+}
+//fin de if para servicios	
+	
+	
+	else if ($mod=="eq"){
 
 				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
 				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
@@ -66,7 +110,7 @@ function tblXls($idlab,$mod,$tabla){
 
      }
 
-	if ($mod=="mat"){
+	else if ($mod=="mat"){
 				$query = "SELECT distinct rm.id_req AS id_req, rm.id_lab AS id_lab,cant, rm.descripcion AS descripcion, rm.unidad_medida AS                 medida, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, dp.nombre AS departamento, di.nombre AS                 division, cto_unitario AS costo, act_generales AS actividades, cjnm.descripcion AS motivo, cjnm.id AS num_just, impacto AS                 justificacion, rm.id_cotizacion AS id_cotizacion, rm.ref AS ref
 				FROM req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_just_mat cjnm 
 				WHERE rm.id_lab=l.id_lab 
@@ -77,7 +121,7 @@ function tblXls($idlab,$mod,$tabla){
 				AND l.id_lab=". $idlab;
     }
 
-	if (($mod=="inv" || $mod=="invc" || $mod=="invg") && ( $tabla="dispositivo")){
+	else if (($mod=="inv" || $mod=="invc" || $mod=="invg") ){
 		
       
 	    $query = "SELECT e.*, ct.nombre_tecnologia as nomtec,cequ.nombre_esquema as esquemauno,
@@ -88,7 +132,7 @@ function tblXls($idlab,$mod,$tabla){
 		 ctd.nombre_tecnologia as tecdos,
 		 ctt.nombre_tecnologia as tectres,
 		 ctc.nombre_tecnologia as teccuatro,
-         l.nombre as laboratorio, bi.*,*  FROM ".$tabla." e 
+         l.nombre as laboratorio, bi.*,*  FROM dispositivo e 
 
          LEFT JOIN cat_dispositivo cd
          ON e.dispositivo_clave=cd.dispositivo_clave
@@ -148,9 +192,9 @@ where e.id_lab=" . $idlab;
 		
 	}
 	
-	//echo $query;
+//	echo $query;
 	
-	    //echo "QUERY EN LA CLASE *******************************". $query;		
+	   echo "QUERY EN LA CLASE *******************************". $query;		
 		$result = pg_query($query) or die('Hubo un error con la base de datos');
 		while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
 		//echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";

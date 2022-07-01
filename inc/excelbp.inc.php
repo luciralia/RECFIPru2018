@@ -8,9 +8,9 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 $texto='Content-Disposition: attachment;filename="bitacora_preventivo' . date("Ymd-His") . "_" . $_REQUEST['laboratorio'] . '.xls"';
 header($texto);
 
-// echo $query;  
+ echo 'query en excell'.$query;  
 
-//print_r($_REQUEST);
+print_r($_REQUEST);
 ?>
 
 
@@ -1400,7 +1400,7 @@ echo '<?xml version="1.0"?>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="35.0625"/>
    <Row ss:AutoFitHeight="0" ss:Height="57">
-    <Cell ss:StyleID="s65"><Data ss:Type="String">Nota: Se refiere a todo el mantenimiento que no se realiza de manera externa (programado en SIELDI).</Data><NamedCell
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Nota: Se refiere a todo el mantenimiento que no se realiza de manera externa (programado en RECFIbp).</Data><NamedCell
       ss:Name="Print_Area"/></Cell>
     <Cell ss:StyleID="s64"><NamedCell ss:Name="Print_Area"/></Cell>
     <Cell ss:StyleID="s64"><NamedCell ss:Name="Print_Area"/></Cell>

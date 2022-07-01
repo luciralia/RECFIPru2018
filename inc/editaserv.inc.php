@@ -94,8 +94,7 @@ if ($_GET['mod']=='serv') {
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" />
-
-
+<input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 <input name="fecha" type="hidden" value="<?php echo date('Y-m-d H:i:s'); ?>" />
 <input name="garantia" type="hidden" value="FALSE" />
 <input name="id_evento" type="hidden" value="<?php echo $_POST['id_evento']; ?>" />
@@ -183,7 +182,7 @@ if ($_GET['mod']=='serv') {
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" />
-
+<input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 <input name="fecha" type="hidden" value="<?php echo date('Y-m-d H:i:s'); ?>" />
 <input name="garantia" type="hidden" value="FALSE" />
 <input name="id_evento" type="hidden" value="<?php echo $_POST['id_evento']; ?>" />

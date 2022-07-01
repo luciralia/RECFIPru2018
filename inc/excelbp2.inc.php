@@ -1446,7 +1446,7 @@ echo '<?xml version="1.0"?>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="35.0625"/>
    <Row ss:AutoFitHeight="0" ss:Height="57">
-    <Cell ss:StyleID="s65"><Data ss:Type="String">Nota: Se refiere a todo el mantenimiento que no se realiza de manera externa (programado en SIELDI).</Data><NamedCell
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Nota: Se refiere a todo el mantenimiento que no se realiza de manera externa (programado en RECFI).</Data><NamedCell
       ss:Name="Print_Area"/></Cell>
     <Cell ss:StyleID="s64"><NamedCell ss:Name="Print_Area"/></Cell>
     <Cell ss:StyleID="s64"><NamedCell ss:Name="Print_Area"/></Cell>

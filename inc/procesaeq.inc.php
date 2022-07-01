@@ -44,8 +44,6 @@ header($direccion);
 
  }?>
 
-
-
 <!-- Guarda datos de edicion de registro -->
 <?php if($_POST['accionm']=='Guardar'){ 
 echo 'En guardar'. print_r($_POST);?>
@@ -59,7 +57,7 @@ $queryu=sprintf($strquery,$_POST['id_nec'],$_POST['lab'],$_POST['cant'],$_POST['
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&div=' . $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 echo $queryu;
@@ -86,7 +84,7 @@ echo $queryd;
 
 <?php if($_POST['accionm']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
 echo $direccion;
 header($direccion);
 

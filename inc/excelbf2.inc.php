@@ -4,8 +4,8 @@ require_once('../conexion.php'); // nueva linea
 require_once('../clases/bitacora.class.php'); //Nueva linea
 $obj_bit=new Bitacora(); // nueva linea
 
-
 /*  este for es para cargar los datos de los renglones*/
+
 for ($i=1;$i<$_POST['j'];$i++){
 				
 				$checkbox='servicio'.$i;
@@ -31,13 +31,6 @@ for ($i=1;$i<$_POST['j'];$i++){
 		} // fin for
 	//echo  "<br>el número de renglones será" .  count($renglon_bit) . " ++++++++++++++++++++++++++++++++++++++" ;
 	//print_r($renglon_bit);
-
-
-
-
-
-
-
 
 date_default_timezone_set('America/Mexico_City');
 header('Content-type: application/x-msexcel'); 
@@ -1809,6 +1802,7 @@ echo '<?xml version="1.0"?>
   <Style ss:ID="s197">
    <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
    <Borders>
+
     <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
     <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"/>
     <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -1948,7 +1942,7 @@ echo '<?xml version="1.0"?>
     <Cell ss:Index="2" ss:StyleID="s105"><NamedCell ss:Name="Print_Area"/></Cell>
     <Cell ss:StyleID="s105"><NamedCell ss:Name="Print_Area"/></Cell>
     <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s107"><Data
-      ss:Type="String">Nota: Se refiere a todo el mantenimiento que no se realiza de manera externa (programado en SIELDI).</Data><NamedCell
+      ss:Type="String">Nota: Se refiere a todo el mantenimiento que no se realiza de manera externa (programado en RECFI).</Data><NamedCell
       ss:Name="Print_Area"/></Cell>
     <Cell ss:StyleID="s108"><Data ss:Type="String">Semestre:</Data><NamedCell
       ss:Name="Print_Area"/></Cell>
@@ -2208,5 +2202,3 @@ if (count($renglon_bit)<=11){
   </WorksheetOptions>
  </Worksheet>
 </Workbook>
-
-

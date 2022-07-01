@@ -17,7 +17,6 @@ $obj_bit=new Bitacora();
 $obj_exporta=new Exportaxls();
 
 
-
 if ($_GET['mod']=='serv'){
 $tiposerv="(em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 } else {$tiposerv='TRUE';
@@ -31,7 +30,7 @@ else if($_GET['mod']=='servibp'){
 $tipomant=" AND em.tipo_mant='P'";
 } else {$tipomant=" ";}
 
-if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
+
 $query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
 FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
 WHERE em.id_bitacora = b.id_bitacora 
@@ -44,7 +43,8 @@ AND dp.id_div = dv.id_div
 AND l.id_responsable=u.id_usuario" .$tipomant. " 
 AND " . $tiposerv . " 
 AND l.id_lab=";
-	switch ($_GET['orden']){
+
+switch ($_GET['orden']){
  			case "equipo":
 			$query.= $_GET['lab'] . " order by bn_desc asc, fregistro desc";
 //			return $query;
@@ -63,51 +63,11 @@ AND l.id_lab=";
 	//		return $query;
  			break;
 }
-	
-}else if ($_SESSION['tipo_usuario']==9 && $_GET['lab']=='' && $_GET['div']!=''){
-	$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
-FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
-WHERE em.id_bitacora = b.id_bitacora 
-AND bi.bn_id = e.bn_id 
-AND e.bn_id = em.id_equipo 
-AND e.id_lab = b.id_lab 
-AND l.id_lab = e.id_lab 
-AND l.id_dep = dp.id_dep 
-AND dp.id_div = dv.id_div
-AND l.id_responsable=u.id_usuario" .$tipomant. " 
-AND " . $tiposerv . " 
-AND dv.id_div=".$_REQUEST['div'];
-}else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
-$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
-FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
-WHERE em.id_bitacora = b.id_bitacora 
-AND bi.bn_id = e.bn_id 
-AND e.bn_id = em.id_equipo 
-AND e.id_lab = b.id_lab 
-AND l.id_lab = e.id_lab 
-AND l.id_dep = dp.id_dep 
-AND dp.id_div = dv.id_div
-AND l.id_responsable=u.id_usuario" .$tipomant. " 
-AND " . $tiposerv . " 
-AND dv.id_div=".$_REQUEST['div'];
-}else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
-	$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
-FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
-WHERE em.id_bitacora = b.id_bitacora 
-AND bi.bn_id = e.bn_id 
-AND e.bn_id = em.id_equipo 
-AND e.id_lab = b.id_lab 
-AND l.id_lab = e.id_lab 
-AND l.id_dep = dp.id_dep 
-AND dp.id_div = dv.id_div
-AND l.id_responsable=u.id_usuario" .$tipomant. " 
-AND " . $tiposerv ;
-}
 
-//echo 'En cargaserv'.$query; 
-?>
 
-<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div']. "&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
+//echo 'CargaServ'.$query; ?>
+
+<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
 <!-- <form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/>
 </form>-->
@@ -115,7 +75,8 @@ AND " . $tiposerv ;
 <!--<div style="text-align: right; display: inline-block;"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nuevo individual</a></div></div> -->
 <div style="text-align: right; display: inline-block;"> 
 
-<?php if ($_GET['mod']=='servi'){$texto_bot='Seleccionar equipos';} elseif ($_GET['mod']=='servibf' || $_GET['mod']=='servibp') { $logger->putLog(53,2); $texto_bot='Agregar servicio para bit&aacute;cora'; }
+<?php if ($_GET['mod']=='servi'){$texto_bot='Seleccionar equipos';} 
+			elseif ($_GET['mod']=='servibf' || $_GET['mod']=='servibp') { $logger->putLog(53,2); $texto_bot='Agregar servicio para bit&aacute;cora'; }
 
 ?>
 <?php if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > 
@@ -123,7 +84,7 @@ AND " . $tiposerv ;
 	
 	
 </div>	
-<?php } else if  ($_SESSION['tipo_usuario']!=10)  { $logger->putLog(23,2);?>
+<?php } else { $logger->putLog(23,2);?>
 
 <div style="text-align: right"><?php if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevob';?>">Nueva solicitud</a></div><?php }?></div>	
 <?php }?>
@@ -144,9 +105,9 @@ AND " . $tiposerv ;
            </select>
     
 	<?php
-	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
-	echo "<input name='mod' type='hidden' value='". $_GET['mod']."' /> \n";
-	echo "<input name='div' type='hidden' value='". $_REQUEST['div']."' /> \n";													  
+	echo "<input name='lab' type='hidden' value='".$_GET['lab']."' /> \n";
+	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n";
+	echo "<input name='div' type='hidden' value='".$_REQUEST['div']."' /> \n";												  
 	?>
 
 <input name="bOrden" type="submit" value="ordenar" />
@@ -172,10 +133,10 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
     <form action="<?php echo $action; ?>" method="post" name="servbit" >
 	<input name="enviar" type="submit" value="Generar bitácora" />
 	<?php
-	$obj_bit->tblServ($_GET['lab'],$_GET['mod'],$_REQUEST['div'],$_SESSION['tipo_usuario'] );
+	$obj_bit->tblServ($_GET['lab'],$_GET['mod'] );
 	?>
 	</form>
-    <br />
+  
 <?php } ?>
 
 <?php
@@ -191,7 +152,8 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
 	//  echo "</br>Cotización: "; echo $obj_cotiza->getCotiza($serv_mant['id_cotizacion']);
 	?>
 	
-<table class='serviciosm'>
+    <table class='serviciosm'>
+		
 <tr>
 <th width="86" scope="col">Inventario</th>
     <th width="150" scope="col">Equipo</th>
@@ -221,22 +183,21 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
  <?php }?>
     <td><?php echo date("d-m-Y", strtotime($serv_mant['fsalida']));?></td>
     <td><?php echo date("d-m-Y", strtotime($serv_mant['frecepcion']));?></td>
-</tr>
 
-		<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
+  </tr>
+
+		<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] . "&div=" . $_REQUEST['div'] . "&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$serv_mant['id_lab'] ."_".$serv_mant['id_req'];?>">
 
-<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;} else { $colspan=7;}                    ?> 
+<?php if ($_REQUEST['mod']=='serv'){ $colspan=6;} else { $colspan=7;}                    ?> 
   <tr >
-   <?php   if ( $_SESSION['tipo_usuario']!=10) { ?>
   <td style="text-align: right" colspan="<?php echo $colspan; ?>">
   	<input name="accion" type="submit" value="borrar" />
   </td>
-  <?php  } ?>
   <td style="text-align: right">
   <?php if (($_SESSION['permisos'][2]%3)==0  ){ ?>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	<?php  if ($_REQUEST['mod']!='servibf' && $_REQUEST['mod']!='servibp' && $_SESSION['tipo_usuario']!=10){ ?>
+	<?php  if ($_REQUEST['mod']!='servibf' && $_REQUEST['mod']!='servibp'){ ?>
   		<input name="accion" type="submit" value="editar" />
   	<?php }?>
   <?php } ?>
@@ -278,18 +239,19 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
     
   </tr>
 
- </table>
+</table>
 
-  </br>
+    </br>
      
- 
+  
+    
+	
 	<?php	
 		}// Fin del while que genera la tabla
 	}//fin de if que permite la tabla
 	    ?>
 
- 
-
-
           </table>
-                </div>
+               <br>
+               <br>
+          </div>

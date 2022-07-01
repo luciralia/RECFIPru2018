@@ -26,14 +26,15 @@
     <?php $tipo=$labNom->getLaboratorio($_GET['lab']);?>
      <?php 
 	 if ($_SESSION['tipo_usuario']==10){   ?>
-       	      <li><a href="../view/inicio.html.php?mod=ced" class="actual" >Inicio</a></li>
-             
+       	      <!--<li><a href="../view/inicio.html.php?mod=ced" class="actual" >Inicio</a></li>-->
+             <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>" class="actual" >Inicio</a></li>
         <?php }elseif (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) { ?>
-              <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual">Inicio</a></li>
+              <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php // echo $_SESSION['id_div'];?>" class="actual">Inicio</a></li>-->
+              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">Inicio</a></li>
           <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){   ?>
-       	      <li><a href="../view/inicio.html.php?mod=ced&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
-             
+       	      <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php  //echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>-->
+             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
         <?php }	?>
         <?php  if ($_SESSION['tipo_usuario']!=10){   ?>
         <?php //$clase=($_GET['mod']=='ced')?'" class="actual"':$clase='"'; ?>
@@ -159,7 +160,30 @@
      <li><li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
 <?php }?>
 
+  <!-- Boton mantenimiento -->
+        <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
+        <?php //if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==3 ){ ?>
+        <?php $clase=($_GET['mod']=='serv' || $_GET['mod']=='mat' || $_GET['mod']=='mobi' || $_GET['mod']=='infr')?'" class="actual"':$clase='"'; ?>
+        <li><a href="#" <?php echo $clase; ?>>Mantenimiento</a>
+         <ul>
+             <li><a href="../view/inicio.html.php?mod=serv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Externo</a></li>
+             <li><a href="../view/inicio.html.php?mod=mat&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Interno (Material)</a></li>
+		 </ul>
+	  </li>
+          <?php }?>
   	
+	<!-- Boton Bitacora --> 
+    <?php if($_SESSION['tipo_usuario']==9 ){ ?>   	
+	<?php if ($_GET['mod']=='servibf'||$_GET['mod']=='servibp') { $clase='" class="actual"'; } else {$clase='"';}?> 
+    <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
+	
+    	<ul>
+            <!--<li><a href="../view/inicio.html.php?mod=bit&lab=<?php echo $_GET['lab'];?>">Bit&aacute;cora de uso</a></li>	-->
+            <li><a href="../view/inicio.html.php?mod=servibf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
+            <li><a href="../view/inicio.html.php?mod=servibp&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de mantenimiento preventivo interno</a></li>
+    	</ul>
+	</li>
+	<?php }?>
 
 
 

@@ -24,7 +24,7 @@ class Bitacora{
 			
 						
 				$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
-				FROM eventos_mantenimiento em, bitacora b, equipo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
+				FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
 				WHERE em.id_bitacora = b.id_bitacora 
 				AND bi.bn_id = e.bn_id 
 				AND e.bn_id = em.id_equipo 
@@ -43,6 +43,7 @@ class Bitacora{
 							$result = pg_query($query) or die('Hubo un error con la base de datos');
 							
 							$salida='<table class="equipob"><tr>
+							<br>
 							<th scope="col">Inventario</th>
 							<th scope="col">Equipo</th>
 							<th scope="col">Tipo de mantenimiento</th>
@@ -60,22 +61,20 @@ class Bitacora{
 								{ 
 								$nombrechk="servicio".$j;
 							
-							$salida.='<tr>
-							<td>'. $datosc['clave']. '</td>
-							<td>' . $datosc['bn_desc'] .'</td>
-							<td>' . $datosc['tipo'] .'</td>
-							<td>' . $datosc['falla'] .'</td>
-							<td>' . date("d-m-Y", strtotime($datosc['fsalida'])) .'</td>
-							<td>' . date("d-m-Y", strtotime($datosc['frecepcion'])) .'</td>
-							<td>' . $datosc['reporta'] .'</td>
-							<td>' . $datosc['supervisor'] .'</td>
-							<td>' . $datosc['semestre'] .'</td>
-							<td><input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['id_evento'].'"  /></td>
-							</tr>';
+							        $salida.='<tr>
+							        <td>'. $datosc['clave']. '</td>
+							        <td>' . $datosc['bn_desc'] .'</td>
+							        <td>' . $datosc['tipo'] .'</td>
+							        <td>' . $datosc['falla'] .'</td>
+							        <td>' . date("d-m-Y", strtotime($datosc['fsalida'])) .'</td>
+							        <td>' . date("d-m-Y", strtotime($datosc['frecepcion'])) .'</td>
+							        <td>' . $datosc['reporta'] .'</td>
+							        <td>' . $datosc['supervisor'] .'</td>
+							        <td>' . $datosc['semestre'] .'</td>
+							        <td><input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['id_evento'].'"  /></td>
+							        </tr>';
 									
-							
 									$j++;  
-							
 							
 								}
 						//	return $salida;
@@ -123,9 +122,10 @@ if ($mod=='serv'){
 				else if($mod=='servibp'){ 
 				$tipomant=" AND em.tipo_mant='P'";
 				} else {$tipomant=" ";}
+	
 
 $query="SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
-				FROM eventos_mantenimiento em, bitacora b, equipo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
+				FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
 				WHERE em.id_bitacora = b.id_bitacora 
 				AND bi.bn_id = e.bn_id 
 				AND e.bn_id = em.id_equipo 

@@ -60,7 +60,7 @@ echo "la consulta: " . $queryn;
 $result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . "&div=" . $_REQUEST['div'] .'&orden='. $_REQUEST['orden'];
 echo $direccion . "</br>";
 header($direccion);
 
@@ -68,7 +68,7 @@ header($direccion);
 
 
 
-<!-- Guarda datos de EDICIÓN de registro -->
+<!-- Guarda datos de EDICIï¿½N de registro -->
 <?php if($_POST['accionm']=='Guardar'){ ?>
 <h1>Edicion</h1>
 <?php 
@@ -81,7 +81,7 @@ $queryu=sprintf($strquery,$_POST['tipo_mant'],$_POST['bn_id'],$_POST['cto_unitar
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . "&div=" . $_REQUEST['div'] .'&orden='. $_REQUEST['orden'];
 echo $direccion . "</br>";
 header($direccion);
 echo $queryu;
@@ -92,7 +92,7 @@ echo $queryu;
 
 <?php if($_POST['accionm']=='Cancelar'|| $_POST['accionn']=='Cancelar'|| $_POST['accionb']=='Cancelar'){ 
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . "&div=" . $_REQUEST['div'] .'&orden='. $_REQUEST['orden'];
 echo $direccion;
 header($direccion);
 
@@ -145,7 +145,7 @@ $nreng = pg_num_rows($resultx);
 							   $checkbox='equipo'.$i;
 								 if (isset($_POST[$checkbox])){
 							 
-							/* ---------------query antes de bitácoras de falla y preventivo--------------------------
+							/* ---------------query antes de bitï¿½coras de falla y preventivo--------------------------
 							$strquery="INSERT INTO eventos_mantenimiento (id_bitacora, id_equipo, tipo_mant, fecha, tipo_falla, fecha_salida, fecha_recepcion, costo, ok, id_cotizacion, tipo_serv) VALUES (%d,%d,'%s','%s','%s','%s','%s',%.2f,'%s','%s','%s')";*/
 
 
@@ -163,7 +163,7 @@ $nreng = pg_num_rows($resultx);
 					  
 			  
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] .'&orden='. $_REQUEST['orden'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . "&div=" . $_REQUEST['div'] .'&orden='. $_REQUEST['orden'];
 echo $direccion . "</br>";
 header($direccion);
 
