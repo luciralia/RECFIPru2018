@@ -9,10 +9,10 @@ function Cantidad($div,$equipo,$usu){
 	if ($div!=''){
 	if ($equipo<>3){
 		  
-		$query="select count(*) as cuenta from dispositivo d
-                join laboratorios l
+		$query="SELECT count(*) AS cuenta FROM dispositivo d
+                JOIN laboratorios l
                 on d.id_lab=l.id_lab
-                 join departamentos dep
+                 JOIN departamentos dep
                  on dep.id_dep=l.id_dep
                  join divisiones dv
                  on dv.id_div=dep.id_div
@@ -185,8 +185,8 @@ function CantidadC($div,$coord,$perfil){
 	
 	if ($div!=''){
 		  
-		$query="select count(*) as cuenta from dispositivo d
-                 join laboratorios l
+		$query="SELECT COUNT(*) AS cuenta FROM dispositivo d
+                 JOIN laboratorios l
                  on d.id_lab=l.id_lab
                  join departamentos dep
                  on dep.id_dep=l.id_dep

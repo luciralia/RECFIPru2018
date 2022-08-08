@@ -49,7 +49,7 @@ function getDivision($iddiv){
 			
 			 else {
 			
-			$query="Select * from divisiones where id_div=" . $iddiv;
+			$query="SELECT * FROM divisiones WHERE id_div=" . $iddiv;
 			
 				$result_div = pg_query($query) or die('Hubo un error con la base de datos en lab con id_lab');
 				

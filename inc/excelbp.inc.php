@@ -8,7 +8,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 $texto='Content-Disposition: attachment;filename="bitacora_preventivo' . date("Ymd-His") . "_" . $_REQUEST['laboratorio'] . '.xls"';
 header($texto);
 
- echo 'query en excell'.$query;  
+ echo 'query en excell '.$query;  
 
 print_r($_REQUEST);
 ?>

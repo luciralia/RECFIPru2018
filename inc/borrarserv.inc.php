@@ -31,7 +31,7 @@ require_once('../conexion.php');
 			<?php if($_POST['accion']=='borrar'){ 
 			
 			//print_r($_REQUEST);
-			$strquery="delete from eventos_mantenimiento where id_evento=%d and id_equipo=%d";
+			$strquery="DELETE FROM eventos_mantenimiento WHERE id_evento=%d AND id_equipo=%d";
 			$queryd=sprintf($strquery,$_POST['id_evento'],$_POST['bn_id']);
 			$result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
 			

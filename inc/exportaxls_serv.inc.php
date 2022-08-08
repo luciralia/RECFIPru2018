@@ -34,7 +34,19 @@ header("Content-Type: application/vnd.ms-excel" );
 header("Expires: 0" );
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 //header("Content-type: text/html");
+
+	
+if (  $_SESSION['tipo_usuario']==9  && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
 $texto='Content-Disposition: attachment;filename="' . $nom_arch . date("Ymd-His") . "_" . $renglon_xls[0]['laboratorio'] . '.xls"';
+}
+if ( $_SESSION['tipo_usuario']==10 && $_REQUEST['div']!=""){
+$texto='Content-Disposition: attachment;filename="' . $nom_arch . date("Ymd-His") . "_" . $renglon_xls[0]['division'] . '.xls"';
+}else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+$titulo='FacultadIngenieria';
+	
+$texto='Content-Disposition: attachment;filename="' . $nom_arch . date("Ymd-His") . "_" . $titulo . '.xls"';
+}
+
 header($texto);
 
 ?>

@@ -48,7 +48,6 @@
       
  	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
  	      
-      	 
           <ul>
            <?php 
 				if (isset($_GET['mod']) || isset($_GET['div'] ) ) {
@@ -147,6 +146,7 @@
 
    
     <!-- Boton equipamiento -->
+	  
     <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
 
 	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
@@ -167,7 +167,9 @@
         <li><a href="#" <?php echo $clase; ?>>Mantenimiento</a>
          <ul>
              <li><a href="../view/inicio.html.php?mod=serv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Externo</a></li>
+             <?php if($_SESSION['tipo_usuario']==9){ ?>
              <li><a href="../view/inicio.html.php?mod=mat&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Interno (Material)</a></li>
+             <?php } ?>
 		 </ul>
 	  </li>
           <?php }?>

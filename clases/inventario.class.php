@@ -35,15 +35,15 @@ function cmbEquipo($idlab,$bnid)
 				   {$tabla="dispositivo";}
 				else 
 				   {$tabla="equipo";}
-				$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*
-				from ".$tabla." e, laboratorios l, bienes bi
-				where e.id_lab=l.id_lab
+				$query="SELECT e.*, l.id_lab, l.nombre, id_dep,bi.*
+				FROM ".$tabla." e, laboratorios l, bienes bi
+				WHERE e.id_lab=l.id_lab
 				AND e.bn_id=bi.bn_id
-				AND e.id_lab=" . $idlab . " order by bn_desc asc";
+				AND e.id_lab=" . $idlab . " ORDER BY bn_desc asc";
 				
 						//echo $query ."</br>". $id_cot . "</br>" . $lab;
 					
-				//	echo $query;
+					//echo 'inv', $query;
 					$result = pg_query($query) or die('Hubo un error con la base de datos');
 					
 					$salida='<select name="bn_id" id="bn_id">'; 
@@ -120,27 +120,27 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
 		
 		$query= "SELECT bi.bn_id,* FROM  
                 bienes bi
-                left JOIN dispositivo e
+                LEFT JOIN dispositivo e
                 ON bi.bn_id=e.bn_id
-                left JOIN cat_dispositivo cd
+                LEFT JOIN cat_dispositivo cd
                 ON e.dispositivo_clave=cd.dispositivo_clave
-                left JOIN cat_familia cf
+                LEFT JOIN cat_familia cf
                 ON e.familia_clave=cf.id_familia
-                left JOIN cat_tipo_ram ctr
+                LEFT JOIN cat_tipo_ram ctr
                 ON e.tipo_ram_clave=ctr.id_tipo_ram
-                left JOIN cat_tecnologia ct
+                LEFT JOIN cat_tecnologia ct
                 ON e.tecnologia_clave=ct.id_tecnologia
-                left JOIN cat_sist_oper cso
+                LEFT JOIN cat_sist_oper cso
                 ON  e.sist_oper=cso.id_sist_oper	
-                left join laboratorios l
-                on e.id_lab=l.id_lab
-                left join departamentos de
-                on l.id_dep=de.id_dep
-                left join divisiones di
-                on de.id_div=di.id_div
-                left join usuarios u
-                on l.id_responsable=u.id_usuario
-                where l.id_responsable= ".$usu
+                LEFT JOIN laboratorios l
+                ON e.id_lab=l.id_lab
+                LEFT JOIN departamentos de
+                ON l.id_dep=de.id_dep
+                LEFT JOIN divisiones di
+                ON de.id_div=di.id_div
+                LEFT JOIN usuarios u
+                ON l.id_responsable=u.id_usuario
+                WHERE l.id_responsable= ".$usu
 				. " AND " .implode(" AND ",$array);
                // WHERE id_lab=" . $lab 
 	    }
@@ -154,27 +154,27 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
 		
 		$query= "SELECT bi.bn_id,* FROM  
                 bienes bi
-                left JOIN dispositivo e
+                LEFT JOIN dispositivo e
                 ON bi.bn_id=e.bn_id
-                left JOIN cat_dispositivo cd
+                LEFT JOIN cat_dispositivo cd
                 ON e.dispositivo_clave=cd.dispositivo_clave
-                left JOIN cat_familia cf
+                LEFT JOIN cat_familia cf
                 ON e.familia_clave=cf.id_familia
-                left JOIN cat_tipo_ram ctr
+                LEFT JOIN cat_tipo_ram ctr
                 ON e.tipo_ram_clave=ctr.id_tipo_ram
-                left JOIN cat_tecnologia ct
+                LEFT JOIN cat_tecnologia ct
                 ON e.tecnologia_clave=ct.id_tecnologia
-                left JOIN cat_sist_oper cso
+                LEFT JOIN cat_sist_oper cso
                 ON  e.sist_oper=cso.id_sist_oper	
-                left join laboratorios l
-                on e.id_lab=l.id_lab
-                left join departamentos de
-                on l.id_dep=de.id_dep
-                left join divisiones di
-                on de.id_div=di.id_div
-                left join usuarios u
-                on l.id_responsable=u.id_usuario
-                where " . $consultacomp  . $usu .  " AND " .implode(" AND ",$array);
+                LEFT JOIN laboratorios l
+                ON e.id_lab=l.id_lab
+                LEFT JOIN departamentos de
+                ON l.id_dep=de.id_dep
+                LEFT JOIN divisiones di
+                ON de.id_div=di.id_div
+                LEFT JOIN usuarios u
+                ON l.id_responsable=u.id_usuario
+                WHERE " . $consultacomp  . $usu .  " AND " .implode(" AND ",$array);
 		 }
 	 if ($usutipo==9 && $lab!=NULL){
 		
@@ -192,15 +192,15 @@ function selectEquipoInvC($desc, $serie, $inv, $marca, $inv_ant,$lab,$usu){
                 ON e.tecnologia_clave=ct.id_tecnologia
                 left JOIN cat_sist_oper cso
                 ON  e.sist_oper=cso.id_sist_oper	
-                left join laboratorios l
-                on e.id_lab=l.id_lab
-                left join departamentos de
-                on l.id_dep=de.id_dep
-                left join divisiones di
-                on de.id_div=di.id_div
-                left join usuarios u
-                on l.id_responsable=u.id_usuario
-                where " . $consultacomp  . $usu . " AND l.id_lab=". $lab. " AND " .implode(" AND ",$array);
+                LEFT JOIN laboratorios l
+                ON e.id_lab=l.id_lab
+                LEFT JOIN departamentos de
+                ON l.id_dep=de.id_dep
+                LEFT JOIN divisiones di
+                ON de.id_div=di.id_div
+                LEFT JOIN usuarios u
+                ON l.id_responsable=u.id_usuario
+                WHERE " . $consultacomp  . $usu . " AND l.id_lab=". $lab. " AND " .implode(" AND ",$array);
 		 }
 		
 		return $query;
@@ -239,7 +239,7 @@ function selectEquipoGen($desc, $serie, $inv, $marca, $inv_ant){
                  
 				WHERE " .implode(" AND ",$array);
 		
-	echo 'en clase'. $query;
+	//echo 'en clase'. $query;
 		return $query;
 }	
 
@@ -273,8 +273,7 @@ function selectEquipoFac($desc, $serie, $inv, $marca, $inv_ant){
 				ON cd.dispositivo_clave=d.dispositivo_clave
 				LEFT JOIN cat_sist_oper cso
 				ON cso.id_sist_oper=d.sist_oper
-                 
-				WHERE " .implode(" AND ",$array);
+                WHERE " .implode(" AND ",$array);
 		
 	
 		return $query;
@@ -304,31 +303,31 @@ function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant, $divi){
  			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
  		}
 		
-		$query ="select  e.*, l.nombre as laboratorio, bi.*,* 
-                                           from dispositivo e 
-                                           left join cat_dispositivo cd
+		$query ="SELECT  e.*, l.nombre as laboratorio, bi.*,* 
+                                           FROM dispositivo e 
+                                           LEFT JOIN cat_dispositivo cd
                                            on e.dispositivo_clave=cd.dispositivo_clave
-                                           left join cat_familia cf
+                                           LEFT JOIN cat_familia cf
                                            on e.familia_clave=cf.id_familia
-                                           left join cat_tipo_ram ctr
+                                           LEFT JOIN cat_tipo_ram ctr
                                            on e.tipo_ram_clave=ctr.id_tipo_ram
-                                           left join cat_tecnologia ct
+                                           LEFT JOIN cat_tecnologia ct
                                            on e.tecnologia_clave=ct.id_tecnologia
-										   left join cat_usuario_final cuf
+										   LEFT JOIN cat_usuario_final cuf
 			                               on cuf.usuario_final_clave=e.usuario_final_clave
-                                           left join cat_sist_oper cso
+                                           LEFT JOIN cat_sist_oper cso
                                            on  e.sist_oper=cso.id_sist_oper
-                                           left join cat_marca cm
+                                           LEFT JOIN cat_marca cm
                                            on cm.id_marca=e.id_marca
-                                           left join cat_memoria_ram cmr
+                                           LEFT JOIN cat_memoria_ram cmr
                                            on e.id_mem_ram=cmr.id_mem_ram
-                                           left join bienes_inventario bi
+                                           LEFT JOIN bienes_inventario bi
                                            on  e.bn_id = bi.bn_id
-                                           left join laboratorios l
+                                           LEFT JOIN laboratorios l
                                            on  l.id_lab=e.id_lab
-                                           left join departamentos dp
+                                           LEFT JOIN departamentos dp
                                             on dp.id_dep=l.id_dep
-                                            where id_div= ". $divi . " AND "
+                                           WHERE id_div= ". $divi . " AND "
                                             .implode( " AND ",$array);
 		
 		return $query;
@@ -353,32 +352,32 @@ function selectEquipoGenLab($desc, $serie, $inv, $marca, $inv_ant,$lab){
  			$array['bn_anterior']="bn_anterior like '%".$inv_ant."%'";
  		}
 		
-		$query ="select  e.*, l.nombre as laboratorio, bi.*,* 
-                                           from dispositivo e 
+		$query ="SELECT  e.*, l.nombre as laboratorio, bi.*,* 
+                                           FROM dispositivo e 
 
-                                           left join cat_dispositivo cd
-                                           on e.dispositivo_clave=cd.dispositivo_clave
-                                           left join cat_familia cf
-                                           on e.familia_clave=cf.id_familia
-                                           left join cat_tipo_ram ctr
-                                           on e.tipo_ram_clave=ctr.id_tipo_ram
-                                           left join cat_tecnologia ct
-                                           on e.tecnologia_clave=ct.id_tecnologia
-										   left join cat_usuario_final cuf
-			                               on cuf.usuario_final_clave=e.usuario_final_clave
-                                           left join cat_sist_oper cso
-                                           on  e.sist_oper=cso.id_sist_oper
-                                           left join cat_marca cm
-                                           on cm.id_marca=e.id_marca
-                                           left join cat_memoria_ram cmr
-                                           on e.id_mem_ram=cmr.id_mem_ram
-                                           left join bienes_inventario bi
-                                           on  e.bn_id = bi.bn_id
-                                           left join laboratorios l
-                                           on  l.id_lab=e.id_lab
-                                           left join departamentos dp
-                                            on dp.id_dep=l.id_dep
-                                            where "
+                                           LEFT JOIN cat_dispositivo cd
+                                           ON e.dispositivo_clave=cd.dispositivo_clave
+                                           LEFT JOIN cat_familia cf
+                                           ON e.familia_clave=cf.id_familia
+                                           LEFT JOIN cat_tipo_ram ctr
+                                           ON e.tipo_ram_clave=ctr.id_tipo_ram
+                                           LEFT JOIN cat_tecnologia ct
+                                           ON e.tecnologia_clave=ct.id_tecnologia
+										   LEFT JOIN cat_usuario_final cuf
+			                               ON cuf.usuario_final_clave=e.usuario_final_clave
+                                           LEFT JOIN cat_sist_oper cso
+                                           ON  e.sist_oper=cso.id_sist_oper
+                                           LEFT JOIN cat_marca cm
+                                           ON cm.id_marca=e.id_marca
+                                           LEFT JOIN cat_memoria_ram cmr
+                                           ON e.id_mem_ram=cmr.id_mem_ram
+                                           LEFT JOIN bienes_inventario bi
+                                           ON  e.bn_id = bi.bn_id
+                                           LEFT JOIN laboratorios l
+                                           ON  l.id_lab=e.id_lab
+                                           LEFT JOIN departamentos dp
+                                           ON dp.id_dep=l.id_dep
+                                           WHERE"
                                             .implode( " AND ",$array). " AND e.id_lab=".$lab ;
 		
 		return $query;
@@ -577,11 +576,11 @@ function tblEquipo($idlab)
 				else 
 				   {$tabla="equipo";}
 				   		
-				$query="select e.*, l.id_lab, l.nombre, id_dep,bi.*
-				from ".$tabla." e, laboratorios l, bienes bi
-				where e.id_lab=l.id_lab
+				$query="SELECT e.*, l.id_lab, l.nombre, id_dep,bi.*
+				FROM ".$tabla." e, laboratorios l, bienes bi
+				WHERE e.id_lab=l.id_lab
 				AND e.bn_id=bi.bn_id
-				AND e.id_lab=" . $idlab . " order by bn_desc asc";
+				AND e.id_lab=" . $idlab . " ORDER BY bn_desc ASC";
 				
 				//echo $query ."</br>". $id_cot . "</br>" . $lab;
 					
@@ -610,7 +609,7 @@ function tblEquipo($idlab)
 function combotecnologia($tecnologia,$tipo)
 					{
                    
-				    $query="Select * from  cat_tecnologia order by nombre_tecnologia asc";
+				    $query="SELECT * FROM  cat_tecnologia ORDER BY nombre_tecnologia ASC";
 				     
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_tecnologia');
 					
@@ -720,7 +719,7 @@ function combotecnologia($tecnologia,$tipo)
 	function combotecnologiades($tecnologia,$tipo)
 					{
                    
-				    $query="Select * from  cat_tecnologia order by nombre_tecnologia asc";
+				    $query="SELECT * FROM  cat_tecnologia ORDER BY nombre_tecnologia ASC";
 				     
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_tecnologia');
 					
@@ -817,7 +816,7 @@ function combotecnologia($tecnologia,$tipo)
 	function comboadq($adq)
 					{
                     
-				    $query="Select * from  cat_modo_adq order by modo asc";
+				    $query="SELECT * FROM  cat_modo_adq ORDER BY modo ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_modo_adq');
@@ -852,7 +851,7 @@ function combotecnologia($tecnologia,$tipo)
 function combodispositivo($dispositivo)
 					{
                     
-				    $query="Select * from  cat_dispositivo order by nombre_dispositivo asc";
+				    $query="SELECT * FROM  cat_dispositivo ORDER BY nombre_dispositivo ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_dispositivo');
@@ -885,7 +884,7 @@ function combodispositivo($dispositivo)
 	function comboImpresora($tipo)
 					{
                     
-				    $query="Select * from  cat_impresora order by id_tipoi asc";
+				    $query="SELECT * FROM  cat_impresora ORDER BY id_tipoi ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_impresora');
@@ -918,7 +917,7 @@ function combodispositivo($dispositivo)
 	function comboDigitaliza($tipo)
 					{
                     
-				    $query="Select * from  cat_digitaliza order by tipo_digitaliza asc";
+				    $query="SELECT * FROM  cat_digitaliza ORDER BY tipo_digitaliza ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_digitaliza');
@@ -952,7 +951,7 @@ function combodispositivo($dispositivo)
 	function combomemoriaram($memoriaram)
 					{
                   
-				    $query="Select * from  cat_memoria_ram order by id_mem_ram asc";
+				    $query="SELECT * FROM  cat_memoria_ram ORDER BY id_mem_ram ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_memoria_ram');
@@ -985,7 +984,7 @@ function combodispositivo($dispositivo)
 	function comboesquema($esquema,$tipo)
 					{
                     
-				    $query="Select * from  cat_esquema order by id_esquema asc";
+				    $query="SELECT * FROM  cat_esquema ORDER BY id_esquema ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_esquema');
@@ -1076,7 +1075,7 @@ function combodispositivo($dispositivo)
 	function comboesquemades($esquema,$tipo)
 					{
                     
-				    $query="Select * from  cat_esquema order by id_esquema asc";
+				    $query="SELECT * FROM  cat_esquema ORDER BY id_esquema ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_esquema');
@@ -1167,7 +1166,7 @@ function combodispositivo($dispositivo)
 	function combousuariofinal($ufinal)
 					{
                   
-				    $query="Select * from  cat_usuario_final order by tipo_usuario asc";
+				    $query="SELECT * FROM  cat_usuario_final ORDER BY tipo_usuario ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_usuariofinal');
@@ -1201,7 +1200,7 @@ function combousuarioperfil($uperfil)
 					{
 					
                      //echo $uperfil;
-				    $query="Select * from  cat_usuario_perfil order by nombre_perfil asc";
+				    $query="SELECT * FROM  cat_usuario_perfil ORDER BY nombre_perfil ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_usuario_perfil');
@@ -1234,7 +1233,7 @@ function combousuarioperfil($uperfil)
 	function combousuariosector($usector)
 					{
                     //echo $usector;
-				    $query="Select * from  cat_usuario_sector order by nombre_sector asc";
+				    $query="SELECT * FROM  cat_usuario_sector ORDER BY nombre_sector ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_usuario_sector');
@@ -1267,7 +1266,7 @@ function combousuarioperfil($uperfil)
 function combosistemao($so)
 					{
 						
-				    $query="Select * from  cat_sist_oper order by nombre_so asc";
+				    $query="SELECT * FROM  cat_sist_oper ORDER BY nombre_so ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_sist_oper');
@@ -1302,7 +1301,7 @@ function combofamilia($familia)
 					{
                  
 				   // echo $procesador;    
-				    $query="Select * from  cat_familia order by nombre_familia asc";
+				    $query="SELECT * FROM  cat_familia ORDER BY nombre_familia ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_familia');
@@ -1335,7 +1334,7 @@ function combofamilia($familia)
 function combomarca($marca)
 					{
                    
-				    $query="Select * from  cat_marca order by descmarca asc";
+				    $query="SELECT * FROM  cat_marca ORDER BY descmarca ASC";
 				     
 				    $cambio='myFunctionMarca()" ';
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_marca');
@@ -1367,7 +1366,7 @@ function combomarca($marca)
 function combotipoMemoria($tipomemoria)
 					{
                   
-				    $query="Select * from  cat_tipo_ram order by nombre_tipo_ram asc";
+				    $query="SELECT * FROM  cat_tipo_ram ORDER BY nombre_tipo_ram ASC";
 				     
 				      $cambio='myFunctionMemoria()" ';
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_tipo_ram');
@@ -1402,7 +1401,7 @@ function combotipoMemoria($tipomemoria)
 function comboelementos($elemento)
 					{
                   
-				    $query="Select * from  cat_num_elemento order by id_elemento asc";
+				    $query="SELECT * FROM  cat_num_elemento ORDER BY id_elemento ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_num_elemento');
@@ -1435,7 +1434,7 @@ function comboelementos($elemento)
 function comboAdqu($adq)
 					{
                   
-				    $query="Select * from  cat_adq order by id_adq asc";
+				    $query="SELECT * FROM  cat_adq ORDER BY id_adq ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_adq');
@@ -1468,7 +1467,7 @@ function comboAdqu($adq)
 function comboCrit($crit)
 					{
                   
-				    $query="Select * from  cat_crit order by id_crit asc";
+				    $query="SELECT * FROM  cat_crit ORDER BY id_crit ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_crit');
@@ -1502,7 +1501,7 @@ function comboarreglo($arreglo)
 					{
                    
 				        
-				    $query="Select * from  cat_num_arreglo order by num_arreglos asc";
+				    $query="SELECT * FROM  cat_num_arreglo ORDER BY num_arreglos ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_num_arreglo');
@@ -1536,7 +1535,7 @@ function comboarreglo($arreglo)
 function combotecom($teccom)
 					{
                   
-				    $query="Select * from  cat_tec_com order by nombre_tec_com asc";
+				    $query="SELECT * FROM  cat_tec_com ORDER BY nombre_tec_com ASC";
 				     
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_tec_com');
@@ -1571,7 +1570,7 @@ function combotecom($teccom)
           echo'llega de licencia';
 		  echo $licencia;
        
-          $query="Select * from  cat_licencia order by id_licencia asc";
+          $query="SELECT * FROM  cat_licencia ORDER BY id_licencia ASC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_licencia');
 		 
@@ -1652,7 +1651,7 @@ function radialestado($estado)
 function radialarquitectura($arquitectura)
 {         
         
-          $query="Select * from  cat_arquitectura order by id_arquitectura asc";
+          $query="SELECT * FROM  cat_arquitectura ORDER BY id_arquitectura ASC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_arquitectura');
 		 
@@ -1679,7 +1678,7 @@ function radialarquitectura($arquitectura)
 
 function radialservidor($servidor)   
 {        
-          $query="Select * from  cat_servidor order by id_servidor desc";
+          $query="SELECT * FROM  cat_servidor ORDER BY id_servidor DESC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
 		 
@@ -1709,7 +1708,7 @@ function radialservidor($servidor)
 } //fin radial servidor
 function radialCluster($clst)   
 {        
-          $query="Select * from  cat_servidor order by id_servidor desc";
+          $query="SELECT * FROM cat_servidor ORDER BY id_servidor DESC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
 		 
@@ -1739,7 +1738,7 @@ function radialCluster($clst)
 } 
 function radialConInt($cint)   
 {        
-          $query="Select * from  cat_servidor order by id_servidor desc";
+          $query="SELECT * FROM  cat_servidor ORDER BY id_servidor DESC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
 		 
@@ -1769,7 +1768,7 @@ function radialConInt($cint)
 }
 function radialSalida($sal)   
 {        
-          $query="Select * from  cat_servidor order by id_servidor desc";
+          $query="SELECT * FROM  cat_servidor ORDER BY id_servidor DESC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
 		 

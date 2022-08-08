@@ -38,9 +38,9 @@ $div = new departamentos();
 <?php 
           if($_GET['lab']!='' && $_GET['div']==NULL ){?>
      <tr>
-          <td><div class="centrado"> <?php require('../inc/material.inc.php');?></div></td>
+          <td><div class="centrado"> <?php require('../inc/material.inc.php'); ?></div></td>
      </tr>
-   <?php  }else if ($_GET['lab']!='' && $_GET['div']!='' ){?>
+   <?php  }else if ($_GET['lab']!='' && $_GET['div']!='' ){ ?>
       <tr>
           <td><div class="centrado"> <?php require('../inc/material.inc.php');?></div></td>
      </tr>

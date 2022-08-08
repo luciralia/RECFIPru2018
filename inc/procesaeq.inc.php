@@ -21,7 +21,7 @@ require_once('../conexion.php');
 <?php if($_POST['accionn']=='Guardar'){ ?>
 <h1>Nuevo</h1>
 <?php 
-$queryaux="Select max(id_nec) as maxid from necesidades_equipo where id_lab=". $_REQUEST['lab'];
+$queryaux="SELECT MAX(id_nec) as maxid FROM necesidades_equipo WHERE id_lab=". $_REQUEST['lab'];
 $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
 $row = pg_fetch_array($resultx); 
 $id_req_aux=$row['maxid']; 
@@ -38,7 +38,7 @@ $queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descr
 $result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 echo $queryn;
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&divG='. $_REQUEST['div'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 
@@ -69,7 +69,7 @@ echo $queryu;
 <?php }?>
 <?php if($_POST['accionm']=='borrar'){ 
 
-$strquery="delete from req_mat where id_nec=%d and id_lab=%d";
+$strquery="DELETE FROM req_mat WHERE id_nec=%d AND id_lab=%d";
 $queryd=sprintf($strquery,$_POST['id_nec'],$_POST['id_lab']);
 //$result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
 

@@ -12,7 +12,7 @@ function getJustEq($id_just,$col){
 			
 			} else {
 			
-			$query="Select * from  cat_juztificacion_nec where id=" . $id_just;
+			$query="SELECT * FROM  cat_juztificacion_nec WHERE id=" . $id_just;
 				
 				$result = @pg_query($query) or die('Hubo un error con la base de datos');
 			
@@ -35,7 +35,7 @@ function getJustMat($id_just,$col){
 			
 			} else {
 			
-			$query="Select * from  cat_just_mat where id=" . $id_just;
+			$query="SELECT * FROM  cat_just_mat WHERE id=" . $id_just;
 				
 				$result = @pg_query($query) or die('Hubo un error con la base de datos');
 			
@@ -56,7 +56,7 @@ function cmbJustMat($idjust)
 					{
 
 				        
-				        $query="Select * from cat_just_mat order by id";
+				        $query="SELECT * FROM cat_just_mat ORDER BY id";
 				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos');
@@ -87,7 +87,7 @@ function cmbJustMat($idjust)
 					{
                      echo $idjust;
 				        
-				        $query="Select * from cat_juztificacion_nec order by id";
+				        $query="SELECT * FROM cat_juztificacion_nec ORDER BY id";
 				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos');
@@ -122,7 +122,7 @@ function getPlazo($id_plazo,$col){
 			
 			} else {
 			
-			$query="Select * from  cat_plazo_nec where id=" . $id_plazo;
+			$query="SELECT * FROM  cat_plazo_nec WHERE id=" . $id_plazo;
 				
 				$result = @pg_query($query) or die('Hubo un error con la base de datos');
 			
@@ -140,7 +140,7 @@ function cmbPlazo($idplazo)
 					{
 
 				        
-				        $query="Select * from  cat_plazo_nec order by id desc";
+				        $query="SELECT * FROM  cat_plazo_nec ORDER BY id desc";
 				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos');
@@ -178,7 +178,7 @@ function getPrioridad($id_prio,$col){
 			
 			} else {
 			
-			$query="Select * from  cat_prioridad_nec where id=" . $id_prio;
+			$query="SELECT * FROM  cat_prioridad_nec WHERE id=" . $id_prio;
 				
 				$result = @pg_query($query) or die('Hubo un error con la base de datos');
 			
@@ -195,7 +195,7 @@ function cmbPrioridad($idprio)
 					{
 
 				        
-				        $query="Select * from  cat_prioridad_nec order by id desc";
+				        $query="SELECT * FROM  cat_prioridad_nec ORDER BY id desc";
 				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos');

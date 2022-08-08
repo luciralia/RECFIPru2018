@@ -7,14 +7,14 @@ require_once('../conexion.php');
 //print_r($_SESSION);
 
 
-$query = "select l.*, l.nombre as laboratorio, u.nombre as nresp, a_paterno, a_materno, de.nombre as depa, di.id_div as div, di.nombre as division,
-u.tel1 as tel1,u.tel2 as tel2, u.email as email,u.ext as ext, e.descripcion as edif, detalle_ub as ubica, l.dir_postal as postal, capacidad,asignaturas,carreras
-from laboratorios l, departamentos de, divisiones di, usuarios u, cat_edificio e 
-where l.id_dep=de.id_dep
-and de.id_div=di.id_div
-and l.id_edif=e.id
-and l.id_responsable=u.id_usuario
-and id_lab="  . $_GET['lab'];
+$query = "SELECT l.*, l.nombre AS laboratorio, u.nombre AS nresp, a_paterno, a_materno, de.nombre AS depa, di.id_div AS div, di.nombre AS division,
+u.tel1 AS tel1,u.tel2 AS tel2, u.email AS email,u.ext AS ext, e.descripcion AS edif, detalle_ub AS ubica, l.dir_postal AS postal, capacidad,asignaturas,carreras
+FROM laboratorios l, departamentos de, divisiones di, usuarios u, cat_edificio e 
+WHERE l.id_dep=de.id_dep
+AND de.id_div=di.id_div
+AND l.id_edif=e.id
+AND l.id_responsable=u.id_usuario
+AND id_lab="  . $_GET['lab'];
 
 //echo $query;
 $datos = pg_query($con,$query);

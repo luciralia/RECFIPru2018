@@ -103,8 +103,7 @@ AND dp.id_div = dv.id_div
 AND l.id_responsable=u.id_usuario" .$tipomant. " 
 AND " . $tiposerv ;
 }
-
-//echo 'En cargaserv'.$query; 
+//echo 'En cargaserv '.$query; 
 ?>
 
 <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div']. "&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
@@ -119,6 +118,7 @@ AND " . $tiposerv ;
 
 ?>
 <?php if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > 
+	
 	<a href="<?php echo $action1 . '&accion=nuevob';?>"><?php echo $texto_bot;?></a></div><?php }?>
 	
 	
@@ -128,10 +128,20 @@ AND " . $tiposerv ;
 <div style="text-align: right"><?php if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevob';?>">Nueva solicitud</a></div><?php }?></div>	
 <?php }?>
 
-<div class="block" id="necesidades_content">      
+<div class="block" id="necesidades_content">    
+  
 <table><tr>
 <?php 		 //echo "Responsable: " . $lab->getResponsable($_SESSION['id_usuario']); echo " Tipo de servicio: " . $_GET['mod'];
-	if($_GET['mod']=='serv' || $_GET['mod']=='servi'){ //omite la opción de ordenar para bitácoras?> 
+	
+	if($_GET['mod']=='serv' || $_GET['mod']=='servi'){ 
+		
+	$datos = pg_query($con,$query);
+	
+    $inventario= pg_num_rows($datos); 
+	
+
+	if ($inventario!=0 ){ 
+	?> 
 <td></br>
 <form action="inicio.html.php" method="get" name="orderby">
         Ordenar por: <select name="orden">
@@ -163,32 +173,44 @@ AND " . $tiposerv ;
     <br />
 </td>
 </tr></table>
-<?php } // Termina el if de la opción de ordenar y exportar a excel?>
+<?php } 
+	}// Termina el if de la opción de ordenar y exportar a excel
+?>
 
-<?php if($_GET['mod']=='servibf' || $_GET['mod']=='servibp'){ 
+<?php 
+$datos = pg_query($con,$query);
+$inventario= pg_num_rows($datos); 
+
+if ($inventario!=0 ){ 
+if($_GET['mod']=='servibf' || $_GET['mod']=='servibp'){ 
 $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc.php';
+	
 ?>
    <br />
-    <form action="<?php echo $action; ?>" method="post" name="servbit" >
+  <form action="<?php echo $action; ?>" method="post" name="servbit" >
 	<input name="enviar" type="submit" value="Generar bitácora" />
 	<?php
 	$obj_bit->tblServ($_GET['lab'],$_GET['mod'],$_REQUEST['div'],$_SESSION['tipo_usuario'] );
 	?>
 	</form>
     <br />
-<?php } ?>
+<?php  }
+ } 
+ ?>
+
 
 <?php
 
-	if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla solo si no es para bitácora
+if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla solo si no es para bitácora
+	
 	$datos = pg_query($con,$query) or die('Existe un error con la base de datos' . pg_result_error($datos));
+			
+    $inventario= pg_num_rows($datos); 
+	
+	if ($inventario!=0 ){
 
 		while ($serv_mant = pg_fetch_array($datos, NULL, PGSQL_ASSOC)) 
 			 { 
-		
-//		echo "</br>cantidad:" . $serv_mant['cant']; 
-	//	echo "</br>Descripción:" . $serv_mant['descripcion']; 
-	//  echo "</br>Cotización: "; echo $obj_cotiza->getCotiza($serv_mant['id_cotizacion']);
 	?>
 	
 <table class='serviciosm'>
@@ -226,10 +248,11 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
 		<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$serv_mant['id_lab'] ."_".$serv_mant['id_req'];?>">
 
-<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;} else { $colspan=7;}                    ?> 
+<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;
+									} else { $colspan=7;}                    ?> 
   <tr >
    <?php   if ( $_SESSION['tipo_usuario']!=10) { ?>
-  <td style="text-align: right" colspan="<?php echo $colspan; ?>">
+    <td style="text-align: right" colspan="<?php echo $colspan; ?>">
   	<input name="accion" type="submit" value="borrar" />
   </td>
   <?php  } ?>
@@ -248,13 +271,14 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
 			
 			}
 			?>
-<input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
-</form>
+  <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
+  </form>
   </td>
   <td style="text-align: right">
 	
 	
-<?php	if ($_REQUEST['mod']=='servibf' ){ $destino="../inc/excelbf.inc.php";} else if ($_REQUEST['mod']=='servibp'){ $destino="../inc/excelbp.inc.php";}
+<?php	if ($_REQUEST['mod']=='servibf' ){ $destino="../inc/excelbf.inc.php";} else if ($_REQUEST['mod']=='servibp'){ $destino="../inc/excelbp.inc.php";
+																													}
 ?>
 	
 	<form action="<?php echo $destino; ?>" method="post">
@@ -272,24 +296,34 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
 			<input name="accion" type="submit" value="formato" />
   	
 		  <?php }?>
-	<input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
+		
+	   <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
 	</form>
   </td>
     
   </tr>
 
- </table>
-
-  </br>
+ 
      
  
 	<?php	
-		}// Fin del while que genera la tabla
-	}//fin de if que permite la tabla
-	    ?>
+			 }//fin if servibf or servibp
+	}
+		
+			}else { ?>
+             
+            <!--<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ 
+             <tr> <td align="center"> <h3>No existen necesidades* registradas.</h3> </td></tr>-->
+	  
+		<?php }
+   ?>
+
 
  
+</table>
 
+  </br>
 
-          </table>
+        
                 </div>

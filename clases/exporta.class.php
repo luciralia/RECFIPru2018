@@ -111,7 +111,7 @@ AND " . $tiposerv ;
      }
 
 	else if ($mod=="mat"){
-				$query = "SELECT distinct rm.id_req AS id_req, rm.id_lab AS id_lab,cant, rm.descripcion AS descripcion, rm.unidad_medida AS                 medida, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, dp.nombre AS departamento, di.nombre AS                 division, cto_unitario AS costo, act_generales AS actividades, cjnm.descripcion AS motivo, cjnm.id AS num_just, impacto AS                 justificacion, rm.id_cotizacion AS id_cotizacion, rm.ref AS ref
+				$query = "SELECT DISTINCT rm.id_req AS id_req, rm.id_lab AS id_lab,cant, rm.descripcion AS descripcion, rm.unidad_medida AS                 medida, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, dp.nombre AS departamento, di.nombre AS                 division, cto_unitario AS costo, act_generales AS actividades, cjnm.descripcion AS motivo, cjnm.id AS num_just, impacto AS justificacion, rm.id_cotizacion AS id_cotizacion, rm.ref AS ref
 				FROM req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_just_mat cjnm 
 				WHERE rm.id_lab=l.id_lab 
 				AND l.id_dep=dp.id_dep 
@@ -133,13 +133,12 @@ AND " . $tiposerv ;
 		 ctt.nombre_tecnologia as tectres,
 		 ctc.nombre_tecnologia as teccuatro,
          l.nombre as laboratorio, bi.*,*  FROM dispositivo e 
-
          LEFT JOIN cat_dispositivo cd
          ON e.dispositivo_clave=cd.dispositivo_clave
          LEFT JOIN cat_familia cf
          ON e.familia_clave=cf.id_familia
          LEFT JOIN cat_tipo_ram ctr
-on e.tipo_ram_clave=ctr.id_tipo_ram
+         ON e.tipo_ram_clave=ctr.id_tipo_ram
 left join cat_tecnologia ct
 on e.tecnologia_clave=ct.id_tecnologia
 left join cat_sist_oper cso
@@ -178,17 +177,16 @@ left join cat_tec_com ctcom
 on ctcom.id_tec_com=e.tec_com
 join laboratorios l
 on  l.id_lab=e.id_lab
-where e.id_lab=" . $idlab;
+WHERE e.id_lab=" . $idlab;
 	
     } elseif (($mod=="inv" || $mod=="invg") && ( $tabla="equipo")){
 		
-	$query = "SELECT e.*, l.nombre AS laboratorio, bi.* from ".$tabla." e 
-
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-where e.id_lab=" . $idlab;	
+	$query = "SELECT e.*, l.nombre AS laboratorio, bi.* FROM ".$tabla." e 
+              LEFT JOIN bienes_inventario bi
+              ON  e.bn_id = bi.bn_id
+              JOIN laboratorios l
+              ON  l.id_lab=e.id_lab
+              WHERE e.id_lab=" . $idlab;	
 		
 	}
 	
@@ -246,20 +244,20 @@ where e.id_lab=" . $idlab;
 
 function DispXls(){
 	$query="SELECT  e.inventario,e.serie,e.marca_p,modelo_p,nombre_dispositivo,nombre_so,version_sist_oper,usuario_nombre,nombre_sector,tipo_usuario,
-	 div.nombre as nombrediv,d.nombre as nombredep,l.nombre as laboratorio
+	 div.nombre AS nombrediv,d.nombre AS nombredep,l.nombre AS laboratorio
          FROM dispositivo e 
          LEFT JOIN cat_dispositivo cd
          ON e.dispositivo_clave=cd.dispositivo_clave
          LEFT JOIN cat_familia cf
          ON e.familia_clave=cf.id_familia
-         left join cat_tipo_ram ctr
-         on e.tipo_ram_clave=ctr.id_tipo_ram
-         left join cat_tecnologia ct
+         LEFT JOIN cat_tipo_ram ctr
+         ON e.tipo_ram_clave=ctr.id_tipo_ram
+         LEFT JOIN cat_tecnologia ct
          on e.tecnologia_clave=ct.id_tecnologia
-         left join cat_sist_oper cso
-         on  e.sist_oper=cso.id_sist_oper
-         left join cat_marca cm
-         on cm.id_marca=e.id_marca
+         LEFT JOIN cat_sist_oper cso
+         ON  e.sist_oper=cso.id_sist_oper
+         LEFT JOIN cat_marca cm
+         O cm.id_marca=e.id_marca
          left join cat_memoria_ram cmr
          on e.id_mem_ram=cmr.id_mem_ram
          left join bienes_inventario bi

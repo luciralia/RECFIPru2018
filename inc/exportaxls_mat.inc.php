@@ -12,8 +12,10 @@ $obj_xls=new Exportaxls(); // nueva linea
 $obj_cot=new Cotiza();
 
 /*  este for es para cargar los datos de los renglones*/
-				
-	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod']);
+	
+if ($_REQUEST['lab']!='') {
+	$tab='dispositivo';			
+	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$tab);
 				
 				foreach ($renglon_xls as $reng) {
 			        					
@@ -22,14 +24,39 @@ $obj_cot=new Cotiza();
 					}
 				
 				}
-
+}else if ($_REQUEST['div']!=''||$_REQUEST['div']=='' ) {
+	
+	 echo 'entra aqui';
+	$renglon_xls=$obj_xls->eqDivXls($_REQUEST['div']);
+	
+	foreach ($renglon_xls as $reng) {
+			        					
+					foreach ($reng as $campo => $valor) {
+						$registro[$campo]=$valor;
+					}
+				
+				}
+	}
 date_default_timezone_set('America/Mexico_City');
 header('Content-type: application/x-msexcel'); 
 header("Content-Type: application/vnd.ms-excel" );
 header("Expires: 0" );
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 //header("Content-type: text/html");
+if (  $_SESSION['tipo_usuario']==9  && $_SESSION['id_div']==NULL || $_REQUEST['lab']!=NULL ){
+	 
 $texto='Content-Disposition: attachment;filename="requerimientos_mat_' . date("Ymd-His") . "_" . $renglon_xls[0]['laboratorio'] . '.xls"';
+}
+
+if ( $_SESSION['tipo_usuario']==10 && $_REQUEST['div']!=""){
+$texto='Content-Disposition: attachment;filename="requerimientos_mat_' . date("Ymd-His") . "_" . $renglon_xls[0]['division'] . '.xls"';
+}else if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div']==""){
+$titulo='FacultadIngenieria';	
+$texto='Content-Disposition: attachment;filename="requerimientos_mat_' . date("Ymd-His") . "_" . $titulo . '.xls"';
+}
+
+	
+
 header($texto);
 
 ?>

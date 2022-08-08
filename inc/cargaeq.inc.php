@@ -25,58 +25,58 @@ and l.id_responsable=u.id_usuario";*/
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
-$query = "select distinct id_nec, ne.id_lab as id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre as departamento, dv.nombre as division, cto_unitario as costo, act_generales as actividades, cjn.descripcion as motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
-from necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
-where ne.id_lab=l.id_lab 
-and l.id_dep=de.id_dep 
-and de.id_div=dv.id_div 
-and plazo=cpn.id 
-and justificacion=cjn.id
-and ne.id_lab=" . $_GET['lab'] . 
-"order by id_nec desc";
+$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
+WHERE ne.id_lab=l.id_lab 
+AND l.id_dep=de.id_dep 
+AND de.id_div=dv.id_div 
+AND plazo=cpn.id 
+AND justificacion=cjn.id
+AND ne.id_lab=" . $_GET['lab'] . 
+"ORDER BY id_nec DESC";
 }if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']=='') ){
 	
-$query = "select distinct id_nec, ne.id_lab as id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre as departamento, dv.nombre as division, cto_unitario as costo, act_generales as actividades, cjn.descripcion as motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
-from necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
-where ne.id_lab=l.id_lab 
-and l.id_dep=de.id_dep 
-and de.id_div=dv.id_div 
-and plazo=cpn.id 
-and justificacion=cjn.id
-and ne.id_lab=" . $_GET['lab'] . 
-"order by id_nec desc";
+$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
+WHERE ne.id_lab=l.id_lab 
+AND l.id_dep=de.id_dep 
+AND de.id_div=dv.id_div 
+AND plazo=cpn.id 
+AND justificacion=cjn.id
+AND ne.id_lab=" . $_GET['lab'] . 
+"ORDER BY id_nec DESC";
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['lab']=='' && $_GET['div']!=''){
-$query = "select distinct id_nec, ne.id_lab as id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre as departamento, dv.nombre as division, cto_unitario as costo, act_generales as actividades, cjn.descripcion as motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
-from necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
-where ne.id_lab=l.id_lab 
-and l.id_dep=de.id_dep 
-and de.id_div=dv.id_div 
-and plazo=cpn.id 
-and justificacion=cjn.id
-and dv.id_div=" . $_GET['div'] . 
-"order by id_nec desc";	
+$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
+WHERE ne.id_lab=l.id_lab 
+AND l.id_dep=de.id_dep 
+AND de.id_div=dv.id_div 
+AND plazo=cpn.id 
+AND justificacion=cjn.id
+AND dv.id_div=" . $_GET['div'] . 
+"ORDER BY id_nec DESC";	
 } 
 else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
-$query = "select distinct id_nec, ne.id_lab as id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre as departamento, dv.nombre as division, cto_unitario as costo, act_generales as actividades, cjn.descripcion as motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
-from necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
-where ne.id_lab=l.id_lab 
-and l.id_dep=de.id_dep 
-and de.id_div=dv.id_div 
-and plazo=cpn.id 
-and justificacion=cjn.id
-and dv.id_div=" . $_GET['div'] . 
-"order by id_nec desc";	
+$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre as departamento, dv.nombre as division, cto_unitario as costo, act_generales as actividades, cjn.descripcion as motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
+WHERE ne.id_lab=l.id_lab 
+AND l.id_dep=de.id_dep 
+AND de.id_div=dv.id_div 
+AND plazo=cpn.id 
+AND justificacion=cjn.id
+AND dv.id_div=" . $_GET['div'] . 
+"ORDER BY id_nec DESC";	
 } else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 	
-$query = "select distinct id_nec, ne.id_lab as id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion as plazo, cpn.id as id_plazo, l.nombre as laboratorio, de.nombre as departamento, dv.nombre as division, cto_unitario as costo, act_generales as actividades, cjn.descripcion as motivo, cjn.id as id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
-from necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
-where ne.id_lab=l.id_lab 
-and l.id_dep=de.id_dep 
-and de.id_div=dv.id_div 
-and plazo=cpn.id 
-and justificacion=cjn.id
-order by id_nec desc";	
+$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn
+WHERE ne.id_lab=l.id_lab 
+AND l.id_dep=de.id_dep 
+AND de.id_div=dv.id_div 
+AND plazo=cpn.id 
+AND justificacion=cjn.id
+ORDER BY id_nec DESC";	
 }
 //echo 'query'. $query;
   ?>
@@ -84,19 +84,20 @@ order by id_nec desc";
 <div class="block" id="necesidades_content">   
 
 
-<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_GET['div'];?>
+<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_REQUEST['div'];?>
 <!--<form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/></p>
 </form>-->
 
 <?php if ($_SESSION['tipo_usuario']==9){ ?>
-<div style="text-align: right"> <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nueva solicitud</a></div><?php // }?></div>
-<div class="block" id="necesidades_content">  
+<div style="text-align: right"> <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nueva solicitud</a></div></div>
+<?php } ?>
+
 
 <br>
 <br> 
 
-<?php } 
+<?php 
 $datos = pg_query($con,$query);
 	
     $inventario= pg_num_rows($datos); 
@@ -111,6 +112,7 @@ $datos = pg_query($con,$query);
 	<input name="enviar" type="submit" value="Exportar a excel" />
 	<input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
     <input name="div" type="hidden" value="<?php echo $_GET['div'] ?>" />
+    <input name="div" type="hidden" value="<?php echo $_REQUEST['div']?>" />
 	<input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
 	</form>
     <br />
@@ -171,7 +173,7 @@ $datos = pg_query($con,$query);
 	                         </td>
                     </tr>
 <?php //if($_SESSION['tipo_usuario']==9){ ?> 
-			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=".   $_GET['div'];?>
+			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=".   $_REQUEST['div'];?>
 			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab'] ."_".$lab_nec['id_nec'];?>">
 			<?php if ($_SESSION['tipo_usuario']==9){ 
 				?>
@@ -191,8 +193,7 @@ $datos = pg_query($con,$query);
 </table> 
  <br>
 	<?php	
-	
-				 	 
+		 	 
 			}
 			 }else { ?>
              <br>
@@ -204,6 +205,5 @@ $datos = pg_query($con,$query);
 
 
 ?>
-
 
   </div>

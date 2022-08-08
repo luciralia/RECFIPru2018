@@ -46,11 +46,16 @@ switch ($_GET['orden']){
 // echo $query; ?>
 
 <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'].'&div='. $_REQUEST['div'];?>
+
 <!--<form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/>
 </form>-->
 
-<div class="barra_boton" style="width:800px;"> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nuevo</a></div></div>
+<!--<div class="barra_boton" style="width:800px;">-->
+
+<div  style="text-align: right"> 
+ 
+  <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nuevo</a></div></div>
 
 <?php  $datos = pg_query($con,$query);
 	

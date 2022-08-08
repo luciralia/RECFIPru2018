@@ -18,7 +18,7 @@ require_once('../conexion.php');
 <h1>Nuevo</h1>
 <?php 
 //Determina si exite bitacora de mantenimiento para agregar el registro, si no existe se crea automaticamente, el proceso es transparente para el usuario
-$queryaux="Select id_bitacora from bitacora where id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
+$queryaux="SELECT id_bitacora FROM bitacora WHERE id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
 $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
 $nreng = pg_num_rows($resultx);
 			if ($nreng==1){
@@ -35,7 +35,7 @@ $nreng = pg_num_rows($resultx);
 						$result=pg_query($con,$query) or die('ERROR AL LEER DATOS: ' . pg_last_error());				
 			
 			//Carga el id_bitacora recien creada
-						$queryaux="Select id_bitacora from bitacora where id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
+						$queryaux="SELECT id_bitacora FROM bitacora WHERE id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
 						$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
 						$row = pg_fetch_array($resultx); 
 						$id_bit_aux=$row['id_bitacora']; 
@@ -105,7 +105,7 @@ header($direccion);
 <h1>Nuevo</h1>
 <?php 
 //Determina si exite bitacora de mantenimiento para agregar el registro, si no existe se crea automaticamente, el proceso es transparente para el usuario
-$queryaux="Select id_bitacora from bitacora where id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
+$queryaux="SELECT id_bitacora FROM bitacora WHERE id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
 $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
 $nreng = pg_num_rows($resultx);
 			if ($nreng==1){
@@ -122,7 +122,7 @@ $nreng = pg_num_rows($resultx);
 						$result=pg_query($con,$query) or die('ERROR AL LEER DATOS: ' . pg_last_error());				
 			
 			//Carga el id_bitacora recien creada
-						$queryaux="Select id_bitacora from bitacora where id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
+						$queryaux="SELECT id_bitacora FROM bitacora WHERE id_lab=". $_REQUEST['lab'] . " AND tipo_bit='3' AND vb_rl IS FALSE and vb_jdep IS FALSE";
 						$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
 						$row = pg_fetch_array($resultx); 
 						$id_bit_aux=$row['id_bitacora']; 
