@@ -244,8 +244,7 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
     <td><?php echo date("d-m-Y", strtotime($serv_mant['fsalida']));?></td>
     <td><?php echo date("d-m-Y", strtotime($serv_mant['frecepcion']));?></td>
 </tr>
-
-		<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
+       <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$serv_mant['id_lab'] ."_".$serv_mant['id_req'];?>">
 
 <?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;

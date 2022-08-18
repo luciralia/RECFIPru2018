@@ -17,10 +17,10 @@ if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10
 } 
 
 */
-if ((!isset($_GET['lab']) || $_GET['lab']=='' ) && $_SESSION['tipo_usuario']!=10) {
+if ((!isset($_GET['lab']) || $_GET['lab']=="" ) && $_SESSION['tipo_usuario']!=10) {
 	
        $estado='visible'; ?>
-        <div id="resaltado"> Debe seleccionar un Área </div> 
+        <div id="resaltado">Debe seleccionar un Área</div> 
      <?php    
          require_once('../inc/menuNiv.inc.php');
 
@@ -38,7 +38,7 @@ if ((!isset($_GET['lab']) || $_GET['lab']=='' ) && $_SESSION['tipo_usuario']!=10
 	   $estado='visible';
 	  
  ?>
-<div id="resaltado"> Debe seleccionar una división </div> 
+<div id="resaltado">Debe seleccionar una división</div> 
 <?php 
       require_once('../inc/cargadiv.inc.php');
     }

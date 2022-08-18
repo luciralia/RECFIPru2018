@@ -47,7 +47,7 @@ require_once('../inc/encabezado.inc.php');
 	 && $_GET['mod']!='invg' 
     &
 	 }*/
-    if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred')
+    if ($_GET['mod']!='imp' && $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred')
    /* if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='act'  && $_GET['mod']!='invear' &&        $_GET['mod']!='impear'  &&  $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred'  && $_GET['mod']!='invg'    )*/
             require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>

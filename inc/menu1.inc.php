@@ -27,14 +27,14 @@
      <?php 
 	 if ($_SESSION['tipo_usuario']==10){   ?>
        	      <!--<li><a href="../view/inicio.html.php?mod=ced" class="actual" >Inicio</a></li>-->
-             <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>" class="actual" >Inicio</a></li>
+             <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }elseif (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) { ?>
               <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php // echo $_SESSION['id_div'];?>" class="actual">Inicio</a></li>-->
-              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">Inicio</a></li>
+              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
           <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){   ?>
        	      <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php  //echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>-->
-             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>
+             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }	?>
         <?php  if ($_SESSION['tipo_usuario']!=10){   ?>
         <?php //$clase=($_GET['mod']=='ced')?'" class="actual"':$clase='"'; ?>
@@ -186,6 +186,13 @@
     	</ul>
 	</li>
 	<?php }?>
+	  
+	  <!-- Boton proyectos -->
+    
+    <?php  ?>
+	<?php //$clase=($_GET['mod']=='pro')?'" class="actual"':$clase='"'; ?>
+	<!--<li><a href="../view/inicio.html.php?mod=pro&lab=<?php //echo $_GET['lab'];?>" <?php //echo $clase;?>>Proyectos</a></li>-->
+	<?php ?>
 
 
 

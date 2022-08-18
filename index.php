@@ -78,12 +78,11 @@ Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó c
        <?php 
         if ($_GET['log']=='no'){
    
-        $usuario=$_GET['usr'];
-        $rusuario=$_GET['usr'];
-        $estado='visible';
-
+           $usuario=$_GET['usr'];
+           $rusuario=$_GET['usr'];
+           $estado='visible';
         }else{
-        $usuario='';      
+           $usuario='';      
  
          }
 		

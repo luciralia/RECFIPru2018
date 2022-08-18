@@ -16,8 +16,8 @@ body {
 	padding: 0px;
 	background-color: #FFFFFF;
 	/*font-family:arial, sans-serif;*/
-/*font-family: Verdana, Geneva, sans-serif;	*/
-/*	font-family: 'TitilliumText22LThin';*/
+/*font-family: Verdana, Geneva, sans-serif;	
+font-family: 'TitilliumText22LThin';*/
     font-family: 'TitilliumText22LRegular';
 	font-size:12pt;
 	/*background-image: url('../images/bkg_02.gif');*/
@@ -69,7 +69,6 @@ padding:2px;
 text-decoration:none;
 /*border:1px ridge #383838;*/
 cursor:pointer;
-
 }
 
 a.menu:hover, a.menu:active
@@ -132,21 +131,17 @@ border:1px outset;
 /*border-collapse:collapse;*/
 border:0px none #FF0000; 
 width:1024px;
-
-
 }
 
+
 div.docs ul{
-	
 	list-style-type:square;
 	}
 
 div.recuadro{
-	
 background-color: #F6F6F6;
 border:1px  inset #F6F6F6;
 padding: 5px;
-
 }
 
 div.recuadro2 p{
@@ -181,8 +176,6 @@ margin:auto;
 width:70%;
 background-color:#EEEEEE;
 }
-}
-
 
 td.bgtabla
 {
@@ -409,7 +402,7 @@ max-width: 450px;*/
 /*-------------*/
 .cssToolTip {
     position: relative; /* Esta clase tiene que tener posicion relativa */
-    color: #48474F  /* Color del texto */
+    color: #48474F;  /* Color del texto */
     
 }
 /* El tooltip */
@@ -430,7 +423,7 @@ max-width: 450px;*/
 
     top: 15px; /* Posicion apartir de la parte superior del primer elemento padre con posicion relativa */
 
-    left: 1o0px; /* Posicion apartir de la parte izquierda del primer elemento padre con posicion relativa */
+    left: 100px; /* Posicion apartir de la parte izquierda del primer elemento padre con posicion relativa */
 
     z-index: 100; /* Poner un z-index alto para que aparezca por encima del resto de elementos */
 
@@ -477,7 +470,7 @@ background: #fff6bf url('../images/alert.png') center no-repeat;
 background-position: 15px 50%; /* x-pos y-pos */
 opacity: 0.99;
 /*text-align: left;*/
-vertical-align:middle;
+vertical-align: middle;
 height: auto;
 padding: 5px 20px 5px 45px;
 border-top: 2px solid #ffd324;

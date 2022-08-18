@@ -24,7 +24,7 @@ function getJustEq($id_just,$col){
 				}
 			return $salidac[$col];
 			}
-
+	
 
 function getJustMat($id_just,$col){
 
@@ -216,7 +216,7 @@ function cmbPrioridad($idprio)
 					
 						$salida.= "<option value='" . $datosc['id'] . "'>" . $datosc['descripcion']. "</option>";
 						
-					             					  }
+					    }
 					
 						}
 				//	return $salida;
