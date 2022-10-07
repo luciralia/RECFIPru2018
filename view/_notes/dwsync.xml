@@ -4,7 +4,6 @@
 <file name="cedula.html.php" server="132.248.52.241//var/www/SIELDIv2/" local="130301425940000000" remote="130915658260000000" Dst="-1" />
 <file name="inicio.html.php" server="132.248.52.241//var/www/SIELDIv2/" local="130876930340000000" remote="130915658310000000" Dst="-1" />
 <file name="equipamiento.html.php" server="132.248.52.241//var/www/SIELDIv2/" local="130272049340000000" remote="130915658270000000" Dst="-1" />
-<file name="inicio.html.php.bak" server="132.248.52.241//var/www/SIELDIv2/" local="130254122720000000" remote="130254122720000000" Dst="-1" />
 <file name="servicios.html.php" server="132.248.52.241//var/www/SIELDIv2/" local="131063663242237820" remote="131063732500000000" Dst="-1" />
 <file name="material.html.php" server="132.248.52.241//var/www/SIELDIv2/" local="130280974020000000" remote="130915658270000000" Dst="-1" />
 <file name="proyectos.html.php" server="132.248.52.241//var/www/SIELDIv2/" local="130271492080000000" remote="130915658270000000" Dst="-1" />
@@ -24,7 +23,6 @@
 <file name="equipamiento.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132834595756087118" remote="132834619520000000" Dst="1" />
 <file name="infraestructura.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130387142840000000" remote="131790350370000000" Dst="2" />
 <file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132926605953324565" remote="132926939230000000" Dst="1" />
-<file name="inicio.html.php.bak" server="132.248.52.241//var/www/RECFIPru2018/" local="130254122720000000" remote="131790350370000000" Dst="2" />
 <file name="inventario.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132926605953344674" remote="132926937120000000" Dst="1" />
 <file name="material.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280974020000000" remote="131790350370000000" Dst="2" />
 <file name="mobiliario.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130414516400000000" remote="131790350370000000" Dst="2" />
@@ -36,10 +34,9 @@
 <file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131874824330000000" remote="131874824330000000" Dst="1" />
 <file name="actualizar.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
 <file name="editainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
-<file name="importarant.html" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
 <file name="importarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
 <file name="importarant.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
-<file name="creditos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132633258593365082" remote="132633258640000000" Dst="2" />
+<file name="creditos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133065243737711783" remote="133065244980000000" Dst="2" />
 <file name="censoDGTIC.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132623697849706485" remote="132623703330000000" Dst="2" />
 <file name="censoDGTICC.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132968477484583325" remote="132969428070000000" Dst="2" />
 </dwsync>

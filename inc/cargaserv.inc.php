@@ -323,6 +323,4 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
 </table>
 
   </br>
-
-        
-                </div>
+ </div>

@@ -11,15 +11,8 @@ $this->datos=array();
 }//termina constructor
 
 function tblXls($idlab,$mod,$iddiv,$tipou){
-	
+	$tab='dispositivo';	
 
-		/*if ($_SESSION['tipo_lab']!='e' && $mod=='invc' )	
-             $tabla="dispositivo";
-           elseif ($_SESSION['tipo_lab']=='e' && $mod=='invc' )
-               $tabla="dispositivo";
-            else 
-               $tabla="equipo"*/;	   
-	
 	if ($mod=='serv'||$mod=='servi'){
 
 
@@ -65,6 +58,7 @@ AND dp.id_div = dv.id_div
 AND l.id_responsable=u.id_usuario" .$tipomant. " 
 AND " . $tiposerv . " 
 AND dv.id_div=".$_REQUEST['div'];
+	
 }else if ($tipou==10 && $iddiv!='') {
 $query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
 FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
@@ -78,6 +72,7 @@ AND dp.id_div = dv.id_div
 AND l.id_responsable=u.id_usuario" .$tipomant. " 
 AND " . $tiposerv . " 
 AND dv.id_div=".$_REQUEST['div'];
+	
 }else if ($tipou==10 &&  $iddiv==NULL) {
 	$query = "SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, em.usuario_reporta as reporta, em.fecha_salida as fsalida, em.fecha_recepcion as frecepcion, em.costo as costo, em.fecha_prox_mant as fprox, em.descripcion as desc_serv, em.garantia as garantia, bi.bn_desc as bn_desc, bi.bn_marca as marca, bi.bn_modelo as modelo, bi.bn_serie as serie, bi.bn_clave as clave, l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, em.supervisor as supervisor, em.detecto as detecto 
 FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones dv, usuarios u 
@@ -90,6 +85,7 @@ AND l.id_dep = dp.id_dep
 AND dp.id_div = dv.id_div
 AND l.id_responsable=u.id_usuario" .$tipomant. " 
 AND " . $tiposerv ;
+	
 }
 	
 }
@@ -97,6 +93,19 @@ AND " . $tiposerv ;
 	
 	
 	else if ($mod=="eq"){
+
+				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
+				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				WHERE ne.id_lab=l.id_lab 
+				AND l.id_dep=de.id_dep 
+				AND de.id_div=dv.id_div 
+				AND plazo=cpn.id 
+				AND justificacion=cjn.id
+				AND ne.id_lab=" . $idlab . 
+				"ORDER BY id_nec DESC";
+
+     }
+	else if ($mod=="pryeb"){
 
 				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
 				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
@@ -190,9 +199,9 @@ WHERE e.id_lab=" . $idlab;
 		
 	}
 	
-//	echo $query;
+
 	
-	   echo "QUERY EN LA CLASE *******************************". $query;		
+	   //echo "QUERY EN LA CLASE *******************************". $query;		
 		$result = pg_query($query) or die('Hubo un error con la base de datos');
 		while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
 		//echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";

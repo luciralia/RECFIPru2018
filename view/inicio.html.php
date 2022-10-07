@@ -24,7 +24,7 @@ require_once('../inc/encabezado.inc.php');
 		       ON l.id_responsable=u.id_usuario
                WHERE l.id_responsable=" .$_SESSION['id_usuario'];
    $datosdiv=pg_query($con,$querydiv);
- // echo 'query inicio.html'.$querydiv;
+  //echo 'query inicio.html'.$querydiv;
    $div = pg_fetch_array($datosdiv);
    $_SESSION['id_div']=$div[0];
 	
@@ -68,6 +68,8 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/cedula.html.php");
 		else if ($_GET['mod']=='eq')
 		include_once("../view/equipamiento.html.php");
+		else if ($_GET['mod']=='pry'|| $_GET['mod']=='pryeb'||$_GET['mod']=='pryv')
+		include_once("../view/proy.html.php");
 		else if ($_GET['mod']=='serv'|| $_GET['mod']=='servi'|| $_GET['mod']=='servibf'|| $_GET['mod']=='servibp')
 		include_once("../view/servicios.html.php");
 		else if ($_GET['mod']=='mat'||$_POST['mat']=='mat')

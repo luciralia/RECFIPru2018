@@ -145,14 +145,28 @@
 <!-- Fin de menu-->
 
    
-    <!-- Boton equipamiento -->
+    <!-- Boton Proyectos -->
 	  
     <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
 
-	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+	<?php $clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
     <?php //$actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
-	    <li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Equipamiento</a></li>
+	    <li><a href="../view/inicio.html.php?mod=pry&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Proyectos</a>
+	     <ul>
+             <?php if($_SESSION['tipo_usuario']==9){ ?>
+             <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Editar/borrar</a></li>
+             <?php } ?>
+             <li><a href="../view/inicio.html.php?mod=pryv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Validar</a></li>
+            
+		 </ul>
+		 </li>
 	<?php }?>
+	    <!-- Boton Equipamiento -->
+    
+    <?php  ?>
+	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+	<li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $clase;?>>Equi</a></li>
+	<?php ?>
 	
     <!-- Botón cotizaciones-->
    <?php if($_SESSION['tipo_usuario']==9){ ?>
@@ -187,15 +201,7 @@
 	</li>
 	<?php }?>
 	  
-	  <!-- Boton proyectos -->
-    
-    <?php  ?>
-	<?php //$clase=($_GET['mod']=='pro')?'" class="actual"':$clase='"'; ?>
-	<!--<li><a href="../view/inicio.html.php?mod=pro&lab=<?php //echo $_GET['lab'];?>" <?php //echo $clase;?>>Proyectos</a></li>-->
-	<?php ?>
-
-
-
+	
  <?php //if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
            <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
            <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Documentos</a></li>

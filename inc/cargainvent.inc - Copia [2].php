@@ -831,8 +831,12 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
   <?php } //fin elseif ?> 
 
 <?php } //fin de si y solo hay registros 
- $bandera=1;
-		   if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) { /**/ ?>
+
+	 
+           $bandera=1;
+		   
+		
+			if ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc'  ) { /**/ ?>
            
            <tr>
                   <td width="20%" scope="col"><?php echo $lab_invent['bn_clave'];?></td>
@@ -1203,7 +1207,9 @@ if ($_SESSION['tipo_usuario']==9)
 			   left join cat_crit cc
 			   on cc.id_crit=ear.criticidad
                where id_div=";
-			   
+             
+               
+
             switch ($_GET['orden']){
  			case "descripcion":
 			    $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
@@ -1224,10 +1230,15 @@ if ($_SESSION['tipo_usuario']==9)
    $datos = pg_query($con,$query);
    $inventario= pg_num_rows($datos); 
     if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0){ ?>
-        <!--  <tr>
+        
+        
+                    
+          <!--  <tr>
               <td>
+              
               <legend align="right">
-               <form action=<?php  // echo $action; ?> method="post" name="expgendiv" >
+         
+              <form action=<?php  // echo $action; ?> method="post" name="expgendiv" >
 	          <input name="enviar" type="submit" value="Exportar" />
 	          <input name="mod" type="hidden" value="<?php // echo $_GET['mod'] ?>" />
               <input name="lab" type="hidden" value="<?php //echo $_GET['lab'] ?>" />
@@ -1235,7 +1246,10 @@ if ($_SESSION['tipo_usuario']==9)
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              </td>
             </tr> -->
-  
+            
+            
+            
+            
  <?php } ?>
 
 </td>
@@ -1245,6 +1259,7 @@ if ($_SESSION['tipo_usuario']==9)
      if (($inventario!=0 ) && $bandera1==0 ) 
          $bandera1=1;  
     
+ 
      ?>
     </td>
 
@@ -1256,11 +1271,15 @@ if ($_SESSION['tipo_usuario']==9)
   <?php 
 		while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-		//print_r($lab_invent);
+		
+          //print_r($lab_invent);
 		   	if (count($lab_invent > 0 )){
-         ?>
+        
+               
+           ?>
 	 
 
+  
             <table class='material'>
             <tr>
                <th width="20%" scope="col">No. Inventario</th>
@@ -1326,7 +1345,9 @@ if ($_SESSION['tipo_usuario']==9)
     <form action="<?php echo $action1; ?>" method="post" name="edi_inv_AR<?php echo $form=$lab_invent['id_lab'] ."_".$lab_invent['bn_id']; ?>">
           <tr ><td style="text-align: right" colspan="11"><input name="accion" type="submit" value="editarG" />   </td></tr>
  
- <?php foreach ($lab_invent as $campo => $valor) {
+ <?php 
+
+		foreach ($lab_invent as $campo => $valor) {
 			echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 			
 		}
@@ -1337,8 +1358,10 @@ if ($_SESSION['tipo_usuario']==9)
        <?php      
             }//fin if equipoc	para boton de editar	
 	?>
+          
    <table>
-   <?php  } else {
+
+     <?php  } else {
 	 //$action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];
 	
 	  //isset($_GET['lab']) && isset($_GET['mod']) 
@@ -1354,6 +1377,8 @@ if ($_SESSION['tipo_usuario']==9)
 }
 
 }
+
+
 
 ?>
 <br/>
