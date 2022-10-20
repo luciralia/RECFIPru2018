@@ -6,8 +6,8 @@ require_once('../conexion.php');
 
 <?php
 
-/*echo 'valores de POSTen borrareq';
-print_r ($_POST);*/
+echo 'valores de POSTen borrareq';
+print_r ($_POST);
 
 if(!isset($_POST['resp'])){ ?>
 				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'].'&div='. $_REQUEST['div'];?>
@@ -34,10 +34,13 @@ if(!isset($_POST['resp'])){ ?>
 <?php } else if ($_POST['resp']=='Si') {
 
 if($_POST['accion']=='borrar'){
+	
 
+	//borrar las nececsidades por cada proy en proyecto_nec
 
-$strquery="delete from necesidades_equipo where id_nec=%d and id_lab=%d";
-$queryd=sprintf($strquery,$_POST['id_nec'],$_POST['id_lab']);
+	
+$strquery="delete from proy where id_proy=%d";
+$queryd=sprintf($strquery,$_POST['id_proy']);
 $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
 
   $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];

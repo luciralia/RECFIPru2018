@@ -92,7 +92,7 @@ function tblProy($idlab)
 							echo $salida;
 			}//finmetodo
 	
-	function cmbnec ($idnec,$idlab,$edo){
+	function selnec ($idnec,$idlab,$edo){
 		
 		if ($edo=='new'){
 			
@@ -119,26 +119,23 @@ function tblProy($idlab)
 			
 			//Devuelve la necesidad
 			
-			$salida='<select name="id_nec" idnec="id_nec">';
 			
+		 $salida='<table class="equipob"><br><br><tr><th>Requerimientos</th><th>Seleccionar</th></tr>'; 
+			$j=1;
 		while ($datosc = pg_fetch_array($result_nec))
 		{
-					if($datosc['id_nec']==$idnec)
-					
-						$salida.= "<option value='" . $datosc['id_nec'] . "' selected='selected'>" . $datosc['descripcion'] . "</option>";
-					
-					 else 
-					
-						$salida.="<option value='" . $datosc['id_nec'] . "'>" . $datosc['descripcion'] . "</option>";
-		}
-					$salida.="</select>";
-					echo $salida;
-	
-	
+			     $nombrechk="id_nec_".$j;
+			     $salida.='<tr><td>'. $datosc['descripcion']. '</td><td>
+			     <input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['id_nec'].'"  /></td>		
+				 </tr>';	 
+				 $j++;
+				 }
+				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
+				echo $salida;
 		
 	} //
 	
-	
+					
 	function cmbCotiza($idlab,$tipo_req,$id_cot)
 					{
 

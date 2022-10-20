@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <script type="text/javascript">
 
@@ -30,7 +28,7 @@ $motivo = new Requerimiento();
 
 if ($_REQUEST['accion']=='nuevo'){  
 
-print_r($_POST);
+//print_r($_POST);
 ?>
 <br>
 <br>
@@ -56,8 +54,8 @@ print_r($_POST);
   </tr>
   
 	<tr>
-       <td align="right">Descripci&oacute;n Necesidades</td>
-       <td colspan="3"><?php $combonec->cmbnec($_POST['id_nec'],$_REQUEST['lab'],'new'); ?></td>
+       <td align="right">Necesidades</td>
+       <td colspan="3"><?php $combonec->selnec($_POST['id_nec'],$_REQUEST['lab'],'new'); ?></td>
   </tr>
   <tr>
     <td align="right">N&uacute;mero de equipos </td>
@@ -112,8 +110,8 @@ print_r($_POST);*/
       value="<?php echo $_POST['descripcion_proy'];?>"/></td>
   </tr>
   <tr>
-       <td align="right">Descripci&oacute;n Necesidades</td>
-       <td colspan="3"><?php $combonec->cmbnec($_POST['id_nec'],$_REQUEST['lab'],'ed'); ?></td>
+       <td align="right">Necesidades</td>
+       <td colspan="3"><?php $combonec->selnec($_POST['id_nec'],$_REQUEST['lab'],'ed'); ?></td>
   </tr>
   <tr>
     <td align="right">N&uacute;mero de equipos </td>

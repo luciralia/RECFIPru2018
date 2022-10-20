@@ -33,30 +33,34 @@ echo "despues id_proy_aux: " . $id_proy_aux . "</br>";
 
 
 
-	
-
-$strquery="INSERT INTO proy (id_proy,nombre_proy,objetivo_general, objetivo_especifico,descripcion_proy,descripcion_nec,num_equipo,justificacion,evidencia) VALUES (%d,'%s','%s','%s','%s','%s',%d,'%s','%s')";
-$queryn=sprintf($strquery,$id_proy_aux,$_POST['nombre_proy'],$_POST['objetivo_general'],$_POST['objetivo_especifico'],$_POST['descripcion_proy'],$desc,$_POST['num_equipo'],$_POST['justificacion'],'faltan');
+$strquery="INSERT INTO proy (id_proy,nombre_proy,objetivo_general, objetivo_especifico,descripcion_proy,num_equipo,justificacion,evidencia) VALUES (%d,'%s','%s','%s','%s',%d,'%s','%s')";
+$queryn=sprintf($strquery,$id_proy_aux,$_POST['nombre_proy'],$_POST['objetivo_general'],$_POST['objetivo_especifico'],$_POST['descripcion_proy'],$_POST['num_equipo'],$_POST['justificacion'],'faltan');
 
 echo $queryn;
 	
 $result=@pg_query($con,$queryn) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 echo $queryn;
 /* Insertar datos en proyecto_nec*/
-
-$queryaux="SELECT MAX(id_proy_nec) as maxidpn FROM proyecto_nec";
+for ($i=1;$i<=$_REQUEST['j'];$i++){
+	$val='id_nec_'.+$i;
+     echo 'val',$val;
+     if (isset($_REQUEST[$val]))	{
+		 echo 'valor',$_REQUEST[$val];
+        $queryaux="SELECT MAX(id_proy_nec) as maxidpn FROM proyecto_nec";
           				
-$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
-$row = pg_fetch_array($resultx); 
-$id_proyn_aux=$row['maxidpn']; 
-$id_proyn_aux=$id_proyn_aux+1;	
+        $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+        $row = pg_fetch_array($resultx); 
+        $id_proyn_aux=$row['maxidpn']; 
+        $id_proyn_aux=$id_proyn_aux+1;	
 	
-$proyquery="INSERT INTO proyecto_nec (id_proy_nec,id_proy,id_lab,id_nec,fecha) VALUES 
+        $proyquery="INSERT INTO proyecto_nec (id_proy_nec,id_proy,id_lab,id_nec,fecha) VALUES 
 (%d,%d,%d,%d,'%s')";
-$queryd=sprintf($proyquery,$id_proyn_aux,$id_proy_aux,$_REQUEST['lab'],$_POST['id_nec'],date('Y-m-d H:i:s'));
-$result=@pg_query($con,$queryd) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-echo $queryn;	
-
+        $queryd=sprintf($proyquery,$id_proyn_aux,$id_proy_aux,$_REQUEST['lab'],$_REQUEST[$val],date('Y-m-d H:i:s'));
+		  echo $queryd;
+        $result=@pg_query($con,$queryd) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+        echo $queryd;
+	 }//if valor en id_nec_x
+}//while
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);

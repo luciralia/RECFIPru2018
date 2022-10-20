@@ -41,9 +41,7 @@ function cmbEquipo($idlab,$bnid)
 				AND e.bn_id=bi.bn_id
 				AND e.id_lab=" . $idlab . " ORDER BY bn_desc asc";
 				
-						//echo $query ."</br>". $id_cot . "</br>" . $lab;
 					
-					//echo 'inv', $query;
 					$result = pg_query($query) or die('Hubo un error con la base de datos');
 					
 					$salida='<select name="bn_id" id="bn_id">'; 
@@ -588,18 +586,13 @@ function tblEquipo($idlab)
 					$result = pg_query($query) or die('Hubo un error con la base de datos en equipo');
 					
 					$salida='<table class="equipob"><tr><th>No. Inv</th><th>Equipo</th><th>Seleccionar</th></tr>'; 
-					
-							
-						$j=1;
+					    $j=1;
 						while ($datosc = pg_fetch_array($result, NULL, PGSQL_ASSOC))
 						{ 
 						$nombrechk="equipo".$j;
-					
-						  $salida.='<tr><td>'. $datosc['bn_clave']. '</td><td>' . $datosc['bn_desc'] .'</td><td><input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['bn_id'].'"  /></td></tr>';
-							
+					       $salida.='<tr><td>'. $datosc['bn_clave']. '</td><td>' . $datosc['bn_desc'] .'</td><td><input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['bn_id'].'"  /></td></tr>';
 							$j++;  
-					
-						}
+					    }
 				//	return $salida;
 					$salida.='</table><br><br> <input name="j" type="hidden" value="' .$j. '" />';
 					echo $salida;

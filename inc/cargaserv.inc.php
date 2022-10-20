@@ -103,7 +103,7 @@ AND dp.id_div = dv.id_div
 AND l.id_responsable=u.id_usuario" .$tipomant. " 
 AND " . $tiposerv ;
 }
-//echo 'En cargaserv '.$query; 
+echo 'En cargaserv '.$query; 
 ?>
 
 <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div']. "&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
@@ -247,8 +247,7 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
        <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$serv_mant['id_lab'] ."_".$serv_mant['id_req'];?>">
 
-<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;
-									} else { $colspan=7;}                    ?> 
+<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;} else { $colspan=7;}                    ?> 
   <tr >
    <?php   if ( $_SESSION['tipo_usuario']!=10) { ?>
     <td style="text-align: right" colspan="<?php echo $colspan; ?>">
@@ -277,7 +276,7 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
 	
 	
 <?php	if ($_REQUEST['mod']=='servibf' ){ $destino="../inc/excelbf.inc.php";} else if ($_REQUEST['mod']=='servibp'){ $destino="../inc/excelbp.inc.php";
-																													}
+																												}
 ?>
 	
 	<form action="<?php echo $destino; ?>" method="post">

@@ -21,8 +21,8 @@ print_r($_REQUEST); */
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
-$query = "SELECT DISTINCT p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
-objetivo_especifico,descripcion_proy,descripcion_nec,
+$query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
+objetivo_especifico,descripcion_proy,
 num_equipo,p.justificacion,evidencia,fecha 
 FROM proy p
 LEFT JOIN proyecto_nec pn
@@ -74,7 +74,7 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 	
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['div']!=NULL && $_GET['lab']==''){
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
-objetivo_especifico,descripcion_proy,descripcion_nec,
+objetivo_especifico,descripcion_proy,
 num_equipo,p.justificacion,evidencia,fecha 
 FROM proy p
 JOIN proyecto_nec pn
@@ -100,8 +100,8 @@ echo 'consulta 2';
 } 
 else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
-$query = "SELECT  p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
-objetivo_especifico,descripcion_proy,descripcion_nec,
+$query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
+objetivo_especifico,descripcion_proy,
 num_equipo,p.justificacion,evidencia,fecha 
 FROM proy p
 JOIN proyecto_nec pn
@@ -127,8 +127,8 @@ echo 'consulta 3';
 	
 } else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 	
-$query = "SELECT DISTINCT p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
-objetivo_especifico,descripcion_proy,descripcion_nec,
+$query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
+objetivo_especifico,descripcion_proy,
 num_equipo,p.justificacion,evidencia,fecha 
 FROM proy p
 JOIN proyecto_nec pn
@@ -212,7 +212,6 @@ $datos = pg_query($con,$query);
                         <th width="15%">Objetivo General</th>
                         <th width="15%">Objetivo Espec&iacute;fico</th>
                         <th width="15%">Descripci&oacute;n Proyecto</th>
-                        <th width="12%">Descripci&oacute;n Necesidades</th>
                         <th width="12%">Cantidad de equipo</th>
                         <th width="20%">Justificaci&oacute;n</th>
                         <th width="10%">Evidencia</th>
@@ -231,7 +230,6 @@ $datos = pg_query($con,$query);
                         <?php // } ?>
                         <td align="left"><?php echo $lab_proy['objetivo_especifico'];?></td>
                         <td align="left"><?php echo $lab_proy['descripcion_proy'];?></td>
-                        <td align="left"><?php echo $lab_proy['descripcion_nec'];?></td>
                         <td align="left"><?php echo $lab_proy['num_equipo'];?></td>
                         <td align="left"><?php echo $lab_proy['justificacion'];?></td>
                         <td align="left"><?php echo $lab_proy['evidencia']; ?></td>
