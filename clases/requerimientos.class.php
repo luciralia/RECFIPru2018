@@ -85,7 +85,7 @@ function cmbJustMat($idjust)
 	
 	function cmbJustEq($idjust)
 					{
-                     echo $idjust;
+                    // echo $idjust;
 				        
 				        $query="SELECT * FROM cat_juztificacion_nec ORDER BY id";
 				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
@@ -224,6 +224,38 @@ function cmbPrioridad($idprio)
 					echo $salida;
 					}
 
+function cmbRecurso($idrec)
+					{
+
+				        
+				    $query="SELECT * FROM  cat_recursos_equipo ORDER BY id_recurso asc";
+				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos');
+					
+					/*$salida='<select name="id_just" id="id_just">
+					<option value="0" >Ninguno</option>'; */
+					
+					$salida='<select name="id_recurso" id="id_recurso">'; 
+					
+					
+					while ($datosc = pg_fetch_array($result))
+						{
+					if($datosc['id_recurso']==$idrec){
+					
+						$salida.= "<option value='" . $datosc['id_recurso'] . "' selected='selected'>" . $datosc['nomb_recurso']. "</option>";
+					
+					 } else { 
+					
+						$salida.= "<option value='" . $datosc['id_recurso'] . "'>" . $datosc['nomb_recurso']. "</option>";
+						
+					    }
+					
+						}
+				//	return $salida;
+					$salida.="</select>";
+					echo $salida;
+					}
 
 
 } //termina la clase

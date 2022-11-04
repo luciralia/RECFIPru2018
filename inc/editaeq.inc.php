@@ -24,23 +24,32 @@ require_once('../clases/requerimientos.class.php');
 $combocot = new Cotiza();
 $motivo = new Requerimiento();
 
+ print_r($_POST);
+
 if ($_REQUEST['accion']=='nuevo'){  
 
-//print_r($_POST);
+
 ?>
 <br>
 <br>
 <div class=formulario>
-<form action="../inc/procesaeq.inc.php" method="post" name="form_nuevo" class="formul">
+	
+<form action="../inc/procesaeq.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
 <table cellpadding="2" class="formulario">
   <tr>
-      <td width="151" align="right" >Cantidad</td>
+      <td align="right">Recursos de cómputo</td>
+      <td ><?php  $motivo->cmbRecurso($_POST['id_recurso']); ?></td>
+  </tr>
+  <tr>
+      <td width="151" align="right" >Cantidad de equipos</td>
       <td width="857" colspan="3" ><input name="cant" type="text" id="cant" tabindex="1" size="4"></td>
    </tr>
    <tr>
       <td align="right">Descripción</td>
+      <td><textarea name="descripcion" id="descripcion" rows="10" cols="50">Escribe aquí la descripción detallada para que se utilizarán los equipos</textarea></td>
+      <!--<td align="right">Descripción</td>
       <td colspan="3"> <input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" /></td>
-      <!--<td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3"></textarea></td>-->
+      <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3"></textarea></td>-->
    </tr>
   <tr>
       <td align="right">Costo Unitario</td>
@@ -57,7 +66,7 @@ if ($_REQUEST['accion']=='nuevo'){
 	</td>
       </tr>
       <tr>
-       <td>Otro Motivo</td>
+       <td align="right">Otro Motivo</td>
         <?php
 	     if ($_POST['id_just']==7){  ?>
 		 <td><input type="text" name="otrajust" id="otrajust" size="50" value="<?php echo $_POST['otrajust'];  ?>" required ></td>
@@ -67,10 +76,22 @@ if ($_REQUEST['accion']=='nuevo'){
 	 <?php }  ?>
   </tr>
   <tr>
-      <td align="right">Justificación ampliada</td>
-      <td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" /></td>
-    <!--<td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8"></textarea></td>-->
+      <td align="right">Justificación técnica</td>
+      <td><textarea name="impacto" id="impacto" rows="10" cols="50">Escribe aquí la justificación</textarea></td>
+      <!--<td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" /></td>
+    <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8"></textarea></td>-->
   </tr>
+ 
+ 
+   
+  <tr>
+	  <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
+	 <td ><input type="file" name="file" id="file"/></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+    </td>
+  </tr>
+	
    <tr>
     <td align="right">Prioridad</td>
     <td><?php $motivo->cmbPrioridad($_POST['id_prio'])?></td>
@@ -85,6 +106,8 @@ if ($_REQUEST['accion']=='nuevo'){
 	<input type="submit" name="accionn" value="Cancelar" /></td>
     </tr>
 </table>
+<br>
+<br>
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
@@ -99,6 +122,11 @@ if ($_REQUEST['accion']=='nuevo'){
 <br>
 <form action="../inc/procesaeq.inc.php" method="post" name="form_edita">
 <table cellpadding="2" class="formulario">
+<tr>
+      <td align="right">Recursos de cómputo</td>
+      <td><?php  $motivo->cmbRecurso($_REQUEST['id_recurso']); ?></td>
+  </tr>
+ 
   <tr>
     <td width="151" align="right" >Cantidad</td>
     <td width="857" colspan="3" ><input name="cant" type="text" id="cant" tabindex="1" size="4" value="<?php echo $_POST['cant']; ?>"></td>
@@ -108,9 +136,14 @@ if ($_REQUEST['accion']=='nuevo'){
     <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="9" value="<?php echo $_POST['costo']; ?>"/></td>
   </tr>
   <tr>
-    <td align="right">Descripción</td>
-    <td colspan="3"><input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" value="<?php echo $_POST['descripcion']; ?>"/></td>
-   <!-- <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3" value="<?php //echo $_POST['descripcion']; ?>"></textarea></td>-->
+  
+      <td align="right">Descripción</td>
+      <td><textarea name="descripcion" id="descripcion" rows="10" cols="40"><?php echo $_POST['descripcion']?></textarea></td>
+    <!--<td align="right">Descripción</td>
+    <td colspan="3"><input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" value="<?php //echo $_POST['descripcion']; ?>"/></td>
+    
+    
+    <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3" value="<?php //echo $_POST['descripcion']; ?>"></textarea></td>-->
     
   </tr>
   <tr>
@@ -129,7 +162,7 @@ if ($_REQUEST['accion']=='nuevo'){
 	<!--<td colspan="3"><?php// echo "</br>" . $motivo->getJusteq($_POST['id_just'],'descripcion');?></td>-->
     </tr>
     <tr>
-     <td>Otro Motivo</td>
+     <td align="right">Otro Motivo</td>
         <?php
 	     if ($_POST['id_just']==7){  ?>
 		 <td><input type="text" name="otrajust" id="otrajust" size="50" value="<?php echo $_POST['otrajust'];  ?>" required ></td>
@@ -139,11 +172,15 @@ if ($_REQUEST['accion']=='nuevo'){
 	 <?php } ?>
   </tr>
   <tr>
-    <td align="right">Justificación ampliada</td>
+   <!-- <td align="right">Justificación ampliada</td>
    
-   <td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" value="<?php echo $_POST['impacto']; ?>"/></td>
+   <td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" value="<?php //echo $_POST['impacto']; ?>"/></td>
     
-    <!-- <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8" value="<?php //echo $_POST['justificacion'];  ?>"/></textarea></td>-->
+     <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8" value="<?php //echo $_POST['justificacion'];  ?>"/></textarea></td>-->
+     <td align="right">Justificación técnica</td>
+      <td><textarea name="impacto" id="impacto" rows="10" cols="40"><?php echo $_POST['impacto']?></textarea></td>
+     
+     
   </tr>
   <tr>
     <td colspan="4" align="right">
@@ -152,6 +189,9 @@ if ($_REQUEST['accion']=='nuevo'){
 	<input type="submit" name="accionm" value="Cancelar" /></td>
     </tr>
 </table>
+<br>
+<br>
+
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="id_nec" type="hidden" value="<?php echo $_POST['id_nec']; ?>" />

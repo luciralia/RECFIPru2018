@@ -10,7 +10,6 @@ $obj_req= new Requerimiento();
 
 
 /* Consulta con catalogo de justificacion de equipo y no de materiales
-
 $query = "select distinct rm.id_req as id_req, rm.id_lab as id_lab,cant, rm.descripcion as descripcion, rm.unidad_medida as medida, cpn.descripcion as plazo, l.nombre as laboratorio, dp.nombre as departamento, di.nombre as division, cto_unitario as costo, act_generales as actividades, cjnm.descripcion as motivo, cjnm.id as num_just, impacto as justificacion, rm.id_cotizacion as id_cotizacion, rm.ref as ref
 from req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_juztificacion_nec cjnm 
 where rm.id_lab=l.id_lab 
@@ -115,7 +114,7 @@ while ($cot_lab = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 
 <table class="cotizaciones">
   <tr>
-    <th width="100" >FolioNL</th>
+    <th width="100" >Folio</th>
     <th width="252" >Proveedor</th>
     <th width="80" >Para</th>
     <th width="180" >Ver</th>
@@ -140,12 +139,9 @@ while ($cot_lab = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
   <input name="tipo" type="hidden" value="<?php echo $cot_lab['tipo']; ?>" />
   <input name="ruta" type="hidden" value="<?php echo $cot_lab['ruta']; ?>" />
   <input name="id_lab" type="hidden" value="<?php echo $cot_lab['id_lab']; ?>" />
-  
   <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>">
   <input name="dep" type="hidden" value="<?php echo $_GET['dep']; ?>">
   <input name="div" type="hidden" value="<?php echo $_REQUEST['div'];?>">
-  
-  
   </form>
       
       

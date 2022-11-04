@@ -35,17 +35,21 @@ if(!isset($_POST['resp'])){ ?>
 
 if($_POST['accion']=='borrar'){
 	
-
-	//borrar las nececsidades por cada proy en proyecto_nec
-
+//borrar las necesidades por cada proy en proyecto_nec
 	
-$strquery="delete from proy where id_proy=%d";
-$queryd=sprintf($strquery,$_POST['id_proy']);
-$result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
-
+  $query="DELETE FROM proyecto_nec WHERE id_proy=%d AND id_lab=%d";	
+  $queryp=sprintf($query,$_POST['id_proy'],$_REQUEST['lab']);
+  echo $queryp;
+  $result=pg_query($con,$queryp) or die('ERROR AL BORRAR DATOS queryp: ' . pg_last_error());	
+  $strquery="DELETE FROM proy WHERE id_proy=%d";
+  $queryd=sprintf($strquery,$_POST['id_proy']);
+  $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
+  
+  
+	
   $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
 	
-  die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
+die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
 	
    } 
 

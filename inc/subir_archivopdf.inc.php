@@ -21,18 +21,20 @@ echo $direccion;
 	
 echo " Se canceló el cargar cotización";
 header($direccion);
-															}
+}
 
 if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
+	echo 'valores de flies';
+print_r ($_FILES);
 	
-				$query="insert into cotizaciones (folio,proveedor,ruta,id_lab,tipo) values('".$_POST['folio']. "','" . $_POST['proveedor'] . "','../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .",'" . $_POST['tipo']."')";
+				$query="INSERT INTO cotizaciones3 (folio,proveedor,ruta,id_lab,tipo) VALUES('".$_POST['folio']. "','" . $_POST['proveedor'] . "','../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .",'" . $_POST['tipo']."')";
 				
 				echo $query;
 				
 				echo "Tipo a: " . $_FILES["file"]["type"] . "<br />";
 				
 				$allowedExts = array("jpg", "jpeg", "gif", "png", "pdf", "PDF", "JPG");
-				 $extension = end(explode(".", $_FILES["file"]["name"]));
+				$extension = end(explode(".", $_FILES["file"]["name"]));
 				echo "Extension: " . $extension . "</br>";
 				if ($_FILES["file"]["type"] == "application/pdf" || $extension=="pdf" /*&& ($_FILES["file"]["size"] < 20000)*/
 				 /*&& in_array($extension, $allowedExts)*/)

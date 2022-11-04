@@ -26,9 +26,10 @@ require_once('../clases/requerimientos.class.php');
 $combonec = new proyecto();
 $motivo = new Requerimiento();
 
+//echo 'valores en editaproy', print_r($_POST);
+
 if ($_REQUEST['accion']=='nuevo'){  
 
-//print_r($_POST);
 ?>
 <br>
 <br>
@@ -37,7 +38,7 @@ if ($_REQUEST['accion']=='nuevo'){
 <table cellpadding="2" class="formulario">
   <tr>
       <td width="151" align="right" >Nombre</td>
-      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="30" 
+      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="50" 
       maxlength="100"/></td>
   </tr>
   <tr>
@@ -49,21 +50,22 @@ if ($_REQUEST['accion']=='nuevo'){
       <td colspan="3"><input name="objetivo_especifico" type="text" id="objetivo_especifico" tabindex="8" size="50" maxlength="200"/></td>
   </tr>
   <tr>
-      <td width="151" align="right" >Descripci&oacute;n</td>
-      <td colspan="3"><input name="descripcion_proy" type="text" id="descripcion_proy" tabindex="8" size="50" maxlength="200"/></td>
+      <!--<td width="151" align="right" >Descripci&oacute;n detallada</td>
+      <td colspan="3"><input type="text"  name="descripcion_proy"  id="descripcion_proy" tabindex="8" size="50" maxlength="200"/></td>-->
+      <td align="right">Descripción detallada</td>
+      <td><textarea name="descripcion_proy" id="descripcion_proy" rows="10" cols="50">Escribe aquí la descripción detallada del proyecto</textarea></td>
+     
   </tr>
   
 	<tr>
        <td align="right">Necesidades</td>
-       <td colspan="3"><?php $combonec->selnec($_POST['id_nec'],$_REQUEST['lab'],'new'); ?></td>
+       <td colspan="3"><?php $combonec->selnecnew($_POST['id_nec'],$_REQUEST['lab']); ?></td>
   </tr>
+  
   <tr>
-    <td align="right">N&uacute;mero de equipos </td>
-    <td colspan="3"><input name="num_equipo" type="text" id="num_equipo" tabindex="2" size="3" maxlength="5" /></td> 
-    </tr>
-  <tr>
-     <td align="right">Justificación ampliada</td>
-     <td colspan="3"><input name="justificacion" type="text" id="justificacion" tabindex="8" size="100" maxlength="400" /></td>
+     <td align="right">Beneficios esperados</td>
+     
+     <td><textarea name="beneficio" id="beneficio" rows="10" cols="50">Escribe aquí los beneficios que se esperan conseguir</textarea></td>
   </tr>
  
   <tr>
@@ -76,6 +78,7 @@ if ($_REQUEST['accion']=='nuevo'){
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
+<input name="id_proy" type="hidden" value="<?php echo $_POST['id_proy']; ?>" />
 
 </form>
 </div>
@@ -91,7 +94,7 @@ print_r($_POST);*/
 <table cellpadding="2" class="formulario">
   <tr>
       <td width="151" align="right" >Nombre</td>
-      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="30" 
+      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="50" 
       maxlength="100" value="<?php echo $_POST['nombre_proy']; ?>"/></td>
   </tr>
   <tr>
@@ -105,21 +108,19 @@ print_r($_POST);*/
       value="<?php echo $_POST['objetivo_especifico'];?>"/></td>
   </tr>
   <tr>
+     
       <td width="151" align="right" >Descripci&oacute;n</td>
       <td colspan="3"><input name="descripcion_proy" type="text" id="descripcion_proy" tabindex="8" size="50" maxlength="200"
       value="<?php echo $_POST['descripcion_proy'];?>"/></td>
   </tr>
   <tr>
        <td align="right">Necesidades</td>
-       <td colspan="3"><?php $combonec->selnec($_POST['id_nec'],$_REQUEST['lab'],'ed'); ?></td>
+       <td colspan="3"><?php $combonec->selneced($_POST['id_nec'],$_REQUEST['lab'],$_POST['id_proy']); ?></td>
   </tr>
+  
   <tr>
-    <td align="right">N&uacute;mero de equipos </td>
-    <td colspan="3"><input name="num_equipo" type="text" id="num_equipo" tabindex="2" size="3" maxlength="5" value="<?php echo $_POST['num_equipo'];?>"/></td> 
-    </tr>
-  <tr>
-     <td align="right">Justificación ampliada</td>
-     <td colspan="3"><input name="justificacion" type="text" id="justificacion" tabindex="8" size="100" maxlength="400" value="<?php echo $_POST['justificacion']; ?>"/></td>
+     <td align="right">Beneficio</td>
+     <td colspan="3"><input name="beneficio" type="text" id="beneficio" tabindex="8" size="100" maxlength="400" value="<?php echo $_POST['beneficio']; ?>"/></td>
   </tr>
   <tr>
     <td colspan="4" align="right">

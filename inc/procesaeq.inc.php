@@ -14,6 +14,8 @@ require_once('../conexion.php');
 <?php 
 	echo 'Valores en procesa eq';
 	print_r($_POST); 
+		echo 'valores de flies';
+print_r ($_FILES);
 	echo 'Valores en REQ procesa eq';
 	print_r($_REQUEST);?>
 
@@ -26,21 +28,105 @@ $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_erro
 $row = pg_fetch_array($resultx); 
 $id_req_aux=$row['maxid']; 
 
-echo "antes id_req_aux: " . $id_req_aux . "</br>";
+//echo "antes id_req_aux: " . $id_req_aux . "</br>";
 $id_req_aux+=1;
-echo "despues id_req_aux: " . $id_req_aux . "</br>";
+//echo "despues id_req_aux: " . $id_req_aux . "</br>";
 
 
-$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion, prioridad, plazo, justificacion, impacto, cto_unitario, id_cotizacion,otrajust) VALUES (%d,%d,%d,'%s',%d,%d,%d,'%s',%.2f,%d,'%s')";
-$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['otrajust']);
+$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion, prioridad, plazo, justificacion, impacto, cto_unitario, id_cotizacion,otrajust,id_recurso) VALUES (%d,%d,%d,'%s',%d,%d,%d,'%s',%.2f,%d,'%s',%d)";
+$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['otrajust'], $_POST['id_recurso']);
 
 
 $result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
-echo $queryn;
+//echo $queryn;
+	
+//Guardar imagen
+$queryaux="SELECT MAX(id_evidencia) as maxevid FROM evidencia";
+$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+$row = pg_fetch_array($resultx); 
+$id_evid_aux=$row['maxevid']; 
 
+echo "antes id_evid_aux: " . $id_evid_aux . "</br>";
+$id_evid_aux+=1;
+echo "despues id_req_aux: " . $id_evid_aux . "</br>";
+	
+	$query="INSERT INTO evidencia (id_evidencia,descripcion,ruta_evidencia) VALUES('".$id_evid_aux. "','" . $_POST['descripcion'] . "','../evidencia/" .$_REQUEST['lab'] . "_" . $_FILES["file"]["name"]  ."')";
+				
+				echo "Tipo a: " . $_FILES["file"]["type"] . "<br />";
+				
+				$allowedExts = array("jpg", "jpeg", "png" , "pdf", "PDF", "JPG" , "PNG" );
+				$extension = end(explode(".", $_FILES["file"]["name"]));
+				echo "Extension: " . $extension . "</br>";
+				if ($_FILES["file"]["type"] == "application/png" || $extension=="PNG" || in_array($extension, $allowedExts)) /*&& ($_FILES["file"]["size"] < 20000)*/
+				 /*&& in_array($extension, $allowedExts)*/
+					
+				  {
+				   if ($_FILES["file"]["error"] > 0)
+					 {
+					 echo "código de error: " . $_FILES["file"]["error"] . "<br />";
+					 }
+				   else
+					 {
+					 echo "Archivo: " . $_FILES["file"]["name"] . "<br />";
+					 echo "Tipo: " . $_FILES["file"]["type"] . "<br />";
+					 echo "Tamaño: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+					 echo "Archivo temporal: " . $_FILES["file"]["tmp_name"] . "<br />";
+				
+					 if (file_exists("../evidencia/" . $_REQUEST['lab'] . "_" . $_FILES["file"]["name"]))
+					   {
+					    echo $_FILES["file"]["name"] . " ya existe. ";
+					   $_SESSION['error']['arch']='ea'; 
+					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&accion=nuevo' . '&id_evidencia="' . $_REQUEST['id_evidencia'] . '"' . '&descripcion="'. $_REQUEST['descripcion'] . '"' . '&div=' . $_REQUEST['div'] ;
+						echo $direccion . "</br>";
+						echo $_SESSION['error']['arch'];
+						header($direccion);
+						
+					   }
+					 else
+					   {
+					   $result = pg_query ($con, $query) or die('No se pudo insertar');
+						$queryaux="SELECT MAX(id_nec_evid) as maxnevid FROM nec_evid";
+                        $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+                        $row = pg_fetch_array($resultx); 
+                        $id_ne_aux=$row['maxnevid']; 
+
+                        echo "antes id_ne_aux: " . $id_ne_aux . "</br>";
+                        $id_ne_aux+=1;
+                        echo "despues id_ne_aux: " . $id_ne_aux . "</br>";
+
+                        $queryne="INSERT INTO nec_evid (id_nec_evid,id_lab,id_nec, id_evidencia,fechaevid) 
+						VALUES (%d,%d,%d,%d,'%s')";
+                        $queryn=sprintf($queryne,$id_ne_aux,$_POST['lab'],$id_req_aux,$id_evid_aux,date('Y-m-d H:i:s'));
+	
+                        $result = pg_query ($con, $queryn) or die('No se pudo insertar');   
+					    $_SESSION['error']['arch']='';	   
+					    echo "inserción" . $_SESSION['error']['arch'];
+					    move_uploaded_file($_FILES["file"]["tmp_name"],"../evidencia/" . $_REQUEST['lab'] . "_" . $_FILES["file"]["name"]);
+					    echo "Almacenado en: " . "evidencia/" . $_FILES["file"]["name"];
+					   
+					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
+						echo $direccion . "</br>";
+						header($direccion);
+						}
+					 }
+				   }
+				 else
+				   {
+				   echo "Archivo inv&aacute;lido, el formato de archivo debe ser imagen";
+				   $_SESSION['error']['arch']='ai'; 
+					//$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&accion=nuevo' . '&folio="' . $_REQUEST['folio'] . '"' . '&proveedor="' . $_REQUEST['proveedor']  . '"' . '&div='. $_REQUEST['div'] ;
+					$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&accion=nuevo' . '&id_evidencia="' . $_REQUEST['id_evidencia'] . '"' . '&descripcion="' . $_REQUEST['descripcion']  . '"' . '&div='. $_REQUEST['div'] ;   
+					echo $direccion . "</br>";
+					header($direccion);
+				   }
+																	
+//Falta insertar en evidencia nec
+	
+
+/*	
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
-header($direccion);
+header($direccion);*/
 
  }?>
 

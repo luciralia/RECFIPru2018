@@ -23,7 +23,7 @@ if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-num_equipo,p.justificacion,evidencia,fecha 
+beneficio,nec.id_evidencia,fecha
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
@@ -33,6 +33,10 @@ LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
+LEFT JOIN nec_evid nec
+ON nec.id_nec=ne.id_nec
+LEFT JOIN evidencia e
+ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
 LEFT JOIN cotizaciones ct
 ON ct.id_cotizacion=ne.id_cotizacion 
@@ -75,24 +79,28 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['div']!=NULL && $_GET['lab']==''){
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-num_equipo,p.justificacion,evidencia,fecha 
+beneficio,nec.id_evidencia,fecha
 FROM proy p
-JOIN proyecto_nec pn
+LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
-JOIN proyecto_criterio pc
+LEFT JOIN proyecto_criterio pc
 ON pc.id_proy_nec=pn.id_proy_nec
-JOIN criterio c
+LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
-JOIN necesidades_equipo ne
+LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
+LEFT JOIN nec_evid nec
+ON nec.id_nec=ne.id_nec
+LEFT JOIN evidencia e
+ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
 LEFT JOIN cotizaciones ct
 ON ct.id_cotizacion=ne.id_cotizacion 
-JOIN laboratorios l
+LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
-JOIN departamentos de
+LEFT JOIN departamentos de
 ON de.id_dep=l.id_dep
-JOIN divisiones dv
+LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE dv.id_div=" . $_GET['div'] . 
 " ORDER BY id_proy DESC";	
@@ -102,24 +110,28 @@ else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-num_equipo,p.justificacion,evidencia,fecha 
+beneficio,nec.id_evidencia,fecha
 FROM proy p
-JOIN proyecto_nec pn
+LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
-JOIN proyecto_criterio pc
+LEFT JOIN proyecto_criterio pc
 ON pc.id_proy_nec=pn.id_proy_nec
-JOIN criterio c
+LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
-JOIN necesidades_equipo ne
+LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
+LEFT JOIN nec_evid nec
+ON nec.id_nec=ne.id_nec
+LEFT JOIN evidencia e
+ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
 LEFT JOIN cotizaciones ct
 ON ct.id_cotizacion=ne.id_cotizacion 
-JOIN laboratorios l
+LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
-JOIN departamentos de
+LEFT JOIN departamentos de
 ON de.id_dep=l.id_dep
-JOIN divisiones dv
+LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE dv.id_div=" . $_GET['div'] . 
 " ORDER BY id_proy DESC";
@@ -129,24 +141,28 @@ echo 'consulta 3';
 	
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-num_equipo,p.justificacion,evidencia,fecha 
+beneficio,nec.id_evidencia,fecha
 FROM proy p
-JOIN proyecto_nec pn
+LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
-JOIN proyecto_criterio pc
+LEFT JOIN proyecto_criterio pc
 ON pc.id_proy_nec=pn.id_proy_nec
-JOIN criterio c
+LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
-JOIN necesidades_equipo ne
+LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
+LEFT JOIN nec_evid nec
+ON nec.id_nec=ne.id_nec
+LEFT JOIN evidencia e
+ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
 LEFT JOIN cotizaciones ct
 ON ct.id_cotizacion=ne.id_cotizacion 
-JOIN laboratorios l
+LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
-JOIN departamentos de
+LEFT JOIN departamentos de
 ON de.id_dep=l.id_dep
-JOIN divisiones dv
+LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 ORDER BY id_proy DESC";	
 	echo 'consulta 4';
@@ -211,16 +227,15 @@ $datos = pg_query($con,$query);
                         <th width="10%">Nombre</th>
                         <th width="15%">Objetivo General</th>
                         <th width="15%">Objetivo Espec&iacute;fico</th>
-                        <th width="15%">Descripci&oacute;n Proyecto</th>
+                        <th width="15%">Descripci&oacute;n detallada</th>
                         <th width="12%">Cantidad de equipo</th>
-                        <th width="20%">Justificaci&oacute;n</th>
-                        <th width="10%">Evidencia</th>
+                        <th width="20%">Beneficios esperados</th>
+                        <th width="10%">Evidencias</th>
                         <th width="14%">fecha</th>
-                        
                       </tr>          
 
 	                 <tr>
-                       <td align="center"><?php echo $lab_proy['nom_area'];?></td>
+                        <td align="center"><?php echo $lab_proy['nom_area'];?></td>
                         <td align="center"><?php echo $lab_proy['nombre_proy'];?></td>
                         
                          <?php //if($_SESSION['permisos'][2] % 3 == 0){ ?>
@@ -231,8 +246,8 @@ $datos = pg_query($con,$query);
                         <td align="left"><?php echo $lab_proy['objetivo_especifico'];?></td>
                         <td align="left"><?php echo $lab_proy['descripcion_proy'];?></td>
                         <td align="left"><?php echo $lab_proy['num_equipo'];?></td>
-                        <td align="left"><?php echo $lab_proy['justificacion'];?></td>
-                        <td align="left"><?php echo $lab_proy['evidencia']; ?></td>
+                        <td align="left"><?php echo $lab_proy['beneficio'];?></td>
+                        <td align="left"><?php echo $lab_proy['id_evidencia']; ?></td>
 				         <td align="left"><?php echo $lab_proy['fecha']; ?></td>
 					</tr>
 					
@@ -242,7 +257,7 @@ $datos = pg_query($con,$query);
 			<?php if ($_SESSION['tipo_usuario']==9){ 
 				?>
                      <tr><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td> 
-                      <td style="text-align: right"> <?php //if &nbsp;&nbsp;&nbsp;&nbsp;(($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td>
+                     <td style="text-align: right"><?php//if &nbsp;&nbsp;&nbsp;&nbsp;(($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td>
               </tr>
               <?php }?>
 	        <?php
@@ -282,7 +297,7 @@ $datos = pg_query($con,$query);
 	<input name="enviar" type="submit" value="Generar bitácora" /><br>
 	<?php
 	
-	$obj_proy->tblProy($_GET['lab']);
+	$obj_proy->tblProy($_GET['lab'],$_REQUEST['div']);
 	?>
 	</form>
     <br />
