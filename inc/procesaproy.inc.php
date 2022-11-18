@@ -31,8 +31,8 @@ require_once('../conexion.php');
     $id_proy_aux=$id_proy_aux+1;
     echo "despues id_proy_aux: " . $id_proy_aux . "</br>";
 
-    $strquery="INSERT INTO proy (id_proy,nombre_proy,objetivo_general, objetivo_especifico,descripcion_proy,num_equipo,justificacion,evidencia) VALUES (%d,'%s','%s','%s','%s',%d,'%s','%s')";
-   $queryn=sprintf($strquery,$id_proy_aux,$_POST['nombre_proy'],$_POST['objetivo_general'],$_POST['objetivo_especifico'],$_POST['descripcion_proy'],$_POST['num_equipo'],$_POST['justificacion'],'faltan');
+    $strquery="INSERT INTO proy (id_proy,nombre_proy,objetivo_general, objetivo_especifico,descripcion_proy,beneficio,cantalum,cantprof,cantinvest,id_impacto,id_producto,id_evid_actual,id_resp_acad,id_resp_tec,id_resp_admin) VALUES (%d,'%s','%s','%s','%s','%s',%d,%d,%d,%d,%d,%d,%d,%d,%d)";
+   $queryn=sprintf($strquery,$id_proy_aux,$_POST['nombre_proy'],$_POST['objetivo_general'],$_POST['objetivo_especifico'],$_POST['descripcion_proy'],$_POST['beneficio'],$_POST['cantalum'],$_POST['cantprof'],$_POST['cantinvest'],$_POST['id_impacto'],$_POST['id_producto'],$_POST['id_evid_actual'],$_POST['id_resp_acad'],$_POST['id_resp_tec'],$_POST['id_resp_admin']);
    echo $queryn;
    $result=@pg_query($con,$queryn) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
     echo $queryn;
@@ -73,8 +73,8 @@ header($direccion);
     echo $queryp;
     $result=pg_query($con,$queryp) or die('ERROR AL BORRAR DATOS queryp: ' . pg_last_error());	
     //Actualiza en proyecto	
-    $strquery="UPDATE proy SET nombre_proy='%s', objetivo_general='%s', objetivo_especifico='%s', descripcion_proy='%s',  num_equipo=%d, justificacion='%s', evidencia='%s'  WHERE id_proy=" . $_POST['id_proy'];
-	$queryu=sprintf($strquery,$_POST['nombre_proy'],$_POST['objetivo_general'],$_POST['objetivo_especifico'],$_POST['descripcion_proy'],$_POST['num_equipo'],$_POST['justificacion'],$_POST['evidencia']);
+    $strquery="UPDATE proy SET nombre_proy='%s', objetivo_general='%s', objetivo_especifico='%s', descripcion_proy='%s', beneficio='%s',cantalum=%d, cantprof=%d,cantinvest=%d,id_impacto=%d,id_producto=%d,id_evid_actual=%d, id_resp_acad=%d, id_resp_tec=%d,id_resp_admin=%d  WHERE id_proy=" . $_POST['id_proy'];
+	$queryu=sprintf($strquery,$_POST['nombre_proy'],$_POST['objetivo_general'],$_POST['objetivo_especifico'],$_POST['descripcion_proy'],$_POST['beneficio'],$_POST['cantalum'],$_POST['cantprof'],$_POST['cantinvest'],$_POST['id_impacto'],$_POST['id_producto'],$_POST['id_evid_actual'],$_POST['id_resp_acad'],$_POST['id_resp_tec'],$_POST['id_resp_admin']);
     echo $queryu;
 	$result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 	

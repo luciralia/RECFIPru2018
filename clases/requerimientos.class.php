@@ -256,6 +256,43 @@ function cmbRecurso($idrec)
 					$salida.="</select>";
 					echo $salida;
 					}
+	function cmbcal($idcalif)
+					{
+                 $query="SELECT * FROM  califica ORDER BY id_calif asc";
+				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos');
+					
+					/*$salida='<select name="id_just" id="id_just">
+					<option value="0" >Ninguno</option>'; */
+					$nombrechk="id_calif_".$i; 
+					$salida='<td><select name="'. $nombrechk .'" id="id_calif">'; 
+					
+					//$j=1;
+					while ($datosc = pg_fetch_array($result))
+						{
+							  
+					if($datosc['id_calif']==$idcalif){
+					
+						$salida.= "<option value='" . $datosc['id_calif'] . "' selected='selected'>" . $datosc['calif_texto']. "</option>";
+					}
+					  else {
+					
+						$salida.= "<option value='" . $datosc['id_calif'] . "'>" . $datosc['calif_texto']. "</option>";
+						
+					             					
+					  }
+						
+						//$j++;
+						}
+				
+				$salida.='<input name="j" type="hidden" value="' .$j. '" />';
+				
+				//	return $salida;
+					$salida.="</select></td>";
+					echo $salida;
+					}
+	
 
 
 } //termina la clase

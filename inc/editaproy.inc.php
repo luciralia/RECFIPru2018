@@ -25,9 +25,15 @@ require_once('../clases/proyectos.class.php');
 require_once('../clases/requerimientos.class.php');
 $combonec = new proyecto();
 $motivo = new Requerimiento();
+$combousu= new laboratorios();
+$combo= new proyecto();
 
-//echo 'valores en editaproy', print_r($_POST);
 
+
+
+
+echo 'valores en editaproy', print_r($_POST);
+echo 'valores en editaproy', print_r($_REQUEST);
 if ($_REQUEST['accion']=='nuevo'){  
 
 ?>
@@ -54,9 +60,7 @@ if ($_REQUEST['accion']=='nuevo'){
       <td colspan="3"><input type="text"  name="descripcion_proy"  id="descripcion_proy" tabindex="8" size="50" maxlength="200"/></td>-->
       <td align="right">Descripción detallada</td>
       <td><textarea name="descripcion_proy" id="descripcion_proy" rows="10" cols="50">Escribe aquí la descripción detallada del proyecto</textarea></td>
-     
   </tr>
-  
 	<tr>
        <td align="right">Necesidades</td>
        <td colspan="3"><?php $combonec->selnecnew($_POST['id_nec'],$_REQUEST['lab']); ?></td>
@@ -64,10 +68,44 @@ if ($_REQUEST['accion']=='nuevo'){
   
   <tr>
      <td align="right">Beneficios esperados</td>
-     
      <td><textarea name="beneficio" id="beneficio" rows="10" cols="50">Escribe aquí los beneficios que se esperan conseguir</textarea></td>
   </tr>
- 
+  <tr>
+	  <td >Cantidad de miembros de la comunidad universitaria beneficiados</td> 
+  <td >Alumnos
+      <input name="cantalum" type="text" id="cantalum" tabindex="1" size="3">
+      Profesores
+      <input name="cantprof" type="text" id="cantprof" tabindex="1" size="3">
+      Investigadores
+      <input name="cantinvest" type="text" id="cantinvest" tabindex="1" size="3"></td>    
+  </tr>
+  <tr>
+      <td align="right">Impacto</td>
+      <td ><?php  $combo->cmbImpacto($_POST['id_impacto']); ?></td>
+  </tr>
+  <tr>
+      <td align="right">Productos a obtener</td>
+      <td ><?php  $combo->cmbProducto($_POST['id_producto']); ?></td>
+  </tr>
+  <tr>
+        <td><label>Responsable acádemico</label></td>
+        <td><label><?php $combousu->combousudiv($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+     </tr>  
+     <tr>
+        <td><label>Responsable técnico</label></td>
+        <td><label><?php $combousu->combousudiv($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+     </tr>  
+     <tr>
+        <td><label>Responsable administrativo</label></td>
+        <td><label><?php $combousu->combousudiv($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+     </tr>  
+  <tr>
+	 <td align="right"><label for="file">Evidencia  de los espacios (.pdf):</label></td>
+	 <td ><input type="file" name="file" id="file"/></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+    </td>
+  </tr>
   <tr>
     <td colspan="4" align="right">
     <input type="submit" name="accionn" value="Guardar" />
@@ -122,7 +160,29 @@ print_r($_POST);*/
      <td align="right">Beneficio</td>
      <td colspan="3"><input name="beneficio" type="text" id="beneficio" tabindex="8" size="100" maxlength="400" value="<?php echo $_POST['beneficio']; ?>"/></td>
   </tr>
+  
   <tr>
+    <td >Cantidad de miembros de la comunidad universitaria beneficiados</td> 
+     <td >Alumnos<input name="cantalum" type="text" id="cantalum" tabindex="1" size="4" value="<?php echo $_POST['cantalum']; ?> "/>
+     Profesores<input name="cantprof" type="text" id="cantprof" tabindex="1" size="4" value="<?php echo $_POST['cantprof']; ?> "/>
+    Investigadores<input name="cantinvest" type="text" id="cantinvest" tabindex="1" size="4" value="<?php echo $_POST['cantinvest']; ?> "/></td>
+  </tr>
+  <tr>
+      <td align="right">Impacto</td>
+      <td ><?php  $combo->cmbImpacto($_POST['id_impacto']); ?></td>
+  </tr>
+  <tr>
+      <td align="right">Productos a obtener</td>
+      <td ><?php  $combo->cmbProducto($_POST['id_producto']); ?></td>
+  </tr>
+  <tr>
+   <tr>
+	 <td align="right"><label for="file">Evidencia  de los espacios (.pdf):</label></td>
+	 <td ><input type="file" name="file" id="file"/></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+    </td>
+  </tr>
     <td colspan="4" align="right">
     <input type="submit" name="accionm" value="Guardar" />
     <input type="reset" name="accionm"  value="Limpiar" />
@@ -135,6 +195,7 @@ print_r($_POST);*/
 <input name="ref" type="hidden" value="<?php echo $_POST['ref']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 </form>
+<br>
 <?php 
 
 	}?>

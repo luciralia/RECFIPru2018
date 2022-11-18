@@ -23,12 +23,12 @@ if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,nec.id_evidencia,fecha
+beneficio,fecha
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
 LEFT JOIN proyecto_criterio pc
-ON pc.id_proy_nec=pn.id_proy_nec
+ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
@@ -79,12 +79,12 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['div']!=NULL && $_GET['lab']==''){
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,nec.id_evidencia,fecha
+beneficio,fecha
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
 LEFT JOIN proyecto_criterio pc
-ON pc.id_proy_nec=pn.id_proy_nec
+ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
@@ -110,12 +110,12 @@ else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,nec.id_evidencia,fecha
+beneficio,fecha
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
 LEFT JOIN proyecto_criterio pc
-ON pc.id_proy_nec=pn.id_proy_nec
+ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
@@ -141,12 +141,12 @@ echo 'consulta 3';
 	
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,nec.id_evidencia,fecha
+beneficio,fecha
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
 LEFT JOIN proyecto_criterio pc
-ON pc.id_proy_nec=pn.id_proy_nec
+ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
 ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
@@ -258,6 +258,7 @@ $datos = pg_query($con,$query);
 				?>
                      <tr><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td> 
                      <td style="text-align: right"><?php//if &nbsp;&nbsp;&nbsp;&nbsp;(($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td>
+                     <td style="text-align: right"><?php//if &nbsp;&nbsp;&nbsp;&nbsp;(($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="evaluar" /></td>
               </tr>
               <?php }?>
 	        <?php

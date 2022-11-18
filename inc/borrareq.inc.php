@@ -6,8 +6,8 @@ require_once('../conexion.php');
 
 <?php
 
-/*echo 'valores de POSTen borrareq';
-print_r ($_POST);*/
+echo 'valores de POSTen borrareq';
+print_r ($_POST);
 
 if(!isset($_POST['resp'])){ ?>
 				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'].'&div='. $_REQUEST['div'];?>
@@ -34,17 +34,34 @@ if(!isset($_POST['resp'])){ ?>
 <?php } else if ($_POST['resp']=='Si') {
 
 if($_POST['accion']=='borrar'){
+	
+$queryaux="SELECT id_evidencia FROM nec_evid WHERE id_nec=%d AND id_lab=%d";
+$querye=sprintf($queryaux,$_POST['id_nec'],$_REQUEST['lab']);
+$resultx=@pg_query($con,$querye) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+$row = pg_fetch_array($resultx); 
+$id_evid=$row['id_evidencia']; 
+echo 'la evidencia es',$id_evid;	
+	
 
-
-$strquery="delete from necesidades_equipo where id_nec=%d and id_lab=%d";
+$strquery="DELETE FROM nec_evid WHERE id_nec=%d AND id_lab=%d";	
 $queryd=sprintf($strquery,$_POST['id_nec'],$_POST['id_lab']);
+$result=pg_query($con,$queryd) or die ('ERROR AL BORRAR DATOS:' . pg_last_error());
+	
+$strquery="DELETE FROM evidencia WHERE id_evidencia=%d";	
+$queryd=sprintf($strquery,$id_evid);
+$result=pg_query($con,$queryd) or die ('ERROR AL BORRAR DATOS:' . pg_last_error());	
+	
+$strquery1="DELETE FROM necesidades_equipo WHERE id_nec=%d AND id_lab=%d";
+$queryd=sprintf($strquery1,$_POST['id_nec'],$_POST['id_lab']);
 $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
-
-  $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
 	
-  die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
+unlink($_POST['ruta_evidencia']);
 	
-   } 
+$direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
+	
+die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
+	
+} 
 
  } else {
 		//echo "No borrar";	

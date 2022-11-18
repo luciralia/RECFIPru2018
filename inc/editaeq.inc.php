@@ -24,6 +24,7 @@ require_once('../clases/requerimientos.class.php');
 $combocot = new Cotiza();
 $motivo = new Requerimiento();
 
+
  print_r($_POST);
 
 if ($_REQUEST['accion']=='nuevo'){  
@@ -85,10 +86,10 @@ if ($_REQUEST['accion']=='nuevo'){
  
    
   <tr>
-	  <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
+	 <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
 	 <td ><input type="file" name="file" id="file"/></td>
     <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
-    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </td>
   </tr>
 	
@@ -179,8 +180,13 @@ if ($_REQUEST['accion']=='nuevo'){
      <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8" value="<?php //echo $_POST['justificacion'];  ?>"/></textarea></td>-->
      <td align="right">Justificación técnica</td>
       <td><textarea name="impacto" id="impacto" rows="10" cols="40"><?php echo $_POST['impacto']?></textarea></td>
-     
-     
+    </tr>
+  <tr>
+	 <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
+	 <td ><input type="file" name="file" id="file"/></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
+    </td>
   </tr>
   <tr>
     <td colspan="4" align="right">

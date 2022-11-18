@@ -6,6 +6,7 @@ require_once('../clases/cotiza.class.php');
 $obj_req= new Requerimiento();
 $obj_cotiza = new Cotiza();
 
+
 class Proyecto{
 
 function getTipoProyecto($id){
@@ -92,17 +93,88 @@ function tblProy($idlab,$iddiv)
 							echo $salida;
 			}//finmetodo
 	
+	function califcrit($idproy){
+		$combocal= new Requerimiento();
+		$query="SELECT DISTINCT c.id_criterio as criterio, texto_criterio, pc.id_calif,justif
+                FROM  criterio c
+                LEFT JOIN proyecto_criterio pc
+                ON c.id_criterio=pc.id_criterio
+                LEFT JOIN califica cl
+                ON cl.id_calif=pc.id_calif
+                LEFT JOIN proyecto_nec pn
+                ON pn.id_proy=pc.id_proy";
+		
+		$result_crit = pg_query($query) or die('Hubo un error con la base de datos');
+		
+		$salida='<table class="equipob"><br><tr><th>Criterio</th><th>Calificación</th><th>Justificación</th></tr>'; 
+		
+		$j=1;
+	
+		 while ($datosc = pg_fetch_array($result_crit))
+		   {
+			    $nombrechk="id_justif_".$j;
+			    $nombrecrit="id_criterio_".$j;
+			    $cal=$datosc['id_calif'];
+			   /* $combo="$combocal";
+			    $combo1="->(";
+			    $combo3=",";
+			    $combo4=")";*/
+			    $salida.='<tr><td>'. $datosc['texto_criterio']. '</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td> <td>'.$combocal->cmbcal($cal).'</td></tr><input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" />';
+				//$salida.='<tr><td>'. $datosc['texto_criterio']. '</td> <td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/> </td><td>'.$combocal->cmbcal($id_cal,$j).'</td></tr>';
+				$j++;
+			}
+			$salida.='</table><br>  <input name="j" type="hidden" value="' .$j. '" />';
+			echo $salida;
+	}
+	
+	function selnecproy($idproy){
+		
+		$query="SELECT ne.id_nec, pn.id_lab,ne.descripcion,prioridad,plazo,e.id_evidencia,ruta_evidencia
+			                FROM proy p
+                            JOIN proyecto_nec pn
+                            ON pn.id_proy=p.id_proy
+                            JOIN necesidades_equipo ne
+                            ON ne.id_lab=pn.id_lab
+                            AND ne.id_nec=pn.id_nec
+                            LEFT JOIN nec_evid nev
+                            ON nev.id_lab=ne.id_lab
+                            LEFT JOIN evidencia e
+                            ON e.id_evidencia=nev.id_evidencia
+							WHERE p.id_proy=".$idproy ;
+		
+		 $result_opc = pg_query($query) or die('Hubo un error con la base de datos');
+		
+		$salida='<table class="equipob"><br><tr><th>Requerimientos</th><th>prioridad</th><th>plazo</th><th>evidencia</th></tr>'; 
+		   
+		$j=1;
+		
+		 while ($datosc = pg_fetch_array($result_opc))
+		   {
+			    $nombrechk="id_nec_".$j;
+			   
+				 $salida.='<tr><td>'. $datosc['descripcion']. '</td><td> '. $datosc['prioridad']. 		
+			      '</td><td> ' .$datosc['plazo'].'</td><td><a href= ' .$datosc['ruta_evidencia'].' 
+				  target="_blank"></a></td>
+				  </tr>';
+				
+				$j++;
+				}
+				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
+				echo $salida;
+	}
+	/*Para validar*/
 	function selnecnew($idnec,$idlab){
 		
 		$query="SELECT id_nec, id_lab,descripcion FROM necesidades_equipo 
             WHERE id_lab=" . $idlab. "
-             EXCEPT
+            EXCEPT
             SELECT ne.id_nec,ne.id_lab,descripcion 
             FROM necesidades_equipo ne
             JOIN proyecto_nec pn
             ON ne.id_lab=pn.id_lab
             AND ne.id_nec=pn.id_nec
             WHERE pn.id_lab=" . $idlab;
+		
 		 $result_opc = pg_query($query) or die('Hubo un error con la base de datos');
 		
 		$salida='<table class="equipob"><br><br><tr><th>Requerimientos</th><th>Seleccionar</th></tr>'; 
@@ -152,7 +224,7 @@ function tblProy($idlab,$iddiv)
                             JOIN necesidades_equipo ne
                             ON ne.id_lab=pn.id_lab
                             AND ne.id_nec=pn.id_nec
-			                WHERE pn.id_lab=" . $idlab . " and p.id_proy=".$idproy;
+			                WHERE pn.id_lab= " . $idlab;
 		
 				            $result = pg_query($querysel) or die('Hubo un error con la base de datos');
 		   
@@ -281,8 +353,114 @@ function tblProy($idlab,$iddiv)
 					$salida.="</select>";
 					echo $salida;
 					} 
+	
+	function cmbImpacto($idimpac)
+					{
+
+				        
+				    $query="SELECT * FROM  cat_impacto ORDER BY id_impacto asc";
+				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
 				
-}
+					$result = @pg_query($query) or die('Hubo un error con la base de datos');
+					
+					/*$salida='<select name="id_just" id="id_just">
+					<option value="0" >Ninguno</option>'; */
+					
+					$salida='<select name="id_impacto" id="id_impacto">'; 
+					
+					
+					while ($datosc = pg_fetch_array($result))
+						{
+					if($datosc['id_impacto']==$idimpac){
+					
+						$salida.= "<option value='" . $datosc['id_impacto'] . "' selected='selected'>" . $datosc['nomb_impacto']. "</option>";
+					
+					 } else { 
+					
+						$salida.= "<option value='" . $datosc['id_impacto'] . "'>" . $datosc['nomb_impacto']. "</option>";
+						
+					    }
+					
+						}
+				//	return $salida;
+					$salida.="</select>";
+					echo $salida;
+					}
+
+
+function cmbProducto($idprod)
+					{
+
+				        
+				    $query="SELECT * FROM  cat_producto ORDER BY id_producto asc";
+				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos');
+					
+					/*$salida='<select name="id_just" id="id_just">
+					<option value="0" >Ninguno</option>'; */
+					
+					$salida='<select name="id_producto" id="id_producto">'; 
+					
+					
+					while ($datosc = pg_fetch_array($result))
+						{
+					if($datosc['id_producto']==$idprod){
+					
+						$salida.= "<option value='" . $datosc['id_producto'] . "' selected='selected'>" . $datosc['nomb_producto']. "</option>";
+					
+					 } else { 
+					
+						$salida.= "<option value='" . $datosc['id_producto'] . "'>" . $datosc['nomb_producto']. "</option>";
+						
+					    }
+					
+						}
+				//	return $salida;
+					$salida.="</select>";
+					echo $salida;
+					}
+ 
+function cmbcal($idcalif)
+					{
+
+				     $nombrechk="id_calif_".$j;   
+				        $query="SELECT * FROM  califica ORDER BY id_calif desc";
+				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos');
+					
+					/*$salida='<select name="id_just" id="id_just">
+					<option value="0" >Ninguno</option>'; */
+					
+					$salida='<select name="'. $nombrechk .'" id="id_calif">'; 
+					
+					$j=0;
+					while ($datos = pg_fetch_array($result))
+						{
+					if($datos['id_calif']==$idcalif){
+					
+						$salida.= "<option value='" . $datos['id_calif'] . "' selected='selected'>" . $datos['calif_texto']. "</option>";
+					
+					 } else { 
+					
+						$salida.= "<option value='" . $datos['id_calif'] . "'>" . $datos['calif_texto']. "</option>";
+						
+					             					  }
+					
+						$j++;
+				}
+				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
+				//echo $salida;
+				//	return $salida;
+					$salida.="</select>";
+					echo $salida;
+					}
+
+	
+	
+
+}//rtermina la clase
 	
 	
 

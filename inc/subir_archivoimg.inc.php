@@ -23,7 +23,7 @@ print_r($_POST);
 
 if($_POST['accionn']=='Guardar') {
 	
-				$query="INSERT INTO evidencia1 (id_evidencia,descripcion,ruta_evidencia) VALUES('".$_POST['id_evidencia']. "','" . $_POST['descripcion'] . "','../evidencia/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .")";
+				$query="INSERT INTO evidencia (id_evidencia,descripcion,ruta_evidencia) VALUES('".$_POST['id_evidencia']. "','" . $_POST['descripcion'] . "','../evidencia/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .")";
 				echo $query;
 				
 				echo "Tipo a: " . $_FILES["file"]["type"] . "<br />";

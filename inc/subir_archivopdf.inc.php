@@ -27,7 +27,7 @@ if($_POST['accionm']=='Enviar'|| $_POST['accionn']=='Enviar') {
 	echo 'valores de flies';
 print_r ($_FILES);
 	
-				$query="INSERT INTO cotizaciones3 (folio,proveedor,ruta,id_lab,tipo) VALUES('".$_POST['folio']. "','" . $_POST['proveedor'] . "','../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .",'" . $_POST['tipo']."')";
+				$query="INSERT INTO cotizaciones (folio,proveedor,ruta,id_lab,tipo) VALUES('".$_POST['folio']. "','" . $_POST['proveedor'] . "','../cotizaciones/" . $id_lab . "_" . $_FILES["file"]["name"] . "',". $id_lab .",'" . $_POST['tipo']."')";
 				
 				echo $query;
 				

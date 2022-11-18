@@ -8,11 +8,13 @@ require_once('../clases/requerimientos.class.php');
 $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 $obj_req= new Requerimiento();
+echo 'Valores en carga eq';
+	print_r($_POST); 
 
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -36,8 +38,7 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 
 }if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']=='') ){
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.ruta_evidencia,,
-ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -60,7 +61,7 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 "ORDER BY id_nec DESC";
 	
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['lab']=='' && $_GET['div']!=''){
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.ruta_evidencia,nomb_recurso,ne.id_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -84,7 +85,7 @@ WHERE dv.id_div=" . $_GET['div'] .
 } 
 else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.ruta_evidencia,nomb_recurso,ne.id_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -108,7 +109,7 @@ WHERE dv.id_div=" . $_GET['div'] .
 	
 } else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.ruta_evidencia,nomb_recurso,ne.id_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -187,7 +188,7 @@ $datos = pg_query($con,$query);
 	?>              <table class="equipo"  width="100%" border="0" cellpadding="5">
                       <tr align="left">
 				        <th width="15%">Recursos de cómputo</th>		  
-                        <th width="5%">Cantidad de equipos</th>
+                        <th width="5%"> Cantidad de equipos</th>
                         <th width="15%">Descripci&oacute;n</th>
                         <th width="12%">Unitario (USD)</th>
                         <th width="12%">Total(USD)</th>
@@ -195,7 +196,7 @@ $datos = pg_query($con,$query);
                         <th width="10%">Prioridad</th>
                         <th width="14%">Año</th>
                         <th width="14%">Cotización:</th>
-						<th width="14%">Evidencia Actual</th>  
+						<th width="20%">Evidencia Actual</th>  
                       </tr>          
 
 	                 <tr>
@@ -213,7 +214,7 @@ $datos = pg_query($con,$query);
                         <td align="left"><?php echo $lab_nec['id_prio']; $obj_req->getPrioridad($lab_nec['id_prio'],'descripcion');?></td>
                         <td align="left"><?php echo /*$lab_nec['plazo']; */ $obj_req->getPlazo($lab_nec['id_plazo'],'descripcion');?></td>
                         <td colspan="9" align="left"><?php echo $obj_cotiza->getCotiza($lab_nec['id_cotizacion']); ?></td>
-						<td colspan="9" align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+1);?></a></td>
+						<td colspan="12" align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td>
                       </tr>
 					<tr>
     	                  <td colspan="9" align="left">&nbsp;</td>
