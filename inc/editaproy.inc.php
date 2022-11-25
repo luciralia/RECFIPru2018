@@ -26,6 +26,7 @@ require_once('../clases/requerimientos.class.php');
 $combonec = new proyecto();
 $motivo = new Requerimiento();
 $combousu= new laboratorios();
+
 $combo= new proyecto();
 
 
@@ -89,15 +90,15 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
         <td><label>Responsable acádemico</label></td>
-        <td><label><?php $combousu->combousudiv($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+        <td><label><?php $combousu->combousuacad($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
      </tr>  
      <tr>
         <td><label>Responsable técnico</label></td>
-        <td><label><?php $combousu->combousudiv($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+        <td><label><?php $combousu->combousuatec($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
      </tr>  
      <tr>
         <td><label>Responsable administrativo</label></td>
-        <td><label><?php $combousu->combousudiv($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+        <td><label><?php $combousu->combousuadmin($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
      </tr>  
   <tr>
 	 <td align="right"><label for="file">Evidencia  de los espacios (.pdf):</label></td>
@@ -175,7 +176,18 @@ print_r($_POST);*/
       <td align="right">Productos a obtener</td>
       <td ><?php  $combo->cmbProducto($_POST['id_producto']); ?></td>
   </tr>
-  <tr>
+   <tr>
+        <td><label>Responsable acádemico</label></td>
+        <td><label><?php $combousu->combousuacad($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+     </tr>  
+     <tr>
+        <td><label>Responsable técnico</label></td>
+        <td><label><?php $combousu->combousuatec($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+     </tr>  
+     <tr>
+        <td><label>Responsable administrativo</label></td>
+        <td><label><?php $combousu->combousuadmin($_REQUEST['div'],$_SESSION['id_usuario'])?></label></td>
+     </tr>  
    <tr>
 	 <td align="right"><label for="file">Evidencia  de los espacios (.pdf):</label></td>
 	 <td ><input type="file" name="file" id="file"/></td>

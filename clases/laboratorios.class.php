@@ -192,11 +192,11 @@ function getResplab($idlab){
 
 	}
 
-function combousudiv($div,$tipoUsu){
+function combousuacad($div,$tipoUsu){
 	
 	   $consultacomp=" di.id_cac=";
 
-	  $query = "SELECT DISTINCT  a_paterno, a_materno,u.nombre as nombre
+	  $query = "SELECT DISTINCT  u.id_usuario,a_paterno, a_materno,u.nombre as nombre
       FROM laboratorios l, departamentos de, divisiones di, usuarios u where  di.id_div=". $div .	  
       " AND l.id_dep=de.id_dep
       AND de.id_div=di.id_div
@@ -204,15 +204,15 @@ function combousudiv($div,$tipoUsu){
 	  ORDER BY a_paterno ASC";
 			
 				$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
-			        $salida='<select name="id_div" id="id_div">';
+			        $salida='<select name="id_resp_acad" id="id_resp_acad">';
 					        // <option value="0" >Ninguna</option>'; 
 				    while ($datosc = pg_fetch_array($result))
 					{
 						
-					if($datosc['id_div']==$div)
-					      $salida.= "<option value='" . $datosc['id_div'] . "' selected='selected'>" . $datosc['a_paterno']. " ". $datosc['a_materno']." ". $datosc['nombre']. "</option>";
+					if($datosc['id_usuario']==$tipoUsu)
+					      $salida.= "<option value='" . $datosc['id_usuario'] . "' selected='selected'>" . $datosc['a_paterno']. " ". $datosc['a_materno']." ". $datosc['nombre']. "</option>";
 					 else 
-					      $salida.= "<option value='" . $datosc['id_div'] . "'>" . $datosc['a_paterno']." ".$datosc['a_materno']. " ". $datosc['nombre']. "</option>";
+					      $salida.= "<option value='" . $datosc['id_usuario'] . "'>" . $datosc['a_paterno']." ".$datosc['a_materno']. " ". $datosc['nombre']. "</option>";
 						
 					}//Fin del while
 						
@@ -221,7 +221,64 @@ function combousudiv($div,$tipoUsu){
 					
 					echo $salida;
 	}
+function combousuatec($div,$tipoUsu){
+	
+	   $consultacomp=" di.id_cac=";
 
+	  $query = "SELECT DISTINCT  u.id_usuario,a_paterno, a_materno,u.nombre as nombre
+      FROM laboratorios l, departamentos de, divisiones di, usuarios u where  di.id_div=". $div .	  
+      " AND l.id_dep=de.id_dep
+      AND de.id_div=di.id_div
+      AND l.id_responsable=u.id_usuario
+	  ORDER BY a_paterno ASC";
+			
+				$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+			        $salida='<select name="id_resp_tec" id="id_resp_tec">';
+					        // <option value="0" >Ninguna</option>'; 
+				    while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_usuario']==$tipoUsu)
+					      $salida.= "<option value='" . $datosc['id_usuario'] . "' selected='selected'>" . $datosc['a_paterno']. " ". $datosc['a_materno']." ". $datosc['nombre']. "</option>";
+					 else 
+					      $salida.= "<option value='" . $datosc['id_usuario'] . "'>" . $datosc['a_paterno']." ".$datosc['a_materno']. " ". $datosc['nombre']. "</option>";
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+	}
+	function combousuadmin($div,$tipoUsu){
+	
+	   $consultacomp=" di.id_cac=";
+
+	  $query = "SELECT DISTINCT  u.id_usuario,a_paterno, a_materno,u.nombre as nombre
+      FROM laboratorios l, departamentos de, divisiones di, usuarios u where  di.id_div=". $div .	  
+      " AND l.id_dep=de.id_dep
+      AND de.id_div=di.id_div
+      AND l.id_responsable=u.id_usuario
+	  ORDER BY a_paterno ASC";
+			
+				$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+			        $salida='<select name="id_resp_admin" id="id_resp_admin">';
+					        // <option value="0" >Ninguna</option>'; 
+				    while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_usuario']==$tipoUsu)
+					      $salida.= "<option value='" . $datosc['id_usuario'] . "' selected='selected'>" . $datosc['a_paterno']. " ". $datosc['a_materno']." ". $datosc['nombre']. "</option>";
+					 else 
+					      $salida.= "<option value='" . $datosc['id_usuario'] . "'>" . $datosc['a_paterno']." ".$datosc['a_materno']. " ". $datosc['nombre']. "</option>";
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+	}
 
 function getAct($acts,$tipo)
 		{

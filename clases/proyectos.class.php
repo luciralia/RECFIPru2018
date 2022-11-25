@@ -95,6 +95,7 @@ function tblProy($idlab,$iddiv)
 	
 	function califcrit($idproy){
 		$combocal= new Requerimiento();
+		
 		$query="SELECT DISTINCT c.id_criterio as criterio, texto_criterio, pc.id_calif,justif
                 FROM  criterio c
                 LEFT JOIN proyecto_criterio pc
@@ -105,8 +106,7 @@ function tblProy($idlab,$iddiv)
                 ON pn.id_proy=pc.id_proy";
 		
 		$result_crit = pg_query($query) or die('Hubo un error con la base de datos');
-		
-		$salida='<table class="equipob"><br><tr><th>Criterio</th><th>Calificación</th><th>Justificación</th></tr>'; 
+		$salida='<table class="equipob" width="80%" border="0" cellpadding="20"><br><tr><th>Criterio</th><th>Justificación</th><th>Calificación</th></tr>'; 
 		
 		$j=1;
 	
@@ -115,15 +115,17 @@ function tblProy($idlab,$iddiv)
 			    $nombrechk="id_justif_".$j;
 			    $nombrecrit="id_criterio_".$j;
 			    $cal=$datosc['id_calif'];
-			   /* $combo="$combocal";
+			    $combo="->$cmbcal(";
 			    $combo1="->(";
 			    $combo3=",";
-			    $combo4=")";*/
-			    $salida.='<tr><td>'. $datosc['texto_criterio']. '</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td> <td>'.$combocal->cmbcal($cal).'</td></tr><input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" />';
-				//$salida.='<tr><td>'. $datosc['texto_criterio']. '</td> <td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/> </td><td>'.$combocal->cmbcal($id_cal,$j).'</td></tr>';
+			    $combo4=")";
+			   
+			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td><input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" /></td><td>'.$combocal->cmbcal($cal,$j).'</td></tr>';
+			    //$salida.='<tr><td>'. $datosc['texto_criterio']. '</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td> <input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" /><td>'.$combocal->cmbcal($cal);
+				//$salida.='<tr><td>'. $datosc['texto/td><td>_criterio']. '</td> <td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/> </td><td>'.$combocal->cmbcal($id_cal,$j).'</td></tr>';
 				$j++;
 			}
-			$salida.='</table><br>  <input name="j" type="hidden" value="' .$j. '" />';
+			$salida.='  <input name="j" type="hidden" value="' .$j. '" />';
 			echo $salida;
 	}
 	
@@ -152,14 +154,14 @@ function tblProy($idlab,$iddiv)
 		   {
 			    $nombrechk="id_nec_".$j;
 			   
-				 $salida.='<tr><td>'. $datosc['descripcion']. '</td><td> '. $datosc['prioridad']. 		
+				 $salida.='<tr><td >'. $datosc['descripcion']. '</td><td> '. $datosc['prioridad']. 		
 			      '</td><td> ' .$datosc['plazo'].'</td><td><a href= ' .$datosc['ruta_evidencia'].' 
-				  target="_blank"></a></td>
+				  target="_blank"></a>
 				  </tr>';
 				
 				$j++;
 				}
-				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
+				$salida.='</table> <input name="j" type="hidden" value="' .$j. '" />';
 				echo $salida;
 	}
 	/*Para validar*/
@@ -421,41 +423,8 @@ function cmbProducto($idprod)
 					echo $salida;
 					}
  
-function cmbcal($idcalif)
-					{
 
-				     $nombrechk="id_calif_".$j;   
-				        $query="SELECT * FROM  califica ORDER BY id_calif desc";
-				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
-				
-					$result = @pg_query($query) or die('Hubo un error con la base de datos');
-					
-					/*$salida='<select name="id_just" id="id_just">
-					<option value="0" >Ninguno</option>'; */
-					
-					$salida='<select name="'. $nombrechk .'" id="id_calif">'; 
-					
-					$j=0;
-					while ($datos = pg_fetch_array($result))
-						{
-					if($datos['id_calif']==$idcalif){
-					
-						$salida.= "<option value='" . $datos['id_calif'] . "' selected='selected'>" . $datos['calif_texto']. "</option>";
-					
-					 } else { 
-					
-						$salida.= "<option value='" . $datos['id_calif'] . "'>" . $datos['calif_texto']. "</option>";
-						
-					             					  }
-					
-						$j++;
-				}
-				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
-				//echo $salida;
-				//	return $salida;
-					$salida.="</select>";
-					echo $salida;
-					}
+	
 
 	
 	

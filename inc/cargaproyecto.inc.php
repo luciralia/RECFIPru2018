@@ -265,11 +265,11 @@ $datos = pg_query($con,$query);
 				foreach ($lab_proy as $campo => $valor) {
 				   echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
 				}
-				?>
-			</form>
+			?>
+			<!--</form>22/nov-->
 			
 	<?php	} ?>
-		</table> 
+		<!--</table>--> 
 		 <br>
 			<?php }else { ?>
              <br>

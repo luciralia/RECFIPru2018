@@ -21,19 +21,32 @@ require_once('../conexion.php');
     <h1>Nuevo</h1>
 <?php 
     
+$query="SELECT pc.id_proy FROM proyecto_criterio pc
+        WHERE 
+        EXISTS (SELECT id_proy FROM proy p
+        WHERE pc.id_proy=p.id_proy AND p.id_proy=". $_REQUEST['id_proy'].")";
 
+$result = pg_query($con,$query);
+	
+    $existe= pg_num_rows($result); 
+	
+	if ($existe!=0 ){		
     
-
-   
+        $queryde="DELETE FROM proyecto_criterio WHERE id_proy=".$_REQUEST['id_proy'];
+	    $resultx=@pg_query($con,$queryde) or die('ERROR AL BORRAR LOS DATOS: ' . pg_last_error());
+	}
+		
+		
 /* Insertar datos en proyecto_criterio*/
 for ($i=1;$i<=$_REQUEST['j']-1;$i++){
 	$crit='id_criterio_'.+$i;
 	$cal='id_calif_'.$i;
 	$just='id_justif_'.$i;
     echo 'crit',$crit;
-	echo 'calif',$calif;
+	echo 'calif',$cal;
      //if (isset($_REQUEST[$crit]))	{
 		echo 'valor',$_REQUEST[$crit];
+	     echo 'valorde calif',$_REQUEST[$cal];
         $queryaux="SELECT MAX(id_proy_crit) as maxidpc FROM proyecto_criterio ";
         $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
         $row = pg_fetch_array($resultx); 
@@ -44,14 +57,22 @@ for ($i=1;$i<=$_REQUEST['j']-1;$i++){
        $queryd=sprintf($strquery,$id_pc_aux,$_REQUEST[$crit],$_REQUEST[$cal],$_REQUEST[$just],$_REQUEST['id_proy']);
 		 echo $queryd;
         $result=@pg_query($con,$queryd) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-        echo $queryd;
-	// }//if valor en id_nec_x
+     
 }//for inserta cada necesidad proy
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
+//}//fin de existe
+	}
+		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 
- }?>
-	
+ if($_POST['accionm']=='Cancelar'|| $_POST['accionn']=='Cancelar'){ 
+
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
+echo $direccion;
+header($direccion);
+
+}?>
+
+
 	
 

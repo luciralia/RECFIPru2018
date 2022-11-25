@@ -60,7 +60,7 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 <!--<table cellpadding="2" class="formulario">-->
 <form action="../inc/guardarproy.inc.php" method="post" name="form_nuevo" class="formul">
 	<table class="equipo"  width="100%" border="0" cellpadding="5">
-<tr align="left">		
+     <tr align="left">		
    <th width="10%">Nombre</th>
                         <th width="15%">Objetivo General</th>
                         <th width="15%">Objetivo Espec&iacute;fico</th>
@@ -88,26 +88,35 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 				        <td align="left"><?php echo $nimpacto; ?></td>
 				        <td align="left"><?php echo $nprod; ?></td>
 					</tr>
-					<tr>
-                          <?php $combonec->selnecproy($_POST['id_proy']); ?>
-                    </tr>
-                    <tr>
-                          <?php $comboproy->califcrit($_POST['id_proy']); ?>
-                   </tr>
-	
-  <tr>
-    <td colspan="4" align="right">
-    <input type="submit" name="accionn" value="Guardar" />
-    <input type="reset" name="accionn"  value="Limpiar" />
-	<input type="submit" name="accionn" value="Cancelar" /></td>
+		
+    <tr>
+       <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+       <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      
+       <td colspan="15"> <?php $combonec->selnecproy($_POST['id_proy']); ?></td>
     </tr>
-</table>
-<br>
+	    <tr>
+     
+        <td >
+				<?php $comboproy->califcrit($_POST['id_proy']); ?> </td>
+	    </tr> 
+    
+		 
+    <tr>
+       <td colspan="4" align="right">
+       <input type="submit" name="accionn" value="Guardar" />
+       <input type="reset" name="accionn"  value="Limpiar" />
+	   <input type="submit" name="accionn" value="Cancelar" /></td>
+    </tr>
+   
+
+
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 <input name="id_proy" type="hidden" value="<?php echo $_POST['id_proy']; ?>" />
 
 </form>
+<br>
 <br>
 </div>
