@@ -23,10 +23,14 @@ if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,fecha
+beneficio,fecha,ruta_evidencia_a
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
+LEFT JOIN proy_evid_actual pea
+ON pea.id_proy=p.id_proy 
+LEFT JOIN evidencia_actual ea
+ON ea.id_evid_actual=pea.id_evid_actual
 LEFT JOIN proyecto_criterio pc
 ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
@@ -79,10 +83,14 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['div']!=NULL && $_GET['lab']==''){
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,fecha
+beneficio,fecha,ruta_evidencia_a
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
+LEFT JOIN proy_evid_actual pea
+ON pea.id_proy=p.id_proy 
+LEFT JOIN evidencia_actual ea
+ON ea.id_evid_actual=pea.id_evid_actual
 LEFT JOIN proyecto_criterio pc
 ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
@@ -110,10 +118,14 @@ else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,fecha
+beneficio,fecha,ruta_evidencia_a
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
+LEFT JOIN proy_evid_actual pea
+ON pea.id_proy=p.id_proy 
+LEFT JOIN evidencia_actual ea
+ON ea.id_evid_actual=pea.id_evid_actual
 LEFT JOIN proyecto_criterio pc
 ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
@@ -141,10 +153,14 @@ echo 'consulta 3';
 	
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
-beneficio,fecha
+beneficio,fecha,ruta_evidencia_a
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
+LEFT JOIN proy_evid_actual pea
+ON pea.id_proy=p.id_proy 
+LEFT JOIN evidencia_actual ea
+ON ea.id_evid_actual=pea.id_evid_actual
 LEFT JOIN proyecto_criterio pc
 ON pc.id_proy=pn.id_proy
 LEFT JOIN criterio c
@@ -230,8 +246,8 @@ $datos = pg_query($con,$query);
                         <th width="15%">Descripci&oacute;n detallada</th>
                         <th width="12%">Cantidad de equipo</th>
                         <th width="20%">Beneficios esperados</th>
-                        <th width="10%">Evidencias</th>
-                        <th width="14%">fecha</th>
+                        <th width="20%">Evidencia actual</th>
+                        <th width="20%">Fecha</th>
                       </tr>          
 
 	                 <tr>
@@ -247,7 +263,7 @@ $datos = pg_query($con,$query);
                         <td align="left"><?php echo $lab_proy['descripcion_proy'];?></td>
                         <td align="left"><?php echo $lab_proy['num_equipo'];?></td>
                         <td align="left"><?php echo $lab_proy['beneficio'];?></td>
-                        <td align="left"><?php echo $lab_proy['id_evidencia']; ?></td>
+                        <td align="left"><a href="<?php echo $lab_proy['ruta_evidencia_a']; ?>" target="_blank"><?php echo substr($lab_proy['ruta_evidencia_a'],strpos($lab_proy['ruta_evidencia_a'],'_')+12);?></a></td>
 				         <td align="left"><?php echo $lab_proy['fecha']; ?></td>
 					</tr>
 					

@@ -40,8 +40,10 @@ if ($_REQUEST['accion']=='nuevo'){
 ?>
 <br>
 <br>
-<div class=formulario>
-<form action="../inc/procesaproy.inc.php" method="post" name="form_nuevo" class="formul">
+
+<div class=formulario>	
+<form action="../inc/procesaproy.inc.php" method="post" enctype="multipart/form-data" class="formul">
+<div name="formcotiza" >	
 <table cellpadding="2" class="formulario">
   <tr>
       <td width="151" align="right" >Nombre</td>
@@ -129,8 +131,12 @@ print_r($_POST);*/
 	
 <br>
 <br>
-<form action="../inc/procesaproy.inc.php" method="post" name="form_edita">
+<div class=formulario>
+<form action="../inc/procesaproy.inc.php" method="post" enctype="multipart/form-data" class="formul">
+	<div name="formcotiza" >
+	
 <table cellpadding="2" class="formulario">
+
   <tr>
       <td width="151" align="right" >Nombre</td>
       <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="50" 
@@ -191,10 +197,11 @@ print_r($_POST);*/
    <tr>
 	 <td align="right"><label for="file">Evidencia  de los espacios (.pdf):</label></td>
 	 <td ><input type="file" name="file" id="file"/></td>
-    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
-    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+     <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+         <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
     </td>
   </tr>
+	
     <td colspan="4" align="right">
     <input type="submit" name="accionm" value="Guardar" />
     <input type="reset" name="accionm"  value="Limpiar" />
@@ -207,6 +214,8 @@ print_r($_POST);*/
 <input name="ref" type="hidden" value="<?php echo $_POST['ref']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 </form>
+</div>
+
 <br>
 <?php 
 

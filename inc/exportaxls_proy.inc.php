@@ -59,8 +59,6 @@ $titulo='FacultadIngenieria';
 $texto='Content-Disposition: attachment;filename="proyectos_' . date("Ymd-His") . "_" . $titulo . '.xls"';
 }
 
-	
-	
 header($texto);
 
 ?>
@@ -68,8 +66,8 @@ header($texto);
 
 <table border="1">
   <tr>
-    <th scope="col">Cantidad</th>
-    <th scope="col">Descripción</th>
+    <th scope="col">Nombre Proyecto</th>
+    <th scope="col">Objetivo General</th>
     <th scope="col">Unitario (USD)</th>
     <th scope="col">Total(USD)</th>
     <th scope="col">Año</th>
@@ -83,8 +81,8 @@ header($texto);
 for($i=0;$i<count($renglon_xls);$i++){
 ?>
   <tr>
-    <td><?php echo $renglon_xls[$i]['cant']; ?></td>
-    <td><?php echo $renglon_xls[$i]['descripcion']; ?></td>
+    <td><?php echo $renglon_xls[$i]['nombre_proy']; ?></td>
+    <td><?php echo $renglon_xls[$i]['Objetivo General']; ?></td>
     <td><?php echo $renglon_xls[$i]['costo']; ?></td>
     <td><?php echo $total=$renglon_xls[$i]['costo']*$renglon_xls[$i]['cant']; ?></td>
     <td><?php echo $renglon_xls[$i]['plazo']; ?></td>

@@ -121,7 +121,9 @@ if ($_REQUEST['accion']=='nuevo'){
 //print_r($_POST);?>
 <br>
 <br>
-<form action="../inc/procesaeq.inc.php" method="post" name="form_edita">
+<div class=formulario>
+	
+<form action="../inc/procesaeq.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
 <table cellpadding="2" class="formulario">
 <tr>
       <td align="right">Recursos de cómputo</td>
@@ -183,11 +185,11 @@ if ($_REQUEST['accion']=='nuevo'){
     </tr>
   <tr>
 	 <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
-	 <td ><input type="file" name="file" id="file"/></td>
+	 <td ><input type="file" name="file" id="file"/><a href="<?php echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
     <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
     <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </td>
-  </tr>
+	</tr>
   <tr>
     <td colspan="4" align="right">
     <input type="submit" name="accionm" value="Guardar" />
@@ -203,7 +205,9 @@ if ($_REQUEST['accion']=='nuevo'){
 <input name="id_nec" type="hidden" value="<?php echo $_POST['id_nec']; ?>" />
 <input name="ref" type="hidden" value="<?php echo $_POST['ref']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
+<input name ="ruta_evidencia" type="hidden" value="<?php echo $_POST['ruta_evidencia']; ?>" />
 </form>
+</div>
 <?php 
 
 	}?>

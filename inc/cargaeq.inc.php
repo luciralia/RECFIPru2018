@@ -196,7 +196,7 @@ $datos = pg_query($con,$query);
                         <th width="10%">Prioridad</th>
                         <th width="14%">Año</th>
                         <th width="14%">Cotización:</th>
-						<th width="20%">Evidencia Actual</th>  
+						<th width="20%">Evidencia</th>  
                       </tr>          
 
 	                 <tr>
@@ -214,7 +214,7 @@ $datos = pg_query($con,$query);
                         <td align="left"><?php echo $lab_nec['id_prio']; $obj_req->getPrioridad($lab_nec['id_prio'],'descripcion');?></td>
                         <td align="left"><?php echo /*$lab_nec['plazo']; */ $obj_req->getPlazo($lab_nec['id_plazo'],'descripcion');?></td>
                         <td colspan="9" align="left"><?php echo $obj_cotiza->getCotiza($lab_nec['id_cotizacion']); ?></td>
-						<td colspan="12" align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td>
+						<td align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td>
                       </tr>
 					<tr>
     	                  <td colspan="9" align="left">&nbsp;</td>

@@ -194,7 +194,7 @@
     <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
 	
     	<ul>
-            <!--<li><a href="../view/inicio.html.php?mod=bit&lab=<?php echo $_GET['lab'];?>">Bit&aacute;cora de uso</a></li>	-->
+          
             <li><a href="../view/inicio.html.php?mod=servibf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
             <li><a href="../view/inicio.html.php?mod=servibp&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de mantenimiento preventivo interno</a></li>
     	</ul>

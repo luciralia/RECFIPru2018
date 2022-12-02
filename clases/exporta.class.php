@@ -31,6 +31,7 @@ function tblXls($idlab,$mod,$iddiv,$tipou){
 				
 		
 if ($tipou==9 && ($idlab!='' && $iddiv!='') ){
+	
 				$query="SELECT l.id_lab AS id_lab, em.id_evento AS id_evento, em.id_bitacora AS id_bitacora, em.tipo_mant AS tipo, em.fecha                 AS fregistro, em.tipo_falla AS falla, em.usuario_reporta AS reporta, em.fecha_salida AS fsalida, em.fecha_recepcion AS                 frecepcion, em.costo AS costo, em.fecha_prox_mant AS fprox, em.descripcion AS desc_serv, em.garantia AS garantia,                 bi.bn_desc AS bn_desc, bi.bn_marca AS marca, bi.bn_modelo AS modelo, bi.bn_serie AS serie, bi.bn_clave AS clave, modelo_procesador                 AS procesador, cantidad_procesador AS procesadores, velocidad AS velocidad, l.nombre AS laboratorio, dp.nombre AS departamento,                 dv.nombre AS division, u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, em.id_cotizacion AS                 id_cotizacion, em.ok AS sitio, em.tipo_serv, e.bn_id AS bn_id, em.semestre AS semestre, em.actividad AS actividad,                 em.supervisor AS supervisor, em.detecto AS detecto 
 				 FROM eventos_mantenimiento em, bitacora b, dispositivo e, bienes_inventario bi, laboratorios l, departamentos dp, divisiones                 dv, usuarios u 
 				 WHERE em.id_bitacora = b.id_bitacora 
@@ -94,10 +95,14 @@ AND " . $tiposerv ;
 	
 	else if ($mod=="eq"){
 
-				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
-				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				$query = "SELECT DISTINCT ne.id_nec, nomb_recurso,cant,ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,cto_unitario, ref ,ruta_evidencia
+				FROM necesidades_equipo ne,cat_recursos_equipo cre,nec_evid nev,evidencia e,laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
 				WHERE ne.id_lab=l.id_lab 
+				AND cre.id_recurso=ne.id_recurso
+				AND nev.id_lab=ne.id_lab
+				AND nev.id_nec=ne.id_nec
 				AND l.id_dep=de.id_dep 
+				AND e.id_evidencia=nev.id_evidencia
 				AND de.id_div=dv.id_div 
 				AND plazo=cpn.id 
 				AND justificacion=cjn.id
@@ -107,15 +112,68 @@ AND " . $tiposerv ;
      }
 	else if ($mod=="pryeb"){
 
-				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
-				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
-				WHERE ne.id_lab=l.id_lab 
-				AND l.id_dep=de.id_dep 
-				AND de.id_div=dv.id_div 
-				AND plazo=cpn.id 
-				AND justificacion=cjn.id
-				AND ne.id_lab=" . $idlab . 
-				"ORDER BY id_nec DESC";
+				$query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,objetivo_especifico,descripcion_proy,
+                beneficio,fecha,ruta_evidencia_a
+                FROM proy p
+                LEFT JOIN proyecto_nec pn
+                ON p.id_proy=pn.id_proy
+LEFT JOIN proy_evid_actual pea
+ON pea.id_proy=p.id_proy 
+LEFT JOIN evidencia_actual ea
+ON ea.id_evid_actual=pea.id_evid_actual
+LEFT JOIN proyecto_criterio pc
+ON pc.id_proy=pn.id_proy
+LEFT JOIN criterio c
+ON c.id_criterio=pc.id_criterio
+LEFT JOIN necesidades_equipo ne
+ON ne.id_nec=pn.id_nec
+LEFT JOIN nec_evid nec
+ON nec.id_nec=ne.id_nec
+LEFT JOIN evidencia e
+ON nec.id_evidencia=e.id_evidencia
+AND ne.id_lab=pn.id_lab
+LEFT JOIN cotizaciones ct
+ON ct.id_cotizacion=ne.id_cotizacion 
+LEFT JOIN laboratorios l
+ON l.id_lab=ne.id_lab
+LEFT JOIN departamentos de
+ON de.id_dep=l.id_dep
+LEFT JOIN divisiones dv
+WHERE
+ ne.id_lab=" . $idlab . 
+"ORDER BY id_nec DESC";
+		
+		
+		SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
+objetivo_especifico,descripcion_proy,
+beneficio,fecha,ruta_evidencia_a
+FROM proy p
+LEFT JOIN proyecto_nec pn
+ON p.id_proy=pn.id_proy
+LEFT JOIN proy_evid_actual pea
+ON pea.id_proy=p.id_proy 
+LEFT JOIN evidencia_actual ea
+ON ea.id_evid_actual=pea.id_evid_actual
+LEFT JOIN proyecto_criterio pc
+ON pc.id_proy=pn.id_proy
+LEFT JOIN criterio c
+ON c.id_criterio=pc.id_criterio
+LEFT JOIN necesidades_equipo ne
+ON ne.id_nec=pn.id_nec
+LEFT JOIN nec_evid nec
+ON nec.id_nec=ne.id_nec
+LEFT JOIN evidencia e
+ON nec.id_evidencia=e.id_evidencia
+AND ne.id_lab=pn.id_lab
+LEFT JOIN cotizaciones ct
+ON ct.id_cotizacion=ne.id_cotizacion 
+LEFT JOIN laboratorios l
+ON l.id_lab=ne.id_lab
+LEFT JOIN departamentos de
+ON de.id_dep=l.id_dep
+LEFT JOIN divisiones dv
+ON dv.id_div=de.id_div
+WHERE dv.id_div=
 
      }
 

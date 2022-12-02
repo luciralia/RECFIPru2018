@@ -120,12 +120,12 @@ function tblProy($idlab,$iddiv)
 			    $combo3=",";
 			    $combo4=")";
 			   
-			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td><input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" /></td><td>'.$combocal->cmbcal($cal,$j).'</td></tr>';
+			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td><input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" />'.$combocal->cmbcal($cal,$j);
 			    //$salida.='<tr><td>'. $datosc['texto_criterio']. '</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td> <input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" /><td>'.$combocal->cmbcal($cal);
 				//$salida.='<tr><td>'. $datosc['texto/td><td>_criterio']. '</td> <td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/> </td><td>'.$combocal->cmbcal($id_cal,$j).'</td></tr>';
 				$j++;
 			}
-			$salida.='  <input name="j" type="hidden" value="' .$j. '" />';
+			$salida.='<input name="j" type="hidden" value="' .$j. '" />';
 			echo $salida;
 	}
 	
@@ -176,6 +176,7 @@ function tblProy($idlab,$iddiv)
             ON ne.id_lab=pn.id_lab
             AND ne.id_nec=pn.id_nec
             WHERE pn.id_lab=" . $idlab;
+		echo $query;
 		
 		 $result_opc = pg_query($query) or die('Hubo un error con la base de datos');
 		
