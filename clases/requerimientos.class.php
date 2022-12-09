@@ -277,7 +277,7 @@ function cmbcal($idcalif,$i)
 						//$j++;
 						}
 				
-				$salida.='<input name="j" type="hidden" value="' .$j. '" />';
+				//$salida.='<input name="j" type="hidden" value="' .$j. '" />';
 				
 				//	return $salida;
 					

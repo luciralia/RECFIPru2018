@@ -9,8 +9,8 @@ $combousu= new laboratorios();
 $comboproy= new proyecto();
 
 
-//echo 'valores en evaluarproy', print_r($_POST);
-//echo 'valores en editaproy', print_r($_REQUEST);
+/*echo 'valores en evaluarproy', print_r($_POST);
+echo 'valores en editaproy', print_r($_REQUEST);*/
 
 $query="
 SELECT DISTINCT p.id_proy,c.id_criterio
@@ -75,13 +75,12 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
                         
                       </tr>          
                       <tr>
-                        
                         <td align="left"><?php echo $_REQUEST['nombre_proy'];?></td>
                         <td align="left"><?php echo $_REQUEST['objetivo_general'];?></td>
                         <td align="left"><?php echo $_REQUEST['objetivo_especifico'];?></td>
                         <td align="left"><?php echo $_REQUEST['descripcion_proy'];?></td>
                         <td align="left"><?php echo $_REQUEST['beneficio'];?></td>
-                        <td align="left"><?php echo $_REQUEST['id_evidencia']; ?></td>
+                        <td align="left"><a href="<?php echo $_REQUEST['ruta_evidencia_a']; ?>"target="_blank"><?php echo substr($_REQUEST['ruta_evidencia_a'],strpos($_REQUEST['ruta_evidencia_a'],'_')+12);?></a></td>
                         <td align="left"><?php echo $calum; ?></td>
 				        <td align="left"><?php echo $cprof; ?></td>
 				        <td align="left"><?php echo $cinvest; ?></td>
@@ -89,34 +88,28 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 				        <td align="left"><?php echo $nprod; ?></td>
 					</tr>
 		
-    <tr>
+      <tr>
        <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
        <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      
        <td colspan="15"> <?php $combonec->selnecproy($_POST['id_proy']); ?></td>
-    </tr>
-	    <tr>
-     
-        <td >
-				<?php $comboproy->califcrit($_POST['id_proy']); ?> </td>
-	    </tr> 
-    
-		 
+      </tr>
+	   <tr>
+				<?php $comboproy->califcrit($_POST['id_proy']); ?> 
+		</tr>  
     <tr>
        <td colspan="4" align="right">
        <input type="submit" name="accionn" value="Guardar" />
        <input type="reset" name="accionn"  value="Limpiar" />
-	   <input type="submit" name="accionn" value="Cancelar" /></td>
+	   <input type="submit" name="accionn" value="Cancelar" />
+	   </td>
     </tr>
    
-
-
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 <input name="id_proy" type="hidden" value="<?php echo $_POST['id_proy']; ?>" />
 
 </form>
-<br>
-<br>
+
+
 </div>

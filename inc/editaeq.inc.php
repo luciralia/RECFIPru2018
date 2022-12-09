@@ -83,8 +83,6 @@ if ($_REQUEST['accion']=='nuevo'){
     <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8"></textarea></td>-->
   </tr>
  
- 
-   
   <tr>
 	 <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
 	 <td ><input type="file" name="file" id="file"/></td>

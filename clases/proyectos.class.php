@@ -106,10 +106,10 @@ function tblProy($idlab,$iddiv)
                 ON pn.id_proy=pc.id_proy";
 		
 		$result_crit = pg_query($query) or die('Hubo un error con la base de datos');
-		$salida='<table class="equipob" width="80%" border="0" cellpadding="20"><br><tr><th>Criterio</th><th>Justificación</th><th>Calificación</th></tr>'; 
+		$salida='<table class="equipob" width="80%" border="0" cellpadding="40"><br><tr><th>Criterio</th><th>Justificación</th><th>Calificación</th></tr>'; 
 		
 		$j=1;
-	
+	     $etiq='poner';
 		 while ($datosc = pg_fetch_array($result_crit))
 		   {
 			    $nombrechk="id_justif_".$j;
@@ -119,13 +119,14 @@ function tblProy($idlab,$iddiv)
 			    $combo1="->(";
 			    $combo3=",";
 			    $combo4=")";
+			    //<input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" />
 			   
-			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td><input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" />'.$combocal->cmbcal($cal,$j);
+			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td>'.$combocal->cmbcal($cal,$j). '</td></tr>';//$combocal->cmbcal($cal,$j).'</td></tr>';
 			    //$salida.='<tr><td>'. $datosc['texto_criterio']. '</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td> <input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" /><td>'.$combocal->cmbcal($cal);
-				//$salida.='<tr><td>'. $datosc['texto/td><td>_criterio']. '</td> <td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/> </td><td>'.$combocal->cmbcal($id_cal,$j).'</td></tr>';
+				
 				$j++;
 			}
-			$salida.='<input name="j" type="hidden" value="' .$j. '" />';
+			$salida.='<input name="j" type="hidden" value="' .$j. '" /><br>';
 			echo $salida;
 	}
 	
@@ -140,14 +141,15 @@ function tblProy($idlab,$iddiv)
                             AND ne.id_nec=pn.id_nec
                             LEFT JOIN nec_evid nev
                             ON nev.id_lab=ne.id_lab
+							AND nev.id_nec=ne.id_nec
                             LEFT JOIN evidencia e
                             ON e.id_evidencia=nev.id_evidencia
 							WHERE p.id_proy=".$idproy ;
 		
 		 $result_opc = pg_query($query) or die('Hubo un error con la base de datos');
 		
-		$salida='<table class="equipob"><br><tr><th>Requerimientos</th><th>prioridad</th><th>plazo</th><th>evidencia</th></tr>'; 
-		   
+		$salida='<table class="equipob"><br><tr><th>Requerimientos</th><th>Prioridad</th><th>Plazo</th><th>Evidencia</th></tr>'; 
+	
 		$j=1;
 		
 		 while ($datosc = pg_fetch_array($result_opc))
@@ -155,12 +157,12 @@ function tblProy($idlab,$iddiv)
 			    $nombrechk="id_nec_".$j;
 			   
 				 $salida.='<tr><td >'. $datosc['descripcion']. '</td><td> '. $datosc['prioridad']. 		
-			      '</td><td> ' .$datosc['plazo'].'</td><td><a href= ' .$datosc['ruta_evidencia'].' 
-				  target="_blank"></a>
-				  </tr>';
+			      '</td><td> ' .$datosc['plazo'].'</td><td><a href="'. $datosc['ruta_evidencia'].'"target="_blank">'. substr($datosc['ruta_evidencia'],strpos($datosc['ruta_evidencia'], "'_'")+19).'</a></td></tr>';
 				
 				$j++;
 				}
+		
+		 
 				$salida.='</table> <input name="j" type="hidden" value="' .$j. '" />';
 				echo $salida;
 	}

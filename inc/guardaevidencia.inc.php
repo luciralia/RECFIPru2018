@@ -84,7 +84,7 @@ echo "Tipo a: " . $_FILES["file"]["type"] . "<br />";
 					   }
 					 else
 					   {
-						   echo $query;
+						echo $query;
 					    $result = pg_query ($con, $query) or die('No se pudo insertar');
 						$queryaux="SELECT MAX(id_proy_evid) as maxproye FROM proy_evid_actual";
                         $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
