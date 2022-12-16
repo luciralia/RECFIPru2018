@@ -106,10 +106,12 @@ function tblProy($idlab,$iddiv)
                 ON pn.id_proy=pc.id_proy";
 		
 		$result_crit = pg_query($query) or die('Hubo un error con la base de datos');
-		$salida='<table class="equipob" width="80%" border="0" cellpadding="40"><br><tr><th>Criterio</th><th>Justificación</th><th>Calificación</th></tr>'; 
+		$salida='<table class="equipob" width="100%" border="0" cellpadding="40"><br><tr><th>Criterio</th><th>Justificación</th><th>Calificación</th></tr>'; 
+		
+		
 		
 		$j=1;
-	     $etiq='poner';
+	     
 		 while ($datosc = pg_fetch_array($result_crit))
 		   {
 			    $nombrechk="id_justif_".$j;
@@ -121,12 +123,13 @@ function tblProy($idlab,$iddiv)
 			    $combo4=")";
 			    //<input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" />
 			   
-			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td>'.$combocal->cmbcal($cal,$j). '</td></tr>';//$combocal->cmbcal($cal,$j).'</td></tr>';
+			    $salida.='<tr><td>'.$datosc['texto_criterio'].'</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td>'.$combocal->cmbcal($cal,$j).'</td>';
+			   //quite /tr$combocal->cmbcal($cal,$j).'</td></tr>';
 			    //$salida.='<tr><td>'. $datosc['texto_criterio']. '</td><td><input name="'. $nombrechk .'" type="text" id="justif" tabindex="8" size="50"/></td><td> <input name="'. $nombrecrit .'" type="hidden" value="' .$j. '" /><td>'.$combocal->cmbcal($cal);
 				
 				$j++;
 			}
-			$salida.='<input name="j" type="hidden" value="' .$j. '" /><br>';
+			$salida.='<input name="j" type="hidden" value="' .$j. '" />';
 			echo $salida;
 	}
 	

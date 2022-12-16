@@ -62,7 +62,7 @@ if ($_REQUEST['accion']=='nuevo'){
       <!--<td width="151" align="right" >Descripci&oacute;n detallada</td>
       <td colspan="3"><input type="text"  name="descripcion_proy"  id="descripcion_proy" tabindex="8" size="50" maxlength="200"/></td>-->
       <td align="right">Descripción detallada</td>
-      <td><textarea name="descripcion_proy" id="descripcion_proy" rows="10" cols="50">Escribe aquí la descripción detallada del proyecto</textarea></td>
+      <td><textarea name="descripcion_proy" id="descripcion_proy" rows="10" cols="50" placeholder="Escribe la descripción detallada del proyecto"></textarea></td>
   </tr>
 	<tr>
        <td align="right">Necesidades</td>
@@ -71,7 +71,7 @@ if ($_REQUEST['accion']=='nuevo'){
   
   <tr>
      <td align="right">Beneficios esperados</td>
-     <td><textarea name="beneficio" id="beneficio" rows="10" cols="50">Escribe aquí los beneficios que se esperan conseguir</textarea></td>
+     <td><textarea name="beneficio" id="beneficio" rows="10" cols="50" placeholder="Escribe aquí los beneficios que se esperan conseguir"></textarea></td>
   </tr>
   <tr>
 	  <td >Cantidad de miembros de la comunidad universitaria beneficiados</td> 

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link rel="stylesheet" type="text/css" href="css/styles_general.css">
+<link rel="stylesheet" type="text/css" href="css/styles_general1.css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="icon" type="image/gif" href="images/favicon_cpd.gif" />
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
@@ -45,9 +45,9 @@ $navegador=getBrowser($_SERVER['HTTP_USER_AGENT']);
 <?php //require_once('inc/encabezado.inc.php');  ?>
 
 
-<table width="1024" border="0" cellpadding="1" class="principal">
+<table width="auto" border="0" cellpadding="1" class="principal">
   <tr>
-    <td><img src="images/banner_principalsin.jpg" width="1024" height="103" /></td>
+    <td><img src="images/banner_principalsin.jpg" width="auto" height="103" /></td>
   </tr>
   
    <td>&nbsp;</td> <td>&nbsp;</td>

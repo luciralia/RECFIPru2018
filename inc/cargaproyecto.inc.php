@@ -9,6 +9,7 @@ $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 //$obj_req= new Requerimiento();
 $obj_proy=new Proyecto();
+$cant_equi=new Proyecto();
 
 //$logger->putLog(31,2)
 
@@ -31,10 +32,6 @@ LEFT JOIN proy_evid_actual pea
 ON pea.id_proy=p.id_proy 
 LEFT JOIN evidencia_actual ea
 ON ea.id_evid_actual=pea.id_evid_actual
-LEFT JOIN proyecto_criterio pc
-ON pc.id_proy=pn.id_proy
-LEFT JOIN criterio c
-ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
 LEFT JOIN nec_evid nec
@@ -52,7 +49,7 @@ LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE ne.id_lab=" . $_GET['lab'] . 
 " ORDER BY id_proy DESC";
-	echo 'consulta 1';
+	
 	
 //}else if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']=='') ){
 	
@@ -91,10 +88,6 @@ LEFT JOIN proy_evid_actual pea
 ON pea.id_proy=p.id_proy 
 LEFT JOIN evidencia_actual ea
 ON ea.id_evid_actual=pea.id_evid_actual
-LEFT JOIN proyecto_criterio pc
-ON pc.id_proy=pn.id_proy
-LEFT JOIN criterio c
-ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
 LEFT JOIN nec_evid nec
@@ -126,10 +119,6 @@ LEFT JOIN proy_evid_actual pea
 ON pea.id_proy=p.id_proy 
 LEFT JOIN evidencia_actual ea
 ON ea.id_evid_actual=pea.id_evid_actual
-LEFT JOIN proyecto_criterio pc
-ON pc.id_proy=pn.id_proy
-LEFT JOIN criterio c
-ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
 LEFT JOIN nec_evid nec
@@ -161,10 +150,6 @@ LEFT JOIN proy_evid_actual pea
 ON pea.id_proy=p.id_proy 
 LEFT JOIN evidencia_actual ea
 ON ea.id_evid_actual=pea.id_evid_actual
-LEFT JOIN proyecto_criterio pc
-ON pc.id_proy=pn.id_proy
-LEFT JOIN criterio c
-ON c.id_criterio=pc.id_criterio
 LEFT JOIN necesidades_equipo ne
 ON ne.id_nec=pn.id_nec
 LEFT JOIN nec_evid nec
@@ -226,7 +211,7 @@ $datos = pg_query($con,$query);
  <?php } ?> 
 
      
-<?php
+<?php  //Hacer funcion por cada proy y devuelva total equipos
 	
  $datos = pg_query($con,$query);
 	
@@ -236,6 +221,7 @@ $datos = pg_query($con,$query);
 
 		while ($lab_proy = pg_fetch_array($datos, NULL, PGSQL_ASSOC)) 
 			 { 
+				 
 
 	?>              <table class="equipo"  width="100%" border="0" cellpadding="5">
                       <tr align="left">
@@ -261,7 +247,7 @@ $datos = pg_query($con,$query);
                         <?php // } ?>
                         <td align="left"><?php echo $lab_proy['objetivo_especifico'];?></td>
                         <td align="left"><?php echo $lab_proy['descripcion_proy'];?></td>
-                        <td align="left"><?php echo $lab_proy['num_equipo'];?></td>
+                        <td align="left"><?php echo $cantproy;?></td>
                         <td align="left"><?php echo $lab_proy['beneficio'];?></td>
                         <td align="left"><a href="<?php echo $lab_proy['ruta_evidencia_a']; ?>" target="_blank"><?php echo substr($lab_proy['ruta_evidencia_a'],strpos($lab_proy['ruta_evidencia_a'],'_')+12);?></a></td>
 				         <td align="left"><?php echo $lab_proy['fecha']; ?></td>
@@ -300,9 +286,8 @@ $datos = pg_query($con,$query);
 ?>
   
 <?php if ($_SESSION['tipo_usuario']==9 ){ ?>
-<div style="text-align: right"> <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div > <a href="<?php //echo $action1 . '&accion=nuevo';?>"></a></div></div>
+<div style="text-align: right"> <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div > <a href="<?php //echo $action1 . '&accion=nuevo';?>"></a></div>
 <?php } 
-
 
 
 ?>
@@ -317,7 +302,7 @@ $datos = pg_query($con,$query);
 	$obj_proy->tblProy($_GET['lab'],$_REQUEST['div']);
 	?>
 	</form>
-    <br />
+    <br/>
    
 	 
 <?php } 

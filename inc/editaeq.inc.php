@@ -14,7 +14,37 @@ function cargajust() {
 			 
 	 }
 	
+function validarRango(elemento){
+  var numero = parseInt(elemento.value,10);
 	
+  //Validamos que se haya ingresado solo numeros
+  if(isNaN(numero)){
+    alert('Ingrese solo números.');
+    //elemento.focus();
+    //elemento.select();
+    return false;
+  }
+  //Validamos que se cumpla el rango
+if (document.getElementById("id_recurso").value==1 && (numero<0 || numero>450))
+ {
+    alert('Al menos 450 equipos de la configuración CatálogoBase-2022-002');
+   // elemento.focus();
+    return false;
+  }else if (document.getElementById("id_recurso").value==2 && (numero<0 || numero>192))
+ {
+    alert('Al menos 192 equipos de la configuración CatálogoBase-2022-003');
+   // elemento.focus();
+    return false;
+  }else if (document.getElementById("id_recurso").value==3 && (numero<0 || numero>70))
+ {
+    alert('Al menos 70 equipos de la configuración CatálogoBase-2022-008');
+   // elemento.focus();
+    return false;
+  }
+	  
+  return true;
+}
+
 
 </script>	 
 	 
@@ -43,18 +73,16 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
       <td width="151" align="right" >Cantidad de equipos</td>
-      <td width="857" colspan="3" ><input name="cant" type="text" id="cant" tabindex="1" size="4"></td>
+      <td width="857" colspan="3" ><input name="cant" type="text" id="cant" tabindex="1" size="4"  onblur="return validarRango(this);"></td>
    </tr>
    <tr>
       <td align="right">Descripción</td>
-      <td><textarea name="descripcion" id="descripcion" rows="10" cols="50">Escribe aquí la descripción detallada para que se utilizarán los equipos</textarea></td>
-      <!--<td align="right">Descripción</td>
-      <td colspan="3"> <input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" /></td>
-      <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3"></textarea></td>-->
+      <td><textarea name="descripcion" id="descripcion" rows="10" cols="50" placeholder="Escribe aquí la descripción detallada para que se utilizarán los equipos"></textarea></td>
+      
    </tr>
   <tr>
       <td align="right">Costo Unitario</td>
-      <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="11" /> 
+      <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="11"/> 
     &nbsp;<span style="color: #900; font-size: x-small;">(El costo debe ser expresado en dólares americanos USD)</span></td>
   </tr>
   <tr>
@@ -78,9 +106,8 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
       <td align="right">Justificación técnica</td>
-      <td><textarea name="impacto" id="impacto" rows="10" cols="50">Escribe aquí la justificación</textarea></td>
-      <!--<td colspan="3"><input name="impacto" type="text" id="impacto" tabindex="8" size="100" maxlength="400" /></td>
-    <td colspan="3"> <textarea name="impacto" id="impacto" tabindex="8"></textarea></td>-->
+      <td><textarea name="impacto" id="impacto" rows="10" cols="50"  placeholder="Escribe aquí la justificación técnica"></textarea></td>
+      
   </tr>
  
   <tr>

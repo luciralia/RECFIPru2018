@@ -165,7 +165,7 @@
     
     <?php  ?>
 	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
-	<li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $clase;?>>Equi</a></li>
+	<li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $clase;?>>Equipamiento</a></li>
 	<?php ?>
 	
     <!-- Botón cotizaciones-->

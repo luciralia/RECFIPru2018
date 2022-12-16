@@ -89,14 +89,22 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 					</tr>
 		
       <tr>
-       <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-       <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-       <td colspan="15"> <?php $combonec->selnecproy($_POST['id_proy']); ?></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td colspan="15"> <?php $combonec->selnecproy($_POST['id_proy']); ?></td>
       </tr>
-	   <tr>
-				<?php $comboproy->califcrit($_POST['id_proy']); ?> 
-		</tr>  
-    <tr>
+      <tr>
+        <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      </tr>
+      <?php $comboproy->califcrit($_POST['id_proy']); ?> 
+		
+      <tr>
+       <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+       <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+       <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      </tr>
+     
+	  <tr> 
        <td colspan="4" align="right">
        <input type="submit" name="accionn" value="Guardar" />
        <input type="reset" name="accionn"  value="Limpiar" />
@@ -109,7 +117,9 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 <input name="id_proy" type="hidden" value="<?php echo $_POST['id_proy']; ?>" />
 
-</form>
 
+	</table>
+	<br><br>
+</form>
 
 </div>

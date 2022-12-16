@@ -19,7 +19,9 @@ require_once('../config.php');?>
 
 <body>
 <table cellpadding="1" class="principal">
+ 
   <tr>
     <td><div class="encabezado"><img src="../images/banner_principalsin.jpg" width="1024" height="103" /></div></td>
+    
   </tr>
 
