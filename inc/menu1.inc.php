@@ -151,15 +151,9 @@
 
 	<?php $clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
     <?php //$actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
-	    <li><a href="../view/inicio.html.php?mod=pry&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Proyectos</a>
-	     <ul>
-             <?php if($_SESSION['tipo_usuario']==9){ ?>
-             <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Editar/borrar</a></li>
-             <?php } ?>
-             <li><a href="../view/inicio.html.php?mod=pryv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Validar</a></li>
-            
-		 </ul>
-		 </li>
+	    <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Proyectos</a>
+	   </li>
+             
 	<?php }?>
 	    <!-- Boton Equipamiento -->
     

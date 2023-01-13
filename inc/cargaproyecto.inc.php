@@ -48,7 +48,7 @@ ON de.id_dep=l.id_dep
 LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE ne.id_lab=" . $_GET['lab'] . 
-" ORDER BY id_proy DESC";
+" ORDER BY id_proy ASC";
 	
 	
 //}else if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']=='') ){
@@ -105,7 +105,7 @@ LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE dv.id_div=" . $_GET['div'] . 
 " ORDER BY id_proy DESC";	
-echo 'consulta 2';	
+
 } 
 else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
@@ -136,7 +136,7 @@ LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE dv.id_div=" . $_GET['div'] . 
 " ORDER BY id_proy DESC";
-echo 'consulta 3';	
+
 	
 } else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 	
@@ -166,9 +166,9 @@ ON de.id_dep=l.id_dep
 LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 ORDER BY id_proy DESC";	
-	echo 'consulta 4';
+	//echo 'consulta 4';
 }
-//echo 'query'. $query;
+//echo 'query cargaproy'. $query;
   ?>
 
 <div class="block" id="necesidades_content">   
@@ -266,13 +266,14 @@ $datos = pg_query($con,$query);
 	        <?php
 				foreach ($lab_proy as $campo => $valor) {
 				   echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
+					
 				}
 			?>
-			<!--</form>22/nov-->
+			</form>
 			
 	<?php	} ?>
 		<!--</table>--> 
-		 <br>
+		 
 			<?php }else { ?>
              <br>
              <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -281,31 +282,8 @@ $datos = pg_query($con,$query);
 		<?php }
 		//$_SESSION['id_usuario']=$usuario['id_usuario'];
 
- } else  if ($_GET['mod']=='pryv' ){ 
-	 $action='../inc/excelproyv.inc.php';
-?>
-  
-<?php if ($_SESSION['tipo_usuario']==9 ){ ?>
-<div style="text-align: right"> <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div > <a href="<?php //echo $action1 . '&accion=nuevo';?>"></a></div>
-<?php } 
-
-
-?>
-
- <form action="<?php echo $action; ?>" method="post" name="servbit" >
-    <br>
-    <br>
-     
-	<input name="enviar" type="submit" value="Generar bitácora" /><br>
-	<?php
-	
-	$obj_proy->tblProy($_GET['lab'],$_REQUEST['div']);
-	?>
-	</form>
-    <br/>
-   
-	 
-<?php } 
+ } 
+ 
 ?>
 
   </div>

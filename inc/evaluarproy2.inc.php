@@ -9,11 +9,11 @@ $combousu= new laboratorios();
 $comboproy= new proyecto();
 
 
-/*echo 'valores en evaluarproy', print_r($_POST);
-echo 'valores en editaproy', print_r($_REQUEST);*/
+echo 'valores en evaluarproy', print_r($_POST);
+echo 'valores en editaproy', print_r($_REQUEST);
 
 $query="
-SELECT DISTINCT p.id_proy,c.id_criterio
+SELECT DISTINCT p.id_proy,c.id_criterio,pc.id_calif
 FROM proy p
 LEFT JOIN proyecto_nec pn
 ON p.id_proy=pn.id_proy
@@ -38,6 +38,8 @@ LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
 WHERE p.id_proy=" . $_POST['id_proy'];
 
+echo $query;
+
 $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM proy p 
             JOIN cat_impacto i
 			ON p.id_impacto=i.id_impacto
@@ -60,8 +62,8 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 <!--<table cellpadding="2" class="formulario">-->
 <form action="../inc/guardarproy.inc.php" method="post" name="form_nuevo" class="formul">
 	<table class="equipo"  width="100%" border="0" cellpadding="5">
-     <tr align="left">		
-   <th width="10%">Nombre</th>
+    <tr align="left">		
+    <th width="10%">Nombre</th>
                         <th width="15%">Objetivo General</th>
                         <th width="15%">Objetivo Espec&iacute;fico</th>
                         <th width="15%">Descripci&oacute;n detallada</th>
@@ -89,29 +91,47 @@ $queryproy="SELECT cantalum,cantprof,cantinvest,nomb_impacto,nomb_producto FROM 
 					</tr>
 		
       <tr>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
         <td colspan="15"> <?php $combonec->selnecproy($_POST['id_proy']); ?></td>
       </tr>
       <tr>
         <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
       </tr>
-      <?php $comboproy->califcrit($_POST['id_proy']); ?> 
+      <?php 
+		$queryc="SELECT DISTINCT c.id_criterio as criterio, texto_criterio, pc.id_calif,justif
+                FROM  criterio c
+                LEFT JOIN proyecto_criterio pc
+                ON c.id_criterio=pc.id_criterio
+                LEFT JOIN califica cl
+                ON cl.id_calif=pc.id_calif
+                LEFT  JOIN proyecto_nec pn
+                ON pn.id_proy=pc.id_proy
+                LEFT JOIN proy p
+                ON p.id_proy=pc.id_proy
+		        WHERE p.id_proy=". $_POST['id_proy'];
 		
+		$resultx=@pg_query($con,$queryc) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+		$inventario= pg_num_rows($resultx); 
+	
+	    if ($inventario!=0 )
+		    $comboproy->califcrit($_POST['id_proy']); 
+		else
+		    $comboproy->muestracrit();?>	
       <tr>
-       <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-       <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-       <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+       <td >&nbsp;</td>
+       <td >&nbsp;</td>
+       <td >&nbsp;</td>
       </tr>
-     
-	  <tr> 
-       <td colspan="4" align="right">
-       <input type="submit" name="accionn" value="Guardar" />
-       <input type="reset" name="accionn"  value="Limpiar" />
-	   <input type="submit" name="accionn" value="Cancelar" />
-	   </td>
-    </tr>
-   
+
+       <tr>
+          <td>&nbsp;</td> 
+          <td style="text-align: right">
+             <input type="submit" name="accionn" value="Guardar" />
+		     <input type="reset" name="accionn"  value="Limpiar" /></td>
+		  <td style="text-align: right"><input type="submit" name="accionn" value="Cancelar" /></td>
+		</tr>
+
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />

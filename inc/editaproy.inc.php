@@ -30,11 +30,9 @@ $combousu= new laboratorios();
 $combo= new proyecto();
 
 
-
-
-
 echo 'valores en editaproy', print_r($_POST);
 echo 'valores en editaproy', print_r($_REQUEST);
+
 if ($_REQUEST['accion']=='nuevo'){  
 
 ?>
@@ -122,11 +120,12 @@ if ($_REQUEST['accion']=='nuevo'){
 <input name="id_proy" type="hidden" value="<?php echo $_POST['id_proy']; ?>" />
 
 </form>
+<br>
+<br>
 </div>
 <?php 	} else {
-
-/*echo "Edicion de registro de material </br>";
-print_r($_POST);*/
+	
+     echo 'proy en edita:'. $_POST['id_proy'];
 ?>
 	
 <br>
@@ -196,13 +195,12 @@ print_r($_POST);*/
      </tr>  
    <tr>
 	 <td align="right"><label for="file">Evidencia  de los espacios (.pdf):</label></td>
-	 <td ><input type="file" name="file" id="file"/></td>
+	 <td><input type="file" name="file" id="file"/></td>
      <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
          <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
     </td>
   </tr>
-	
-    <td colspan="4" align="right">
+	<td colspan="4" align="right">
     <input type="submit" name="accionm" value="Guardar" />
     <input type="reset" name="accionm"  value="Limpiar" />
 	<input type="submit" name="accionm" value="Cancelar" /></td>
