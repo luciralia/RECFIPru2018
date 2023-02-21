@@ -279,6 +279,9 @@ print_r ($_SESSION);*/
      <tr>
         <td><label>No.de serie/etiqueta de servicio</label></td>
         <td><label><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" ></label></td>
+        <td colspan="1">&nbsp;</td>
+        <td><label>MAC</label></td>
+        <td><input name="mac" type="text" id="mac" tabindex="1" size="20" value="<?php echo $_POST['mac'];?>"></td>
      </tr>
      <tr>
         <td><label>No.Inventario UNAM</label></td>
