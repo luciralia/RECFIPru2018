@@ -280,8 +280,8 @@ print_r ($_SESSION);*/
         <td><label>No.de serie/etiqueta de servicio</label></td>
         <td><label><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" ></label></td>
         <td colspan="1">&nbsp;</td>
-        <td><label>MAC</label></td>
-        <td><input name="mac" type="text" id="mac" tabindex="1" size="20" value="<?php echo $_POST['mac'];?>"></td>
+        <td><label>Dirección MAC</label></td>
+        <td><input name="dir_mac" type="text" id="dir_mac" tabindex="1" size="20" value="<?php echo $_POST['dir_mac'];?>"></td>
      </tr>
      <tr>
         <td><label>No.Inventario UNAM</label></td>
@@ -705,7 +705,7 @@ print_r ($_SESSION);*/
          <td colspan="2">&nbsp;</td>
         <td><label>Versión </label></td>
      <?php if ($_POST['version_sist_oper']=='' ) { ?>
-    <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['so']; ?>"  required  ></label>< </td>
+    <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['so']; ?>"  required  ></label> </td>
      <?php } else {?>
      <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['version_sist_oper']; ?>"  required ></label> </td>
    <?php } ?>
@@ -784,7 +784,7 @@ print_r ($_SESSION);*/
    <br/>
    <br/>
   <tr>
-       <td colspan="3" align="center">
+        <td colspan="3" align="center">
         <input type="submit" name="accioned" value="Guardar" />
         <input type="reset" name="accione"  value="Limpiar" />
 	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab']."&div=" .$_REQUEST['div']?>

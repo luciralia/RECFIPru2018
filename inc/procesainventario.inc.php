@@ -97,8 +97,6 @@ $ultimo= pg_fetch_array($registrod);
 //$traeidmarca=pg_query($con,$querymarca);
 //$idmarca=pg_fetch_array($traeidmarca);
 
-
-
 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
 dispositivo_clave,usuario_final_clave,familia_clave,
 tipo_ram_clave,tecnologia_clave,resguardo_no_empleado,nombre_resguardo,
@@ -709,7 +707,7 @@ else
               $marca= pg_fetch_array($registrom);
 			
 if (isset($_POST['id_mem_ram'])){
-    $memram= "select cantidad_ram from cat_memoria_ram where id_mem_ram=" . $_POST['id_mem_ram'];	
+    $memram= "SELECT cantidad_ram FROM cat_memoria_ram WHERE id_mem_ram=" . $_POST['id_mem_ram'];	
    	$result = pg_query($memram) or die('Hubo un error con la base de datos cat_memoria_ram');
     $datosram=pg_fetch_array($result,NULL,PGSQL_ASSOC);	  
 }
@@ -728,8 +726,9 @@ $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_fin
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-licencia_ini='%s',licencia_fin='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d
+licencia_ini='%s',licencia_fin='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
+	
 	
 
 
@@ -748,9 +747,10 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,
                           date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),
 						  $_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
-						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza']);	
+						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);	
 						  
 echo $queryud;
+//actualiza número de MAC
 	
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en dispositivo: ' . pg_last_error());
 

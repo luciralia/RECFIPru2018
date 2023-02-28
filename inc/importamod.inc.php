@@ -823,7 +823,8 @@ if($size > 0){
               accesorios,garantiamanten,arquitectura ,
               estadobien,servidor,descextensa , 
               id_marca , marca, marca_esp,
-              id_mem_ram,importa,accesored,salidainternet,tipo_impresora,tipo_digitaliza)
+              id_mem_ram,importa,accesored,salidainternet,tipo_impresora,
+			  tipo_digitaliza)
 
 		      VALUES (%d,%d,%d,
 		           %d,%d,%d,
@@ -847,7 +848,8 @@ if($size > 0){
 				   '%s','%s','%s',  
 				   '%s','%s','%s',  
 				   %d,'%s','%s', 
-				   %d,%d,'%s','%s',%d,%d)";
+				   %d,%d,'%s','%s',%d,
+				   %d)";
 				   
                  $queryid=sprintf($strqueryd,$ultimo,$busca,$lab, 
                  $datosdec[0],$datosdec[1],$datosdec[2], 
