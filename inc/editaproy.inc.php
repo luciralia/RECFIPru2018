@@ -32,6 +32,7 @@ $combo= new proyecto();
 
 echo 'valores en editaproy', print_r($_POST);
 echo 'valores en editaproy', print_r($_REQUEST);
+echo 'valores en editaproy',print_r($_SESSION);
 
 if ($_REQUEST['accion']=='nuevo'){  
 
@@ -63,8 +64,8 @@ if ($_REQUEST['accion']=='nuevo'){
       <td><textarea name="descripcion_proy" id="descripcion_proy" rows="10" cols="50" placeholder="Escribe la descripción detallada del proyecto"></textarea></td>
   </tr>
 	<tr>
-       <td align="right">Necesidades</td>
-       <td colspan="3"><?php $combonec->selnecnew($_POST['id_nec'],$_REQUEST['lab']); ?></td>
+       <td align="right">Necesidades new</td>
+       <td colspan="3"><?php $combonec->selnecnew($_POST['id_nec'],$_REQUEST['lab'],$_REQUEST['div']); ?></td>
   </tr>
   
   <tr>

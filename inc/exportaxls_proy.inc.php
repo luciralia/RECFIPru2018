@@ -68,12 +68,13 @@ header($texto);
   <tr>
     <th scope="col">Nombre Proyecto</th>
     <th scope="col">Objetivo General</th>
-    <th scope="col">Unitario (USD)</th>
-    <th scope="col">Total(USD)</th>
-    <th scope="col">Año</th>
-    <th scope="col">Cotización</th>
-    <th scope="col">Motivo</th>
-    <th scope="col">Justificación</th>
+    <th scope="col">Objetivo Específico</th>
+    <th scope="col">Descripción</th>
+    <th scope="col">Beneficio</th>
+    <th scope="col">Cantidad Alumnos</th>
+    <th scope="col">Cantidad Profesores</th>
+    <th scope="col">Cantidad Investigadores</th>
+   
   </tr>
 <?php 
 
@@ -82,15 +83,17 @@ for($i=0;$i<count($renglon_xls);$i++){
 ?>
   <tr>
     <td><?php echo $renglon_xls[$i]['nombre_proy']; ?></td>
-    <td><?php echo $renglon_xls[$i]['Objetivo General']; ?></td>
-    <td><?php echo $renglon_xls[$i]['costo']; ?></td>
-    <td><?php echo $total=$renglon_xls[$i]['costo']*$renglon_xls[$i]['cant']; ?></td>
-    <td><?php echo $renglon_xls[$i]['plazo']; ?></td>
-    <td><?php echo $obj_cot->getCotiza($renglon_xls[$i]['id_cotizacion']); ?></td>
-    <td><?php echo $renglon_xls[$i]['motivo']; ?></td>
-    <td><?php echo $renglon_xls[$i]['justificacion']; ?></td>
+    <td><?php echo $renglon_xls[$i]['objetivo_general']; ?></td>
+    <td><?php echo $renglon_xls[$i]['objetivo_especifico']; ?></td>
+    <td><?php echo $renglon_xls[$i]['descripcion_proy']; ?></td>
+    <td><?php echo $renglon_xls[$i]['beneficio']; ?></td>
+    <td><?php echo $renglon_xls[$i]['cantalum']; ?></td>
+    <td><?php echo $renglon_xls[$i]['cantprof']; ?></td>
+    <td><?php echo $renglon_xls[$i]['cantinvest']; ?></td>
     
+    <!--<td><?php //echo $total=$renglon_xls[$i]['costo']*$renglon_xls[$i]['cant']; ?></td>-->
   </tr>
-
+    <!--<td><?php //echo $obj_cot->getCotiza($renglon_xls[$i]['id_cotizacion']); ?></td><td><?php //echo $renglon_xls[$i]['motivo']; ?></td>
+    <td><?php //echo $renglon_xls[$i]['justificacion']; ?></td>-->
 <?php } ?>
 </table>

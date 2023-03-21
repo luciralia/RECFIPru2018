@@ -202,10 +202,10 @@ function tblProy($idlab,$iddiv)
 				$salida.='</table> <input name="j" type="hidden" value="' .$j. '" />';
 				echo $salida;
 	}
-	/*Para validar*/
-	function selnecnew($idnec,$idlab){
-		
-		$query="SELECT id_nec, id_lab,descripcion FROM necesidades_equipo 
+	
+	function selnecnew($idnec,$idlab,$div){
+		/*Listar requerimientos disponibles de toda la Div*/
+		/*$query="SELECT id_nec, id_lab,descripcion FROM necesidades_equipo 
             WHERE id_lab=" . $idlab. "
             EXCEPT
             SELECT ne.id_nec,ne.id_lab,descripcion 
@@ -213,7 +213,21 @@ function tblProy($idlab,$iddiv)
             JOIN proyecto_nec pn
             ON ne.id_lab=pn.id_lab
             AND ne.id_nec=pn.id_nec
-            WHERE pn.id_lab=" . $idlab;
+            WHERE pn.id_lab=" . $idlab;*/
+		$query="SELECT ne.id_nec, ne.id_lab,descripcion FROM necesidades_equipo ne 
+                LEFT JOIN proyecto_nec pn 
+                ON ne.id_lab=pn.id_lab 
+                AND ne.id_nec=pn.id_nec 
+                LEFT JOIN laboratorios l
+                ON l.id_lab=ne.id_lab
+                LEFT JOIN departamentos dp
+                ON dp.id_dep=l.id_dep
+                LEFT JOIN divisiones dv
+                ON dv.id_div=dp.id_div
+                WHERE pn.id_proy IS NULL
+                AND dv.id_div=". $div;
+		
+		echo 'En selcnecnew', $query;
 		
 		$result_opc = pg_query($query) or die('Hubo un error con la base de datos');
 		
@@ -246,37 +260,40 @@ function tblProy($idlab,$iddiv)
 	
 	function selneced ($idnec,$idlab,$idproy){
 		
+			//Todos los requerimientos sin seleccionar de la div y además los del proyecto en edición
 			
-			//Permite elejir cualquier necesidad previamente 
-			$query="SELECT id_nec, id_lab,descripcion FROM necesidades_equipo 
-            WHERE id_lab=" . $idlab; /*."
-			EXCEPT 
-			SELECT ne.id_nec,ne.id_lab,descripcion 
-			FROM proy p
-            LEFT JOIN proyecto_nec pn
-            ON pn.id_proy=p.id_proy
-            LEFT JOIN necesidades_equipo ne
-            ON ne.id_lab=pn.id_lab
-            AND ne.id_nec=pn.id_nec
-			WHERE pn.id_lab=". $idlab;*/
-			
+			$query="SELECT ne.id_nec,ne.id_lab,descripcion FROM necesidades_equipo ne
+                    LEFT JOIN proyecto_nec pn
+                    ON ne.id_lab=pn.id_lab
+                    AND ne.id_nec=pn.id_nec
+                    WHERE pn.id_proy IS NULL
+				    UNION
+                    SELECT ne.id_nec,ne.id_lab,descripcion FROM necesidades_equipo ne
+                    JOIN proyecto_nec pn
+                    ON ne.id_lab=pn.id_lab
+                    AND ne.id_nec=pn.id_nec
+                    WHERE pn.id_proy=".$idproy;
+		
+		   // echo 'query de necesidades no elejidas mas las del proyecto para editar', $query;
+		
 		   $result_opc = pg_query($query) or die('Hubo un error con la base de datos');
+		
 		 // $salida='<table class="equipob"><br><br><tr><th>Requerimientos</th><th>Seleccionar</th></tr>'; 
 		  // $j=1;
 		
 		
-		   
-		   $querysel= "SELECT  ne.id_nec, pn.id_lab,descripcion
+		   $querysel= "SELECT  ne.id_nec,pn.id_lab,descripcion
 			                FROM proy p
                             JOIN proyecto_nec pn
                             ON pn.id_proy=p.id_proy
                             JOIN necesidades_equipo ne
                             ON ne.id_lab=pn.id_lab
                             AND ne.id_nec=pn.id_nec
-			                WHERE p.id_proy= " . $idproy;  
-		
+			                WHERE p.id_proy=" . $idproy;  
+		 
 				            $result = pg_query($querysel) or die('Hubo un error con la base de datos');
-		   
+		
+		   //Reconoce las necesidades del proyecto a editar
 		   $nec=array();
 		   $count=0;
 		   $valor=1;
@@ -285,7 +302,7 @@ function tblProy($idlab,$iddiv)
               $cont++;
 			  $valor++; 
             }
-		
+		   //Identifica las descripciones del proyecto y las disponibles
 		  $desc=array();
 		  $opc=array();
 		   $i=0;
@@ -296,51 +313,50 @@ function tblProy($idlab,$iddiv)
 			   $desc[$i]=$opcrow['descripcion'];
 			   $i++;
 			   $valori++;
-			//   $valorj++;
+			   $valorj++;
 		   }
 		
+		foreach ($nec as $valor) {
+         echo 'nec',$valor;
+		}
 		foreach ($opc as $valori) {
-         // echo 'opc',$valori;
+        echo 'opc',$valori;
          }
-	    foreach ($nec as $valor) {
-         // echo 'nec',$valor;
-         }
-		/*foreach ($desc as $valorj) {
+	    
+		foreach ($desc as $valorj) {
           echo 'desc',$valorj;
-         }*/
+         }
 		
 		 if($opc){
 			
 		   $salida='<table class="equipob"><br><br><tr><th>Requerimientos</th><th>Seleccionar</th></tr>'; 
 		   $j=1;
 			 
-		  foreach($opc as $elemento){
-			 // foreach($desc as $descripcion){
+		 foreach($opc as $elemento){
+		// foreach($desc as $elemento){
 			 $selected="";
 			 $nombrechk="id_nec_".$j;
 			  
-			 $querynec="SELECT descripcion FROM necesidades_equipo 
-             WHERE id_lab=".$idlab. " AND id_nec=" . $elemento;
-			  
-			 // echo $querynec; 
-			$result_nec = pg_query($querynec) or die('Hubo un error con la base de datos');  
-			$descripcion=pg_fetch_array($result_nec);
-			$edesc=$descripcion[0]; 
-			  
-			 if(in_array($elemento,$nec)){
-				
-			    $selected= ' checked="checked"';
-			    $salida.='<tr><td>'. $edesc. '</td><td>		
-			         <input type="checkbox" name="'. $nombrechk .'" value="'. $elemento .'" '. $selected .'
-				     </tr>';
 			
-		    }else {
-				
+			  $querynec="SELECT descripcion FROM necesidades_equipo 
+                 WHERE id_lab=".$idlab. " AND id_nec=" . $elemento;
+				 $result_nec = pg_query($querynec) or die('Hubo un error con la base de datos');  
+			     $descripcion=pg_fetch_array($result_nec);
+			     $edesc=$descripcion[0]; 
+			 
+			 if(in_array( $elemento, $nec)){
+				 	 
+				 $selected= ' checked="checked"';
+			     $salida.='<tr><td>'. $edesc. '</td><td>		
+			             <input type="checkbox" name="'. $nombrechk .'" value="'. $elemento .'" '. $selected .'
+				         </tr>';
+			 }else {
 				 $salida.='<tr><td>'. $edesc . '</td><td>		
-			         <input type="checkbox" name="'. $nombrechk .'" value="'. $elemento .'" '. $selected .'
-				     </tr>';
+			           <input type="checkbox" name="'. $nombrechk .'" value="'. $elemento .'" '. $selected .'
+				       </tr>';
 			 }
 			 $j++;
+			// $i++; 
 		  }
 					
 			$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';

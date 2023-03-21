@@ -113,38 +113,39 @@ AND " . $tiposerv ;
 	else if ($mod=="pryeb"){
 
 				$query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,objetivo_especifico,descripcion_proy,
-                beneficio,fecha,ruta_evidencia_a
+                beneficio,fecha,ruta_evidencia_a,cantalum,cantprof,cantinvest
                 FROM proy p
                 LEFT JOIN proyecto_nec pn
                 ON p.id_proy=pn.id_proy
-LEFT JOIN proy_evid_actual pea
-ON pea.id_proy=p.id_proy 
-LEFT JOIN evidencia_actual ea
-ON ea.id_evid_actual=pea.id_evid_actual
-LEFT JOIN proyecto_criterio pc
-ON pc.id_proy=pn.id_proy
-LEFT JOIN criterio c
-ON c.id_criterio=pc.id_criterio
-LEFT JOIN necesidades_equipo ne
-ON ne.id_nec=pn.id_nec
-LEFT JOIN nec_evid nec
-ON nec.id_nec=ne.id_nec
-LEFT JOIN evidencia e
-ON nec.id_evidencia=e.id_evidencia
-AND ne.id_lab=pn.id_lab
-LEFT JOIN cotizaciones ct
-ON ct.id_cotizacion=ne.id_cotizacion 
-LEFT JOIN laboratorios l
-ON l.id_lab=ne.id_lab
-LEFT JOIN departamentos de
-ON de.id_dep=l.id_dep
-LEFT JOIN divisiones dv
-WHERE
- ne.id_lab=" . $idlab . 
-"ORDER BY id_nec DESC";
+                LEFT JOIN proy_evid_actual pea
+                ON pea.id_proy=p.id_proy 
+                LEFT JOIN evidencia_actual ea
+                ON ea.id_evid_actual=pea.id_evid_actual
+                LEFT JOIN proyecto_criterio pc
+                ON pc.id_proy=pn.id_proy
+                LEFT JOIN criterio c
+                ON c.id_criterio=pc.id_criterio
+                LEFT JOIN necesidades_equipo ne
+                ON ne.id_nec=pn.id_nec
+                LEFT JOIN nec_evid nec
+                ON nec.id_nec=ne.id_nec
+                LEFT JOIN evidencia e
+                ON nec.id_evidencia=e.id_evidencia
+                AND ne.id_lab=pn.id_lab
+                LEFT JOIN cotizaciones ct
+                ON ct.id_cotizacion=ne.id_cotizacion 
+                LEFT JOIN laboratorios l
+                ON l.id_lab=ne.id_lab
+                LEFT JOIN departamentos de
+                ON de.id_dep=l.id_dep
+                LEFT JOIN divisiones dv
+                ON dv.id_div=de.id_div
+                WHERE
+                ne.id_lab=" . $idlab . 
+              " ORDER BY p.id_proy DESC";
 		
 		
-		SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
+/*		SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
 beneficio,fecha,ruta_evidencia_a
 FROM proy p
@@ -173,7 +174,7 @@ LEFT JOIN departamentos de
 ON de.id_dep=l.id_dep
 LEFT JOIN divisiones dv
 ON dv.id_div=de.id_div
-WHERE dv.id_div=
+WHERE dv.id_div=*/
 
      }
 
@@ -259,7 +260,7 @@ WHERE e.id_lab=" . $idlab;
 	
 
 	
-	   //echo "QUERY EN LA CLASE *******************************". $query;		
+	   echo "QUERY EN LA CLASE *******************************". $query;		
 		$result = pg_query($query) or die('Hubo un error con la base de datos');
 		while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
 		//echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
