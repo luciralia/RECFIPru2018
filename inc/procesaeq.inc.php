@@ -32,10 +32,13 @@ $id_req_aux=$row['maxid'];
 $id_req_aux+=1;
 //echo "despues id_req_aux: " . $id_req_aux . "</br>";
 
-
-$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion, prioridad, plazo, justificacion, impacto, cto_unitario, id_cotizacion,otrajust,id_recurso) VALUES (%d,%d,%d,'%s',%d,%d,%d,'%s',%.2f,%d,'%s',%d)";
-$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['id_prio'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['otrajust'], $_POST['id_recurso']);
-
+//Modificaciones con otros datos falta revisar tipos de datos
+	
+$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion,justificacion, impacto,otrajust,id_recurso, fecha_fisico,fecha_software,desarrollo_sistema,plataforma_software) VALUES (%d,%d,%d,'%s',%d,'%s',%d,'%s',%d,
+)";
+$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],
+				$_POST['id_just'],$_POST['impacto'],$_POST['otrajust'], $_POST['id_recurso'],$_POST['fecha_fisico'],$_POST['fecha_software'],
+				$_POST['desarrollo_sistema'],$_POST['plataforma_software']);
 
 $result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 //echo $queryn;

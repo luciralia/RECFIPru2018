@@ -129,7 +129,7 @@ if ($_SESSION['tipo_usuario']==9)
             </tr>
             <tr>
                 
-                <th width="15%">Tabletas Android </th>
+                <th width="15%">Tabletas iPadOS</th>
                 <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],6,1)?></td>
                 <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],6,2)?></td>
                 <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],6,3)?></td>

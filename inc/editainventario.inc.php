@@ -245,8 +245,8 @@ print_r ($_POST);
      <tr>
         <td>No.de serie/etiqueta de servicio</td>
         <td><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" ></td>
-        <td>Número MAC</td>
-        <td><input name="mac" type="text" id="mac" tabindex="1" size="20" value="<?php echo $_POST['mac'];  ?>" disabled="disabled" ></td>
+       <!--<td>Número MAC</td>
+        <td><input name="mac" type="text" id="mac" tabindex="1" size="20" value="<?php //echo $_POST['mac'];  ?>" disabled="disabled" ></td>-->
      </tr>
      <tr>
         <td>No.Inventario UNAM</td>

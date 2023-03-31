@@ -13,8 +13,6 @@ function palomeadoLic(){
 } 
 
 
-
-
 function palomeadoSal(){ 
     if(salida.checked) 
         velocidadInt.disabled=true; 
@@ -62,6 +60,103 @@ function palomeadoSal(){
 			
 	      }
 	 }
+	/*function noImpresora() {
+		  var z = document.getElementById("dispositivo_clave").value;
+		
+          if (document.getElementById("dispositivo_clave").value==10){
+		      document.getElementById("id_tipoi").disabled = false; // habilitar
+		  }
+		  else{
+			  document.getElementById("id_tipoi").disabled = true; // deshabilitar
+			
+	      }		
+	 }*/
+	
+	function habilitar(value)
+		{
+			//if(value=="10" || value==true)
+			if(value=="10" )
+			// habilitamos
+				document.getElementById("id_tipoi").disabled=false;
+			//}else if(value=="1"   || value==false){
+			else if(value=="1" )
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="2" )
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="3" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="4" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="5" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="6" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="7" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="8" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="9" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="11" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="12" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+			else if(value=="13" )
+				// deshabilitamos
+				document.getElementById("id_tipoi").disabled=true;
+		}
+	
+	function habilitarDig(value)
+		{
+			//if(value=="10" || value==true)
+			if(value=="13" )
+			// habilitamos
+				document.getElementById("id_digitaliza").disabled=false;
+			//}else if(value=="1"   || value==false){
+			else if(value=="1" )
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="2" )
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="3" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="4" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="5" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="6" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="7" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="8" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="9" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="11" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="12" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+			else if(value=="10" )
+				// deshabilitamos
+				document.getElementById("id_digitaliza").disabled=true;
+		}
   
 	 /*
 	 function sumar(valor) {
@@ -178,19 +273,13 @@ $cbox = new inventario();
 $verifica = new inventario();
 $combolab= new laboratorios();
 
- /*if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']!='')
-		   $_SESSION['id_div']=$_REQUEST['div'];
-		   if ($_SESSION['tipo_usuario']==9)
-                $_SESSION['id_div']=$_REQUEST['div'];*/
-				//echo 'Valores de session';
-//print_r ($_SESSION);
 
 if ($_POST['accion']=='editar'){  
 
-/*echo 'Valores a editar';
-print_r ($_REQUEST);
-echo 'Valores de session';
-print_r ($_SESSION);*/
+//echo 'Valores a editar';
+//print_r ($_REQUEST);
+//echo 'Valores de session';
+//print_r ($_SESSION);
 
 
 ?>
@@ -204,9 +293,13 @@ print_r ($_SESSION);*/
 <tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo</h3></legend></tr>
  <br> 
    <tr>
+     <?php if ($_POST['dispositivo_clave']==10){ ?>
       <td><label>Dispositivo: </label></td>
-      <td><label><?php $combo->combodispositivo($_POST['dispositivo_clave'])?></label></td>
-       
+      <td><label><?php $combo->combodispositivo($_POST['dispositivo_clave'])?></label> </td>
+       <?php }else if ($_POST['dispositivo_clave']==13){ ?> 
+       <td><label>Dispositivo: </label></td>
+      <td><label><?php $combo->combodispositivoDig($_POST['dispositivo_clave'])?></label> </td>
+       <?php } ?> 
       <td><label>Usuario Final:</label></td>
       <td><label><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></label></td>
    </tr>
@@ -214,15 +307,16 @@ print_r ($_SESSION);*/
        <td><label>Descripción Extensa</label></td>
        <td><label><input type="text" name="descextensa" id="descextensa" size="60" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
          <!--<td><textarea  name="descextensa" id="descextensa" value="<?php  echo $_POST['descextensa'];?>" required> </textarea></td>-->
-        <?php if ($_POST['dispositivo_clave']==10){ ?>
+         <?php if ($_POST['dispositivo_clave']==10){ ?>
          <td><label>Tipo Impresora:</label></td>
          <td><label><?php $combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
          <?php } ?>
          
-         <?php if ($_POST['dispositivo_clave']==11){ ?>
+         <?php if ($_POST['dispositivo_clave']==13){ ?>
          <td><label>Tipo Digitalizador:</label></td>
          <td><label><?php $combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>
          <?php } ?>
+         
     </tr>
      <tr>
         <td><label>Área</label></td>
@@ -279,9 +373,6 @@ print_r ($_SESSION);*/
      <tr>
         <td><label>No.de serie/etiqueta de servicio</label></td>
         <td><label><input name="serie" type="text" id="serie" tabindex="1" size="30" value="<?php echo $_POST['serie'];  ?>" disabled="disabled" ></label></td>
-        <td colspan="1">&nbsp;</td>
-        <td><label>Dirección MAC</label></td>
-        <td><input name="dir_mac" type="text" id="dir_mac" tabindex="1" size="20" value="<?php echo $_POST['dir_mac'];?>"></td>
      </tr>
      <tr>
         <td><label>No.Inventario UNAM</label></td>
@@ -294,10 +385,10 @@ print_r ($_SESSION);*/
         <td><label>Marca </label></td>
         <td><label><?php $combo->combomarca($_POST['descmarca'])?></label></td>
         <td colspan="1">&nbsp;</td>
-        <td><label>Otra Marca </label></td>
+        <td><label>Otra Marca</label></td>
         <?php
-	     if ($_POST['id_marca']==''){  ?>
-		 <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];   ?>" required ></label></td>
+	     if ($_POST['id_marca']==''){?>
+		 <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];?>" required ></label></td>
         <?php } else {  ?>
          <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];  ?>" disabled="disabled" ></label></td>
      
@@ -705,7 +796,7 @@ print_r ($_SESSION);*/
          <td colspan="2">&nbsp;</td>
         <td><label>Versión </label></td>
      <?php if ($_POST['version_sist_oper']=='' ) { ?>
-    <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['so']; ?>"  required  ></label> </td>
+    <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['so']; ?>"  required  ></label>< </td>
      <?php } else {?>
      <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['version_sist_oper']; ?>"  required ></label> </td>
    <?php } ?>
@@ -784,7 +875,7 @@ print_r ($_SESSION);*/
    <br/>
    <br/>
   <tr>
-        <td colspan="3" align="center">
+       <td colspan="3" align="center">
         <input type="submit" name="accioned" value="Guardar" />
         <input type="reset" name="accione"  value="Limpiar" />
 	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab']."&div=" .$_REQUEST['div']?>

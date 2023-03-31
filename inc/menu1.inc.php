@@ -91,6 +91,7 @@
         <ul >
             <li><a href="#">Equipo C&oacute;mputo</a>    <!--Temporal Nivel 1--> 
                   <ul>
+                    <li><a href="../view/inicio.html.php?mod=cenport&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Antigüedad</a></li>
                      <li><a href="../view/inicio.html.php?mod=ceneceq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Estado del Equipo</a></li>
                      <li><a href="../view/inicio.html.php?mod=cenecso&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Sistema Operativo</a></li>
                      <li><a href="../view/inicio.html.php?mod=cenecuf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Usuario Final</a>
@@ -142,47 +143,43 @@
 			//	 }
 				
 		?> 
-<!-- Fin de menu-->
-
-   
-    <!-- Boton Proyectos -->
 	  
-    <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
+    <?php //if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
 
-	<?php $clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
+	<?php //$clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
     <?php //$actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
-	    <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Proyectos</a>
-	   </li>
+	   <!-- <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php //echo  $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>"  <?php  //echo $clase;?>>Proyectos</a>
+	   </li> -->
              
-	<?php }?>
-	    <!-- Boton Equipamiento -->
+	<?php // }?>
+	    
     
-    <?php  ?>
-	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
-	<li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $clase;?>>Equipamiento</a></li>
-	<?php ?>
+   
+	<?php //$clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+	<!-- <li><a href="../view/inicio.html.php?mod=eq&lab=<?php //echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>" <?php // echo $clase;?>>Equipamiento</a></li>-->
 	
-    <!-- Botón cotizaciones-->
-   <?php if($_SESSION['tipo_usuario']==9){ ?>
-	<?php $actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
-     <li><li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Cotizaciones</a></li>
-<?php }?>
+	
+   
+   <?php //if($_SESSION['tipo_usuario']==9){ ?>
+	<?php //$actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
+     <!-- <li><li><a href="../view/inicio.html.php?mod=cot&lab=<?php //echo  $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>" <?php //echo $actual; ?>>Cotizaciones</a></li> -->
+<?php //}?>
 
-  <!-- Boton mantenimiento -->
+  
         <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-        <?php //if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==3 ){ ?>
+        <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==3 ){ ?>
         <?php $clase=($_GET['mod']=='serv' || $_GET['mod']=='mat' || $_GET['mod']=='mobi' || $_GET['mod']=='infr')?'" class="actual"':$clase='"'; ?>
-        <li><a href="#" <?php echo $clase; ?>>Mantenimiento</a>
+        <li><a href="#" <?php  echo $clase; ?>>Mantenimiento</a>
          <ul>
              <li><a href="../view/inicio.html.php?mod=serv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Externo</a></li>
              <?php if($_SESSION['tipo_usuario']==9){ ?>
-             <li><a href="../view/inicio.html.php?mod=mat&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Interno (Material)</a></li>
+             <li><a href="../view/inicio.html.php?mod=mat&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Interno (Material)</a></li>
              <?php } ?>
 		 </ul>
-	  </li>
+	  </li> 
           <?php }?>
   	
-	<!-- Boton Bitacora --> 
+	
     <?php if($_SESSION['tipo_usuario']==9 ){ ?>   	
 	<?php if ($_GET['mod']=='servibf'||$_GET['mod']=='servibp') { $clase='" class="actual"'; } else {$clase='"';}?> 
     <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
@@ -220,7 +217,7 @@
       	
    	<li><a href="#">Administración</a></li>-->
     
-    <?php //}?>
+    <?php }?>
    
  </ul>
  

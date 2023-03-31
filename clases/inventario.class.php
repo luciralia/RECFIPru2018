@@ -849,7 +849,8 @@ function combodispositivo($dispositivo)
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_dispositivo');
 					
-					$salida='<select name="dispositivo_clave" id="dispositivo_clave">';
+					$salida='<select name="dispositivo_clave" id="dispositivo_clave" onchange="habilitar(this.value);">';
+						//$salida='<select name="dispositivo_clave" id="dispositivo_clave">';
 					        // <option value="0" >Ninguna</option>'; 
 					
 					while ($datosc = pg_fetch_array($result))
@@ -857,11 +858,44 @@ function combodispositivo($dispositivo)
 						
 					if($datosc['dispositivo_clave']==$dispositivo){
 					
-						  $salida.= "<option value='" . $datosc['dispositivo_clave'] . "' selected='selected'>" . $datosc['nombre_dispositivo']. "</option>";
+						  $salida.= "<option value='".$datosc['dispositivo_clave']."' selected='selected'>" . $datosc['nombre_dispositivo']. "</option>";
 					 
 					 } else { 
 					
-						  $salida.= "<option value='" . $datosc['dispositivo_clave'] . "'>" . $datosc['nombre_dispositivo']. "</option>";
+						  $salida.= "<option value='".$datosc['dispositivo_clave']."'>" . $datosc['nombre_dispositivo']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dispositivo	
+	function combodispositivoDig($dispositivo)
+					{
+                    
+				    $query="SELECT * FROM  cat_dispositivo ORDER BY nombre_dispositivo ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_dispositivo');
+					
+					$salida='<select name="dispositivo_clave" id="dispositivo_clave" onchange="habilitarDig(this.value);">';
+						//$salida='<select name="dispositivo_clave" id="dispositivo_clave">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['dispositivo_clave']==$dispositivo){
+					
+						  $salida.= "<option value='".$datosc['dispositivo_clave']."' selected='selected'>" . $datosc['nombre_dispositivo']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='".$datosc['dispositivo_clave']."'>" . $datosc['nombre_dispositivo']. "</option>";
 											  
 						}
 						
@@ -890,7 +924,7 @@ function combodispositivo($dispositivo)
 						
 					if($datosc['id_tipoi']==$tipo){
 					
-						  $salida.= "<option value='" . $datosc['id_tipoi'] . "' selected='selected'>" . $datosc['tipoimpresora']. "</option>";
+						  $salida.= "<option value='".$datosc['id_tipoi'] . "' selected='selected'>" . $datosc['tipoimpresora']. "</option>";
 					 
 					 } else { 
 					
@@ -1792,7 +1826,7 @@ function radialSalida($sal)
  	
 function verificaTipoEquipo($bien)
 		{
-			if($bien<>9 && $bien<>10 && $bien<>11 && $bien<>12)
+			if($bien<>9 && $bien<>10 && $bien<>11 && $bien<>12 && $bien<>13)
 					$salida=1 ;
 			else  $salida=0;		
 					return $salida;

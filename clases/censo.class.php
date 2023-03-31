@@ -156,11 +156,11 @@ function CantidadC($div,$coord,$perfil){
 	    break;		
 		case 6:
 			    $query.="dispositivo_clave=1 
-                         AND sist_oper=6";
+                         AND sist_oper=7";
         break;	
 		case 7:
 			    $query.="dispositivo_clave=1 
-                         AND sist_oper=7";
+                         AND sist_oper=6";
         break;			
 		case 8:
 			    $query.= "(dispositivo_clave=5 OR dispositivo_clave=6)";  
@@ -180,6 +180,109 @@ function CantidadC($div,$coord,$perfil){
 			return $salidar;
 
 	}	
+	
+    function CantidadP ($div,$tipo){
+		
+		$query="SELECT COUNT (*) as cuenta
+                FROM dispositivo ec 
+                LEFT JOIN laboratorios l
+                ON ec.id_lab=l.id_lab
+                LEFT JOIN cat_familia cf
+                ON ec.familia_clave=cf.id_familia
+                LEFT JOIN cat_dispositivo cd
+                ON ec.dispositivo_clave=cd.dispositivo_clave
+                LEFT JOIN cat_marca cm
+                ON cm.id_marca=ec.id_marca
+                LEFT JOIN departamentos d
+                ON d.id_dep=l.id_dep
+				LEFT JOIN divisiones dv
+				ON dv.id_div=d.id_div
+                WHERE (ec.dispositivo_clave=1 or ec.dispositivo_clave=2) ";
+	
+		if ($div!=''){
+		switch ($tipo){
+		  case 1:
+			    $query.= " AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) < 2
+                           AND dv.id_div=". $div ;
+			break;
+ 		  case 2:
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) > 2 
+				           AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<3)
+                           AND dv.id_div=". $div ;
+			break;
+			case 3:
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) > 4 
+				           AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<5)
+                           AND dv.id_div=". $div ;
+			break;
+		    case 4: 
+			    $query.= " AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) > 6
+                           AND dv.id_div=". $div ;
+			break;
+		}//fin switch
+	}//fin del if
+		//echo $query;
+		$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+			
+				while ($datos = pg_fetch_array($result,NULL,PGSQL_ASSOC))
+					{
+					$salidar = $datos['cuenta'] ;
+					}
+			if ($salidar == null) 
+				$salidar=0;
+			return $salidar;
+	}
+	
+	function CantidadS ($div,$tipo){
+		$query="SELECT COUNT (*) as cuenta
+                FROM dispositivo ec 
+                LEFT JOIN laboratorios l
+                ON ec.id_lab=l.id_lab
+                LEFT JOIN cat_familia cf
+                ON ec.familia_clave=cf.id_familia
+                LEFT JOIN cat_dispositivo cd
+                ON ec.dispositivo_clave=cd.dispositivo_clave
+                LEFT JOIN cat_marca cm
+                ON cm.id_marca=ec.id_marca
+                LEFT JOIN departamentos d
+                ON d.id_dep=l.id_dep
+				LEFT JOIN divisiones dv
+				ON dv.id_div=d.id_div
+                WHERE ec.dispositivo_clave=6 ";
+	if ($div!=''){
+		switch ($tipo){
+		  case 1:
+			    $query.= " AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) < 2
+                           AND dv.id_div=". $div ;
+			break;
+ 		  case 2:
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) > 2 
+				           AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<3)
+                           AND dv.id_div=". $div ;
+			break;
+			case 3:
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) > 4 
+				           AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<5)
+                           AND dv.id_div=". $div ;
+			break;
+		    case 4: 
+			    $query.= " AND EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura) > 6
+                           AND dv.id_div=". $div ;
+			break;
+		}//fin switch
+	}//fin del if
+		//echo $query;
+		$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+			
+				while ($datos = pg_fetch_array($result,NULL,PGSQL_ASSOC))
+					{
+					$salidar = $datos['cuenta'] ;
+					}
+			if ($salidar == null) 
+				$salidar=0;
+			return $salidar;
+	}
+	
 	
 	function EAR($div,$usu){
 	

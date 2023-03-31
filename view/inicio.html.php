@@ -1,4 +1,6 @@
-
+<?php
+ob_start();
+?>
 <?php 
 require_once('../inc/encabezado.inc.php'); 
 //require_once('../inc/sesion.inc.php'); 
@@ -104,22 +106,21 @@ require_once('../inc/encabezado.inc.php');
 		else if ($_GET['mod']=='act')
 		include_once("../view/actualizar.html.php");	
 		else if ($_GET['mod']=='cot')
-		include_once("../view/cotizaciones.html.php");
+		     include_once("../view/cotizaciones.html.php");
 		else if ($_GET['mod']=='infr')
-		include_once("../view/infraestructura.html.php");
+		     include_once("../view/infraestructura.html.php");
 		else if ($_GET['mod']=='mobi')
-		include_once("../view/mobiliario.html.php");
+		     include_once("../view/mobiliario.html.php");
 		else if ($_GET['mod']=='doc')
-		include_once("../view/documentos.html.php");
+		     include_once("../view/documentos.html.php");
 		else if ($_GET['mod']=='que')
-		include_once("../view/quejas.html.php");
+		      include_once("../view/quejas.html.php");
 		else if ($_GET['mod']=='ceneceq' || $_GET['mod']=='ceni' || $_GET['mod']=='cened' || $_GET['mod']=='cenert'|| $_GET['mod']=='cenecso'|| $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb' || $_GET['mod']=='cenecar')
-		       include_once("../view/censo.html.php");
-		//else if (!isset($_GET['mod'])|| $_GET['mod']=='censo'  && !isset($_GET['lab']))
-		//else if ($_GET['mod']=='censo' )
-		    // include_once("../view/censoDGTIC.html.php");
+		      include_once("../view/censo.html.php");
+		else if ($_GET['mod']=='cenport' )
+		      include_once("../view/censoportatiles.html.php");
 		else if ($_GET['mod']=='censoC' )
-		    include_once("../view/censoDGTICC.html.php");
+		     include_once("../view/censoDGTICC.html.php");
 		else if ($_GET['mod']=='cred')
 		include_once("../view/creditos.html.php");
 		else if ($_GET['mod']=='ace'){
@@ -134,3 +135,6 @@ require_once('../inc/encabezado.inc.php');
 
 
 <?php require('../inc/pie.inc.php'); ?>
+<?php
+ob_end_flush();
+?>
