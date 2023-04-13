@@ -91,7 +91,7 @@
         <ul >
             <li><a href="#">Equipo C&oacute;mputo</a>    <!--Temporal Nivel 1--> 
                   <ul>
-                    <li><a href="../view/inicio.html.php?mod=cenport&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Antigüedad</a></li>
+                    
                      <li><a href="../view/inicio.html.php?mod=ceneceq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Estado del Equipo</a></li>
                      <li><a href="../view/inicio.html.php?mod=cenecso&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Sistema Operativo</a></li>
                      <li><a href="../view/inicio.html.php?mod=cenecuf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Usuario Final</a>
@@ -100,6 +100,8 @@
                          </ul>
                       </li>
                      <li><a href="../view/inicio.html.php?mod=cenecar&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Alto Rendimiento</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenport&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Por antigüedad</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenmanto&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Mantenimiento</a></li>
                    </ul>
              </li>   <!-- Es fin del equipo de Cómputo--> 
             
@@ -110,7 +112,7 @@
 			//&& ( $_GET['div']!=''  ) ){ 
 			?>
             <!--<li><a href="../view/inicio.html.php?mod=censo&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC</a></li>-->
-			<li><a href="../view/inicio.html.php?mod=censoC&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC 2021</a></li> 
+			<li><a href="../view/inicio.html.php?mod=censoC&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC</a></li> 
           <?php } ?>
          
          </ul>  <!--Fin de equipo de Cómputo-->

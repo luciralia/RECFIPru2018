@@ -115,7 +115,6 @@ if ($_SESSION['tipo_usuario']==9)
 												  $censo->CantidadC($_SESSION['id_div'],4,4)?></td>
             </tr>
             <tr>
-                
                 <th width="15%">Computadoras
                                 portátiles Apple Mac</th>
                 <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],5,1)?></td>
@@ -275,7 +274,7 @@ if ($_SESSION['tipo_usuario']==9)
                   <td width="40%" center><?php echo $totalD1=$censo->cantDigita($_SESSION['id_div'],1)?></td>
 	           </tr>
                <tr>
-                  <th width="15%">Digitalizador con alimnetador de hojas para oficina</th>
+                  <th width="15%">Digitalizador con alimentador de hojas para oficina</th>
                   <td width="20%" center><?php echo $totalD2=$censo->cantDigita($_SESSION['id_div'],2)?></td>
 	           </tr> 
                <tr>

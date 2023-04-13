@@ -119,6 +119,8 @@ require_once('../inc/encabezado.inc.php');
 		      include_once("../view/censo.html.php");
 		else if ($_GET['mod']=='cenport' )
 		      include_once("../view/censoportatiles.html.php");
+		else if ($_GET['mod']=='cenmanto' )
+		      include_once("../view/censomanto.html.php");
 		else if ($_GET['mod']=='censoC' )
 		     include_once("../view/censoDGTICC.html.php");
 		else if ($_GET['mod']=='cred')
