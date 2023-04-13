@@ -181,6 +181,40 @@ function CantidadC($div,$coord,$perfil){
 
 	}	
 	
+function CantidadM($div,$usu){
+$query="	SELECT count(*) AS cuenta
+FROM eventos_mantenimiento em
+JOIN  bitacora b
+ON em.id_bitacora = b.id_bitacora 
+JOIN dispositivo e
+ON e.bn_id = em.id_equipo
+JOIN bienes bi
+ON e.bn_id = bi.bn_id 
+JOIN laboratorios l
+ON l.id_lab = e.id_lab 
+JOIN departamentos dp
+ON l.id_dep = dp.id_dep
+JOIN divisiones dv
+ON dp.id_div = dv.id_div
+JOIN usuarios u
+ON l.id_responsable=u.id_usuario
+WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
+	
+	if ($div!='' && ($usu==9 || $usu==10))
+		$query.=" AND dv.id_div=".$div;
+    //echo $query;
+	
+		$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+			
+				while ($datos = pg_fetch_array($result,NULL,PGSQL_ASSOC))
+					{
+					$salidar = $datos['cuenta'] ;
+					}
+			if ($salidar == null) 
+				$salidar=0;
+			return $salidar;	
+}
+	
     function CantidadP ($div,$tipo,$usu){
 		
 		$query="SELECT COUNT (*) as cuenta
