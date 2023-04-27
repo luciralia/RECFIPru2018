@@ -50,7 +50,7 @@ if ($_SESSION['tipo_usuario']==9)
               <th width="15%" >Académicos</th>
               <th width="15%" >Investigadores</th>
               <th width="15%" >Administrativos</th>
-              <th width="5%" >Total</th>
+              <th width="5%" ><strong>TOTAL</strong></th>
     </tr>
     </table>  
     <?php
@@ -257,7 +257,7 @@ if ($_SESSION['tipo_usuario']==9)
                   <td width="20%" center><?php echo  $totalI9=$censo->cantImpresoras($_SESSION['id_div'],9)?></td>
                 </tr>
                 
-                   <th width="15%">Total</th>
+                   <th width="15%">TOTAL</th>
                    <td width="20%" right><strong><?php echo $totalI1+$totalI2+$totalI3+$totalI4+$totalI5+$totalI6
 					   +$totalI7+$totalI8+$totalI9?></strong></td>
   </table>            
@@ -285,7 +285,7 @@ if ($_SESSION['tipo_usuario']==9)
                  <th width="15%">Otros</th>
                   <td width="20%" center><?php echo $totalD4=$censo->cantDigita($_SESSION['id_div'],4)?></td>
 	           </tr>
-               <th width="15%">Total</th>
+               <th width="15%">TOTAL</th>
                    <td width="20%" right><strong><?php echo $totalD1+$totalD2+$totalD3+$totalD4?></strong></td>
   </table>            
   <br>

@@ -88,6 +88,7 @@
 	<?php $clase=($_GET['mod']=='cen' || $_GET['mod']=='ceni' || $_GET['mod']=='cened'|| $_GET['mod']=='cenert'|| $_GET['mod']=='ceneceq'|| $_GET['mod']=='cenecso' || $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb'|| $_GET['mod']=='cenecar')?'" class="actual"':$clase='"'; ?>
 	<li><a href="#" <?php echo $clase;?>>Censo</a>
      <?php if( $_GET['lab']!='' || $_SESSION['id_div']!='' || $_GET['div']!='' || $_SESSION['tipo_usuario']==10 ){ ?>
+		
         <ul >
             <li><a href="#">Equipo C&oacute;mputo</a>    <!--Temporal Nivel 1--> 
                   <ul>
@@ -105,8 +106,18 @@
                    </ul>
              </li>   <!-- Es fin del equipo de Cómputo--> 
             
-            <li><a href="../view/inicio.html.php?mod=ceni&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Impresoras </a></li>
-            <li><a href="../view/inicio.html.php?mod=cened&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Digital</a></li>
+            <li><a href="#">Impresoras</a> 
+			 <ul>
+                     <li><a href="../view/inicio.html.php?mod=ceni&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por ubicación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+				     <li><a href="../view/inicio.html.php?mod=cenitipo&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por tipo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
+            </ul>
+			</li>
+            <li><a href="#">Equipos de digitalización</a> 
+			 <ul>
+                     <li><a href="../view/inicio.html.php?mod=cened&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por ubicación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+				     <li><a href="../view/inicio.html.php?mod=cenedtipo&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por tipo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
+            </ul>
+			</li>
             <li><a href="../view/inicio.html.php?mod=cenert&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Redes y Telecomunicaciones</a></li>
             <?php if(($_SESSION['tipo_usuario']==10  || $_SESSION['tipo_usuario']==9) && ( $_GET['lab']=='')){
 			//&& ( $_GET['div']!=''  ) ){ 

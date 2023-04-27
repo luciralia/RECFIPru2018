@@ -22,7 +22,7 @@
 <file name="documentos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130886308380000000" remote="131790350370000000" Dst="2" />
 <file name="equipamiento.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132834595756087118" remote="132834619520000000" Dst="1" />
 <file name="infraestructura.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130387142840000000" remote="131790350370000000" Dst="2" />
-<file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133244983880404276" remote="133244984910000000" Dst="0" />
+<file name="inicio.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263107286212945" remote="133264943390000000" Dst="0" />
 <file name="inventario.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132926605953344674" remote="132926937120000000" Dst="1" />
 <file name="material.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130280974020000000" remote="131790350370000000" Dst="2" />
 <file name="mobiliario.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130414516400000000" remote="131790350370000000" Dst="2" />
@@ -39,4 +39,8 @@
 <file name="creditos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133065243737711783" remote="133065244980000000" Dst="2" />
 <file name="censoDGTIC.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132623697849706485" remote="132623703330000000" Dst="2" />
 <file name="censoDGTICC.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132968477484583325" remote="132969428070000000" Dst="2" />
+<file name="censoitipo.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133264949136280404" remote="133264949240000000" Dst="0" />
+<file name="censoedtipo.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263120188264169" remote="133264943170000000" Dst="0" />
+<file name="censomanto.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133258795000070292" remote="133264943300000000" Dst="0" />
+<file name="censoportatiles.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133247606525542405" remote="133264943460000000" Dst="0" />
 </dwsync>

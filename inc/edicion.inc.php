@@ -178,7 +178,7 @@ function palomeadoSal(){
 	     } 
 		*/ 
 		
-     function myFunctionTecCom() {
+function myFunctionTecCom() {
 		  var x = document.getElementById("id_tec_com").value;
 		 
           if (document.getElementById("id_tec_com").value==0)
@@ -189,7 +189,7 @@ function palomeadoSal(){
 	 }
 	 
 	
-		 function calculo()
+function calculo()
 {
 valor1js= parseFloat(document.form.valor1.value);
 valor2js = parseFloat(document.form.valor2.value);
@@ -300,14 +300,7 @@ if ($_POST['accion']=='editar'){
        <td><label>Dispositivo: </label></td>
       <td><label><?php $combo->combodispositivoDig($_POST['dispositivo_clave'])?></label> </td>
        <?php } ?> 
-      <td><label>Usuario Final:</label></td>
-      <td><label><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></label></td>
-   </tr>
-   <tr>
-       <td><label>Descripción Extensa</label></td>
-       <td><label><input type="text" name="descextensa" id="descextensa" size="60" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
-         <!--<td><textarea  name="descextensa" id="descextensa" value="<?php  echo $_POST['descextensa'];?>" required> </textarea></td>-->
-         <?php if ($_POST['dispositivo_clave']==10){ ?>
+       <?php if ($_POST['dispositivo_clave']==10){ ?>
          <td><label>Tipo Impresora:</label></td>
          <td><label><?php $combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
          <?php } ?>
@@ -316,6 +309,14 @@ if ($_POST['accion']=='editar'){
          <td><label>Tipo Digitalizador:</label></td>
          <td><label><?php $combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>
          <?php } ?>
+      
+   </tr>
+   <tr>
+       <td><label>Descripción Extensa</label></td>
+       <td><label><input type="text" name="descextensa" id="descextensa" size="60" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
+         <!--<td><textarea  name="descextensa" id="descextensa" value="<?php  echo $_POST['descextensa'];?>" required> </textarea></td>-->
+       <td><label>Usuario Final:</label></td>
+      <td><label><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></label></td>  
          
     </tr>
      <tr>
@@ -863,10 +864,9 @@ if ($_POST['accion']=='editar'){
    <tr> 
         <td>Tipo tarjeta de video</td>
         <td><input name="tipotarjvideo" type="text" id="tipotarjvideo" tabindex="1" size="7" value="<?php echo $_POST['tipotarjvideo']; ?>"></td>
-    
         <td>Modelo de tarjeta de video</td>
         <td><input name="modelotarjvideo" type="text" id="modelotarjvideo" tabindex="1" size="15" value="<?php echo $_POST['modelotarjvideo']; ?>"></td>
-        <td>Memoria de video [GB] </td>
+        <td>Memoria de video [GB]</td>
         <td><input name="memoriavideo" type="text" id="memoriavideo"  tabindex="1" size="7" value="<?php echo $_POST['memoriavideo']; ?>"></td>
   </tr>
 </table>
@@ -878,15 +878,13 @@ if ($_POST['accion']=='editar'){
        <td colspan="3" align="center">
         <input type="submit" name="accioned" value="Guardar" />
         <input type="reset" name="accione"  value="Limpiar" />
-	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab']."&div=" .$_REQUEST['div']?>
+	    <?php  $retorno="../view/inicio.html.php?mod=" . $_REQUEST['mod'] . "&lab=" . $_REQUEST['lab'] ."&div=" .$_REQUEST['div']?>
 	    <input type="button" name="accionec" value="Cancelar" onClick="window.parent.location='<?php echo  $retorno;?>' "/>
      </td>
   </tr>    
      </table>
 <br/>
 <br/>
-
-
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="bn_id" type="hidden" value="<?php echo $_POST['bn_id']; ?>" />

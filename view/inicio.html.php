@@ -117,6 +117,10 @@ require_once('../inc/encabezado.inc.php');
 		      include_once("../view/quejas.html.php");
 		else if ($_GET['mod']=='ceneceq' || $_GET['mod']=='ceni' || $_GET['mod']=='cened' || $_GET['mod']=='cenert'|| $_GET['mod']=='cenecso'|| $_GET['mod']=='cenecuf'|| $_GET['mod']=='cenecufb' || $_GET['mod']=='cenecar')
 		      include_once("../view/censo.html.php");
+		else if ($_GET['mod']=='cenitipo' )
+		      include_once("../view/censoitipo.html.php");
+		else if ($_GET['mod']=='cenedtipo' )
+		      include_once("../view/censoedtipo.html.php");
 		else if ($_GET['mod']=='cenport' )
 		      include_once("../view/censoportatiles.html.php");
 		else if ($_GET['mod']=='cenmanto' )

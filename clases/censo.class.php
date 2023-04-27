@@ -287,7 +287,7 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 	}
 	
 	function CantidadS ($div,$tipo,$usu){
-		$query="SELECT COUNT (*) as cuenta
+		$query="SELECT COUNT (*) AS cuenta
                 FROM dispositivo ec 
                 LEFT JOIN laboratorios l
                 ON ec.id_lab=l.id_lab
@@ -373,7 +373,7 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 				 " and equipoAltorend='Si'" .
 				 " and d.usuario_final_clave= " .$usu ;
 	}else {
-		$query="select count(*) as cuenta from dispositivo d
+		$query="SELECT COUNT(*) as cuenta FROM dispositivo d
                  join laboratorios l
                  on d.id_lab=l.id_lab
                  join departamentos dep
@@ -396,31 +396,32 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 			return $salidar;
 	}
 	
-	function cantImpresoras($div,$tipo){
+	function cantImpresoraT($div,$tipo,$usu){
 	
-	if ($div!=''){
+	if ($div!='' && ($usu==9 || $usu==10)){
 		   
-			$query="select count(*) as cuenta from dispositivo d
-            join cat_impresora ci
-            on ci.id_tipoi=d.tipo_impresora
-            join laboratorios l
-            on d.id_lab=l.id_lab
-            join departamentos dep
-            on dep.id_dep=l.id_dep
-            join divisiones dv
-            on dv.id_div=dep.id_div
-            where dv.id_div=".$div . "
-            and tipo_impresora=".$tipo;
+			$query="SELECT COUNT(*) AS cuenta FROM dispositivo d
+            JOIN cat_impresora ci
+            ON ci.id_tipoi=d.tipo_impresora
+            JOIN laboratorios l
+            ON d.id_lab=l.id_lab
+            JOIN departamentos dep
+            ON dep.id_dep=l.id_dep
+            JOIN divisiones dv
+            ON dv.id_div=dep.id_div
+            WHERE dv.id_div=".$div . "
+            AND tipo_impresora=".$tipo;
       
 		
 		    
 	   }else {
 	
-				$query="select count(*) as cuenta from dispositivo d
-                    join cat_impresora ci
-                    on ci.id_tipoi=d.tipo_impresora
-                    where tipo_impresora=".$tipo;
+				$query="SELECT COUNT(*) AS cuenta FROM dispositivo d
+                        JOIN cat_impresora ci
+                        ON ci.id_tipoi=d.tipo_impresora
+                        WHERE tipo_impresora=".$tipo;
 	}
+		
 	 $result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
 	 
 	 // $datos = pg_query($query);
@@ -473,6 +474,46 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 			return $salidar;
 
 	}
+	function cantImpresoras($div,$tipo){
+	
+	if ($div!='' && ($usu==9 || $usu==10)){
+		   
+			$query="SELECT COUNT(*) AS cuenta FROM dispositivo d
+            JOIN cat_impresora ci
+            ON ci.id_tipoi=d.tipo_impresora
+            JOIN laboratorios l
+            ON d.id_lab=l.id_lab
+            JOIN departamentos dep
+            ON dep.id_dep=l.id_dep
+            JOIN divisiones dv
+            ON dv.id_div=dep.id_div
+            WHERE dv.id_div=".$div . "
+            AND tipo_impresora=".$tipo;
+      
+		
+		    
+	   }else {
+	
+				$query="SELECT COUNT(*) AS cuenta FROM dispositivo d
+                        JOIN cat_impresora ci
+                        ON ci.id_tipoi=d.tipo_impresora
+                        WHERE tipo_impresora=".$tipo;
+	}
+		
+	 $result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+	 
+	 // $datos = pg_query($query);
+     // $cantidad= pg_num_rows($datos); 
+			
+				while ($datos = pg_fetch_array($result,NULL,PGSQL_ASSOC))
+					{
+					$salidar = $datos['cuenta'] ;
+					}
+				
+			return $salidar;
+
+	}
+	
 	
 	
 	function cantLab($div){

@@ -2798,7 +2798,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
  <table>
   <tr>
-      <legend align="right"><h3>Impresoras</h3>
+      <legend align="right"><h3>Impresoras por ubicación</h3>
    <br>
  
 		      <form action="../inc/exportaxls_censoeqimp.inc.php" method="post" name="ceneceq" >
@@ -2962,7 +2962,7 @@ $inventario= pg_num_rows($datos);
   <br>        
  <table>
   <tr>
-      <legend align="right"><h3>Equipo Digital
+      <legend align="right"><h3>Equipo de digitalización por ubicación
       </h3>
        <br>
   
@@ -3094,7 +3094,8 @@ $inventario= pg_num_rows($datos);
    <td width="1%" ><strong><?php echo $cuenta;?></strong></td>
 </tr>
 </table>
-    
+  <br>
+  <br>  
   <?php 
    	
 } //termina Equipo Digital

@@ -43,7 +43,7 @@ $censo = new censo();
    <tr>
               <th width="15%" >Antigüedad</th>
               
-              <th width="5%"  >Cantidad</th>
+              <th width="30%"  >Cantidad</th>
     </tr>
     </table>  
     <?php
@@ -79,7 +79,7 @@ $censo = new censo();
            <tr>
               <th width="15%" >Antigüedad</th>
               
-              <th width="5%"  >Cantidad</th>
+              <th width="30%"  >Cantidad</th>
     </tr>
     </table>  
     <?php
