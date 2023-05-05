@@ -304,7 +304,6 @@ if ($_POST['accion']=='editar'){
          <td><label>Tipo Impresora:</label></td>
          <td><label><?php $combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
          <?php } ?>
-         
          <?php if ($_POST['dispositivo_clave']==13){ ?>
          <td><label>Tipo Digitalizador:</label></td>
          <td><label><?php $combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>

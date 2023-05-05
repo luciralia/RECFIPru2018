@@ -46,7 +46,7 @@
                 <!-- Botón inventario -->
                 <?php $clase=($_GET['mod']=='inv' || $_GET['mod']=='invc' || $_GET['mod']=='invg' || $_GET['mod']=='imp' )?'"  class="actual"':$clase='"'; ?>
       
- 	      <li><a href="#" <?php echo $clase;?>>Inventarios</a>
+ 	      <li><a href="#" <?php echo $clase;?>>Inventario</a>
  	      
           <ul>
            <?php 
@@ -76,6 +76,17 @@
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
                     <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
          <?php } ?> 
+         <?php 
+				if ( $_GET['lab']!='' ){
+			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
+			?>
+               <li><a href="#">Software</a> 
+			 <ul>
+                     <li><a href="../view/inicio.html.php?mod=soft_com&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Comercial&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+				     <li><a href="../view/inicio.html.php?mod=soft_desar&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Desarrollo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
+            </ul></li> 
+             <?php 
+				 }?>
          <?php // if ($_SESSION['tipo_usuario']==9)	 {?>
             <!--  <li><a href="../view/inicio.html.php?mod=act&lab=<?php  //echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li> -->        <?php  // } ?> 
      
@@ -157,19 +168,19 @@
 				
 		?> 
 	  
-    <?php //if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
+    <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
 
-	<?php //$clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
-    <?php //$actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
-	   <!-- <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php //echo  $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>"  <?php  //echo $clase;?>>Proyectos</a>
-	   </li> -->
+	<?php $clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
+    <?php $actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
+	   <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Proyectos</a>
+	   </li> 
              
-	<?php // }?>
+	<?php  }?>
 	    
     
    
-	<?php //$clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
-	<!-- <li><a href="../view/inicio.html.php?mod=eq&lab=<?php //echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>" <?php // echo $clase;?>>Equipamiento</a></li>-->
+	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
+	 <li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>" <?php echo $clase;?>>Equipamiento</a></li>
 	
 	
    

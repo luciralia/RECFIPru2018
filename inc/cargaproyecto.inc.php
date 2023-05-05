@@ -39,8 +39,8 @@ ON nec.id_nec=ne.id_nec
 LEFT JOIN evidencia e
 ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
-LEFT JOIN cotizaciones ct
-ON ct.id_cotizacion=ne.id_cotizacion 
+--LEFT JOIN cotizaciones ct
+--ON ct.id_cotizacion=ne.id_cotizacion 
 LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
 LEFT JOIN departamentos de
@@ -95,8 +95,8 @@ ON nec.id_nec=ne.id_nec
 LEFT JOIN evidencia e
 ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
-LEFT JOIN cotizaciones ct
-ON ct.id_cotizacion=ne.id_cotizacion 
+--LEFT JOIN cotizaciones ct
+--ON ct.id_cotizacion=ne.id_cotizacion 
 LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
 LEFT JOIN departamentos de
@@ -126,8 +126,8 @@ ON nec.id_nec=ne.id_nec
 LEFT JOIN evidencia e
 ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
-LEFT JOIN cotizaciones ct
-ON ct.id_cotizacion=ne.id_cotizacion 
+--LEFT JOIN cotizaciones ct
+--ON ct.id_cotizacion=ne.id_cotizacion 
 LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
 LEFT JOIN departamentos de
@@ -157,8 +157,8 @@ ON nec.id_nec=ne.id_nec
 LEFT JOIN evidencia e
 ON nec.id_evidencia=e.id_evidencia
 AND ne.id_lab=pn.id_lab
-LEFT JOIN cotizaciones ct
-ON ct.id_cotizacion=ne.id_cotizacion 
+--LEFT JOIN cotizaciones ct
+--ON ct.id_cotizacion=ne.id_cotizacion 
 LEFT JOIN laboratorios l
 ON l.id_lab=ne.id_lab
 LEFT JOIN departamentos de

@@ -182,7 +182,7 @@ function tblProy($idlab,$iddiv)
 		
 		echo 'selnecproy'.$query;
 		
-		 $result_opc = pg_query($query) or die('Hubo un error con la base de datos');
+		$result_opc = pg_query($query) or die('Hubo un error con la base de datos');
 		
 		$salida='<table class="equipob"><br><tr><th>Requerimientos</th><th>Prioridad</th><th>Plazo</th><th>Evidencia</th></tr>'; 
 	

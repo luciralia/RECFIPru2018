@@ -558,11 +558,11 @@ print_r($_POST);
 // verificar que el equipo pertenezca a la division del jefe de división que desea modificar
 
 $queryexp="SELECT * FROM equipo d
-           left JOIN bienes b
+           LEFT JOIN bienes b
            ON b.bn_id=d.bn_id
-           left JOIN laboratorios l 
+           LEFT JOIN laboratorios l 
            ON l.id_lab=d.id_lab
-           left JOIN departamentos dep
+           LEFT JOIN departamentos dep
 	       ON dep.id_dep=l.id_dep
 	       WHERE bn_clave="."'".$_REQUEST['bn_clave']."'". " AND id_div=".$_SESSION['id_div'];
 		   

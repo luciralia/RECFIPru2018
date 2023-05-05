@@ -1,23 +1,6 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<script type="text/javascript">
-
-function cargajust() {
-		  var x = document.getElementById('id_just').value;
-		 
-		  if (x=="7")
-		  
-		      document.getElementById('otrajust').disabled = false; // habilitar
-		  else
-			  document.getElementById('otrajust').disabled = true; 
-			    
-			  // deshabilitar
-			 
-	 }
-	
-	
-
-</script>	 
+	 
 	 
 <?php 
 

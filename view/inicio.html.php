@@ -99,6 +99,8 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/inventario.html.php");}
 		else if ($_GET['mod']=='imp')
 		include_once("../view/importar.html.php");	
+		else if ($_GET['mod']=='soft_com')
+		include_once("../view/software_com.html.php");
 		else if ($_GET['mod']=='impear')
 		include_once("../inc/importaraltorend.inc.php");	
 		else if (!isset($_GET['mod']) || $_GET['mod']=='invear'){
