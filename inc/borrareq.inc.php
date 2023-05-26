@@ -68,7 +68,7 @@ die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>
 		
 		 $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
 		
-  die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
+            die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
 
 }
 ?>

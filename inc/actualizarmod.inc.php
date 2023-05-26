@@ -1,7 +1,10 @@
 <?php 
 require_once('../inc/sesion.inc.php');
+require_once('../conexion.php');
 require_once('../clases/importa.class.php');
 require_once('../clases/inventario.class.php');
+
+session_start(); 
 
 $cuentaact=0;
 $errorbn=0;
@@ -18,13 +21,19 @@ $botonBien=new importa();
 $valida=new importa();
 $verifica = new inventario();
 
+	 if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+		   $_SESSION['id_div']=$_REQUEST['div'];
+		   if ($_SESSION['tipo_usuario']==9)
+                $_SESSION['id_div']=$_REQUEST['div'];
+
+
 $querydt="DELETE FROM errorinserta";	
 $result = pg_query($querydt) or die('Hubo un error con la base de datos');
 $querypre="DELETE FROM registroerror re
 	       WHERE date(fecharegistro)= current_date
 		   AND id_div=" . $_SESSION['id_div'];
 $result = pg_query($querypre) or die('Hubo un error con la base de datos');			 
-			 
+
 
 function buscaBienesAct(&$datosdec){
 	
@@ -593,12 +602,13 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 				 if (!preg_match("/^[0-9]+$/",$datosdec[50])){ $columna51=2;?>
 		      <legend align="left"> <?php echo 'La columna AX, <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>    
                <?php } else{ // que sea laboratorio de la div
+					 
 				      $querylab="SELECT * FROM laboratorios l
                                    JOIN departamentos d
                                    ON d.id_dep=l.id_dep
                                    WHERE id_div=".$_SESSION['id_div'].
 					               " AND l.id_lab=".$datosdec[50];
-			         // echo $querylab;
+			        // echo $querylab;
 		              $existelab= pg_query($querylab) or die('Hubo un error con la base de datos');		
 			
 	    	          $cuantos=pg_num_rows($existelab);
@@ -772,7 +782,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
 		     arreglo_total=%d,tec_com=%d, tec_com_otro='%s',
 		     sist_oper=%d, version_sist_oper='%s',
-		     licencia=%d,licencia_ini='%s',licencia_fin='%s',fecha='%s',importa=%d
+		     licencia=%d,licencia_ini='%s',licencia_fin='%s',importa=%d
 			  WHERE inventario="."'".$datosdec[15]."'";
 				
 					//echo $updatequery;		  
@@ -792,9 +802,9 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 									$datosdec[37],$datosdec[38],$datosdec[39],$datosdec[40],
 									$datosdec[41],$datosdec[42],$datosdec[43],
 									$datosdec[44],$datosdec[45],
-									$datosdec[46],$datosdec[47],$datosdec[48],date("Y-m-d"),2); 
-			     //  echo $queryu;
-			   
+									$datosdec[46],$datosdec[47],$datosdec[48],2); 
+			     //  echo $queryu; date("Y-m-d")
+			     
                     $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR tupla en dispositivo'); 
 					
 					if (!$result) 
@@ -803,8 +813,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 					 else
 						
  		                  $cuentaact++;
-					 
-		        }
+					 }
 				/*else 
 				   { echo 'error de bienes inv';// fin de la validación cuando si existe en BIENES INVENTARIO    
 				   $errorbn++;
@@ -819,9 +828,9 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
                     $ultimo= pg_fetch_array($registrod);
 	
 		         if ($ultimo[0]==0)
-				    $ultimo=1;
+				     $ultimo=1;
 			     else 
-			        $ultimo=$ultimo[0]+1;
+			         $ultimo=$ultimo[0]+1;
 		   
 		          $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
 			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
@@ -858,18 +867,16 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
           <br>
 		<?php } ?>
         <?php   if ($sinlab>0 ){	?>
-	      <legend align="left"> <h3><?php echo "Tuplas con error por laboratorio inválido " . $sinlab; ?></h3></legend> 
+	      <legend align="left"> <h3><?php echo "Tuplas con error por laboratorio inválido " . $sinlab ; ?></h3></legend> 
           <br>
 		<?php } ?>
           
           <?php if ($novalido >0 && $cuentaact!=0)
 		  
 		              $botonReg->exportaErrorRegAct();
-			  
-			  	
-				if ($conteorrorbn >0 && $cuentaact!=0)
-						 
-		              $botonBien->exportaErrorBienAct();
+	
+			    if ($conteorrorbn >0 && $cuentaact!=0)
+						$botonBien->exportaErrorBienAct();
 }else {?>
 
   <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></div></div>

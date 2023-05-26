@@ -6,8 +6,8 @@ require_once('../conexion.php');
 
 <?php
 
-echo 'valores de POSTen borrareq';
-print_r ($_POST);
+/*echo 'valores de POSTen borrareq';
+print_r ($_POST);*/
 
 if(!isset($_POST['resp'])){ ?>
 				<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'].'&div='. $_REQUEST['div'];?>
@@ -21,9 +21,8 @@ if(!isset($_POST['resp'])){ ?>
                 
                 <?php
                 foreach ($_REQUEST as $campo => $valor) {
-                        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
-                echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
-                
+                    //echo "\$usuario[$campo] => $valor.\n" . "</br>";
+                    echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
                 }
                 ?>
                 <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
@@ -39,27 +38,19 @@ if($_POST['accion']=='borrar'){
 	
   $query="DELETE FROM proyecto_nec WHERE id_proy=%d AND id_lab=%d";	
   $queryp=sprintf($query,$_POST['id_proy'],$_REQUEST['lab']);
-  echo $queryp;
   $result=pg_query($con,$queryp) or die('ERROR AL BORRAR DATOS queryp: ' . pg_last_error());	
+	
   $strquery="DELETE FROM proy WHERE id_proy=%d";
   $queryd=sprintf($strquery,$_POST['id_proy']);
   $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
   
-  
-	
-  $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
-	
-die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
-	
-   } 
-
- } else {
-		//echo "No borrar";	
-		
-		 $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&orden='. $_REQUEST['orden'] .'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
-		
+  $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod'].'&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
   die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
-
+	 } 
+} else {
+		//echo "No borrar";	
+	 $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod']. '&lab=' . $_REQUEST['lab'] . '&div='.  $_REQUEST['div'];
+	 die('<script type="text/javascript">window.location=\''.$direccion.'\';</script>');	
 }
 ?>
 				

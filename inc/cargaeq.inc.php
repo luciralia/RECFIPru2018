@@ -14,7 +14,7 @@ echo 'Valores en carga eq';
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso,   l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division,  act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso,   l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division,  act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -36,7 +36,7 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 
 }if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']=='') ){
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario, otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -58,7 +58,7 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 "ORDER BY id_nec DESC";
 	
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['lab']=='' && $_GET['div']!=''){
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario, otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -80,7 +80,7 @@ WHERE dv.id_div=" . $_GET['div'] .
 } 
 else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab
@@ -102,7 +102,7 @@ WHERE dv.id_div=" . $_GET['div'] .
 	
 } else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto , id_cotizacion, cto_unitario, ref ,otrajust
+$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario,otrajust
 FROM necesidades_equipo ne
 LEFT JOIN nec_evid nec
 ON nec.id_lab=ne.id_lab

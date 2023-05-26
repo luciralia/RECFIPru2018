@@ -6,8 +6,7 @@ require_once('../clases/inventario.class.php');
 $software = new Inventario();
 $radial = new inventario();
 
- print_r($_POST);
-
+ //print_r($_POST);
 
 if ($_REQUEST['accion']=='nuevo'){  
 
@@ -16,39 +15,30 @@ if ($_REQUEST['accion']=='nuevo'){
 <br>
 <div class=formulario>
 	
-<form action="../inc/procesasoft.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
+<form action="../inc/procesasoft_desa.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
 <table cellpadding="2" class="formulario">
-  <tr>
-       <td align="right">Tipo de software</td>
-       <td ><?php  $software->cmbsoftware($_POST['id_tipo_soft']); ?></td>
-  </tr>
-  <tr>
-      <td width="151" align="right" >Proveedor</td>
-      <td colspan="3"><input name="proveedor" type="text" id="proveedor" tabindex="8" size="50" 
-      maxlength="55"/></td>
-  </tr>
   
   <tr>
-  	<td width="151" align="right"><font color="blue">Licencia</font></td>
-        <td ><font color="blue"><?php $radial->radialsoflic($_POST['licencia'])?></font></td>
-        <td colspan="1">&nbsp;</td>
+      <td width="151" align="right" >Número de software</td>
+      <td colspan="3"><input name="no_software" type="text" id="no_software" tabindex="8" size="15" 
+      maxlength="30"/></td>
   </tr>
   <tr>
-  	<td><label>Fecha adquisición</label></td>
+  	<td><label>Fecha de desarrollo</label></td>
          <td><label><input name="fecha_adq" type="date" id="fecha_factura" step="1" min="01-01-2000" max="31-12-2040"  value="<?php echo $_POST['fecha_adq']; ?>"   ></label> </td>
   </tr>
   <tr>
-      <td width="151" align="right" >Nombre responsable</td>
+      <td width="151" align="right" >Nombre desarrollador</td>
       <td colspan="3"><input name="pila_respons" type="text" id="pila_respons" tabindex="8" size="25" 
       maxlength="30"/></td>
   </tr>
    <tr>
-      <td width="151" align="right" >Paterno responsable</td>
+      <td width="151" align="right" >Paterno desarollador</td>
       <td colspan="3"><input name="pat_respons" type="text" id="pat_respons" tabindex="8" size="25" 
       maxlength="30"/></td>
   </tr>
   <tr>
-      <td width="151" align="right" >Materno responsable</td>
+      <td width="151" align="right" >Materno desarollador</td>
       <td colspan="3"><input name="mat_respons" type="text" id="mat_respons" tabindex="8" size="25" 
       maxlength="30"/></td>
   </tr>
@@ -76,43 +66,32 @@ if ($_REQUEST['accion']=='nuevo'){
 <br>
 <div class=formulario>
 	
-<form action="../inc/procesasoft.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
+<form action="../inc/procesasoft_desa.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
 <table cellpadding="2" class="formulario">
-<tr>
-       <td align="right">Tipo de software</td>
-      <td ><?php  $software->cmbsoftware($_POST['id_tipo_soft']); ?></td>
-  </tr>
- 
-  <tr>
-    <td width="151" align="right" >Proveedor</td>
-    <td width="857" colspan="3" ><input name="proveedor" type="text" id="proveedor" tabindex="1" size="50" value="<?php echo $_POST['proveedor']; ?>"></td>
-  </tr>
-  <tr>
-        <td width="151" align="right"><font color="blue">Licencia</font></td>
-        <td ><font color="blue"><?php  $radial->radialsoflic($_POST['licencia'])?></font></td>
-        <td colspan="1">&nbsp;</td>
-	</tr>      
- 
+
+     
+    <tr>
+      <td width="151" align="right" >Número de software</td>
+      <td colspan="3"><input name="no_software" type="text" id="no_software" tabindex="8" size="15" 
+      maxlength="30"/></td>
+    </tr>
    <tr>
-  	<td><label>Fecha adquisición</label></td>
+  	<td><label>Fecha de desarollo</label></td>
          <td><label><input name="fecha_adq" type="date" id="fecha_factura" step="1" min="01-01-2000" max="31-12-2040"  value="<?php echo $_POST['fecha_adq']; ?>"   ></label> </td>
   </tr>
    <tr>
-    <td width="151" align="right" >Nombre responsable</td>
+    <td width="151" align="right" >Nombre desarrollador</td>
     <td width="857" colspan="3" ><input name="pila_respons" type="text" id="pila_respons" tabindex="1" size="50" value="<?php echo $_POST['pila_respons']; ?>"></td>
   </tr>
   <tr>
-    <td width="151" align="right" >Paterno responsable</td>
+    <td width="151" align="right" >Paterno desarrollador</td>
     <td width="857" colspan="3" ><input name="pat_respons" type="text" id="pat_respons" tabindex="1" size="50" value="<?php echo $_POST['pat_respons']; ?>"></td>
   </tr>
   <tr>
-    <td width="151" align="right" >Materno responsable</td>
+    <td width="151" align="right" >Materno desarrollador</td>
     <td width="857" colspan="3" ><input name="mat_respons" type="text" id="mat_respons" tabindex="1" size="50" value="<?php echo $_POST['mat_respons']; ?>"></td>
   </tr>
-  <tr>
-      <td align="right">Descripción</td>
-      <td><textarea name="descripcion" id="descripcion" rows="10" cols="40"><?php echo $_POST['descripcion']?></textarea></td>
-  </tr>
+  
  
   <tr>
     <td colspan="4" align="right">

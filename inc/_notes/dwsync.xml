@@ -231,7 +231,7 @@
 <file name="importaraltorend.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132289481090103332" remote="132289481140000000" Dst="1" />
 <file name="cargaCensoDGTIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624764809620892" remote="132633255440000000" Dst="2" />
 <file name="exportaxls_censoCATIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624744538121770" remote="132633256830000000" Dst="2" />
-<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263119287504418" remote="133264948080000000" Dst="0" />
+<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133293376383354851" remote="133293382300000000" Dst="0" />
 <file name="cargadocs.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132924621766166615" remote="132924622470000000" Dst="1" />
 <file name="cargaCensoDGTICC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133245037742468542" remote="133245038330000000" Dst="0" />
 <file name="exportaxls_censoedtipo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263267610000000" remote="133264941220000000" Dst="0" />

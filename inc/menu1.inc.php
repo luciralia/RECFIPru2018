@@ -73,9 +73,7 @@
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
                   <!--  <li><a href="../view/inicio.html.php?mod=invear&lab=<?php // echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Equipos de Alto Rendimiento</a></li> -->
          <?php } ?> 
-         <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-                    <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
-         <?php } ?> 
+         
          <?php 
 				if ( $_GET['lab']!='' ){
 			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
@@ -87,8 +85,11 @@
             </ul></li> 
              <?php 
 				 }?>
-         <?php // if ($_SESSION['tipo_usuario']==9)	 {?>
-            <!--  <li><a href="../view/inicio.html.php?mod=act&lab=<?php  //echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Actualizar</a></li> -->        <?php  // } ?> 
+         <?php if ($_SESSION['tipo_usuario']==9)	 {?>
+                    <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
+         <?php } ?> 
+         <?php if ($_SESSION['tipo_usuario']==9)	 {?>
+             <li><a href="../view/inicio.html.php?mod=act&lab=<?php  echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">Actualizar</a></li>       <?php   } ?> 
      
        </ul>
        </li>
@@ -142,8 +143,7 @@
     
     <?php 
 		 }
-	 ?>
-     <?php }?>  
+	  }?>  
 <!-- MENU DE EQUIPOS DE ALTO RENDIMIENTO-->
   <?php  //if ($_SESSION['tipo_usuario']==9)	 {
     // $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>
@@ -172,13 +172,11 @@
 
 	<?php $clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
     <?php $actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
-	   <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php  echo $clase;?>>Proyectos</a>
+	  <li><a href="../view/inicio.html.php?mod=pryeb&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  <?php echo $clase;?>>Proyectos</a>
 	   </li> 
              
-	<?php  }?>
-	    
-    
-   
+	<?php }?>
+	   
 	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
 	 <li><a href="../view/inicio.html.php?mod=eq&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>" <?php echo $clase;?>>Equipamiento</a></li>
 	
@@ -193,7 +191,7 @@
         <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
         <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==3 ){ ?>
         <?php $clase=($_GET['mod']=='serv' || $_GET['mod']=='mat' || $_GET['mod']=='mobi' || $_GET['mod']=='infr')?'" class="actual"':$clase='"'; ?>
-        <li><a href="#" <?php  echo $clase; ?>>Mantenimiento</a>
+       <li><a href="#" <?php  echo $clase; ?>>Mantenimiento</a>
          <ul>
              <li><a href="../view/inicio.html.php?mod=serv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Externo</a></li>
              <?php if($_SESSION['tipo_usuario']==9){ ?>
@@ -206,11 +204,9 @@
 	
     <?php if($_SESSION['tipo_usuario']==9 ){ ?>   	
 	<?php if ($_GET['mod']=='servibf'||$_GET['mod']=='servibp') { $clase='" class="actual"'; } else {$clase='"';}?> 
-    <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
-	
-    	<ul>
-          
-            <li><a href="../view/inicio.html.php?mod=servibf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
+   <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
+	<ul>
+          <li><a href="../view/inicio.html.php?mod=servibf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
             <li><a href="../view/inicio.html.php?mod=servibp&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Bit&aacute;cora de mantenimiento preventivo interno</a></li>
     	</ul>
 	</li>

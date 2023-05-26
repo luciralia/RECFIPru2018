@@ -794,11 +794,11 @@ if($size > 0){
 			  if ($datosdec[18]=='')
 			      $datosdec[18]=0;	  
 			  if ($datosdec[18]==0) 
-			      $datosdec[18]= date("Y-m-d", strtotime($datosdec[18]));
+			      $datosdec[18]= date("Y-m-d H:i:s", strtotime($datosdec[18]));
 			  if ($datosdec[47]==0) 
-			      $datosdec[47]= date("Y-m-d", strtotime($datosdec[47]));	  
+			      $datosdec[47]= date("Y-m-d H:i:s", strtotime($datosdec[47]));	  
               if ($datosdec[48]==0) 
-			      $datosdec[48]= date("Y-m-d", strtotime($datosdec[48]));	
+			      $datosdec[48]= date("Y-m-d H:i:s", strtotime($datosdec[48]));	
 				  		
 	     
 			 $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,
@@ -867,7 +867,7 @@ if($size > 0){
 				 $datosdec[37],$datosdec[38],$datosdec[39],$datosdec[40], 
                  $datosdec[41],$datosdec[42],$datosdec[43], 
 			     $datosdec[44],$datosdec[45], 
-			     $datosdec[46],$datosdec[47],$datosdec[48],date('Y-m-d'), 
+			     $datosdec[46],$datosdec[47],$datosdec[48],date('Y-m-d H:i:s'), 
 				 $equipoc[1],$equipoc[2],$equipoc[3], 
 				 $equipoc[4],$equipoc[5],$equipoc[6], 
                  $equipoc[7],$equipoc[8],$equipoc[9], 

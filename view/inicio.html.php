@@ -49,7 +49,7 @@ require_once('../inc/encabezado.inc.php');
 	 && $_GET['mod']!='invg' 
     &
 	 }*/
-    if ($_GET['mod']!='imp' && $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred')
+    if ($_GET['mod']!='imp' && $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred' && $_GET['mod']!='act')
    /* if ($_GET['mod']<>'def' && $_GET['mod']!='imp' && $_GET['mod']!='act'  && $_GET['mod']!='invear' &&        $_GET['mod']!='impear'  &&  $_GET['mod']<>'doc'   &&  $_GET['mod']<>'cred'  && $_GET['mod']!='invg'    )*/
             require_once('../inc/menu_usr.inc.php'); 
 	   ?></td>
@@ -101,6 +101,8 @@ require_once('../inc/encabezado.inc.php');
 		include_once("../view/importar.html.php");	
 		else if ($_GET['mod']=='soft_com')
 		include_once("../view/software_com.html.php");
+		else if ($_GET['mod']=='soft_desar')
+		include_once("../view/software_desar.html.php");
 		else if ($_GET['mod']=='impear')
 		include_once("../inc/importaraltorend.inc.php");	
 		else if (!isset($_GET['mod']) || $_GET['mod']=='invear'){

@@ -8,18 +8,13 @@ require_once('../conexion.php');
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
-
-
-<p>procesaeq</p>
+<p>procesasoft_desa</p>
 <p>&nbsp;</p>
 <?php 
-	echo 'Valores en procesa soft';
+	echo 'Valores en procesa_desa';
 	print_r($_POST); 
-	echo 'Valores en REQ procesa soft';
+	echo 'Valores en REQ procesa_desa';
 	print_r($_REQUEST);
-	if ($_POST['licencia']=='Si')
-	$lic='1';
-	else $lic='0';
 	
 	?>
 
@@ -92,11 +87,16 @@ require_once('../conexion.php');
 	
 	// Insertar en software comercial
 	
-	 $strquery="INSERT INTO soft_comercial (id_soft_com,id_tipo_soft,proveedor,licencia) VALUES (%d,%d,'%s','%s')";
+	$strquery="INSERT INTO soft_desarrollo (id_soft_desa,no_software) VALUES (%d,%d,'%s','%s')";
 	$querysc=sprintf($strquery,$id_soft_aux,$_POST['id_tipo_soft'],$_POST['proveedor'],$lic);
     echo $querysc;
     $result=@pg_query($con,$querysc) or die('ERROR AL INSERTA DATOS: ' . pg_last_error());
     echo $querysc;	
+	
+	
+	// FALTA  AGREGAR LOS MANUALES DE DESARROLLO
+	
+	
 	
 	$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
 echo $direccion;

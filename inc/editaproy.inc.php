@@ -29,7 +29,7 @@ if ($_REQUEST['accion']=='nuevo'){
 <table cellpadding="2" class="formulario">
   <tr>
       <td width="151" align="right" >Nombre</td>
-      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="50" 
+      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="200" 
       maxlength="100"/></td>
   </tr>
   <tr>
@@ -38,7 +38,7 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
       <td width="151" align="right" >Objetivo Espec&iacute;fico</td>
-      <td colspan="3"><input name="objetivo_especifico" type="text" id="objetivo_especifico" tabindex="8" size="50" maxlength="200"/></td>
+      <td colspan="3"><input name="objetivo_especifico" type="text" id="objetivo_especifico" tabindex="8" size="50" maxlength="2000"/></td>
   </tr>
   <tr>
       <!--<td width="151" align="right" >Descripci&oacute;n detallada</td>
@@ -122,17 +122,17 @@ if ($_REQUEST['accion']=='nuevo'){
 
   <tr>
       <td width="151" align="right" >Nombre</td>
-      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="50" 
+      <td colspan="3"><input name="nombre_proy" type="text" id="nombre_proy" tabindex="8" size="500" 
       maxlength="100" value="<?php echo $_POST['nombre_proy']; ?>"/></td>
   </tr>
   <tr>
       <td width="151" align="right" >Objetivo General</td>
-      <td colspan="3"><input name="objetivo_general" type="text" id="objetivo_general" tabindex="8" size="50" maxlength="200"
+      <td colspan="3"><input name="objetivo_general" type="text" id="objetivo_general" tabindex="8" size="50" maxlength="2000"
       value="<?php echo $_POST['objetivo_general'];?>"/></td>
   </tr>
   <tr>
       <td width="151" align="right" >Objetivo Espec&iacute;fico</td>
-      <td colspan="3"><input name="objetivo_especifico" type="text" id="objetivo_especifico" tabindex="8" size="50" maxlength="200"
+      <td colspan="3"><input name="objetivo_especifico" type="text" id="objetivo_especifico" tabindex="8" size="50" maxlength="2000"
       value="<?php echo $_POST['objetivo_especifico'];?>"/></td>
   </tr>
   <tr>

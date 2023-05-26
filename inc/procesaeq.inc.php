@@ -283,7 +283,7 @@ $result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error(
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
-echo $queryd;
+
 
  }
 

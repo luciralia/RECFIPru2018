@@ -1,5 +1,5 @@
 <?php 
-//require_once('../inc/encabezado.inc.php'); 
+require_once('../inc/encabezado.inc.php'); 
 require_once('../inc/sesion.inc.php');
 require_once('../clases/laboratorios.class.php');
 require_once('../clases/divisiones.class.php');
@@ -16,31 +16,9 @@ $div = new departamentos();
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
     
   <tr>
-<?php if ($_GET['mod']=='serv'){?>
-
-    <td align="center"><h2>Servicios de mantenimiento externo</h2></td>
-    
-<?php }?>
-<?php if ($_GET['mod']=='servi'){?>
-
-    <td align="center"><h2>Equipo para mantenimiento interno</h2></td>
-    
-<?php }?>
-
-<?php if ($_GET['mod']=='servibf'){?>
-
-    <td align="center"><h2>Bit&aacute;cora de falla y seguimiento de mantenimiento correctivo interno</h2></td>
-    
-<?php }?>
-
-<?php if ($_GET['mod']=='servibp'){?>
-
-    <td align="center"><h2>Bit&aacute;cora de mantenimiento preventivo interno</h2></td>
-    
-<?php }?>
-
+    <td align="center"><h2>Software de desarrollo</h2></td>
   </tr>
- <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
   <tr>
     <?php if($_GET['lab']!='' && $_GET['div']==NULL ){?>
             <td align="center"><strong><h3><?php echo $lab->getLaboratorio($_GET['lab']);?></h3></strong></td>
@@ -53,36 +31,26 @@ $div = new departamentos();
     <?php } ?>
     
     </tr>
-
  
-<tr>
-<td><div class="centrado"> <?php //require('../inc/cargaldd.inc.php'); ?></div></td>
-</tr>
-<!--<tr>
-<td><div class="centrado"> <?php //if (!isset($_GET['lab']) || $_GET['lab']==""){} else {require('../inc/servicios.inc.php');} ?></div></td>
-</tr>-->
-<?php 
+    <?php 
           if($_GET['lab']!='' && $_GET['div']==NULL ){?>
      <tr>
-          <td><div class="centrado"> <?php require('../inc/servicios.inc.php');?></div></td>
+          <td><div class="centrado"> <?php require('../inc/software_desar.inc.php');?></div></td>
      </tr>
-   <?php  }else if ($_GET['lab']!='' && $_GET['div']!='' ){?>
+    <?php  }elseif ($_GET['lab']!='' && $_GET['div']!='' ){?>
       <tr>
-          <td><div class="centrado"> <?php require('../inc/servicios.inc.php');?></div></td>
+          <td><div class="centrado"> <?php require('../inc/software_desar.inc.php');?></div></td>
      </tr>
 	 <?php  }elseif($_GET['div']!=NULL && $_GET['lab']=='' && $_SESSION['tipo_usuario']==10){?>
 	 <tr>
-          <td><div class="centrado"> <?php require('../inc/servicios.inc.php');?></div></td>
+          <td><div class="centrado"> <?php require('../inc/software_desar.inc.php');?></div></td>
      </tr>
-	<?php 
+	<?php //   } else if{ }
 	 }elseif($_GET['div']==NULL && $_GET['lab']=='' ){?>
       <tr>
-           <td><div class="centrado"> <?php require('../inc/servicios.inc.php');?></div></td>
+           <td><div class="centrado"> <?php require('../inc/software_desar.inc.php');?></div></td>
       </tr>
  <?php  } ?>
-
-
-
 
 
 <?php require('../inc/pie.inc.php'); ?>

@@ -71,7 +71,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant .
+WHERE " .$tiposerv . $tipomant .
 " AND l.id_lab= ";		
 	switch ($_GET['orden']){
  			case "equipo":
@@ -121,7 +121,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant .
+WHERE " .$tiposerv . $tipomant .
 		
  " AND dv.id_div= ".$_REQUEST['div'];
 	
@@ -153,7 +153,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant .
+WHERE "  .$tiposerv . $tipomant .
 		
  " AND dv.id_div= ".$_REQUEST['div'];
 	
@@ -185,7 +185,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant ;
+WHERE " .$tiposerv . $tipomant ;
 }
 echo 'En cargaserv '.$query; 
 ?>
