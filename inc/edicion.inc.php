@@ -293,21 +293,21 @@ if ($_POST['accion']=='editar'){
 <tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo</h3></legend></tr>
  <br> 
    <tr>
-     <?php if ($_POST['dispositivo_clave']==10){ ?>
-      <td><label>Dispositivo: </label></td>
+     <?php //if ($_POST['dispositivo_clave']==10){ ?>
+     <td><label>Dispositivo: </label></td>
       <td><label><?php $combo->combodispositivo($_POST['dispositivo_clave'])?></label> </td>
-       <?php }else if ($_POST['dispositivo_clave']==13){ ?> 
-       <td><label>Dispositivo: </label></td>
-      <td><label><?php $combo->combodispositivoDig($_POST['dispositivo_clave'])?></label> </td>
-       <?php } ?> 
-       <?php if ($_POST['dispositivo_clave']==10){ ?>
+       <?php // }else if ($_POST['dispositivo_clave']==13){ ?> 
+       <!-- <td><label>Dispositivo: </label></td>
+      <td><label><?php //$combo->combodispositivoDig($_POST['dispositivo_clave'])?></label> </td>
+       <?php //} ?> 
+       <?php //if ($_POST['dispositivo_clave']==10){ ?>
          <td><label>Tipo Impresora:</label></td>
-         <td><label><?php $combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
-         <?php } ?>
-         <?php if ($_POST['dispositivo_clave']==13){ ?>
+         <td><label><?php //$combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
+         <?php //} ?>
+         <?php //if ($_POST['dispositivo_clave']==13){ ?>
          <td><label>Tipo Digitalizador:</label></td>
-         <td><label><?php $combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>
-         <?php } ?>
+         <td><label><?php //$combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>__>
+         <?php //} ?>
       
    </tr>
    <tr>
@@ -872,7 +872,7 @@ if ($_POST['accion']=='editar'){
   <?php } ?>
   <table style="width:100%; align:center;">
    <br/>
-   <br/>
+   <br/> 
   <tr>
        <td colspan="3" align="center">
         <input type="submit" name="accioned" value="Guardar" />
@@ -889,6 +889,7 @@ if ($_POST['accion']=='editar'){
 <input name="bn_id" type="hidden" value="<?php echo $_POST['bn_id']; ?>" />
 <input name="id_equipo" type="hidden" value="<?php echo $_POST['id_equipo']; ?>" />
 <input name="id_dispositivo" type="hidden" value="<?php echo $_POST['id_dispositivo']; ?>" />
+<input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 <!--<input name="bien" type="hidden" value="<?php //echo $_POST['bien']; ?>" />-->
 </form>
 

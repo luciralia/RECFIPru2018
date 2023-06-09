@@ -70,15 +70,15 @@ AND justificacion=cjnm.id";
 	
 }
 	
-// echo $query; ?>
+// echo 'Carga_material',$query; ?>
 
 <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']. "&div=". $_REQUEST['div'];?>
-<?php $action2="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=servi" ."&div=". $_REQUEST['div'];?>
+<?php $action2="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=servi". "&accion=nuevob" . "&div=". $_REQUEST['div'];?>
 <!--<form action="<?php echo $action1; ?>" method="post" name="fnuevo">
 <p style="text-align: right"> <input name="accion" type="submit" value="nuevo" id="botonblu"/>
 </form>-->
-<div style="text-align: right"> <div class="recuadro2" style="display:inline"><p>Estimado usuario: Favor de indicar el(los) equipo(s) que recibirá(n) mantenimiento con el material que está solicitando.</p> </div><div id="botonblu" > <a href="<?php echo $action2;?>">Selección de equipo</a></div></div>
-<div style="text-align: left"><?php if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nueva solicitud</a></div><?php }?></div>
+<div style="text-align: right"> <div class="recuadro2" style="display:inline"><p>Estimado usuario: Favor de indicar el(los) equipo(s) que recibirá(n) mantenimiento con los componentes que está solicitando.</p> </div><div id="botonblu" > <a href="<?php echo $action2;?>">Selecciónando de equipo</a></div></div>
+<div style="text-align: left"><?php //if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevo';?>">Nueva solicitud</a></div><?php //}?></div>
 <div class="block" id="necesidades_content">
 
 <div class="block" id="necesidades_content">      
@@ -160,22 +160,18 @@ AND justificacion=cjnm.id";
 <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']. "&div=". $_REQUEST['div'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$lab_necmat['id_lab'] ."_".$lab_necmat['id_req'];?>">
 
-  <tr ><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td><td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;<?php if (($_SESSION['permisos'][2]%3)==0){ ?><input name="accion" type="submit" value="editar" /><?php } ?></td></tr>
+  <tr ><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td><td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;<?php //if (($_SESSION['permisos'][2]%3)==0){ ?><input name="accion" type="submit" value="editar" /><?php //} ?></td></tr>
 
 
 <?php
-foreach ($lab_necmat as $campo => $valor) {
+   foreach ($lab_necmat as $campo => $valor) {
         //echo "\$usuario[$campo] => $valor.\n" . "</br>";
-echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
-
- }
+       echo "<input name='".$campo."' type='hidden' value='".$valor."' /> \n";
+   }
 ?>
 <input name="mod" type="hidden" value="<?php echo $_GET['mod'];?>" />
 </form>
 
-                   
-    
-	
 	<?php	
 			 }
 	}else{ ?>

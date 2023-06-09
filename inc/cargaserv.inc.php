@@ -187,7 +187,7 @@ JOIN usuarios u
 ON l.id_responsable=u.id_usuario
 WHERE " .$tiposerv . $tipomant ;
 }
-echo 'En cargaserv '.$query; 
+//echo 'En cargaserv '.$query; 
 ?>
 
 <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div']. "&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
@@ -201,16 +201,17 @@ echo 'En cargaserv '.$query;
 <?php if ($_GET['mod']=='servi'){$texto_bot='Seleccionar equipos';} elseif ($_GET['mod']=='servibf' || $_GET['mod']=='servibp') { $logger->putLog(53,2); $texto_bot='Agregar servicio para bit&aacute;cora'; }
 
 ?>
-<?php if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > 
+<?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > 
 	
 	<a href="<?php echo $action1 . '&accion=nuevob';?>"><?php echo $texto_bot;?></a></div><?php }?>
 	
 	
 </div>	
-<?php } else if  ($_SESSION['tipo_usuario']!=10)  { $logger->putLog(23,2);?>
+<?php //} else 
+	if  ($_SESSION['tipo_usuario']!=10)  { $logger->putLog(23,2);?>
 
-<div style="text-align: right"><?php if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevob';?>">Nueva solicitud</a></div><?php }?></div>	
-<?php }?>
+<div style="text-align: right"><?php //if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevob';?>">Nueva solicitud</a></div><?php }?></div>	
+<?php //}?>
 
 <div class="block" id="necesidades_content">    
   
@@ -219,11 +220,9 @@ echo 'En cargaserv '.$query;
 	
 	if($_GET['mod']=='serv' || $_GET['mod']=='servi'){ 
 		
-	$datos = pg_query($con,$query);
-	
-    $inventario= pg_num_rows($datos); 
-	
+	    $datos = pg_query($con,$query);
 
+        $inventario= pg_num_rows($datos); 
 	if ($inventario!=0 ){ 
 	?> 
 <td></br>
@@ -266,6 +265,7 @@ $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 
 if ($inventario!=0 ){ 
+	
 if($_GET['mod']=='servibf' || $_GET['mod']=='servibp'){ 
 $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc.php';
 	
@@ -339,12 +339,12 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
   </td>
   <?php  } ?>
   <td style="text-align: right">
-  <?php if (($_SESSION['permisos'][2]%3)==0  ){ ?>&nbsp;&nbsp;&nbsp;&nbsp;
+  <?php //if (($_SESSION['permisos'][2]%3)==0  ){ ?>&nbsp;&nbsp;&nbsp;&nbsp;
 
 	<?php  if ($_REQUEST['mod']!='servibf' && $_REQUEST['mod']!='servibp' && $_SESSION['tipo_usuario']!=10){ ?>
   		<input name="accion" type="submit" value="editar" />
   	<?php }?>
-  <?php } ?>
+  <?php //} ?>
 
 			<?php
 			foreach ($serv_mant as $campo => $valor) {
@@ -385,14 +385,11 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
     
   </tr>
 
- 
-     
- 
 	<?php	
 			 }//fin if servibf or servibp
-	}
+	     }
 		
-			}else { ?>
+    }else { ?>
              
             <!--<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
  

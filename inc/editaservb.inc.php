@@ -10,9 +10,11 @@ $motivo = new Requerimiento();
 $obj_inv = new Inventario();
 $logger = new Log();
 
+echo 'en edita serv', print_r($_REQUEST);
+
 if ($_REQUEST['accion']=='nuevob'){  
 
-//print_r($_REQUEST);
+
 
 if ($_GET['mod']=='serv') {
 	$tiposerv='FALSE';} elseif ($_GET['mod']=='servi' || $_GET['mod']=='servibf' || $_GET['mod']=='servibp'){
@@ -20,7 +22,7 @@ if ($_GET['mod']=='serv') {
 
 ?>
 <div class="formulario">
-<div class="recuadro"><p>Seleccione los equipos a los cuales se les dará servicio de mantenimiento con las siguientes especificaciones en común</p></div>
+<div class="recuadro"><p>Selecciona los equipos a los cuales se les dará servicio de mantenimiento con las siguientes especificaciones en común</p></div>
 <form action="../inc/procesaserv.inc.php" method="post" name="form_nuevo">
 <table cellpadding="2" class="formulario">
   <tr>
@@ -47,12 +49,12 @@ if ($_GET['mod']=='serv') {
 
     <!-- aquí termina para bitácoras -->
         
-        
         <br />
       </p>
     </div></td>
   </tr>
-<?php if ($_REQUEST['accion']!='nuevob'){ ?>
+<?php if ($_REQUEST['accion']!='nuevob'){
+	?>
   <tr>
     <td align="right">Equipo</td>
     <td colspan="2"><?php $obj_inv->cmbEquipo($_REQUEST['lab'],$_POST['bn_id']);?></td>
@@ -202,7 +204,6 @@ print_r($_POST);*/?>
 		$ensitiot=($_POST['sitio']=='t')?' checked="checked"':'';
 		$ensitiof=($_POST['sitio']=='f')?' checked="checked"':'';
 		
-
 ?>
 
 <form action="../inc/procesaserv.inc.php" method="post" name="form_edita">
@@ -324,7 +325,6 @@ print_r($_POST);*/?>
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
 <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
-
 <input name="fecha" type="hidden" value="<?php echo date('Y-m-d H:i:s'); ?>" />
 <input name="garantia" type="hidden" value="FALSE" />
 <input name="id_evento" type="hidden" value="<?php echo $_POST['id_evento']; ?>" />

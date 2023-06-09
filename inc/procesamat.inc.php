@@ -24,7 +24,7 @@ require_once('../conexion.php');
 <?php if($_POST['accionn']=='Guardar'){ ?>
 <h1>Nuevo</h1>
 <?php 
-$queryaux="SELECT max(id_req) AS maxid FROM req_mat WHERE id_lab=". $_REQUEST['lab'];
+$queryaux="SELECT max(id_req) AS maxid FROM req_mat WHERE id_lab=" . $_REQUEST['lab'];
 $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
 $row = pg_fetch_array($resultx); 
 $id_req_aux=$row['maxid']; 
@@ -35,8 +35,8 @@ echo "despues id_req_aux: " . $id_req_aux . "</br>";
 
 /* *******************  La buena solo que aqui no actualizo justificacion ni cotizacion ni plazo hasta que ponga los combos *********** */
 
-$strquery="INSERT INTO req_mat (id_req, id_lab, cant, descripcion, unidad_medida, plazo, justificacion, impacto, cto_unitario, id_cotizacion) VALUES (%d,%d,%d,'%s','%s',%d,%d,'%s',%.2f,%d)";
-$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['unidad_medida'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion']);
+$strquery="INSERT INTO req_mat (id_req, id_lab, cant, descripcion, unidad_medida, plazo, justificacion, impacto, cto_unitario, id_cotizacion,ref) VALUES (%d,%d,%d,'%s','%s',%d,%d,'%s',%.2f,%d,%d)";
+$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['unidad_medida'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['ref']);
 
 
 /*$strquery="INSERT INTO req_mat (id_req, id_lab, cant, descripcion, unidad_medida, plazo, impacto, cto_unitario) VALUES (%d,%d,%d,'%s','%s',%d,'%s',%.2f)";
@@ -59,27 +59,22 @@ header($direccion);
 <?php 
 
 /* *******************  La buena solo que aqui no actualizo justificacion ni cotizacion ni plazo hasta que ponga los combos *********** */
-$strquery="UPDATE req_mat SET id_req=%d, id_lab=%d, cant=%d, descripcion='%s', unidad_medida='%s', plazo=%d, justificacion=%d, impacto='%s', cto_unitario=%.2f, id_cotizacion=%d, ref=%d where id_req=" . $_POST['id_req'] . " and id_lab=" . $_POST['lab'];
-$queryu=sprintf($strquery,$_POST['id_req'],$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['unidad_medida'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['ref']);
-
-
+$strquery="UPDATE req_mat SET id_req=%d, id_lab=%d, cant=%d, descripcion='%s', unidad_medida='%s', plazo=%d, justificacion=%d, impacto='%s', cto_unitario=%.2f, id_cotizacion=%d, ref=%d WHERE id_req= " . $_POST['id_req']. " AND id_lab= " . $_POST['lab'];
+	
+$queryu=sprintf($strquery, $_POST['id_req'] ,$_POST['lab'],$_POST['cant'], $_POST['descripcion'],$_POST['unidad_medida'],$_POST['id_plazo'],$_POST['id_just'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['id_cotizacion'],$_POST['ref']);
 
 /*$strquery="UPDATE req_mat SET id_req=%d, id_lab=%d, cant=%d, descripcion='%s', unidad_medida='%s', impacto='%s', cto_unitario=%.2f, ref=%d where id_req=" . $_POST['id_req'] . " and id_lab=" . $_POST['lab'];
 $queryu=sprintf($strquery,$_POST['id_req'],$_POST['lab'],$_POST['cant'],$_POST['descripcion'],$_POST['unidad_medida'],$_POST['impacto'],$_POST['cto_unitario'],$_POST['ref']);*/
-
+	
+echo $queryu;
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. "&div=" . $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
-echo $queryu;
-
-
-?>
-
-
-<?php }?>
+	
+ }?>
 <?php if($_POST['accionm']=='borrar'){ 
 
 $strquery="DELETE FROM req_mat WHERE id_req=%d AND id_lab=%d";

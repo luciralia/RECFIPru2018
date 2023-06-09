@@ -11,13 +11,12 @@ if (($_REQUEST['accion']=='buscar'||$_REQUEST['bbuscar']=='Buscar'|| $_REQUEST['
 				 require_once('cargainvent.inc.php');
 				
 				 else if (!isset($_REQUEST['accion']) || $_REQUEST['accion']=='')
-				{ 
-					require_once('cargainvent.inc.php');} 
+				{ require_once('cargainvent.inc.php');} 
 			    else if ($_REQUEST['accion']=='editar' ) 
 				    {require_once('edicion.inc.php');}
 				else if ( $_REQUEST['accion']=='editarAR' || $_REQUEST['accion']=='editarG') 
 				    {require_once('editarear.inc.php');}	
 				else if ($_REQUEST['accion']=='nuevo') 
-				{require_once('editainventario.inc.php');}
+				{require_once('editainventario1.inc.php');}
              
 ?>
