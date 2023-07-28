@@ -33,12 +33,10 @@ $queryu=sprintf($strquery,$_POST['id_edif'],$_POST['detalle_ub'],$_POST['postal'
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 echo $queryu;
-
-
 
 }?>
 
@@ -56,11 +54,10 @@ $queryu=sprintf($strquery,$_POST['nombre'],$_POST['a_paterno'],$_POST['a_materno
 
 $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'].'&div='. $_REQUEST['div'];
 echo $direccion . "</br>";
 header($direccion);
 echo $queryu;
-
 
 ?>
 
@@ -83,7 +80,7 @@ echo $queryd;*/
 
 <?php if($_POST['accionc']=='Cancelar'|| $_POST['accionu']=='Cancelar'){ 
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&div='. $_REQUEST['div'];
 echo $direccion;
 header($direccion);
 

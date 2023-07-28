@@ -8,118 +8,189 @@ require_once('../clases/requerimientos.class.php');
 $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 $obj_req= new Requerimiento();
+$combofunc = new Requerimiento();
+
 echo 'Valores en carga eq';
 	print_r($_POST); 
 
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso,   l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division,  act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,otrajust
-FROM necesidades_equipo ne
-LEFT JOIN nec_evid nec
-ON nec.id_lab=ne.id_lab
-AND nec.id_nec=ne.id_nec
-LEFT JOIN evidencia e
-ON nec.id_evidencia=e.id_evidencia
+$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
+otra_just
+FROM requerimiento_lab lr
+left JOIN requerimiento_impacto ri
+ON ri.id_lab_req=lr.id_lab_req
+left JOIN cat_impacto ci
+on ci.id_impacto=ri.id_impacto
+left JOIN requerimiento_funcion rf
+ON rf.id_lab_req=lr.id_lab_req
+left JOIN cat_funcion cr
+ON cr.id_funcion=rf.id_funcion
+left JOIN requerimiento_sistema rs
+ON rs.id_lab_req=lr.id_lab_req
+left JOIN sistema s
+ON rs.id_sistema=s.id_sistema
+left JOIN sustitucion_motivo sm
+ON sm.id_motivo=lr.id_motivo
+left JOIN motivo_evidencia me
+ON me.id_motivo=sm.id_motivo
+left JOIN evidencia e
+ON e.id_evidencia=me.id_evidencia
 LEFT JOIN cat_recursos_equipo cre
-ON cre.id_recurso=ne.id_recurso
-JOIN laboratorios l
-ON ne.id_lab=l.id_lab
-JOIN departamentos de
+ON cre.id_recurso=lr.id_recurso
+left JOIN laboratorios l
+ON lr.id_lab=l.id_lab
+left JOIN departamentos de
 ON l.id_dep=de.id_dep
-JOIN divisiones dv
+left JOIN divisiones dv
 ON de.id_div=dv.id_div 
-JOIN cat_juztificacion_nec cjn
-ON justificacion=cjn.id
-WHERE ne.id_lab=" . $_GET['lab'] . 
-"ORDER BY id_nec DESC";
+left JOIN cat_juztificacion_nec cjn
+ON id_just=cjn.id
+WHERE lr.id_lab=" . $_GET['lab'] . 
+"ORDER BY id_req DESC";
 
 }if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']=='') ){
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario, otrajust
-FROM necesidades_equipo ne
-LEFT JOIN nec_evid nec
-ON nec.id_lab=ne.id_lab
-AND nec.id_nec=ne.id_nec
-LEFT JOIN evidencia e
-ON nec.id_evidencia=e.id_evidencia
+$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
+otra_just
+FROM requerimiento_lab lr
+left JOIN requerimiento_impacto ri
+ON ri.id_lab_req=lr.id_lab_req
+left JOIN cat_impacto ci
+on ci.id_impacto=ri.id_impacto
+left JOIN requerimiento_funcion rf
+ON rf.id_lab_req=lr.id_lab_req
+left JOIN cat_funcion cr
+ON cr.id_funcion=rf.id_funcion
+left JOIN requerimiento_sistema rs
+ON rs.id_lab_req=lr.id_lab_req
+left JOIN sistema s
+ON rs.id_sistema=s.id_sistema
+left JOIN sustitucion_motivo sm
+ON sm.id_motivo=lr.id_motivo
+left JOIN motivo_evidencia me
+ON me.id_motivo=sm.id_motivo
+left JOIN evidencia e
+ON e.id_evidencia=me.id_evidencia
 LEFT JOIN cat_recursos_equipo cre
-ON cre.id_recurso=ne.id_recurso
-JOIN laboratorios l
-ON ne.id_lab=l.id_lab
-JOIN departamentos de
+ON cre.id_recurso=lr.id_recurso
+left JOIN laboratorios l
+ON lr.id_lab=l.id_lab
+left JOIN departamentos de
 ON l.id_dep=de.id_dep
-JOIN divisiones dv
+left JOIN divisiones dv
 ON de.id_div=dv.id_div 
-
-JOIN cat_juztificacion_nec cjn
-ON justificacion=cjn.id
-WHERE ne.id_lab=" . $_GET['lab'] . 
-"ORDER BY id_nec DESC";
+left JOIN cat_juztificacion_nec cjn
+ON id_just=cjn.id
+WHERE lr.id_lab=" . $_GET['lab'] . 
+"ORDER BY id_req DESC";
 	
 }else if ($_SESSION['tipo_usuario']==9 && $_GET['lab']=='' && $_GET['div']!=''){
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario, otrajust
-FROM necesidades_equipo ne
-LEFT JOIN nec_evid nec
-ON nec.id_lab=ne.id_lab
-AND nec.id_nec=ne.id_nec
-LEFT JOIN evidencia e
-ON nec.id_evidencia=e.id_evidencia
+$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
+otra_just
+FROM requerimiento_lab lr
+left JOIN requerimiento_impacto ri
+ON ri.id_lab_req=lr.id_lab_req
+left JOIN cat_impacto ci
+on ci.id_impacto=ri.id_impacto
+left JOIN requerimiento_funcion rf
+ON rf.id_lab_req=lr.id_lab_req
+left JOIN cat_funcion cr
+ON cr.id_funcion=rf.id_funcion
+left JOIN requerimiento_sistema rs
+ON rs.id_lab_req=lr.id_lab_req
+left JOIN sistema s
+ON rs.id_sistema=s.id_sistema
+left JOIN sustitucion_motivo sm
+ON sm.id_motivo=lr.id_motivo
+left JOIN motivo_evidencia me
+ON me.id_motivo=sm.id_motivo
+left JOIN evidencia e
+ON e.id_evidencia=me.id_evidencia
 LEFT JOIN cat_recursos_equipo cre
-ON cre.id_recurso=ne.id_recurso
-JOIN laboratorios l
-ON ne.id_lab=l.id_lab
-JOIN departamentos de
+ON cre.id_recurso=lr.id_recurso
+left JOIN laboratorios l
+ON lr.id_lab=l.id_lab
+left JOIN departamentos de
 ON l.id_dep=de.id_dep
-JOIN divisiones dv
+left JOIN divisiones dv
 ON de.id_div=dv.id_div 
-JOIN cat_juztificacion_nec cjn
-ON justificacion=cjn.id
+left JOIN cat_juztificacion_nec cjn
+ON id_just=cjn.id
 WHERE dv.id_div=" . $_GET['div'] . 
-"ORDER BY id_nec DESC";	
+"ORDER BY id_req DESC";	
 } 
 else if ($_SESSION['tipo_usuario']==10 && $_GET['div']!='') {
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario,otrajust
-FROM necesidades_equipo ne
-LEFT JOIN nec_evid nec
-ON nec.id_lab=ne.id_lab
-AND nec.id_nec=ne.id_nec
-LEFT JOIN evidencia e
-ON nec.id_evidencia=e.id_evidencia
+$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
+otra_just
+FROM requerimiento_lab lr
+left JOIN requerimiento_impacto ri
+ON ri.id_lab_req=lr.id_lab_req
+left JOIN cat_impacto ci
+on ci.id_impacto=ri.id_impacto
+left JOIN requerimiento_funcion rf
+ON rf.id_lab_req=lr.id_lab_req
+left JOIN cat_funcion cr
+ON cr.id_funcion=rf.id_funcion
+left JOIN requerimiento_sistema rs
+ON rs.id_lab_req=lr.id_lab_req
+left JOIN sistema s
+ON rs.id_sistema=s.id_sistema
+left JOIN sustitucion_motivo sm
+ON sm.id_motivo=lr.id_motivo
+left JOIN motivo_evidencia me
+ON me.id_motivo=sm.id_motivo
+left JOIN evidencia e
+ON e.id_evidencia=me.id_evidencia
 LEFT JOIN cat_recursos_equipo cre
-ON cre.id_recurso=ne.id_recurso
-JOIN laboratorios l
-ON ne.id_lab=l.id_lab
-JOIN departamentos de
+ON cre.id_recurso=lr.id_recurso
+left JOIN laboratorios l
+ON lr.id_lab=l.id_lab
+left JOIN departamentos de
 ON l.id_dep=de.id_dep
-JOIN divisiones dv
+left JOIN divisiones dv
 ON de.id_div=dv.id_div 
-JOIN cat_juztificacion_nec cjn
-ON justificacion=cjn.id
+left JOIN cat_juztificacion_nec cjn
+ON id_just=cjn.id
 WHERE dv.id_div=" . $_GET['div'] . 
-"ORDER BY id_nec DESC";	
+"ORDER BY id_req DESC";	
 	
 } else if ($_SESSION['tipo_usuario']==10 &&  $_GET['div']==NULL) {
 	
-$query = "SELECT DISTINCT ne.id_nec, ne.id_lab AS id_lab, cant, ne.descripcion,e.id_evidencia,e.ruta_evidencia,ne.id_recurso,nomb_recurso, prioridad as id_prio,  l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo, act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS id_just, impacto ,  cto_unitario,otrajust
-FROM necesidades_equipo ne
-LEFT JOIN nec_evid nec
-ON nec.id_lab=ne.id_lab
-AND nec.id_nec=ne.id_nec
-LEFT JOIN evidencia e
-ON nec.id_evidencia=e.id_evidencia
+$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
+otra_just
+FROM requerimiento_lab lr
+left JOIN requerimiento_impacto ri
+ON ri.id_lab_req=lr.id_lab_req
+left JOIN cat_impacto ci
+on ci.id_impacto=ri.id_impacto
+left JOIN requerimiento_funcion rf
+ON rf.id_lab_req=lr.id_lab_req
+left JOIN cat_funcion cr
+ON cr.id_funcion=rf.id_funcion
+left JOIN requerimiento_sistema rs
+ON rs.id_lab_req=lr.id_lab_req
+left JOIN sistema s
+ON rs.id_sistema=s.id_sistema
+left JOIN sustitucion_motivo sm
+ON sm.id_motivo=lr.id_motivo
+left JOIN motivo_evidencia me
+ON me.id_motivo=sm.id_motivo
+left JOIN evidencia e
+ON e.id_evidencia=me.id_evidencia
 LEFT JOIN cat_recursos_equipo cre
-ON cre.id_recurso=ne.id_recurso
-JOIN laboratorios l
-ON ne.id_lab=l.id_lab
-JOIN departamentos de
+ON cre.id_recurso=lr.id_recurso
+left JOIN laboratorios l
+ON lr.id_lab=l.id_lab
+left JOIN departamentos de
 ON l.id_dep=de.id_dep
-JOIN divisiones dv
+left JOIN divisiones dv
 ON de.id_div=dv.id_div 
-JOIN cat_juztificacion_nec cjn
-ON justificacion=cjn.id
-ORDER BY id_nec DESC";	
+left JOIN cat_juztificacion_nec cjn
+ON id_just=cjn.id
+ORDER BY id_req DESC";	
 }
 //echo 'query'. $query;
   ?>
@@ -179,41 +250,50 @@ $datos = pg_query($con,$query);
 	?>              <table class="equipo"  width="100%" border="0" cellpadding="5">
                       <tr align="left">
 				        <th width="15%">Recursos de cómputo</th>		  
-                        <th width="5%"> Cantidad de equipos</th>
+                        <th width="10%">Cantidad de equipos</th>
                         <th width="15%">Descripci&oacute;n</th>
                         <th width="20%">Motivo</th>
-                        <th width="20%">Evidencia</th>  
+                        <th width="20%">Evidencia actual</th> 
+						<th width="20%">Evidencia infraestructura</th>  
                       </tr>          
-
 	                 <tr>
 						<td align="left"><?php echo $lab_nec['nomb_recurso']; ?></td> 
-                        <td align="center"><?php echo $lab_nec['cant'];?></td>
+                        <td align="center"><?php echo $lab_nec['cantidad'];?></td>
                         
                          <?php //if($_SESSION['permisos'][2] % 3 == 0){ ?>
                   		<td align="left"><a href="#necesidades" onClick="javascript:editLabNecesidades(<?php echo $k?>);"><?php echo $lab_nec['descripcion'];?></a></td>
                         <?php //}else{ ?>
                         <!--<td align="left"><?php echo $lab_nec['descripcion'];?></td>-->
                         <?php // } ?>
-                        
-                        <td align="left"><?php echo $lab_nec['motivo'];?></td>
+                  
+                        <td align="left"><?php echo $lab_nec['motivo_desc'];?></td>
                         
 						<td align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td>
+						 
+						<td align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td> 
                       </tr>
-					<tr>
+					
+                    <!--<tr>
     	                  <td colspan="9" align="left">&nbsp;</td>
-	                </tr>
-                    <tr>
+	                </tr><tr>
     	                  <td colspan="9" align="left"><strong>Justificación</strong></td>
-	                </tr>
+	                </tr>-->
                     <tr>
-                    <td colspan="9" align="left" valign="top"><?php echo $lab_nec['impacto'];?>
-						<?php if ($_SESSION['tipo_usuario']==9){ ?> <br /><hr /> </td> </tr><?php }?>
+                    <td colspan="9" align="left" ><?php echo $lab_nec['desc_impacto'];?>
+						<?php if ($_SESSION['tipo_usuario']==9){ ?> <!--<br /> <hr /></td> </tr>--> <?php }?>
                          
-	                         </td>
+	                </td> 
                     </tr>
+                    
+                    <tr>
+                          <td align="right">Función(es)</td>
+                          <td colspan="3"><?php  $combofunc->muestraselfunc($lab_nec['id_lab_req']); ?></td>
+                    </tr>
+                    
+                    
 <?php //if($_SESSION['tipo_usuario']==9){ ?> 
 			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=".   $_REQUEST['div'];?>
-			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab'] ."_".$lab_nec['id_nec'];?>">
+			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab_req'];?>">
 			<?php if ($_SESSION['tipo_usuario']==9){ 
 				?>
 		          

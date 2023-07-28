@@ -11,117 +11,101 @@ require_once('../conexion.php');
 <p>procesaeq</p>
 <p>&nbsp;</p>
 <?php 
-	/*echo 'Valores en procesa eq';
+	echo 'Valores en procesa eq';
 	print_r($_POST); 
 	echo 'valores de flies';
     print_r ($_FILES);
 	echo 'Valores en REQ procesa eq';
 	print_r($_REQUEST);
-	echo "Archivo: " . $_FILES["file"]["name"] . "<br />";*/
+	echo "Archivo: " . $_FILES["file"]["name"] . "<br />";
 	?>
-
 <!-- /* Guarda datos de registro nuevo */-->
 <?php if($_POST['accionn']=='Guardar'){ ?>
 <h1>Nuevo</h1>
 <?php 
-$queryaux="SELECT MAX(id_nec) as maxid FROM necesidades_equipo WHERE id_lab=". $_REQUEST['lab'];
-$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
-$row = pg_fetch_array($resultx); 
-$id_req_aux=$row['maxid']; 
-//echo "antes id_req_aux: " . $id_req_aux . "</br>";
-$id_req_aux+=1;
-//echo "despues id_req_aux: " . $id_req_aux . "</br>";
-
-//Modificaciones con otros datos falta revisar tipos de datos
+// Obtener id_lab_req
 	
-$strquery="INSERT INTO necesidades_equipo (id_nec, id_lab, cant, descripcion,justificacion, impacto,otrajust,id_recurso, fecha_fisico,fecha_software,desarrollo_sistema,plataforma_software) VALUES (%d,%d,%d,'%s',%d,'%s',%d,'%s',%d,
-)";
-$queryn=sprintf($strquery,$id_req_aux,$_POST['lab'],$_POST['cant'],$_POST['descripcion'],
-				$_POST['id_just'],$_POST['impacto'],$_POST['otrajust'], $_POST['id_recurso'],$_POST['fecha_fisico'],$_POST['fecha_software'],
-				$_POST['desarrollo_sistema'],$_POST['plataforma_software']);
-
-$result=@pg_query($con,$queryn) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
-//echo $queryn;
 	
-//Guardar imagen
-$queryaux="SELECT MAX(id_evidencia) as maxevid FROM evidencia";
-$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
-$row = pg_fetch_array($resultx); 
-$id_evid_aux=$row['maxevid']; 
-
-echo "antes id_evid_aux: " . $id_evid_aux . "</br>";
-$id_evid_aux+=1;
-echo "despues id_req_aux: " . $id_evid_aux . "</br>";
+    $queryaux="SELECT MAX(id_req) as maxidr FROM requerimiento_lab
+    WHERE id_lab=". $_REQUEST['lab']; 
+		
 	
-	$query="INSERT INTO evidencia (id_evidencia,descripcion,ruta_evidencia) VALUES('".$id_evid_aux. "','" . $_POST['descripcion'] . "','../evidencia/" .$_REQUEST['lab'] . "_" .$id_req_aux."_". $_FILES["file"]["name"]  ."')";
-				
-				echo "Tipo a: " . $_FILES["file"]["type"] . "<br />";
-				
-				$allowedExts = array("jpg", "jpeg", "png" , "pdf", "PDF", "JPG" );
-				$extension = end(explode(".", $_FILES["file"]["name"]));
-				echo "Extension: " . $extension . "</br>";
-	            if ($_FILES["file"]["type"] == "application/pdf" || $extension=="pdf" )
-					
-				  {
-				   if ($_FILES["file"]["error"] > 0)
-					 {
-					 echo "código de error: " . $_FILES["file"]["error"] . "<br />";
-					 }
-				   else
-					 {
-					 echo "Archivo: " . $_FILES["file"]["name"] . "<br />";
-					 echo "Tipo: " . $_FILES["file"]["type"] . "<br />";
-					 echo "Tamaño: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-					 echo "Archivo temporal: " . $_FILES["file"]["tmp_name"] . "<br />";
-				
-					 if (file_exists("../evidencia/" . $_REQUEST['lab'] . "_". $id_req_aux."_". $_FILES["file"]["name"]))
-					   {
-					    echo $_FILES["file"]["name"] . " ya existe. ";
-					   $_SESSION['error']['arch']='ea'; 
-					   $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&accion=nuevo' . '&id_evidencia="' . $_REQUEST['id_evidencia'] . '"' . '&descripcion="'. $_REQUEST['descripcion'] . '"' . '&div=' . $_REQUEST['div'] ;
-						echo $direccion . "</br>";
-						echo $_SESSION['error']['arch'];
-						header($direccion);
-						
-					   }
-					 else
-					   {
-					    $result = pg_query ($con, $query) or die('No se pudo insertar');
-						$queryaux="SELECT MAX(id_nec_evid) as maxnevid FROM nec_evid";
-                        $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
-                        $row = pg_fetch_array($resultx); 
-                        $id_ne_aux=$row['maxnevid']; 
-
-                        echo "antes id_ne_aux: " . $id_ne_aux . "</br>";
-                        $id_ne_aux+=1;
-                        echo "despues id_ne_aux: " . $id_ne_aux . "</br>";
-
-                        $queryne="INSERT INTO nec_evid (id_nec_evid,id_lab,id_nec, id_evidencia,fechaevid) 
-						VALUES (%d,%d,%d,%d,'%s')";
-                        $queryn=sprintf($queryne,$id_ne_aux,$_POST['lab'],$id_req_aux,$id_evid_aux,date('Y-m-d H:i:s'));
+	//Obtiene el siguiente valor del requerimiento
+	$resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+    $row = pg_fetch_array($resultx); 
+	$id_req_aux=$row['maxidr']; 
 	
-                        $result = pg_query ($con, $queryn) or die('No se pudo insertar');   
-					    $_SESSION['error']['arch']='';	   
-					    echo "inserción" . $_SESSION['error']['arch'];
-					    move_uploaded_file($_FILES["file"]["tmp_name"],"../evidencia/" . $_REQUEST['lab'] . "_" .$id_req_aux."_". $_FILES["file"]["name"]);
-					    echo "Almacenado en: " . "evidencia/" . $_FILES["file"]["name"];
-					    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
-						echo $direccion . "</br>";
-						header($direccion);
-						}
-					 }
-				   }
-				 else
-				   {
-				   echo "Archivo inv&aacute;lido, el formato de archivo debe ser pdf";
-				   $_SESSION['error']['arch']='ai'; 
-					//$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&accion=nuevo' . '&folio="' . $_REQUEST['folio'] . '"' . '&proveedor="' . $_REQUEST['proveedor']  . '"' . '&div='. $_REQUEST['div'] ;
-					$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&accion=nuevo' . '&id_evidencia="' . $_REQUEST['id_evidencia'] . '"' . '&descripcion="' . $_REQUEST['descripcion']  . '"' . '&div='. $_REQUEST['div'] ;   
-					echo $direccion . "</br>";
-					header($direccion);
-				   }
+    $id_req_aux+=1;		
+	
+	$strquery="INSERT INTO requerimiento_lab (id_lab,id_req, descripcion,id_just,otra_just,cantidad,id_recurso,id_motivo) VALUES (%d,%d,'%s',%d,'%s',%d,%d,%d)";
+    $queryr=sprintf($strquery,$_POST['lab'],$id_req_aux,$_POST['descripcion'],$_POST['id_just'],$_POST['otra_just'],$_POST['cantidad'], $_POST['id_recurso'],$id_mot_aux);
+    $result=@pg_query($con,$queryr) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
+	
+	
+    $queryaux1="SELECT MAX(id_lab_req) as maxidlr FROM requerimiento_lab
+    WHERE id_lab=". $_REQUEST['lab'];
+	echo $queryaux;
+	
+	$resultx1=@pg_query($con,$queryaux1) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+    $row = pg_fetch_array($resultx1); 
+	$id_reqlab_aux=$row['maxidlr']; 
+	
+	
+  // Guardar en sustitución_motivo	
+	
+   $queryaux="SELECT MAX(id_motivo) as maxmot FROM sustitucion_motivo";
+   $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+   $row = pg_fetch_array($resultx); 
+   $id_mot_aux=$row['maxmot']; 	
+   $id_mot_aux+=1;	
+	
+$strquery="INSERT INTO sustitucion_motivo (id_motivo,motivo_desc,corrimiento,planeacion) VALUES (%d,'%s',%d,'%s')";	
+$queryr=sprintf($strquery,$id_mot_aux,$_POST['motivo_desc'],$_POST['corrimiento'],$_POST['planeacion']);
+$result=@pg_query($con,$queryr) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
+	
+//Funciones va con un check
+// Lectura del check
+	
+for ($i=1;$i<=$_REQUEST['j'];$i++){
+	$val='id_funcion_'.+$i;
+     echo 'val',$val;
+     if (isset($_REQUEST[$val]))	{
+		 echo 'valor',$_REQUEST[$val];
+        $queryaux="SELECT MAX(id_func_req) AS maxidrf FROM requerimiento_funcion";
+        $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+        $row = pg_fetch_array($resultx); 
+        $id_reqf_aux=$row['maxidrf']; 
+        $id_reqf_aux=$id_reqf_aux+1;	
+	
+        $proyquery="INSERT INTO requerimiento_funcion (id_func_req,id_lab_req,id_funcion,detalle_func,otro_cual) VALUES 
+(%d,%d,%d,'%s','%s')";
+        $queryd=sprintf($proyquery,$id_reqf_aux,$id_reqlab_aux,$_REQUEST[$val],$_REQUEST['detalle_func'],$_REQUEST['otro_cual']);
+		echo $queryd;
+        $result=@pg_query($con,$queryd) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+        
+	 }//if valor en id_nec_x
+}//for inserta cada necesidad proyy
+
+// Guarda en requerimiento_impacto o justificaciòn????
+	
+$query_imp="SELECT MAX(id_req_imp) as maximpac FROM requerimiento_impacto";
+$resulti=@pg_query($con,$query_imp) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+$row = pg_fetch_array($resulti); 
+$id_impact_aux=$row['maximpac']; 
+$id_impact_aux+=1;
+$query_aux="INSERT INTO requerimiento_impacto (id_req_imp,id_lab_req,id_impacto,desc_impacto) VALUES(%d,%d,%d,'%s')";
+$queryi=sprintf($query_aux, $id_impact_aux,$id_reqlab_aux,$_POST['id_impacto'],$_POST['desc_impacto']);
+	
+//Guarda en evidencia actual	
+require_once('guardaevidenciaactual.inc.php');	
+//Guarda en evidencia de la infraestructura	
+require_once('guardaevidenciainfra.inc.php');		
+
+
 																	
-
+$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
+echo $direccion;
+header($direccion);
 
  }
 	?>

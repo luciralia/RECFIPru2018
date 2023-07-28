@@ -252,6 +252,7 @@ function tblProy($idlab,$iddiv)
 				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
 				
 		} else 
+			
 			$salida = '<h5>No hay necesidades registradas</h5>';
 			
 		echo $salida;
@@ -344,7 +345,7 @@ function tblProy($idlab,$iddiv)
 			     $descripcion=pg_fetch_array($result_nec);
 			     $edesc=$descripcion[0]; 
 			 
-			 if(in_array( $elemento, $nec)){
+			 if(in_array($elemento, $nec)){
 				 	 
 				 $selected= ' checked="checked"';
 			     $salida.='<tr><td>'. $edesc. '</td><td>		

@@ -81,9 +81,9 @@ WHERE ne.id_lab=" . $_GET['lab'] .
 $query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,
 objetivo_especifico,descripcion_proy,
 beneficio,fecha,ruta_evidencia_a
-FROM proy p
+FROM proyecto p
 LEFT JOIN proyecto_nec pn
-ON p.id_proy=pn.id_proy
+ON p.id_proyecto=pn.id_proyecto
 LEFT JOIN proy_evid_actual pea
 ON pea.id_proy=p.id_proy 
 LEFT JOIN evidencia_actual ea

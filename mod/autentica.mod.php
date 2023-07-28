@@ -15,12 +15,12 @@ $password=md5($_POST['pwd']);
           WHERE usuario = '" . $login . "' AND  password='" . $password."'";
 		  
 		  $query ="select  id_usuario,dv.id_div as dvdiv,d.id_div as div,d.id_dep as dep, tipo_usuario from usuarios u */
-	$query ="select * from usuarios u  
-             full outer join departamentos d
-             on d.id_dep=u.id_dep
-             full join divisiones dv
-             on dv.id_cac=u.id_usuario 
-             where usuario= '" . $login . "' AND  password='" . $password."'";
+	$query ="SELECT * FROM usuarios u  
+             FULL OUTER JOIN departamentos d
+             ON d.id_dep=u.id_dep
+             FULL OUTER JOIN divisiones dv
+             ON dv.id_cac=u.id_usuario 
+             WHERE usuario= '" . $login . "' AND  password='" . $password."'";
 		  
 		  		  
 //$query = sprintf("SELECT * FROM usuarios WHERE usuario = '%s' AND pass='%s'", trim($_POST['usuario']), trim($_POST['pwd']));

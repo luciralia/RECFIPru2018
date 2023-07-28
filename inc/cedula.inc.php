@@ -9,9 +9,9 @@ $lab = new laboratorios();
 
 <?php 
 
-//echo 'session en cedula.inc.php';
-/*print_r($laboratorio);
-print_r ($_GET); */?>
+
+
+?>
 <br>
 
 <div class="block2">
@@ -51,13 +51,14 @@ print_r ($_GET); */?>
                           <td width="6%" class="name">ext: </td>
                           <td width="38%" ><?php echo $laboratorio['ext']; ?></td>
                         </tr>
-                         <tr align="left" class="seccion"><?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+                         <tr align="left" class="seccion"><?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_REQUEST['div'];?>
                           <td colspan="6" style="text-align:right">
                           <form action="<?php echo $action1; ?>" method="get" name="usredita">
                           <?php if ($_SESSION['tipo_usuario']==1){?><input type="submit" name="editardp" value="Editar"/> <?php }?>
                           <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 						  <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
                           <input name="idusr" type="hidden" value="<?php echo $_SESSION['id_usuario']; ?>" />
+                          <input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
                           </form>
                           </td>
                         </tr>
@@ -118,12 +119,12 @@ print_r ($_GET); */?>
                         	</tr>
                         <?php if($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==9){ ?>
                         	<tr align="right">
-							<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod'];?>
+							<?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_REQUEST['div'];?>
                           <td colspan="6" style="text-align:right">
                           <form action="<?php echo $action1; ?>" method="post" name="cededita"><input type="submit" name="editarced" value="Editar"/>
                           <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 						  <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
-
+                          <input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
 							<?php 
 							foreach($laboratorio as $campo=>$valor){ ?>
 							<input name="<?php echo $campo ?>" type="hidden" value="<?php echo $valor ?>" />

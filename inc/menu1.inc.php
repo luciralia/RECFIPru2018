@@ -3,13 +3,16 @@
   
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
-/*
-   echo 'SESSION en menu1.inc';
+
+ /*   echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
 	
 	echo 'GET en menu1.inc';
 	print_r($_GET);	
-*/
+    
+   echo "REQUEST en menu1.inc";
+   print_r($_REQUEST);*/
+
 	
 	if ( $_SESSION['id_div']==NULL  )
 	       $_SESSION['id_div']=$_GET['div'];
@@ -30,11 +33,11 @@
              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }elseif (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) { ?>
               <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php // echo $_SESSION['id_div'];?>" class="actual">Inicio</a></li>-->
-              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">InicioSD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
           <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){   ?>
        	      <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php  //echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>-->
-             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >InicioD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }	?>
         <?php  if ($_SESSION['tipo_usuario']!=10){   ?>
         <?php //$clase=($_GET['mod']=='ced')?'" class="actual"':$clase='"'; ?>
@@ -78,12 +81,12 @@
 				if ( $_GET['lab']!='' ){
 			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
 			?>
-               <li><a href="#">Software</a> 
-			 <ul>
+                 <li><a href="#">Software</a> 
+			     <ul>
                      <li><a href="../view/inicio.html.php?mod=soft_com&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Comercial&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 				     <li><a href="../view/inicio.html.php?mod=soft_desar&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Desarrollo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
-            </ul></li> 
-             <?php 
+                 </ul></li> 
+         <?php 
 				 }?>
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
                     <li><a href="../view/inicio.html.php?mod=imp&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>

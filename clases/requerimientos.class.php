@@ -281,8 +281,78 @@ function cmbcal($idcalif,$i)
 					return $salida;
 					}
 	
-
-
+	//Para seleccionar funciones disponibles
+	
+   function selfunc(){
+		
+		$query="SELECT id_funcion, nomb_funcion FROM cat_funcion ORDER BY nomb_funcion ASC";
+                
+		$result_opc = pg_query($query) or die('Hubo un error con la base de datos');
+		
+        $inventario = pg_num_rows($result_opc); 
+	
+	    if ($inventario!=0 ){
+		
+		$salida='<table class="equipob"><br><br><tr><th>Funciones</th><th>Seleccionar</th></tr>'; 
+		   $j=1;
+		
+		 while ($datosc = pg_fetch_array($result_opc))
+		   {
+			    $nombrechk="id_funcion_".$j;
+			    $auxcheck= ' checked="checked"';
+			    
+				 $salida.='<tr><td>'. $datosc['nomb_funcion']. '</td><td>		
+			      <input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['id_funcion'] .'" 
+				  </tr>';
+				
+				$j++;
+				}
+				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
+				
+		} 
+			
+		echo $salida;
+		
+	}
+	
+	//Muestra las funciones seleccionadas
+	
+	function muestraselfunc($idlabreq){
+		
+		$query="SELECT rf.id_funcion,nomb_funcion FROM requerimiento_lab rl
+                JOIN requerimiento_funcion rf
+                ON rl.id_lab_req=rf.id_lab_req 
+                JOIN cat_funcion cf
+                ON cf.id_funcion=rf.id_funcion 
+                WHERE rf.id_lab_req=".$idlabreq;
+                
+		$result_opc = pg_query($query) or die('Hubo un error con la base de datos');
+		
+        $inventario = pg_num_rows($result_opc); 
+	
+	    if ($inventario!=0 ){
+		
+		$salida='<table class="equipob" style="background-color:#FFFFFF" ><br>'; 
+		   $j=1;
+		
+		 while ($datosc = pg_fetch_array($result_opc))
+		   {
+			   
+			    $nombrechk="id_funcion_".$j;
+			    $selected= ' checked="checked"  disabled="disabled"';
+			    $salida.='<tr><td>'. $datosc['nomb_funcion']. '</td><td>		
+			      <input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['id_funcion'] .'"'. $selected .
+				  '</tr>';
+				$j++;
+				}
+				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
+				
+		} 
+			
+		echo $salida;
+		
+	}
+              
 } //termina la clase
 	
 	

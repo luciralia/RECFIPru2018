@@ -27,7 +27,10 @@ function getModo($idmod){
 
 function cmbEquipo($idlab,$bnid)
 	{
+				//	$idlab=$_POST['_id_lab'];
+				//        $tipo_req='eq';
 				
+				//        $id_cot=$necArray[$_POST['_id_nec']]['id_equipo'];
 				if ($_SESSION['tipo_lab']!='e')	
 				   {$tabla="dispositivo";}
 				else 
@@ -278,8 +281,8 @@ function selectEquipoFac($desc, $serie, $inv, $marca, $inv_ant){
 
 
 
-function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant, $divi){
- 		//$where=" WHERE bn_in != NULL     $div;
+function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant, $division){
+ 		
 	
 		
  		if($desc != ''){
@@ -322,7 +325,7 @@ function selectEquipoGenDiv($desc, $serie, $inv, $marca, $inv_ant, $divi){
                                            on  l.id_lab=e.id_lab
                                            LEFT JOIN departamentos dp
                                             on dp.id_dep=l.id_dep
-                                           WHERE id_div= ". $divi . " AND "
+                                           WHERE id_div= ". $division . " AND "
                                             .implode( " AND ",$array);
 		
 		return $query;
@@ -1588,83 +1591,6 @@ function combotecom($teccom)
 					echo $salida;
 					
 	}//fin del metodo combo	teccom	
-	function checksoftware($tipo)
-    {         
-          //echo'llega de licencia';
-		  echo $tipo;
-       
-          $query="SELECT id_tipo_soft,desc_tipo FROM  cat_software ORDER BY id_tipo_soft ASC";
-		  
-		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_software');
-		
-		  $inventario = pg_num_rows($result); 
-		   
-		  if ($inventario!=0){
-			  
-		  $salida='<table class="equipob"><br><br><tr><th>Tipo</th><th>Seleccionar</th></tr>'; 
-		   $j=1;
-		 
-			        $salida='<input type="checkbox" name="software" ';  
-		  while ($datosc = pg_fetch_array($result)){
-			    $nombrechk="id_tipo_soft_".$j;
-			    $auxcheck= ' checked="checked"';
-			   $salida.='<tr><td>'. $datosc['desc_tipo']. '</td><td>		
-			      <input type="checkbox" name="'. $nombrechk .'" value="'. $datosc['id_tipo_soft'] .'" 
-				  </tr>';
-				
-				$j++;
-				}
-				$salida.='</table><br> <input name="j" type="hidden" value="' .$j. '" />';
-				
-		 } 
-		else 
-			$salida = '<h5>No hay necesidades registradas</h5>';
-		
-		echo $salida;
-     /*     
-	 if($datosc['servidor']==$servidor){
-					
-					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".$etieut ;
-					
-		        } else { 
-					
-					$salida.= " value='" . $etiqueta . "'>" .$etiqueta;
-		*/	
-} //fin radial licencia
-
-	function cmbSoftware($tipo)
-					{
-                    
-				    $query="SELECT * FROM  cat_software ORDER BY id_tipo_soft ASC";
-				     
-				
-					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_impresora');
-					
-					$salida='<select name="id_tipo_soft" id="id_tipo_soft">';
-					        // <option value="0" >Ninguna</option>'; 
-					
-					while ($datosc = pg_fetch_array($result))
-					{
-						
-					if($datosc['id_tipo_soft']==$tipo){
-					
-						  $salida.= "<option value='".$datosc['id_tipo_soft'] . "' selected='selected'>" . $datosc['desc_tipo']. "</option>";
-					 
-					 } else { 
-					
-						  $salida.= "<option value='" . $datosc['id_tipo_soft'] . "'>" . $datosc['desc_tipo']. "</option>";
-											  
-						}
-						
-					}//Fin del while
-						
-				//	return $salida;
-					$salida.="</select>";
-					
-					echo $salida;
-					
-	}//fin del metodo combo	dispositivo	
-	
 	
 	function checklicencia($licencia)
 {         
@@ -1782,7 +1708,7 @@ function radialservidor($servidor)
           $query="SELECT * FROM  cat_servidor ORDER BY id_servidor DESC";
 		  
 		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
-		  $espacio= '&nbsp;&nbsp;&nbsp';
+		 
 		  while ($datosc = pg_fetch_array($result))
 		  {
 			       $salida='<input type="radio" name="servidor" '; 
@@ -1795,11 +1721,11 @@ function radialservidor($servidor)
 		       
 		        if($datosc['servidor']==$servidor){
 					
-					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".$etiqueta .$espacio ;
+					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".$etiqueta ;
 					
 		        } else { 
 					
-					$salida.= " value='" . $etiqueta . "'>" .$etiqueta .$espacio;
+					$salida.= " value='" . $etiqueta . "'>" .$etiqueta;
 					
 				}
 		
@@ -1807,38 +1733,6 @@ function radialservidor($servidor)
     	}
 			
 } //fin radial servidor
-	
-function radialsoflic($lic)   
-{        
-          $query="SELECT * FROM  cat_servidor ORDER BY id_servidor DESC";
-		  
-		  $result = @pg_query($query) or die('Hubo un error con la base de datos en cat_servidor');
-		  $espacio= '&nbsp;&nbsp;&nbsp';
-		  while ($datosc = pg_fetch_array($result))
-		  {
-			       $salida='<input type="radio" name="licencia" '; 
-					
-					if ($datosc['id_servidor']==1)
-						$etiqueta='No';
-					else 
-						$etiqueta='Si';
-						
-		       
-		        if($datosc['servidor']==$lic){
-					
-					$salida.= " value='" . $etiqueta . "' checked=''. checked . '>".  $etiqueta .$espacio ;
-					
-		        } else { 
-					
-					$salida.= " value='" . $etiqueta . "'>". $etiqueta .$espacio ;
-					
-				}
-		
-		echo $salida;
-    	}
-			
-} //fin radial servidor	
-	
 function radialCluster($clst)   
 {        
           $query="SELECT * FROM cat_servidor ORDER BY id_servidor DESC";

@@ -67,8 +67,6 @@ Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó c
         
          <td>&nbsp;</td><td>&nbsp;</td> <td>&nbsp;</td><td>&nbsp;</td>
  
-  
-          
    <!-- <td align="center">-->
     <table align="center" width="200" cellspacing="0" cellpadding="0" class="login">
       <tr>
@@ -87,8 +85,6 @@ Para acceder al RECFI, ingrese el usuario y contraseña que se le proporcionó c
          }
 		
        ?>
-       
-   
        
        <form action="mod/autentica.mod.php" method="post" name="formlog">
         <p>&nbsp;</p>

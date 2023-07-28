@@ -53,6 +53,7 @@ require_once('../clases/cotiza.class.php');
 require_once('../clases/requerimientos.class.php');
 $combocot = new Cotiza();
 $motivo = new Requerimiento();
+$combofunc = new Requerimiento();
 
 
  print_r($_POST);
@@ -73,11 +74,11 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
       <td width="151" align="right" >Cantidad de equipos</td>
-      <td width="857" colspan="3" ><input name="cant" type="text" id="cant" tabindex="1" size="4"  onblur="return validarRango(this);"></td>
+      <td width="857" colspan="3" ><input name="cantidad" type="text" id="cantidad" tabindex="1" size="4"  onblur="return validarRango(this);"></td>
    </tr>
    <tr>
       <td align="right">Descripción</td>
-      <td><textarea name="descripcion" id="descripcion" rows="10" cols="50" placeholder="Escribe aquí la descripción detallada para que se utilizarán los equipos"></textarea></td>
+      <td><textarea name="descripcion" id="descripcion" rows="5" cols="50" placeholder="Escribe aquí la descripción detallada para que se utilizarán los equipos"></textarea></td>
       
    </tr>
   <tr>
@@ -98,15 +99,29 @@ if ($_REQUEST['accion']=='nuevo'){
        <td align="right">Otro Motivo</td>
         <?php
 	     if ($_POST['id_just']==7){  ?>
-		 <td><input type="text" name="otrajust" id="otrajust" size="50" value="<?php echo $_POST['otrajust'];  ?>" required ></td>
+		 <td><input type="text" name="otra_just" id="otrajust" size="50" value="<?php echo $_POST['otra_just'];  ?>" required ></td>
         <?php } else {  ?>
-         <td><input type="text" name="otrajust" id="otrajust" size="50" value="<?php echo $_POST['otrajust'];  ?>" disabled="disabled" ></td>
+         <td><input type="text" name="otra_just" id="otrajust" size="50" value="<?php echo $_POST['otra_just'];  ?>" disabled="disabled" ></td>
      
 	 <?php }  ?>
   </tr>
   <tr>
       <td align="right">Justificación técnica</td>
-      <td><textarea name="impacto" id="impacto" rows="10" cols="50"  placeholder="Escribe aquí la justificación técnica"></textarea></td>
+      <td><textarea name="impacto" id="impacto" rows="5" cols="50"  placeholder="Escribe aquí la justificación técnica"></textarea></td>
+      
+  </tr>
+  <tr>
+	  <td align="right">Función(es)</td>
+           <td ><?php $combofunc->selfunc(); ?></td>
+   </tr>
+   <tr>
+      <td align="right">Otra función</td>
+      <td><textarea name="otro_cual" id="otro_cual" rows="2" cols="50"  placeholder="Escribe aquí otra función"></textarea></td>
+      
+  </tr>
+  <tr>
+      <td align="right">Detalle de (las) función(es)</td>
+      <td><textarea name="detalle_func" id="detalle_func" rows="5" cols="50"  placeholder="Escribe aquí el detalle de la función"></textarea></td>
       
   </tr>
  
@@ -117,6 +132,14 @@ if ($_REQUEST['accion']=='nuevo'){
     <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </td>
   </tr>
+  <tr>
+	 <td align="right"><label for="file">Evidencia  de la infraestructura en archivo (.pdf):</label></td>
+	 <td ><input type="file" name="file1" id="file1"/></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
+    </td>
+  </tr>
+   
 	
    <tr>
     <td align="right">Prioridad</td>
@@ -157,7 +180,7 @@ if ($_REQUEST['accion']=='nuevo'){
  
   <tr>
     <td width="151" align="right" >Cantidad</td>
-    <td width="857" colspan="3" ><input name="cant" type="text" id="cant" tabindex="1" size="4" value="<?php echo $_POST['cant']; ?>"></td>
+    <td width="857" colspan="3" ><input name="cantidad" type="text" id="cantidad" tabindex="1" size="4" value="<?php echo $_POST['cantidad']; ?>"></td>
   </tr>
   <tr>
     <td align="right">Costo Unitario</td>
@@ -169,7 +192,6 @@ if ($_REQUEST['accion']=='nuevo'){
       <td><textarea name="descripcion" id="descripcion" rows="10" cols="40"><?php echo $_POST['descripcion']?></textarea></td>
     <!--<td align="right">Descripción</td>
     <td colspan="3"><input name="descripcion" type="text" id="descripcion" tabindex="3" size="100" maxlength="200" value="<?php //echo $_POST['descripcion']; ?>"/></td>
-    
     
     <td colspan="3"> <textarea name="descripcion" id="descripcion" tabindex="3" value="<?php //echo $_POST['descripcion']; ?>"></textarea></td>-->
     
@@ -208,9 +230,29 @@ if ($_REQUEST['accion']=='nuevo'){
      <td align="right">Justificación técnica</td>
       <td><textarea name="impacto" id="impacto" rows="10" cols="40"><?php echo $_POST['impacto']?></textarea></td>
     </tr>
+	<tr>
+	  <td align="right">Función(es)</td>
+           <td ><?php $combofunc->selfunc(); ?></td>
+   </tr>
+   <tr>
+      <td align="right">Otra función</td>
+      <td><textarea name="otro_cual" id="otro_cual" rows="2" cols="50" ><?php echo $_POST['otra_cual']?></textarea></td>
+    </tr>
   <tr>
-	 <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
+      <td align="right">Detalle de (las) función(es)</td>
+      <td><textarea name="detalle_func" id="detalle_func" rows="5" cols="50"  ><?php echo $_POST['detalle_func']?></textarea></td>
+  </tr>	
+ 	
+  <tr>
+	 <td align="right"><label for="file">Evidencia actual en archivo (.pdf):</label></td>
 	 <td ><input type="file" name="file" id="file"/><a href="<?php echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
+    </td>
+	</tr>
+	 <tr>
+	 <td align="right"><label for="file1">Evidencia de infraestructura en archivo (.pdf):</label></td>
+	 <td ><input type="file" name="file1" id="file1"/><a href="<?php echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
     <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
     <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </td>
