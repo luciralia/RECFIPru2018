@@ -139,6 +139,13 @@ if ($_REQUEST['accion']=='nuevo'){
     <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </td>
   </tr>
+  
+  <tr>
+   <td>  <label for="fecha_implem">Fecha Implementación</label></td>
+         <td>  <input type="date" name="fecha_implem" id="fecha_implem" step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo $_POST['fecha_implem']; ?>"  /></td>
+     <td> Corrimiento </td>   
+    <td> Planeación </td>     
+	</tr>
    
 	
    <tr>
@@ -146,6 +153,12 @@ if ($_REQUEST['accion']=='nuevo'){
     <td><?php $motivo->cmbPrioridad($_POST['id_prio'])?></td>
     <td align="right">Año</td>
     <td><?php $motivo->cmbPlazo($_POST['id_plazo']) ?></td>
+  </tr>
+  
+   <tr>
+      <td align="right">Falta combo impacto</td>
+      <td><?php $combofunc->comboImpacto($_POST['id_impacto'])?></td>
+      
   </tr>
  
   <tr>
@@ -232,7 +245,7 @@ if ($_REQUEST['accion']=='nuevo'){
     </tr>
 	<tr>
 	  <td align="right">Función(es)</td>
-           <td ><?php $combofunc->selfunc(); ?></td>
+           <td ><?php $combofunc->editaselfunc($_POST['id_lab_req']); ?></td>
    </tr>
    <tr>
       <td align="right">Otra función</td>
@@ -263,13 +276,23 @@ if ($_REQUEST['accion']=='nuevo'){
     <input type="reset" name="accionm"  value="Limpiar" />
 	<input type="submit" name="accionm" value="Cancelar" /></td>
     </tr>
+    
+   <tr>
+   
+    <td>  
+         <label for="fecha_implem">Fecha Implementación</label></td>
+               <td>  <input type="date" name="fecha_implem" id="fecha_implem"  step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo $_POST['fecha_implem']; ?>"  /></td>
+                <td> Corrimiento </td>   
+                <td> Planeación </td>  
+  </tr>
 </table>
 <br>
 <br>
 
 <input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
 <input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
-<input name="id_nec" type="hidden" value="<?php echo $_POST['id_nec']; ?>" />
+<input name="id_func_req" type="hidden" value="<?php echo $_POST['id_func_req']; ?>" />
+<input name="id_lab_req" type="hidden" value="<?php echo $_POST['id_lab_req']; ?>" />
 <input name="ref" type="hidden" value="<?php echo $_POST['ref']; ?>" />
 <input name="div" type="hidden" value="<?php echo $_GET['div']; ?>" />
 <input name ="ruta_evidencia" type="hidden" value="<?php echo $_POST['ruta_evidencia']; ?>" />

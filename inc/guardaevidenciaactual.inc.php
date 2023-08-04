@@ -49,6 +49,20 @@ echo "despues id_evid_aux: " . $id_evid_aux . "</br>";
 					 else
 					   {
 						   
+						 /* $queryaux="SELECT MAX(id_mot_evid) as maxmote FROM motivo_evidencia";
+   $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+   $row = pg_fetch_array($resultx); 
+   $id_mote_aux=$row['maxmote']; 	
+   $id_mote_aux+=1;	
+	
+	
+  $strquery="INSERT INTO motivo_evidencia(id_mot_evid,id_lab_req,id,corrimiento,planeacion) VALUES (%d,%d,%d,%d,'%s')";	
+   $queryr=sprintf($strquery,$id_mote_aux,$id_reqlab_aux,$_POST['corrimiento'],$_POST['planeacion']);
+   $result=@pg_query($con,$queryr) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
+	
+		  */  
+						   
+						   
 					    $result = pg_query ($con, $query) or die('No se pudo insertar');
 						$queryaux="SELECT MAX(id_mot_evid) as maxnevid FROM motivo_evidencia";
                         $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
@@ -59,9 +73,9 @@ echo "despues id_evid_aux: " . $id_evid_aux . "</br>";
                         $id_mote_aux+=1;
                         echo "despues id_mote_aux: " . $id_mote_aux . "</br>";
 
-                        $queryne="INSERT INTO motivo_evidencia (id_mot_evid,id_motivo, id_evidencia,fecha_implem) 
-						VALUES (%d,%d,%d,'%s')";
-                        $queryn=sprintf($queryne,$id_mote_aux,$id_mot_aux,$id_evid_aux,date('Y-m-d H:i:s'));
+                        $queryne="INSERT INTO motivo_evidencia(id_mot_evid,id,id_evidencia,fecha_implem,corrimiento,planeacion) VALUES (%d,%d,%d,'%s',%d,'%s')";	
+						
+                        $queryn=sprintf($queryne,$id_mote_aux,$_POST['id_just'],$id_evid_aux, $_POST['fecha_implem'],$_POST['corrimiento'],$_POST['planeacion']);
 	
                         $result = pg_query ($con, $queryn) or die('No se pudo insertar');   
 					    $_SESSION['error']['arch']='';	   
