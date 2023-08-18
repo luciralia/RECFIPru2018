@@ -12,12 +12,14 @@ $combofunc = new Requerimiento();
 
 echo 'Valores en carga eq';
 	print_r($_POST); 
+
+//$nombEvid=$_FILES["file"]["name"];
+echo 'Valor en evid',$_POST['evidi'];
 //Se modifico motivo_evidencia y se agrego requerimiento_just
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 echo'1';
-$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
-otra_just,fecha_implem,fecha_solic
+$query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,desc_impacto,fecha_implem,detalle_func,planeacion,otro_cual
 FROM requerimiento_lab lr
 left JOIN requerimiento_impacto ri
 ON ri.id_lab_req=lr.id_lab_req
@@ -31,10 +33,12 @@ left JOIN requerimiento_sistema rs
 ON rs.id_lab_req=lr.id_lab_req
 left JOIN sistema s
 ON rs.id_sistema=s.id_sistema
+LEFT join requerimiento_just rj
+ON lr.id_lab_req=rj.id_lab_req
 left JOIN cat_juztificacion_nec cjn
-ON lr.id_just=cjn.id
+ON rj.id_req_just=cjn.id
 left JOIN motivo_evidencia me
-ON me.id=cjn.id
+ON me.id_req_just=rj.id_req_just
 left JOIN evidencia e
 ON e.id_evidencia=me.id_evidencia
 LEFT JOIN cat_recursos_equipo cre
@@ -52,7 +56,7 @@ WHERE lr.id_lab=" . $_GET['lab'] .
 	
 $query = "
 SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,e.id_evidencia,e.ruta_evidencia,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,cjn.descripcion AS motivo,cjn.id AS id_just,desc_impacto,
-otra_just,fecha_implem,fecha_solic
+otra_just,fecha_implem,fecha_solic,corrimiento
 FROM requerimiento_lab lr
 left JOIN requerimiento_impacto ri
 ON ri.id_lab_req=lr.id_lab_req
@@ -241,12 +245,12 @@ $datos = pg_query($con,$query);
 
 	?>              <table class="equipo"  width="100%" border="0" cellpadding="5">
                       <tr align="left">
-				        <th width="15%">Recursos de cómputo</th>		  
+				        <th width="20%">Recursos de cómputo</th>		  
                         <th width="10%">Cantidad de equipos</th>
                         <th width="15%">Descripci&oacute;n</th>
-                        <th width="20%">Motivo</th>
-                        <th width="20%">Evidencia actual</th> 
-						<th width="20%">Evidencia infraestructura</th>  
+                        <th width="15%">Impacto</th>
+                        <th width="25%">Evidencia actual</th> 
+						<th width="25%">Evidencia infraestructura</th>  
                       </tr>          
 	                 <tr>
 						<td align="left"><?php echo $lab_nec['nomb_recurso']; ?></td> 
@@ -258,14 +262,17 @@ $datos = pg_query($con,$query);
                         <!--<td align="left"><?php echo $lab_nec['descripcion'];?></td>-->
                         <?php // } ?>
                   
-                        <td align="left"><?php echo $lab_nec['motivo'];?></td>
+                        <td align="left"><?php echo $lab_nec['desc_impacto'];?></td>
                         
-						<td align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td>
+                        <!--
+						<td align="left"><a href="<?php // echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php //echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3); ?></a></td>
 						 
-						<td align="left"><a href="<?php echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3);?></a></td> 
-                      </tr>
-					
-                    <!--<tr>
+						<td align="left"><a href="<?php // echo $lab_nec['ruta_evidencia']; ?>" target="_blank"><?php //echo substr($lab_nec['ruta_evidencia'],strpos($lab_nec['ruta_evidencia'],'_')+3); ?></a></td> -->
+						
+						<td align="left"><a href="<?php  echo $combofunc->evidenciaa($lab_nec['id_lab_req']); ?>" target="_blank"><?php echo substr($combofunc->evidenciaa($lab_nec['id_lab_req']),strpos($combofunc->evidenciaa($lab_nec['id_lab_req']),'_')+4); ?></a></td>
+						 <td align="left"><a href="<?php  echo $combofunc->evidenciai($lab_nec['id_lab_req']); ?>" target="_blank"><?php echo substr($combofunc->evidenciai($lab_nec['id_lab_req']),strpos($combofunc->evidenciai($lab_nec['id_lab_req']),'_')+14); ?></a></td>
+					</tr>
+					<!--<tr>
     	                  <td colspan="9" align="left">&nbsp;</td>
 	                </tr><tr>
     	                  <td colspan="9" align="left"><strong>Justificación</strong></td>
@@ -273,16 +280,13 @@ $datos = pg_query($con,$query);
                     <tr>
                     <td colspan="9" align="left" ><?php echo $lab_nec['desc_impacto'];?>
 						<?php if ($_SESSION['tipo_usuario']==9){ ?> <!--<br /> <hr /></td> </tr>--> <?php }?>
-                         
-	                </td> 
+                    </td> 
                     </tr>
-                    
                     <tr>
                           <td align="right">Función(es)</td>
                           <td colspan="3"><?php  $combofunc->muestraselfunc($lab_nec['id_lab_req']); ?></td>
                     </tr>
-                    
-                    
+                 
 <?php //if($_SESSION['tipo_usuario']==9){ ?> 
 			<?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']."&div=".   $_REQUEST['div'];?>
 			<form action="<?php echo $action; ?>" method="post" name="req_eq_<?php echo $form=$lab_nec['id_lab_req'];?>">
@@ -292,6 +296,8 @@ $datos = pg_query($con,$query);
 			      <tr><td style="text-align: right" colspan="8"><input name="accion" type="submit" value="borrar" /></td> 
                       <td style="text-align: right"> <?php //if &nbsp;&nbsp;&nbsp;&nbsp;(($_SESSION['permisos'][2] %3)== 0){ ?><input name="accion" type="submit" value="editar" /></td>
               </tr>
+              
+				 
               <?php }?>
 	        <?php
 				foreach ($lab_nec as $campo => $valor) {
@@ -300,6 +306,7 @@ $datos = pg_query($con,$query);
 				
 				}
 				?>
+				
 			</form>
 </table> 
  <br>

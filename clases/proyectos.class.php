@@ -284,15 +284,15 @@ function tblProy($idlab,$iddiv)
 		
 		
 		   $querysel= "SELECT  ne.id_nec,pn.id_lab,descripcion
-			                FROM proy p
-                            JOIN proyecto_nec pn
-                            ON pn.id_proy=p.id_proy
-                            JOIN necesidades_equipo ne
-                            ON ne.id_lab=pn.id_lab
-                            AND ne.id_nec=pn.id_nec
-			                WHERE p.id_proy=" . $idproy;  
+			           FROM proy p
+                       JOIN proyecto_nec pn
+                       ON pn.id_proy=p.id_proy
+                       JOIN necesidades_equipo ne
+                       ON ne.id_lab=pn.id_lab
+                       AND ne.id_nec=pn.id_nec
+			           WHERE p.id_proy=" . $idproy;  
 		 
-				            $result = pg_query($querysel) or die('Hubo un error con la base de datos');
+		  $result = pg_query($querysel) or die('Hubo un error con la base de datos');
 		
 		   //Reconoce las necesidades del proyecto a editar
 		   $nec=array();

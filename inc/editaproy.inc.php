@@ -166,7 +166,6 @@ if ($_REQUEST['accion']=='nuevo'){
       value="<?php echo $_POST['objetivo_especifico'];?>"/></td>
   </tr>
   <tr>
-     
       <td width="151" align="right" >Descripci&oacute;n</td>
       <td colspan="3"><input name="descripcion_proy" type="text" id="descripcion_proy" tabindex="8" size="50" maxlength="200"
       value="<?php echo $_POST['descripcion_proy'];?>"/></td>

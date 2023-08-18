@@ -1652,6 +1652,7 @@ function radialtorendimiento($altorend)
   //        }// fin del while
 
 } //fin radial alto Rendimiento
+	
 function radialestado($estado)
 {  
 	      

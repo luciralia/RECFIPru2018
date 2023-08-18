@@ -54,12 +54,10 @@ require_once('../clases/requerimientos.class.php');
 $combocot = new Cotiza();
 $motivo = new Requerimiento();
 $combofunc = new Requerimiento();
+$radial = new Requerimiento();
 
-
- print_r($_POST);
 
 if ($_REQUEST['accion']=='nuevo'){  
-
 
 ?>
 <br>
@@ -68,19 +66,17 @@ if ($_REQUEST['accion']=='nuevo'){
 	
 <form action="../inc/procesaeq.inc.php" method="post"  enctype="multipart/form-data" name="form_nuevo" class="formul">
 <table cellpadding="2" class="formulario">
-  <tr>
-      <td align="right">Recursos de cómputo</td>
-      <td ><?php  $motivo->cmbRecurso($_POST['id_recurso']); ?></td>
-  </tr>
-  <tr>
-      <td width="151" align="right" >Cantidad de equipos</td>
-      <td width="857" colspan="3" ><input name="cantidad" type="text" id="cantidad" tabindex="1" size="4"  onblur="return validarRango(this);"></td>
+  <tr> 
+	  <td align="right"><label>Recursos de cómputo</td>
+      <td><?php  $motivo->cmbRecurso($_POST['id_recurso']); ?></td>
+  
+      <td >Cantidad de equipos</td>
+      <td><input name="cantidad" type="text" id="cantidad" tabindex="1" size="4"  onblur="return validarRango(this);"></label></td>
    </tr>
    <tr>
-      <td align="right">Descripción</td>
-      <td><textarea name="descripcion" id="descripcion" rows="5" cols="50" placeholder="Escribe aquí la descripción detallada para que se utilizarán los equipos"></textarea></td>
-      
-   </tr>
+      <td align="right"><label>Descripción</td>
+      <td><textarea name="descripcion" id="descripcion" rows="5" cols="50" placeholder="Escribe aquí la descripción detallada para que se utilizarán los equipos"></textarea></td></label>
+  </tr>
   <tr>
       <td align="right">Costo Unitario</td>
       <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="11"/> 
@@ -94,7 +90,7 @@ if ($_REQUEST['accion']=='nuevo'){
       <td align="right">Motivo</td>
       <td colspan="3"><?php $motivo->cmbJustEq($_POST['id_just']) ?>  
 	</td>
-      </tr>
+    </tr>
       <tr>
        <td align="right">Otro Motivo</td>
         <?php
@@ -112,8 +108,8 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
   <tr>
 	  <td align="right">Función(es)</td>
-           <td ><?php $combofunc->selfunc(); ?></td>
-   </tr>
+       <td><?php $combofunc->selfunc(); ?></td>
+  </tr>
    <tr>
       <td align="right">Otra función</td>
       <td><textarea name="otro_cual" id="otro_cual" rows="2" cols="50"  placeholder="Escribe aquí otra función"></textarea></td>
@@ -126,42 +122,51 @@ if ($_REQUEST['accion']=='nuevo'){
   </tr>
  
   <tr>
-	 <td align="right"><label for="file">Evidencia  actual en archivo (.pdf):</label></td>
-	 <td ><input type="file" name="file" id="file"/></td>
-    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
-    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
+	 <td align="right" ><label for="file">Evidencia  actual en archivo (.pdf):</td>
+	 <td><input type="file" name="file" id="file"/></td>
+    <td>
+		<?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+        <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </td>
-  </tr>
+	</tr>
   <tr>
-	 <td align="right"><label for="file">Evidencia  de la infraestructura en archivo (.pdf):</label></td>
-	 <td ><input type="file" name="file1" id="file1"/></td>
-    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+	 <td  ><label for="file">Evidencia  de la infraestructura en archivo (.pdf):</td>
+	 <td  ><input type="file" name="file1" id="file1"/></td>
+    <td ><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
     <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
-    </td>
+    </label></td>
   </tr>
   
   <tr>
-   <td>  <label for="fecha_implem">Fecha Implementación</label></td>
-         <td>  <input type="date" name="fecha_implem" id="fecha_implem" step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo $_POST['fecha_implem']; ?>"  /></td>
-     <td> Corrimiento </td>   
-    <td> Planeación </td>     
+          <td><label for="fecha_implem">Fecha Implementación</label></td>
+          <td>  <input type="date" name="fecha_implem" id="fecha_implem"  step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo date("Y-m-d",strtotime($_POST['fecha_implem'])); ?>"  /></td>
+  </tr>
+  
+  <tr>   
+         <td colspan="2" align="left">Corrimiento</td>
+      <td ><?php $radial->radialcorrimiento($_POST['corrimiento'])?></td> 
+    
+	</tr>
+     <tr>  <td ><label>Planeación del corrimiento</label></td> 
+      <td><textarea name="planeacion" id="planeacion" rows="5" cols="50"  placeholder="Escribe aquí el detalle de la planeación al realizar el corrimento"></textarea></label></td>     
 	</tr>
    
-	
-   <tr>
+   <!--<tr>
     <td align="right">Prioridad</td>
-    <td><?php $motivo->cmbPrioridad($_POST['id_prio'])?></td>
+    <td align="left"><?php //$motivo->cmbPrioridad($_POST['id_prio'])?></td>
     <td align="right">Año</td>
-    <td><?php $motivo->cmbPlazo($_POST['id_plazo']) ?></td>
-  </tr>
+    <td align="left "><?php //$motivo->cmbPlazo($_POST['id_plazo']) ?></td>
+  </tr>-->
   
-   <tr>
-      <td align="right">Falta combo impacto</td>
-      <td><?php $combofunc->comboImpacto($_POST['id_impacto'])?></td>
-      
-  </tr>
+    <tr>
+      <td align="right"><label>Impacto</label></td>
+      <td><label><?php $combofunc->comboImpacto($_POST['id_impacto'])?></label></td>
+    </tr>
+    <tr>  
+		<td><label>Descripción del impacto</label></td> 
+        <td><textarea name="desc_impacto" id="desc_impacto" rows="5" cols="50" placeholder="Escribe aquí el detalle de la planeación al realizar el corrimento"></textarea></label></td>     
+	</tr>
  
-  <tr>
     <td colspan="4" align="right">
     <input type="submit" name="accionn" value="Guardar" />
     <input type="reset" name="accionn"  value="Limpiar" />
@@ -178,8 +183,12 @@ if ($_REQUEST['accion']=='nuevo'){
 </div>
 <?php 	} else {
 
-//echo "Edicion de registro de material </br>";
-//print_r($_POST);?>
+echo "Edicion de equipamiento </br>";
+print_r($_POST);
+	echo 'valores de SESION archivos';
+print_r ($_SESSION);	
+	
+	?>
 <br>
 <br>
 <div class=formulario>
@@ -256,20 +265,66 @@ if ($_REQUEST['accion']=='nuevo'){
       <td><textarea name="detalle_func" id="detalle_func" rows="5" cols="50"  ><?php echo $_POST['detalle_func']?></textarea></td>
   </tr>	
  	
-  <tr>
+  <!--<tr>
 	 <td align="right"><label for="file">Evidencia actual en archivo (.pdf):</label></td>
-	 <td ><input type="file" name="file" id="file"/><a href="<?php echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
-    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
-    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
+	 <td ><input type="file" name="file" id="file"/><a href="<?php //echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php//echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
+    <td><?php //if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php // } ?>
+    <?php //if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php // } ?>
     </td>
 	</tr>
 	 <tr>
 	 <td align="right"><label for="file1">Evidencia de infraestructura en archivo (.pdf):</label></td>
-	 <td ><input type="file" name="file1" id="file1"/><a href="<?php echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
-    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
-    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
+	 <td ><input type="file" name="file1" id="file1"/><a href="<?php //echo $_POST['ruta_evidencia']; ?>" target="_blank"><?php //echo substr($_POST['ruta_evidencia'],strpos($_POST['ruta_evidencia'],'_')+3);?></a></td>
+    <td><?php //if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php // } ?>
+    <?php //if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php //} ?>
     </td>
-	</tr>
+	</tr>-->
+	
+	<?php echo 'faltaría un función para rescatar el nombre de las evidencia';
+	 echo substr($combofunc->evidenciaa($_POST['id_lab_req']),strpos($combofunc->evidenciaa($_POST['id_lab_req']),'_')+4);;
+	?>
+	
+	<input type="text" name="file" size="15"><br>
+      Seleccione la foto: <input type="file" name="file" value="<?php echo substr($combofunc->evidenciaa($_POST['id_lab_req']),strpos($combofunc->evidenciaa($_POST['id_lab_req']),'_')+4)?>" >
+<br>
+	<tr>
+	 <td align="right"><label for="file">Evidencia  actual en archivo  (.pdf):</label></td>
+	 <td ><input type="file" name="file" id="file" value="<?php  substr($combofunc->evidenciaa($_POST['id_lab_req']),strpos($combofunc->evidenciaa($_POST['id_lab_req']),'_')+4);?>" />  </td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+    </td>
+  </tr>
+  <tr>
+	 <td align="right"><label for="file1">Evidencia de la infraestructura en archivo  (.pdf):</label></td>
+	 <td ><input type="file" name="file1" id="file1" /><?php echo $_FILES["file1"]["name"]?></td>
+    <td><?php if ($_SESSION['error']['arch']=='ea'){?> <div id="resaltado"> El archivo ya existe </div> <?php } ?>
+    <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser jpg </div> <?php } ?>
+    </td>
+  </tr>
+  
+	<tr>
+    <td>  
+         <label for="fecha_implem">Fecha Implementación</label></td>
+         <td>  <input type="date" name="fecha_implem" id="fecha_implem"  step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo date("Y-m-d",strtotime($_POST['fecha_implem'])); ?>"  /></td>
+	</tr>           
+     <tr>   
+         <td colspan="2" align="left">Corrimiento</td>
+         <td ><?php $radial->radialcorrimiento($_POST['corrimiento'])?></td> 
+    </tr>
+    <tr>
+         <td align="right">Planeación del corrimiento</td>
+         <td><textarea name="planeacion" id="planeacion" rows="10" cols="40"><?php echo $_POST['planeacion']?></textarea></td>
+    </tr>
+  <tr>
+      <td align="right"><label>Impacto</label></td>
+      <td><label><?php $combofunc->comboImpacto($_POST['id_impacto'])?></label></td>
+      
+  </tr>
+  <tr>
+      <td align="right">Descripción impacto</td>
+      <td><textarea name="desc_impacto" id="desc_impacto" rows="5" cols="50"  ><?php echo $_POST['desc_impacto']?></textarea></td>
+  </tr>	
+ 
   <tr>
     <td colspan="4" align="right">
     <input type="submit" name="accionm" value="Guardar" />
@@ -277,14 +332,6 @@ if ($_REQUEST['accion']=='nuevo'){
 	<input type="submit" name="accionm" value="Cancelar" /></td>
     </tr>
     
-   <tr>
-   
-    <td>  
-         <label for="fecha_implem">Fecha Implementación</label></td>
-               <td>  <input type="date" name="fecha_implem" id="fecha_implem"  step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo $_POST['fecha_implem']; ?>"  /></td>
-                <td> Corrimiento </td>   
-                <td> Planeación </td>  
-  </tr>
 </table>
 <br>
 <br>

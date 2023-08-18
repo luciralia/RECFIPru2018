@@ -64,20 +64,29 @@ echo "despues id_evid_aux: " . $id_evid_aux . "</br>";
 						   
 						   
 					    $result = pg_query ($con, $query) or die('No se pudo insertar');
-						$queryaux="SELECT MAX(id_mot_evid) as maxnevid FROM motivo_evidencia";
+						   
+						$queryaux="SELECT MAX(id_mot_evid) as maxmote FROM motivo_evidencia";
                         $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
                         $row = pg_fetch_array($resultx); 
-                        $id_mote_aux=$row['maxnevid']; 
+                        $id_mote_aux=$row['maxmote']; 	
+                        $id_mote_aux+=1;	
 
-                        echo "antes id_mote_aux: " . $id_mote_aux . "</br>";
-                        $id_mote_aux+=1;
-                        echo "despues id_mote_aux: " . $id_mote_aux . "</br>";
-
-                        $queryne="INSERT INTO motivo_evidencia(id_mot_evid,id,id_evidencia,fecha_implem,corrimiento,planeacion) VALUES (%d,%d,%d,'%s',%d,'%s')";	
+						$queryaux="SELECT MAX(id_req_just) as maxreqj FROM requerimiento_just";
+                        $resultx=@pg_query($con,$queryaux) or die('ERROR AL LEER DATOS: ' . pg_last_error());
+                        $row = pg_fetch_array($resultx); 
+                        $id_reqj_aux=$row['maxreqj']; 	
+                        $id_reqj_aux+=1;   
+						   
+						$queryrj="INSERT INTO requerimiento_just(id_req_just,id_lab_req,id) VALUES (%d,%d,%d)";	
+						$queryn=sprintf($queryrj,$id_reqj_aux,$id_reqlab_aux,$_POST['id_just']);
+						$result = pg_query ($con, $queryn) or die('No se pudo insertar');      
+						  
+                        $queryne="INSERT INTO motivo_evidencia(id_mot_evid,id_evidencia,id_req_just,fecha_implem,corrimiento,planeacion) VALUES (%d,%d,%d,'%s',%d,'%s')";	
 						
-                        $queryn=sprintf($queryne,$id_mote_aux,$_POST['id_just'],$id_evid_aux, $_POST['fecha_implem'],$_POST['corrimiento'],$_POST['planeacion']);
-	
-                        $result = pg_query ($con, $queryn) or die('No se pudo insertar');   
+						
+                        $queryn=sprintf($queryne,$id_mote_aux,$id_evid_aux, $id_reqj_aux,$_POST['fecha_implem'],$_POST['corrimiento'],$_POST['planeacion']);
+	                    $result = pg_query ($con, $queryn) or die('No se pudo insertar');
+						   
 					    $_SESSION['error']['arch']='';	   
 					    echo "inserción" . $_SESSION['error']['arch'];
 					    move_uploaded_file($_FILES["file"]["tmp_name"],"../evidencia/" . $_REQUEST['lab'] . "_" .$id_req_aux."_". $_FILES["file"]["name"]);
