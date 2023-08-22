@@ -106,10 +106,6 @@ echo "despues id_evid_aux: " . $id_evid_aux . "</br>";
 					echo $direccion . "</br>";
 					header($direccion);
 				   }
-														
-
-
-
 
 
 ?>

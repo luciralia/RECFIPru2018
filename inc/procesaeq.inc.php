@@ -38,7 +38,7 @@ require_once('../conexion.php');
     $id_req_aux+=1;		
 	
 	$strquery="INSERT INTO requerimiento_lab (id_lab,id_req, descripcion,id_just,otra_just,cantidad,id_recurso,id_motivo,fecha_solic) VALUES (%d,%d,'%s',%d,'%s',%d,%d,%d,'%s')";
-    $queryr=sprintf($strquery,$_POST['lab'],$id_req_aux,$_POST['descripcion'],$_POST['id'],$_POST['otra_just'],$_POST['cantidad'], $_POST['id_recurso'],$_POST['id'], date('Y-m-d H:i:s'));
+    $queryr=sprintf($strquery,$_POST['lab'],$id_req_aux,$_POST['descripcion'],$_POST['id_just'],$_POST['otra_just'],$_POST['cantidad'], $_POST['id_recurso'],$_POST['id_just'], date('Y-m-d H:i:s'));
     $result=@pg_query($con,$queryr) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 	
 	
@@ -92,9 +92,9 @@ require_once('guardaevidenciaactual.inc.php');
 //Guarda en evidencia de la infraestructura	
 require_once('guardaevidenciainfra.inc.php');		
 																
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
+/*$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&div=' . $_REQUEST['div'];
 echo $direccion;
-header($direccion);
+header($direccion);*/
 
  }
 	?>
