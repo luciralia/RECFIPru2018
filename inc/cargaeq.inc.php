@@ -10,15 +10,13 @@ $lab = new laboratorios();
 $obj_req= new Requerimiento();
 $combofunc = new Requerimiento();
 
-echo 'Valores en carga eq';
-	print_r($_POST); 
+/*echo 'Valores en carga eq';
+	print_r($_POST); */
 
-//$nombEvid=$_FILES["file"]["name"];
-echo 'Valor en evid',$_POST['evidi'];
-//Se modifico motivo_evidencia y se agrego requerimiento_just
+
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
-echo'1';
+
 $query = "SELECT DISTINCT lr.id_lab_req,lr.id_req, lr.id_lab AS id_lab, cantidad, lr.descripcion,lr.id_recurso,nomb_recurso,l.nombre AS laboratorio, de.nombre AS departamento,dv.nombre AS division,act_generales AS actividades,desc_impacto,fecha_implem,detalle_func,planeacion,otro_cual
 FROM requerimiento_lab lr
 left JOIN requerimiento_impacto ri

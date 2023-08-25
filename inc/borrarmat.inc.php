@@ -11,8 +11,7 @@ require_once('../conexion.php');
                   <tr ><td style="text-align: center" colspan="4">
                   <input name="resp" type="submit" value="Si" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <input name="resp" type="submit" value="No" /></td></tr>
-                    
-                
+                 
                 <?php
                 foreach ($_REQUEST as $campo => $valor) {
                         //echo "\$usuario[$campo] => $valor.\n" . "</br>";

@@ -48,7 +48,8 @@ if (document.getElementById("id_recurso").value==1 && (numero<0 || numero>450))
 
 </script>	 
 	 
-<?php  
+<?php 
+
 require_once('../clases/cotiza.class.php');
 require_once('../clases/requerimientos.class.php');
 $combocot = new Cotiza();
@@ -77,15 +78,15 @@ if ($_REQUEST['accion']=='nuevo'){
       <td align="right"><label>Descripción</td>
       <td><textarea name="descripcion" id="descripcion" rows="5" cols="50" placeholder="Escribe aquí la descripción detallada para que se utilizarán los equipos"></textarea></td></label>
   </tr>
-  <tr>
+  <!--<tr>
       <td align="right">Costo Unitario</td>
       <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="11"/> 
     &nbsp;<span style="color: #900; font-size: x-small;">(El costo debe ser expresado en dólares americanos USD)</span></td>
   </tr>
-  <tr>
+ <tr>
        <td align="right">Cotización</td>
-       <td colspan="3"><?php $combocot->cmbCotiza($_REQUEST['lab'],'eq',$_REQUEST['id_cotizacion']); ?></td>
-  </tr>
+       <td colspan="3"><?php //$combocot->cmbCotiza($_REQUEST['lab'],'eq',$_REQUEST['id_cotizacion']); ?></td>
+  </tr>-->
   <tr>
       <td align="right">Motivo</td>
       <td colspan="3"><?php $motivo->cmbJustEq($_POST['id_just']) ?>  
@@ -104,7 +105,6 @@ if ($_REQUEST['accion']=='nuevo'){
   <tr>
       <td align="right">Justificación técnica</td>
       <td><textarea name="impacto" id="impacto" rows="5" cols="50"  placeholder="Escribe aquí la justificación técnica"></textarea></td>
-      
   </tr>
   <tr>
 	  <td align="right">Función(es)</td>
@@ -113,15 +113,12 @@ if ($_REQUEST['accion']=='nuevo'){
    <tr>
       <td align="right">Otra función</td>
       <td><textarea name="otro_cual" id="otro_cual" rows="2" cols="50"  placeholder="Escribe aquí otra función"></textarea></td>
-      
-  </tr>
+   </tr>
   <tr>
       <td align="right">Detalle de (las) función(es)</td>
       <td><textarea name="detalle_func" id="detalle_func" rows="5" cols="50"  placeholder="Escribe aquí el detalle de la función"></textarea></td>
-      
   </tr>
- 
-  <tr>
+ <tr>
 	 <td align="right" ><label for="file">Evidencia  actual en archivo (.pdf):</td>
 	 <td><input type="file" name="file" id="file"/></td>
     <td>
@@ -136,12 +133,10 @@ if ($_REQUEST['accion']=='nuevo'){
     <?php if ($_SESSION['error']['arch']=='ai'){?> <div id="resaltado"> El formato debe ser pdf </div> <?php } ?>
     </label></td>
   </tr>
-  
-  <tr>
+   <tr>
           <td><label for="fecha_implem">Fecha Implementación</label></td>
           <td>  <input type="date" name="fecha_implem" id="fecha_implem"  step="1" min="01-01-2020" max="31-12-2040"  value="<?php echo date("Y-m-d",strtotime($_POST['fecha_implem'])); ?>"  /></td>
   </tr>
-  
   <tr>   
          <td colspan="2" align="left">Corrimiento</td>
       <td ><?php $radial->radialcorrimiento($_POST['corrimiento'])?></td> 
@@ -204,10 +199,10 @@ print_r ($_SESSION);
     <td width="151" align="right" >Cantidad</td>
     <td width="857" colspan="3" ><input name="cantidad" type="text" id="cantidad" tabindex="1" size="4" value="<?php echo $_POST['cantidad']; ?>"></td>
   </tr>
-  <tr>
+ <!-- <tr>
     <td align="right">Costo Unitario</td>
-    <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="9" value="<?php echo $_POST['costo']; ?>"/></td>
-  </tr>
+    <td colspan="3"><input name="cto_unitario" type="text" id="cto_unitario" tabindex="2" size="9" maxlength="9" value="<?php // echo $_POST['costo']; ?>"/></td>
+  </tr>-->
   <tr>
   
       <td align="right">Descripción</td>
@@ -252,14 +247,17 @@ print_r ($_SESSION);
      <td align="right">Justificación técnica</td>
       <td><textarea name="impacto" id="impacto" rows="10" cols="40"><?php echo $_POST['impacto']?></textarea></td>
     </tr>
+    
 	<tr>
 	  <td align="right">Función(es)</td>
            <td ><?php $combofunc->editaselfunc($_POST['id_lab_req']); ?></td>
    </tr>
+   
    <tr>
       <td align="right">Otra función</td>
       <td><textarea name="otro_cual" id="otro_cual" rows="2" cols="50" ><?php echo $_POST['otra_cual']?></textarea></td>
     </tr>
+    
   <tr>
       <td align="right">Detalle de (las) función(es)</td>
       <td><textarea name="detalle_func" id="detalle_func" rows="5" cols="50"  ><?php echo $_POST['detalle_func']?></textarea></td>
