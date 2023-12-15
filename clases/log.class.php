@@ -12,18 +12,12 @@ $queryn=sprintf($strquery,$_SERVER['REMOTE_ADDR'],$_SESSION['id_usuario'],date("
 
 $result=@pg_query($queryn) or die('ERROR AL INSERTAR DATOS DE LOG: ' . pg_last_error());
 
-//$log = pg_fetch_array($result, NULL, PGSQL_ASSOC);
+$log = pg_fetch_array($result, NULL, PGSQL_ASSOC);
 //print_r($log);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-
-	return 0;
+return 0;
 			}
-
-
-				
-	} 
-	
-	?>
+} ?>
 

@@ -583,8 +583,8 @@ select viewname,'V' from pg_views where viewname like $mask";
 			return $retarr;	
 		
 	}
-
-	  function MetaIndexes ($table, $primary = FALSE)
+public function metaIndexes($table,$normalize=true, $owner = false)
+	 // function MetaIndexes ($table, $primary = FALSE) comento LHH 12/oct/2023
       {
          global $ADODB_FETCH_MODE;
                 

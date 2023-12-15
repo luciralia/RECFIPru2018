@@ -2,7 +2,7 @@
 
 //$cadena_con = "host=132.248.52.241 port=5432 dbname=recfi_pru user=sieldi_user password=s13ld1";
 
-$cadena_con = "host=localhost port=5432 dbname=recfi_pru2018 user=sieldi_user password=s13ld1";
+$cadena_con = "host=localhost port=5432 dbname=recfi user=sieldi_user password=recfi";
 
 //$cadena_con = "host=localhost port=5432 dbname=sieldi_dbp user=sieldi_user password=s13ld1";
 

@@ -12,10 +12,17 @@ require_once('../clases/inventario.class.php');
 $obj_xls=new Exportaxls(); // nueva linea
 
 $madq = new inventario();
+	
+/*	
+echo 'valores con Request';	
+print_r($_REQUEST); 
+echo 'valores con Post';	
+print_r($_POST); 	*/
+//echo'Equipo que llega para asignar ';	
 
 /*  este for es para cargar los datos de los renglones*/
 
-	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$_REQUEST['tabla']);
+$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$_REQUEST['div'],$_REQUEST['tipou']);
 				
 				foreach ($renglon_xls as $reng) {
 			        					

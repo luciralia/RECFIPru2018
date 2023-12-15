@@ -181,7 +181,7 @@
 <file name="procesainfra.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427873960000000" remote="131790350990000000" Dst="2" />
 <file name="procesainfraaux.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130426993760000000" remote="131790351000000000" Dst="2" />
 <file name="procesainv.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131408951442488213" remote="131790351000000000" Dst="2" />
-<file name="procesainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133217412356950843" remote="133246796140000000" Dst="0" />
+<file name="procesainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464480048131061" remote="133464581220000000" Dst="0" />
 <file name="procesamat.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130284263120000000" remote="131790351000000000" Dst="2" />
 <file name="procesamobi.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427400400000000" remote="131790351000000000" Dst="2" />
 <file name="procesaqueja.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130927736912807036" remote="131790351000000000" Dst="2" />
@@ -217,7 +217,7 @@
 <file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137270000000" remote="132005137270000000" Dst="1" />
 <file name="actualizarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133288985038387859" remote="133307239860000000" Dst="0" />
 <file name="buscarcambio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133317597599883798" remote="133317602560000000" Dst="0" />
-<file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133301987189923222" remote="133301987690000000" Dst="0" />
+<file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464473628479921" remote="133464580840000000" Dst="0" />
 <file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132035441330000000" remote="132035441330000000" Dst="1" />
 <file name="exportainvDGTyC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
 <file name="cargainventse.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
@@ -242,4 +242,5 @@
 <file name="exportaxls_censomanto.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133259623671970062" remote="133264942340000000" Dst="0" />
 <file name="cargaCensomanto.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133258834471569980" remote="133264942450000000" Dst="0" />
 <file name="exportaxls_censoAntig.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133257099626490011" remote="133264942510000000" Dst="0" />
+<file name="configura_switch.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464454225595341" remote="133464581520000000" Dst="0" />
 </dwsync>

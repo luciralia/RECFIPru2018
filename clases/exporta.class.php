@@ -32,7 +32,7 @@ function tblXls($idlab,$mod,$iddiv,$tipou){
 		
 if ($tipou==9 && ($idlab!='' && $iddiv!='') ){
 	
-				$query="SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, 
+$query="SELECT l.id_lab as id_lab, em.id_evento as id_evento, em.id_bitacora as id_bitacora, 
 em.tipo_mant as tipo, em.fecha as fregistro, em.tipo_falla as falla, 
 em.usuario_reporta as reporta, em.fecha_salida as fsalida, 
 em.fecha_recepcion as frecepcion, em.costo as costo, 
@@ -246,7 +246,7 @@ WHERE dv.id_div=*/
 
      }
 
-	else if ($mod=="mat"){
+   else if ($mod=="mat"){
 				$query = "SELECT DISTINCT rm.id_req AS id_req, rm.id_lab AS id_lab,cant, rm.descripcion AS descripcion, rm.unidad_medida AS                 medida, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, dp.nombre AS departamento, di.nombre AS                 division, cto_unitario AS costo, act_generales AS actividades, cjnm.descripcion AS motivo, cjnm.id AS num_just, impacto AS justificacion, rm.id_cotizacion AS id_cotizacion, rm.ref AS ref
 				FROM req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_just_mat cjnm 
 				WHERE rm.id_lab=l.id_lab 

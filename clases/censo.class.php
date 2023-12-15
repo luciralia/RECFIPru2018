@@ -56,7 +56,7 @@ function Cantidad($div,$equipo,$usu){
                  where d.dispositivo_clave=" .$equipo.
 				 " and d.usuario_final_clave= " .$usu ;
 	}
-	//echo $query;
+	echo $query;
 	 
 				$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
 			
@@ -69,6 +69,7 @@ function Cantidad($div,$equipo,$usu){
 
 	}
 	//Modificacions del Censo 2022
+	
 function CantidadC($div,$coord,$perfil){
 	$query="SELECT  count(*) AS cuenta FROM dispositivo d
 	        JOIN laboratorios l

@@ -1,3 +1,4 @@
+
 <?php
 ob_start();
  
@@ -14,15 +15,21 @@ require_once('../conexion.php');
 <p>procesaInventario</p>
 <p>&nbsp;</p>
 <?php 
+	
+echo 'valores con Request';	
+print_r($_REQUEST); 
+echo 'valores con Post';	
+print_r($_POST); 	
 //echo'Equipo que llega para asignar ';
- if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
+	
+if ( $_SESSION['tipo_usuario']==10  &&  $_SESSION['id_div']=='')
 		   $_SESSION['id_div']=$_REQUEST['div'];
 		   if ($_SESSION['tipo_usuario']==9 && $_SESSION['id_div']=='')
                 $_SESSION['id_div']=$_REQUEST['div'];
 echo 'valores en procesainventario'	;
-print_r($_SESSION);
+//print_r($_SESSION);
+
 	
-print_r($_REQUEST); 
 ?>
 
 <!-- asigna equipo a un laboratorio-->
@@ -468,8 +475,9 @@ $inventario= pg_num_rows($datos);
 if ($inventario>0) {
 	//echo 'importa', $reg[0];
 		  if($reg[0]==1){    
-		     echo 'Es importación';
-               $updatequery= "UPDATE dispositivo SET id_lab=NULL WHERE  bn_id=" . $_REQUEST['bn_id'];
+		     echo 'Es importación antes dejaba el lab en NULL';
+              
+               $updatequery= "UPDATE dispositivo SET id_lab=0 WHERE  bn_id=" . $_REQUEST['bn_id'];
 
                $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');
 
@@ -488,19 +496,19 @@ if ($inventario>0) {
 
                if ($inveneqc>0){
 	
-                        $updatequery= "UPDATE equipoc SET id_lab=NULL WHERE  bn_id=" . $_REQUEST['bn_id'];
+                        $updatequery= "UPDATE equipoc SET id_lab=0 WHERE  bn_id=" . $_REQUEST['bn_id'];
 
                         $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR equipoc');
 			   }
 		  } // Cuando proviene de una importación
 		  else { 
 		  echo ' NO es importación';
-		  $updatequery= "DELETE FROM dispositivo WHERE  bn_id=" . $_REQUEST['bn_id'];
+              
+                $updatequery= "UPDATE dispositivo SET id_lab=0 WHERE  bn_id=" . $_REQUEST['bn_id'];
 
-               $result=pg_query($con,$updatequery) or die('ERROR AL ELIMINAR dispositivo');
-
-               //verifica que el equipo se encuantre en equipoC, de ser así se actualiza.
-
+                $result=pg_query($con,$updatequery) or die('ERROR AL ACTUALIZAR dispositivo');
+              
+		        
                $query="SELECT * FROM equipoc ec
                        JOIN laboratorios l 
                        ON l.id_lab=ec.id_lab
@@ -614,7 +622,7 @@ header($direccion);
 <?php 
 echo 'Salvar una edición de inventarios';
 //echo 'valores para guardar registros:';
-print_r ($_REQUEST);
+//print_r ($_REQUEST);
 
 if ($_POST['servidor']=='Si'){
 	$servidor='1';}
@@ -626,10 +634,12 @@ if($_POST['total_almac'] == NULL){
 	else{$totalalmac=$_POST['total_almac'];};
 	
 if (isset($_POST['licencia']))
-
+{ 
 	$licencia=1;
-else 
-    $licencia=0;
+}else{ 
+	$licI=date("d-m-Y", strtotime($_POST['licencia_ini']));
+	$licF=date("d-m-Y", strtotime($_POST['licencia_fin']));
+    $licencia=0;}
 
 //echo 'licencia'. $licencia;
 
@@ -694,17 +704,12 @@ else
 				
 	//busca la marca en el catálogo de marcas...
 	
-	    
-	  
-	  
-	      		
-	  $querym="SELECT descmarca 
+  		
+	$querym="SELECT descmarca 
 							  FROM cat_marca
 			                  WHERE id_marca=".$_POST['id_marca'];
-		
-							  
-              $registrom= pg_query($con,$querym);
-              $marca= pg_fetch_array($registrom);
+		     $registrom= pg_query($con,$querym);
+             $marca= pg_fetch_array($registrom);
 			
 if (isset($_POST['id_mem_ram'])){
     $memram= "SELECT cantidad_ram FROM cat_memoria_ram WHERE id_mem_ram=" . $_POST['id_mem_ram'];	
@@ -712,8 +717,10 @@ if (isset($_POST['id_mem_ram'])){
     $datosram=pg_fetch_array($result,NULL,PGSQL_ASSOC);	  
 }
 
-$strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
-                                    tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
+if (isset($_POST['licencia']))
+{ 	
+	$strqueryd="UPDATE dispositivo SET   id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
+                                   tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
                                     usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,
                                     usuario_sector=%d,marca_p='%s',no_factura='%s',
                                     modelo_p='%s',proveedor_p='%s',fecha_factura='%s',familia_especificar='%s',
@@ -726,13 +733,10 @@ $strqueryd="UPDATE dispositivo SET  dispositivo_clave=%d, id_lab=%d, usuario_fin
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-licencia_ini='%s',licencia_fin='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
+garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
-	
-
-
-$queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
+$queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
                           $_POST['id_tipo_ram'],$_POST['id_tecnologia'],$_POST['resguardo_no_empleado'],$_POST['nombre_resguardo'],
                           $_POST['usuario_nombre'],$_POST['usuario_ubicacion'],$_POST['id_usuario_perfil'],
                           $_POST['id_usuario_sector'],$marca[0],$no_factura,
@@ -745,12 +749,52 @@ $queryud=sprintf($strqueryd,$_POST['dispositivo_clave'], $_POST['id_lab'], $_POS
                           $_POST['subtotal_uno'],$_POST['subtotal_dos'],$_POST['subtotal_tres'],$_POST['subtotal_cuatro'],
                           $arregloTotal,$_POST['id_tec_com'],$_POST['tec_com_otro'],
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,
-                          date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),
-						  $_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],
-						  $_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);	
+                        
+						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);		
+	
+						  
+	
+}else{
+$strqueryd="UPDATE dispositivo SET   id_lab=%d, usuario_final_clave=%d, familia_clave=%d,
+                                   tipo_ram_clave=%d,tecnologia_clave=%d,resguardo_no_empleado=%d,nombre_resguardo='%s',
+                                    usuario_nombre='%s',usuario_ubicacion='%s',usuario_perfil=%d,
+                                    usuario_sector=%d,marca_p='%s',no_factura='%s',
+                                    modelo_p='%s',proveedor_p='%s',fecha_factura='%s',familia_especificar='%s',
+                                    modelo_procesador='%s',cantidad_procesador='%s',nucleos_totales='%s',
+                                    nucleos_gpu='%s',id_mem_ram=%d,ram_especificar='%s',
+									memoria_ram='%s',
+                                    num_elementos_almac=%d,total_almac='%s', num_arreglos=%d,
+                                    esquema_uno=%d,esquema_dos=%d,esquema_tres=%d,esquema_cuatro=%d,
+                                    tec_uno=%d,tec_dos=%d,tec_tres=%d,tec_cuatro=%d,
+                                    subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
+                                    arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
+                                    sist_oper=%d,version_sist_oper='%s',licencia=%d,
+licencia_ini='%s',licencia_fin='%s',garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
+WHERE id_dispositivo=". $_POST['id_dispositivo'];
+	
+	
+$queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
+                          $_POST['id_tipo_ram'],$_POST['id_tecnologia'],$_POST['resguardo_no_empleado'],$_POST['nombre_resguardo'],
+                          $_POST['usuario_nombre'],$_POST['usuario_ubicacion'],$_POST['id_usuario_perfil'],
+                          $_POST['id_usuario_sector'],$marca[0],$no_factura,
+                          $_POST['modelo_p'],$proveedor_p,$fecha_factura,$_POST['familia_especificar'],$_POST['modelo_procesador'],$cantidad_procesador,$nucleos_totales,
+                          $nucleos_gpu,$_POST['id_mem_ram'],$_POST['ram_especificar'],
+						  $datosram['cantidad_ram'],
+                          $_POST['id_elemento'],$totalalmac,$_POST['id_arreglo'],
+                          $_POST['esquema_uno'],$_POST['esquema_dos'],$_POST['esquema_tres'],$_POST['esquema_cuatro'],
+						  $tec_uno,$tec_dos,$tec_tres,$tec_cuatro,
+                          $_POST['subtotal_uno'],$_POST['subtotal_dos'],$_POST['subtotal_tres'],$_POST['subtotal_cuatro'],
+                          $arregloTotal,$_POST['id_tec_com'],$_POST['tec_com_otro'],
+                          $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,$licI,$licF,
+                        
+						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);	
+}
+
+
 						  
 echo $queryud;
 //actualiza número de MAC
+	/*  date("d-m-Y", strtotime($_POST['licencia_ini'])),date("d-m-Y", strtotime($_POST['licencia_fin'])),*/
 	
  $result=pg_query($con,$queryud) or die('ERROR AL ACTUALIZAR DATOS en dispositivo: ' . pg_last_error());
 
@@ -815,16 +859,16 @@ if (isset($tipoequipo)){
    $datoserv=pg_fetch_array($result,NULL,PGSQL_ASSOC);
 }
 
-$strquery="UPDATE equipoc SET descextensa='%s', procesador='%s', 
-            noprocesadores='%s', velocidad='%s', so='%s', 
-			cache='%s',cantmemoria='%s', tipomemoria='%s', 
-			tipotarjvideo='%s', modelotarjvideo='%s', memoriavideo='%s', 
-			nodiscos='%s', capdisco='%s', tipointerfaz='%s', 
-			tipodd='%s', equipoaltorend='%s',
-		    accesorios='%s', arquitectura='%s', estadobien='%s', servidor='%s',id_mod=%d
-            WHERE bn_id=". $_REQUEST['bn_id'];
+       $strquery="UPDATE equipoc SET descextensa='%s', procesador='%s', 
+               noprocesadores='%s', velocidad='%s', so='%s', 
+			   cache='%s',cantmemoria='%s', tipomemoria='%s', 
+			   tipotarjvideo='%s', modelotarjvideo='%s', memoriavideo='%s', 
+			   nodiscos='%s', capdisco='%s', tipointerfaz='%s', 
+			   tipodd='%s', equipoaltorend='%s',
+		       accesorios='%s', arquitectura='%s', estadobien='%s', servidor='%s',id_mod=%d
+               WHERE bn_id=". $_REQUEST['bn_id'];
 
-$queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
+       $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
                $_POST['noprocesadores'],$_POST['velocidad'],$datoso['sistemaoperativo'],
 			   $_POST['cache'], $_POST['cantmemoria'], $datotm['tipomemoria'], 
 			   $_POST['tipotarjvideo'], $_POST['modelotarjvideo'], $_POST['memoriavideo'],
@@ -832,13 +876,16 @@ $queryu=sprintf($strquery,$_POST['descextensa'],$datoproc['descprocesador'],
 			   $_POST['equipoaltorend'], $_POST['accesorios'],$datoarq['arquitectura'],$_POST['estadobien'], $datoserv['servidor'],$_POST['id_mod']);
 
 
-    $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
-
-    $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div'];
-    echo $direccion;
-    header($direccion);
-
-}
+       $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
+	
+	if ($_POST['dispositivo_clave']==16){
+		
+	   require_once('configura_switch.inc.php');
+	  
+	}
+	
+		
+	}
 
 if( $_POST['accionear']=='Guardar'){ ?>
 

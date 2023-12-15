@@ -974,6 +974,171 @@ function combodispositivo($dispositivo)
 					
 	}//fin del metodo combo	dispositivo	
 	
+	function comboaccess($tipo)
+					{
+                    
+				    $query="SELECT * FROM  cat_access ORDER BY tipo_access ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_digitaliza');
+					
+					$salida='<select name="id_access" id="id_access">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_access']==$tipo){
+					
+						  $salida.= "<option value='" . $datosc['id_access'] . "' selected='selected'>" . $datosc['tipo_access']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_access'] . "'>" . $datosc['tipo_access']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	access
+	
+	function combofirewall($tipo)
+					{
+                    
+				    $query="SELECT * FROM  cat_firewall ORDER BY tipo_firewall ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_digitaliza');
+					
+					$salida='<select name="id_firewall" id="id_firewall">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_firewall']==$tipo){
+					
+						  $salida.= "<option value='" . $datosc['id_firewall'] . "' selected='selected'>" . $datosc['tipo_firewall']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_firewall'] . "'>" . $datosc['tipo_firewall']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dfirewall	
+	
+	function comboswitch($tipo) 
+					{
+                    
+				    $query="SELECT * FROM  cat_switch ORDER BY id_switch ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_switch');
+					
+					$salida='<select name="id_switch" id="id_switch">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_switch']==$tipo){
+					
+						  $salida.= "<option value='" . $datosc['id_switch'] . "' selected='selected'>" . $datosc['tipo_switch']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_switch'] . "'>" . $datosc['tipo_switch']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dfirewall	
+	
+	
+	function combopuertos($tipo) 
+					{
+                    
+				    $query="SELECT * FROM  cat_puerto ORDER BY tipo_puerto ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_switch');
+					
+					$salida='<select name="id_puerto" id="id_puerto">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_puerto']==$tipo){
+					
+						  $salida.= "<option value='" . $datosc['id_puerto'] . "' selected='selected'>" . $datosc['tipo_puerto']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_puerto'] . "'>" . $datosc['tipo_puerto']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dfirewall	
+	function combomanten($tipo)
+					{
+                    
+				    $query="SELECT * FROM  cat_garantiamanten ORDER BY id_gar_man ASC";
+				     
+				
+					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_garantiamanten');
+					
+					$salida='<select name="id_gar_man" id="id_gar_man">';
+					        // <option value="0" >Ninguna</option>'; 
+					
+					while ($datosc = pg_fetch_array($result))
+					{
+						
+					if($datosc['id_gar_man']==$tipo){
+					
+						  $salida.= "<option value='".$datosc['id_gar_man'] . "' selected='selected'>" . $datosc['tipo_garantia']. "</option>";
+					 
+					 } else { 
+					
+						  $salida.= "<option value='" . $datosc['id_gar_man'] . "'>" . $datosc['tipo_garantia']. "</option>";
+											  
+						}
+						
+					}//Fin del while
+						
+				//	return $salida;
+					$salida.="</select>";
+					
+					echo $salida;
+					
+	}//fin del metodo combo	dispositivo	
+	
 	
 	function combomemoriaram($memoriaram)
 					{
@@ -1827,7 +1992,7 @@ function radialSalida($sal)
  	
 function verificaTipoEquipo($bien)
 		{
-			if($bien<>9 && $bien<>10 && $bien<>11 && $bien<>12 && $bien<>13)
+			if($bien<>9 && $bien<>10 && $bien<>11 && $bien<>12 && $bien<>13 && $bien<>14 && $bien<>15 && $bien<>16)
 					$salida=1 ;
 			else  $salida=0;		
 					return $salida;

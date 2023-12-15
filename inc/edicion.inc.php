@@ -60,6 +60,7 @@ function palomeadoSal(){
 			
 	      }
 	 }
+	
 	/*function noImpresora() {
 		  var z = document.getElementById("dispositivo_clave").value;
 		
@@ -171,11 +172,10 @@ function palomeadoSal(){
 		// document.getElementById('demo9').innerHTML = "Total " + total;
 		
 		
-//var totalcol = document.querySelector('arreglo_total').innerText;
-//var enttotalcol = document.querySelector('input[name="totalcol"]');
-//enttotalcol.value = totalcol;
-
-	     } 
+        //var totalcol = document.querySelector('arreglo_total').innerText;
+        //var enttotalcol = document.querySelector('input[name="totalcol"]');
+        //enttotalcol.value = totalcol;
+     } 
 		*/ 
 		
 function myFunctionTecCom() {
@@ -185,7 +185,6 @@ function myFunctionTecCom() {
 		       document.getElementById("tec_com_otro").disabled = false; // habilitar
 		  else
 			  document.getElementById("tec_com_otro").disabled = true; // deshabilitar
-			
 	 }
 	 
 	
@@ -261,7 +260,8 @@ function validaNum(formulario) {
    
 </script>
 
-<?php  
+<?php 
+
 //echo 'hace solicitud a editainventario.inc'; print_r($_POST);
 
 require_once('../clases/inventario.class.php');
@@ -276,16 +276,15 @@ $combolab= new laboratorios();
 
 if ($_POST['accion']=='editar'){  
 
-//echo 'Valores a editar';
-//print_r ($_REQUEST);
-//echo 'Valores de session';
-//print_r ($_SESSION);
-
-
+    /*echo 'Valores a editar con REQUEST';
+    print_r ($_REQUEST);
+	echo 'Valores a editar con POST';
+    print_r ($_POST);*/
+    //echo 'Valores de session';
+    //print_r ($_SESSION);
 ?>
 
 <form action="../inc/procesainventario.inc.php" method="post" id="formedi" name="form_edita" class="formul" onsubmit="return validaNum(this);"  >
-
  <br>  <br> 
           
 <table class="formulario"  style="width:100%">
@@ -293,34 +292,70 @@ if ($_POST['accion']=='editar'){
 <tr><legend align="center"><h3>Equipo de cómputo -Por dispositivo</h3></legend></tr>
  <br> 
    <tr>
-     <?php //if ($_POST['dispositivo_clave']==10){ ?>
-     <td><label>Dispositivo: </label></td>
-      <td><label><?php $combo->combodispositivo($_POST['dispositivo_clave'])?></label> </td>
-       <?php // }else if ($_POST['dispositivo_clave']==13){ ?> 
-       <!-- <td><label>Dispositivo: </label></td>
-      <td><label><?php //$combo->combodispositivoDig($_POST['dispositivo_clave'])?></label> </td>
-       <?php //} ?> 
-       <?php //if ($_POST['dispositivo_clave']==10){ ?>
-         <td><label>Tipo Impresora:</label></td>
-         <td><label><?php //$combo->comboImpresora($_POST['tipo_impresora'])?></label></td>
-         <?php //} ?>
-         <?php //if ($_POST['dispositivo_clave']==13){ ?>
-         <td><label>Tipo Digitalizador:</label></td>
-         <td><label><?php //$combo->comboDigitaliza($_POST['tipo_digitaliza'])?></label></td>__>
-         <?php //} ?>
+	 <?php if ($_POST['dispositivo_clave']!=10 AND $_POST['dispositivo_clave']!=13 ){ ?>
+	  
+	   <tr>
+        <td><label>Dispositivo:</label></td>
+        <td><label><input name="dispositivo_clave" type="text" id="dispositivo_clave" tabindex="1" size="30" value="<?php echo $_POST['nombre_dispositivo'];  ?>" disabled="disabled" ></label></td>
       
-   </tr>
-   <tr>
+	  <?php } ?> 
+     <?php if ($_POST['dispositivo_clave']==10){ ?>
+      <td><label>Dispositivo:</label></td>
+        <td><label><input name="dispositivo_clave" type="text" id="dispositivo_clave" tabindex="1" size="30" value="<?php echo $_POST['nombre_dispositivo'];  ?>" disabled="disabled" ></label></td>
+       <?php  }else if ($_POST['dispositivo_clave']==13){ ?> 
+      <td><label>Dispositivo:</label></td>
+        <td><label><input name="dispositivo_clave" type="text" id="dispositivo_clave" tabindex="1" size="30" value="<?php echo $_POST['nombre_dispositivo'];  ?>" disabled="disabled" ></label></td>
+       <?php }?>
+       <?php if ($_POST['dispositivo_clave']==10){ ?>
+         <td><label>Tipo Impresora:</label></td>
+         <td><label><?php $combo->comboImpresora($_POST['id_impresora'])?></label></td>
+        
+         <?php }else if ($_POST['dispositivo_clave']==13){ ?>
+         <td><label>Tipo Digitalizador:</label></td>
+         <td><label><?php $combo->comboDigitaliza($_POST['id_digitaliza'])?></label></td>
+         <?php }else if ($_POST['dispositivo_clave']==14){ ?>
+         <td><label>Access Point:</label></td>
+         <td><label><?php $combo->comboAccess($_POST['id_access'])?></label></td>
+	     <?php }else if ($_POST['dispositivo_clave']==15){ ?>
+	     <td><label>Tipo Firewall:</label></td>
+         <td><label><?php $combo->combofirewall($_POST['id_firewall'])?></label></td>
+	     <?php }else if ($_POST['dispositivo_clave']==16){ ?>
+	     <td><label>Tipo Switch:</label></td>
+         <td><label><?php $combo->comboswitch($_POST['id_switch'])?></label></td>
+		 <tr> 
+		 <td><label>Cantidad de puertos</label></td>
+          <td><label><?php $combo->combopuertos($_POST['id_puerto'])?></label></td> 
+			 
+             <?php if ($_POST['chasis']==1) 
+	            $checked = 'checked="checked" '; 
+              else  $checked = ' '; 
+			
+				 ?>
+			  			 
+		<td><input type="checkbox" name="chasis" id="chasis"  <?php echo $checked ?> value="<?php echo $_POST['chasis'];?>"  /><label for="chasis"><strong>&nbsp;&nbsp;&nbsp;Chasis con puertos</strong></label>
+        </td>
+		</tr>
+	    <?php } ?>
+      </tr>
+	  <?php //if ($_POST['descextensa']!='' ) { ?>
+	  <tr>
+      <td>Descripción Extensa</td>
+         <td><label><input type="text" name="descextensa"  id="descextensa" size="60" value="<?php echo $_POST['descextensa'];?>" required></label><font color="red">*</font></td>
+      </tr>
+	<?php //}else{?>
+	
+   <!--<tr>
        <td><label>Descripción Extensa</label></td>
-       <td><label><input type="text" name="descextensa" id="descextensa" size="60" value="<?php  echo $_POST['descextensa'];?>" required></label></td>
-         <!--<td><textarea  name="descextensa" id="descextensa" value="<?php  echo $_POST['descextensa'];?>" required> </textarea></td>-->
+       <td><label><textarea name="descextensa" id="descextensa" rows="3" cols="60" required placeholder="Escribe la descripción extensa del dispositivo"></textarea></label><font color="red">*</font></td>
+	</tr>--> 
+	   <?php // } ?>
        <td><label>Usuario Final:</label></td>
-      <td><label><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></label></td>  
+       <td><label><?php $combo->combousuariofinal($_POST['usuario_final_clave'])?></label><font color="red">*</font></td>  
          
     </tr>
      <tr>
         <td><label>Área</label></td>
-        <td><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_usuario'])?></label></td>
+        <td><label><?php $combolab->combolabdiv($_POST['id_lab'],$_SESSION['id_usuario'])?></label><font color="red">*</font></td>
      </tr>   
     </table>
 <br />
@@ -331,14 +366,14 @@ if ($_POST['accion']=='editar'){
   <br />
    <tr>
       <td ><label>Nombre</label></td>
-      <td><label><input type="text" name="nombre_resguardo"  id="nombre_resguardo" size="37"  value="<?php echo $_POST['nombre_resguardo'];?>" required></label></td>
+      <td><label><input type="text" name="nombre_resguardo"  id="nombre_resguardo" size="37" value="<?php echo $_POST['nombre_resguardo'];?>" required></label><font color="red">*</font></td>
      
       <td ><label>No. Empleado</label></td>
-      <td ><label> <input type="text" name="resguardo_no_empleado" id="resguardo_no_empleado"size="10" value="<?php echo $_POST['resguardo_no_empleado'];?>" required ></label></td>
+      <td ><label> <input type="text" name="resguardo_no_empleado" id="resguardo_no_empleado" size="10" value="<?php echo $_POST['resguardo_no_empleado'];?>" required></label><font color="red">*</font></td>
     </tr>
     <tr>
-        <td> <label>Modo de Adquisición</label></td>
-        <td> <label><?php $combo->comboadq($_POST['id_mod'])?></label></td> 
+        <td><label>Modo de Adquisición</label></td>
+        <td><label><?php $combo->comboadq($_POST['id_mod'])?></label><font color="red">*</font></td> 
     </tr>
   </table>
   <br />
@@ -348,20 +383,19 @@ if ($_POST['accion']=='editar'){
   <br />
    <tr>
        <td ><label>Nombre</label></td>
-       <td><label><input type="text" name="usuario_nombre" size="37" value="<?php echo $_POST['usuario_nombre'];?>" required ></label></td>
+       <td><label><input type="text" name="usuario_nombre" size="37" value="<?php echo $_POST['usuario_nombre'];?>" required></label><font color="red">*</font></td>
        <td colspan="1">&nbsp;</td>
    </tr>
    <tr>    
        <td><label>Ubicación</label></td>
-       <td><label><input type="text" name="usuario_ubicacion" id="usuario_ubicacion"size="60" value="<?php echo $_POST['usuario_ubicacion'];?>" required ></label>   </td>
-        
+       <td><label><input type="text" name="usuario_ubicacion" id="usuario_ubicacion"size="60" value="<?php echo $_POST['usuario_ubicacion'];?>" required></label><font color="red">*</font></td>
     </tr>
     <tr>
         <td><label>Perfil</label></td>
-        <td><label><?php $combo->combousuarioperfil($_POST['usuario_perfil'])?></label></td>
+        <td><label><?php $combo->combousuarioperfil($_POST['usuario_perfil'])?></label><font color="red">*</font></td>
         <td colspan="2">&nbsp;</td>
         <td><label>Sector</label></td>
-        <td><label><?php $combo->combousuariosector($_POST['usuario_sector'])?></label></td>
+        <td><label><?php $combo->combousuariosector($_POST['usuario_sector'])?></label><font color="red">*</font></td>
        
     </tr>   
   </table>
@@ -383,35 +417,35 @@ if ($_POST['accion']=='editar'){
     </tr>
     <tr>
         <td><label>Marca </label></td>
-        <td><label><?php $combo->combomarca($_POST['descmarca'])?></label></td>
+        <td><label><?php $combo->combomarca($_POST['descmarca'])?></label><font color="red">*</font></td>
         <td colspan="1">&nbsp;</td>
         <td><label>Otra Marca</label></td>
         <?php
 	     if ($_POST['id_marca']==''){?>
-		 <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];?>" required ></label></td>
+		 <td><label><input type="text" name="marca_esp" id="marca_esp" size="17" value="<?php echo $_POST['marca_esp'];?>" required placeholder="Obligatorio, si elige 'Otra'"></label></td>
         <?php } else {  ?>
-         <td><label><input type="text" name="marca_esp" id="marca_esp" size="13" value="<?php echo $_POST['marca_esp'];  ?>" disabled="disabled" ></label></td>
+         <td><label><input type="text" name="marca_esp" id="marca_esp" size="17" value="<?php echo $_POST['marca_esp'];  ?>" disabled="disabled" ></label></td>
      
 	 <?php }  ?>
      </tr> 
      <tr>
           <td><label>Modelo</label></td>
-          <td><input type="text" name="modelo_p" size="20" value="<?php echo $_POST['modelo_p'];  ?>" required ></label></td>
+          <td><label><input type="text" name="modelo_p" size="20" value="<?php echo $_POST['modelo_p'];  ?>" required><font color="red">*</font></label></td>
           <td colspan="2">&nbsp;</td>
      </tr>
      <tr>
          <td><label>Factura</label></td>
-         <td><label><input type="text" name="no_factura" size="40" value="<?php echo $_POST['no_factura'];  ?>" ></label></td>
+         <td><label><input type="text" name="no_factura" size="40" value="<?php echo $_POST['no_factura'];  ?>" required></label><font color="red">*</font></td>
          <td colspan="1">&nbsp;</td>
          <td><label>Proveedor</label></td>
-         <td><input type="text" name="proveedor_p" size="35" value="<?php echo $_POST['proveedor_p'];  ?>"  ></td>
+         <td><input type="text" name="proveedor_p" size="35" value="<?php echo $_POST['proveedor_p'];  ?>"  required><font color="red">*</font></td>
      </tr>
      <tr>
          <td><label>Años de garantía</label></td>
-         <td><label><input type="text" name="anos_garantia" size="20" value="<?php echo $_POST['anos_garantia'];  ?>" ></label></td>
+         <td><label><input type="text" name="anos_garantia" size="20" value="<?php echo $_POST['anos_garantia'];  ?>"  required></label><font color="red">*</font></td>
          <td colspan="1">&nbsp;</td>
          <td><label>Fecha Factura</label></td>
-         <td><label><input name="fecha_factura" type="date" id="fecha_factura" step="1" min="01-01-1985" max="31-12-2030"  value="<?php echo $_POST['fecha_factura']; ?>"   ></label> </td>
+         <td><label><input name="fecha_factura" type="date" id="fecha_factura" step="1" min="01-01-1985" max="31-12-2030"  value="<?php echo $_POST['fecha_factura']; ?>"  required></label><font color="red">*</font></td>
      </tr>
    </table>
   <br />
@@ -423,30 +457,29 @@ if ($_POST['accion']=='editar'){
       <br> 
       <tr>
           <td><label>Familia</label></td>
-          <td><label><?php $combo->combofamilia($_POST['nombre_familia'])?></label></td>
+          <td><label><?php $combo->combofamilia($_POST['nombre_familia'])?></label><font color="red">*</font></td>
           <td >&nbsp;</td>
           <td><label>Especificar</label></td>
      <?php
      if ($_POST['id_familia']==''){  ?>
-     
-          <td><label><input type="text" name="familia_especificar" id="familia_especificar" size="15" value="<?php echo $_POST['familia_especificar'];  ?>" required ></label></td>
+         <td><label><input type="text" name="familia_especificar" id="familia_especificar" size="17" value="<?php echo $_POST['familia_especificar']; ?>" required  placeholder="Obligatorio, si elige 'Otra'"></label></td>
      <?php } else {  ?>
-          <td><label><input type="text" name="familia_especificar" id="familia_especificar" size="15" value="<?php echo $_POST['familia_especificar'];  ?>" disabled="disabled"></label></td>
-     <?php }  ?> 
+          <td><label><input type="text" name="familia_especificar" id="familia_especificar" size="20" value="<?php echo $_POST['familia_especificar']; ?>" disabled="disabled" ></label></td>
+     <?php } ?>
         
      </tr>
      <tr>
          <td><label>Modelo</td>
-         <td><input type="text" name="modelo_procesador" size="30" value="<?php echo $_POST['modelo_procesador'];  ?>" required ></label></td>
+         <td><input type="text" name="modelo_procesador" size="30" value="<?php echo $_POST['modelo_procesador'];  ?>" required ></label><font color="red">*</font></td>
          
     
       </tr>
     <tr>
        <td><label>Cantidad</label> </td>
-       <td><label><input name="cantidad_procesador" type="text" id="cantidad_procesador"  tabindex="1" size="5" value="<?php echo $_POST['cantidad_procesador']; ?>"  ></label> </td>
+       <td><label><input name="cantidad_procesador" type="text" id="cantidad_procesador"  tabindex="1" size="5" value="<?php echo $_POST['cantidad_procesador']; ?>" required></label><font color="red">*</font> </td>
        <td colspan="1">&nbsp;</td>
        <td><label>Núcleos Totales</label></td>
-       <td><label><input name="nucleos_totales" type="text" id="nucleos_totales" tabindex="1"  size="5" value="<?php echo $_POST['nucleos_totales']; ?>" ></label> </td>
+       <td><label><input name="nucleos_totales" type="text" id="nucleos_totales" tabindex="1"  size="5" value="<?php echo $_POST['nucleos_totales']; ?>"  required></label><font color="red">*</font> </td>
       
     </tr>
 </table>
@@ -457,7 +490,7 @@ if ($_POST['accion']=='editar'){
   <tr>   
     
        <td><label>Cantitad Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       <input name="nucleos_gpu" type="text" id="nucleos_gpu" tabindex="1" size="5" value="<?php echo $_POST['nucleos_gpu']; ?>" ></label> </td>
+       <input name="nucleos_gpu" type="text" id="nucleos_gpu" tabindex="1" size="5" value="<?php echo $_POST['nucleos_gpu']; ?>" required ></label><font color="red">*</font></td>
    </tr> 
    
   </table>
@@ -468,13 +501,11 @@ if ($_POST['accion']=='editar'){
       <br> 
       <tr>
            <td><label>Memoria RAM [GB]</label></td>
-           <td><label><?php $combo->combomemoriaram($_POST['memoria_ram'])?></label></td>
+           <td><label><?php $combo->combomemoriaram($_POST['memoria_ram'])?></label><font color="red">*</font></td>
       </tr>
       <tr>
-     
-      
-       <td><label>Tipo</label></td>
-       <td><label><?php $combo->combotipomemoria($_POST['nombre_tipo_ram'])?></label></td>
+           <td><label>Tipo</label></td>
+           <td><label><?php $combo->combotipomemoria($_POST['nombre_tipo_ram'])?></label><font color="red">*</font></td>
     
        <td colspan="2">&nbsp;</td>
        <td colspan="2">&nbsp;</td>
@@ -483,13 +514,12 @@ if ($_POST['accion']=='editar'){
        <td >Especificar</td>
       <?php if ($_POST['id_tipo_ram']==''){  ?>
      
-       <td >&nbsp;&nbsp;<label><input type="text" name="ram_especificar" id="ram_especificar" size="15" value="<?php echo $_POST['ram_especificar'];  ?>"  ></label>
+       <td >&nbsp;&nbsp;<label><input type="text" name="ram_especificar" id="ram_especificar" size="17" value="<?php echo $_POST['ram_especificar'];  ?>" placeholder="Obligatorio, si elige 'Otra'"></label>
        <td colspan="2">&nbsp;</td>
        <?php } else {  ?>
-       <td >&nbsp;&nbsp;<label><input type="text" name="ram_especificar" id="ram_especificar" size="15" value="<?php echo $_POST['ram_especificar'];  ?>"  disabled="disabled"></label>
+       <td >&nbsp;&nbsp;<label><input type="text" name="ram_especificar" id="ram_especificar" size="15" value="<?php echo $_POST['ram_especificar']; ?>"  disabled="disabled"    ></label>
        </td>
-     
-       
+      
       <?php } ?>
       </tr>
   </table>
@@ -501,13 +531,13 @@ if ($_POST['accion']=='editar'){
       <td ><legend ><h5>Almacenamiento estándar</h5></legend></td>
    <tr>
       <td><label>Número de elementos</label></td>
-      <td><label><?php $combo->comboelementos($_POST['num_elementos_almac'])?></label></td>
+      <td><label><?php $combo->comboelementos($_POST['num_elementos_almac'])?></label><font color="red">*</font></td>
      
       <td><label>Tecnología</label></td>
-      <td><label><?php $combo->combotecnologia($_POST['nombre_tecnologia'],0)?></label></td>
+      <td><label><?php $combo->combotecnologia($_POST['nombre_tecnologia'],0)?></label><font color="red">*</font></td>
      
       <td>Capacidad Total [GB]</td>
-      <td><label><input name="total_almac" type="text" id="total_almac" tabindex="1" size="7" value="<?php echo $_POST['total_almac']; ?>"  ></label> <td>
+      <td><label><input name="total_almac" type="text" id="total_almac" tabindex="1" size="7" value="<?php echo $_POST['total_almac']; ?>" ></label><font color="red">*</font><td>
      
     </tr>
    <tr>
@@ -515,7 +545,7 @@ if ($_POST['accion']=='editar'){
    </tr>
    <tr> 
        <td ><label>Arreglos</label></td>
-       <td ><label><?php $combo->comboarreglo($_POST['num_arreglos'])?> </label></td>
+       <td ><label><?php $combo->comboarreglo($_POST['num_arreglos'])?></label><font color="red">*</font></td>
        <td colspan="2">&nbsp;</td>
         <tr> <td colspan="2">&nbsp;</td></tr>
    <script>
@@ -593,11 +623,11 @@ if ($_POST['accion']=='editar'){
     <tr>
        
         <td align="center"><label>Esquema</label></td>
-        <td><label><?php $combo->comboesquema($_POST['esquema_uno'],1)?></label></td>
+        <td><label><?php $combo->comboesquema($_POST['esquema_uno'],1)?></label><font color="red">*</font></td>
         <td><label>Tecnología</label></td>
-        <td><label><?php $combo->combotecnologia($_POST['tec_uno'],1)?></label></td>
+        <td><label><?php $combo->combotecnologia($_POST['tec_uno'],1)?></label><font color="red">*</font></td>
         <td><label>Subtotal [GB]</label></td>
-        <td><label><input name="subtotal_uno" type="text" id="subtotal_uno" tabindex="1"  size="7" onChange="sumar(this.value);" value="<?php echo $_POST['subtotal_uno']; ?>" ></label> </td>
+        <td><label><input name="subtotal_uno" type="text" id="subtotal_uno" tabindex="1"  size="7" onChange="sumar(this.value);" value="<?php echo $_POST['subtotal_uno']; ?>"></label><font color="red">*</font></td>
     </tr>
     <tr>
         <td align="center"><label>Esquema</label></td>
@@ -608,12 +638,11 @@ if ($_POST['accion']=='editar'){
         <td><label><input name="subtotal_dos" type="text" id="subtotal_dos" tabindex="1" size="7" onChange="sumar(this.value);" value="<?php echo $_POST['subtotal_dos']; ?>" disabled="disabled" > </label></td>
     </tr>
     <tr>
-       
-        <td align="center"><label>Esquema</label></td>
+       <td align="center"><label>Esquema</label></td>
        <td><label><?php $combo->comboesquemades($_POST['esquema_tres'],3)?></label></td>
        <td><label>Tecnología</label></td>
        <td><label><?php $combo->combotecnologiades($_POST['tec_tres'],3)?></label></td>
-       <td><label>Subtotal [GB]</td></label>
+       <td><label>Subtotal [GB]</label></td>
        <td ><label><input name="subtotal_tres" type="text" id="subtotal_tres" tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_tres']; ?>" disabled="disabled" ></label> </td>
     </tr>
     <tr>
@@ -643,7 +672,7 @@ if ($_POST['accion']=='editar'){
         <td><label>Tecnología</td>
         <td><label> <?php $combo->combotecnologia($_POST['tec_dos'],2)?></label> </td>
         <td><label>Subtotal [GB]</label></td>
-        <td><label><input name="subtotal_dos" type="text" id="subtotal_dos"  tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_dos']; ?>"  ></label> </td>
+        <td><label><input name="subtotal_dos" type="text" id="subtotal_dos"  tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_dos']; ?>"></label> </td>
     </tr>
     <tr>
        
@@ -652,16 +681,16 @@ if ($_POST['accion']=='editar'){
         <td><label>Tecnología</label></td>
         <td><label><?php $combo->combotecnologiades($_POST['tec_tres'],3)?></label></td>
         <td><label>Subtotal [GB]</label></td>
-        <td><label><input name="subtotal_tres" type="text" id="subtotal_tres" tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_tres']; ?>"   disabled="disabled" ></label> </td>
+        <td><label><input name="subtotal_tres" type="text" id="subtotal_tres" tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_tres']; ?>"   disabled="disabled" ></label></td>
     </tr>
     <tr>
         
        <td align="center"><label>Esquema</label></td>
-        <td><label><?php $combo->comboesquemades($_POST['esquema_cuatro'],4)?> </td>
-        <td><label>Tecnología</td>
-        <td><label><?php $combo->combotecnologiades($_POST['tec_cuatro'],4)?></td>
-        <td><label>Subtotal [GB]</td>
-        <td><label><input name="subtotal_cuatro" type="text" id="subtotal_cuatro" tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_cuatro']; ?>"  disabled="disabled" > </td>
+        <td><label><?php $combo->comboesquemades($_POST['esquema_cuatro'],4)?></label> </td>
+        <td><label>Tecnología</label></td>
+        <td><label><?php $combo->combotecnologiades($_POST['tec_cuatro'],4)?></label></td>
+        <td><label>Subtotal [GB]</label></td>
+        <td><label><input name="subtotal_cuatro" type="text" id="subtotal_cuatro" tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_cuatro']; ?>"  disabled="disabled" ></label></td>
      </tr>
      <?php  } ?>
      <?php if ($_POST['num_arreglos']==3){  ?>
@@ -672,7 +701,7 @@ if ($_POST['accion']=='editar'){
          <td><label>Tecnología</label></td>
          <td><label><?php $combo->combotecnologia($_POST['tec_uno'],1)?></label></td>
          <td><label>Subtotal [GB]</label></td>
-         <td><label><input name="subtotal_uno" type="text" id="subtotal_uno"  tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_uno']; ?>" ></label> </td>
+         <td><label><input name="subtotal_uno" type="text" id="subtotal_uno"  tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_uno']; ?>"></label></td>
     </tr>
     <tr>
         
@@ -681,7 +710,7 @@ if ($_POST['accion']=='editar'){
         <td><label>Tecnología</label></td>
         <td><label><?php $combo->combotecnologia($_POST['tec_dos'],2)?></label></td>
         <td><label>Subtotal [GB]</label></td>
-        <td><label><input name="subtotal_dos" type="text" id="subtotal_dos"  tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_dos']; ?>"  ></label> </td>
+        <td><label><input name="subtotal_dos" type="text" id="subtotal_dos"  tabindex="1" size="7" onChange="sumar(this.value)" value="<?php echo $_POST['subtotal_dos']; ?>" ></label> </td>
     </tr>
     <tr>
      
@@ -690,23 +719,22 @@ if ($_POST['accion']=='editar'){
         <td><label>Tecnología</label></td>
         <td><label><?php $combo->combotecnologia($_POST['tec_tres'],3)?></label></td>
         <td><label>Subtotal [GB]</label></td>
-        <td><label><input name="subtotal_tres" type="text" id="subtotal_tres"  tabindex="1" size="7" onChange="sumar(this.value)"  value="<?php echo $_POST['subtotal_tres']; ?>" ></label> </td>
+        <td><label><input name="subtotal_tres" type="text" id="subtotal_tres"  tabindex="1" size="7" onChange="sumar(this.value)"  value="<?php echo $_POST['subtotal_tres']; ?>"></label></td>
     </tr>
     <tr>
         
         <td align="center"><label>Esquema</label></td>
         <td><label><?php $combo->comboesquemades($_POST['esquema_cuatro'],4)?></label></td>
         <td><label>Tecnología</label></td>
-        <td<label>><?php $combo->combotecnologiades($_POST['tec_cuatro'],4)?></label></td>
+        <td><label><?php $combo->combotecnologiades($_POST['tec_cuatro'],4)?></label></td>
         <td><label>Subtotal [GB]</label></td>
-        <td><input name="subtotal_cuatro" type="text" id="subtotal_cuatro" tabindex="1" size="7" onChange="sumar(this.value);"  value="<?php echo $_POST['subtotal_cuatro']; ?>"  disabled="disabled"  ></label> </td>
+        <td><label><input name="subtotal_cuatro" type="text" id="subtotal_cuatro" tabindex="1" size="7" onChange="sumar(this.value);"  value="<?php echo $_POST['subtotal_cuatro']; ?>"  disabled="disabled"  ></label></td>
    </tr>
    <?php } ?>
    <?php if ($_POST['num_arreglos']==4){  ?>
    
     <tr>
-        
-       <td align="center"><label>Esquema</label></td>
+        <td align="center"><label>Esquema</label></td>
         <td><label><?php $combo->comboesquema($_POST['esquema_uno'],1)?></label></td>
         <td><label>Tecnología</label></td>
         <td><label><?php $combo->combotecnologia($_POST['tec_uno'],1)?></label></td>
@@ -714,16 +742,14 @@ if ($_POST['accion']=='editar'){
         <td><label><input name="subtotal_uno" type="text" id="subtotal_uno" pattern="[0-9]" tabindex="1" size="7" onChange="sumar(this.value);" value="<?php echo $_POST['subtotal_uno']; ?>" ></label> </td>
     </tr>
     <tr>
-        
-        <td><label>Esquema</label></td>
+        <td align="center"><label>Esquema</label></td>
         <td><label><?php $combo->comboesquema($_POST['esquema_dos'],2)?></label> </td>    
         <td><label>Tecnología</label></td>
         <td><label><?php $combo->combotecnologia($_POST['tec_dos'],2)?></label></td>
-        <td><label>Subtotal [GB]</td>
-        <td><<label>input name="subtotal_dos" type="text" id="subtotal_dos"  tabindex="1" size="7" onChange="sumar(this.value);"  value="<?php echo $_POST['subtotal_dos']; ?>"  ></label> </td>
+        <td><label>Subtotal [GB]</label></td>
+        <td><label><input name="subtotal_dos" type="text" id="subtotal_dos"  tabindex="1" size="7" onChange="sumar(this.value);"  value="<?php echo $_POST['subtotal_dos']; ?>"  ></label> </td>
     </tr>
     <tr>
-        
         <td align="center"><label>Esquema</label></td>
         <td><label><?php $combo->comboesquema($_POST['esquema_tres'],3)?></label></td>
         <td><label>Tecnología</label></td>
@@ -733,12 +759,11 @@ if ($_POST['accion']=='editar'){
     </tr>
     <tr>
         <td align="center"><label>Esquema</label></td>
-        
         <td><label><?php $combo->comboesquema($_POST['esquema_cuatro'],4)?></label></td>
         <td><label>Tecnología</label></td>
         <td><label><?php $combo->combotecnologia($_POST['tec_cuatro'],4)?></label></td>
         <td><label>Subtotal [GB]</label></td>
-        <td><label><input name="subtotal_cuatro" type="text" id="subtotal_cuatro"  tabindex="1" size="7" onChange="sumar(this.value);" value="<?php echo $_POST['subtotal_cuatro']; ?>"   ></label> </td>
+        <td><label><input name="subtotal_cuatro" type="text" id="subtotal_cuatro"  tabindex="1" size="7" onChange="sumar(this.value);" value="<?php echo $_POST['subtotal_cuatro']; ?>"></label></td>
    </tr> 
    <?php } ?>
  <!--   <p id="demo8" /p>
@@ -755,34 +780,34 @@ if ($_POST['accion']=='editar'){
  -->
  <tr> <td colspan="2">&nbsp;</td></tr>
  <tr>
- 
      <td colspan="2">&nbsp;</td>
      <td colspan="2">&nbsp;</td>
-     
      <td><label>Capacidad Total [GB]</label></td>
-     <td><label><input name="arreglo_total"  id="arreglo_total" tabindex="1" size="7" value="<?php echo $_POST['arreglo_total']; ?>" disabled="disabled"/></label></td>
-   
-  </tr> 
- </table>
- <br />
- <table class="formulario" style="width:100%">
+     <td><label><input name="arreglo_total"  id="arreglo_total" tabindex="1" size="7" value="<?php echo $_POST['arreglo_total']; ?>" disabled="disabled"/></label><font color="red">*</font></td>
+   </tr> 
+  </table>
+  <br/>
+  <table class="formulario" style="width:100%">
   <tr><legend align="center"><h3>Conectividad</h3></legend></tr>
-      <br> 
+  <br> 
   <tr>   
       <td><label>Tecnología de comunicación </label>
-      <label><?php $combo->combotecom($_POST['tec_com'])?></label></td>
-      
- 
-    
-       <td><label>Otra </label></td>
-  
-      <?php if ($_POST['id_tec_com']=='0'){  ?>
-       <td ><label><input name="tec_com_otro" type="text" id="tec_com_otro"   tabindex="1" size="15" value="<?php echo $_POST['tec_com_otro']; ?>" required > </td>
+      <label><?php $combo->combotecom($_POST['tec_com'])?></label><font color="red">*</font></td>
+      <td><label>Otra </label></td>
+       <?php if ($_POST['id_tec_com']=='0'){  ?>
+       <td ><label><input name="tec_com_otro" type="text" id="tec_com_otro"   tabindex="1" size="17" value="<?php echo $_POST['tec_com_otro']; ?>" required placeholder="Obligatorio, si elige 'Otra'"> </label></td>
     
     <?php } else{ ?>
-      <td ><label><input name="tec_com_otro" type="text" id="tec_com_otro" tabindex="1" size="15" value="<?php echo $_POST['tec_com_otro']; ?>" disabled="disabled">  </td>
+      <td><label><input name="tec_com_otro" type="text" id="tec_com_otro" tabindex="1" size="17" value="<?php echo $_POST['tec_com_otro']; ?>" disabled="disabled" placeholder="Obligatorio, si elige 'Otra'"></label>  </td>
     <?php } ?>
       <td colspan="2">&nbsp;</td>
+  </tr>
+	  <tr>   
+      <td><label>Protocolo</label>
+      <!--<label><?php //$combo->comboprot($_POST['id_prot'])?></label><font color="red">*</font></td>
+      <td><label>Otra </label></td>
+      <td colspan="2">&nbsp;</td>-->
+	  </td>
   </tr>
 </table>
   <br />
@@ -792,42 +817,42 @@ if ($_POST['accion']=='editar'){
       <br> 
     <tr>   
         <td><label>Sistema Operativo</label></td>
-        <td><label><?php $combo->combosistemao($_POST['nombre_so'])?></label></td>
+        <td><label><?php $combo->combosistemao($_POST['nombre_so'])?></label><font color="red">*</font></td>
          <td colspan="2">&nbsp;</td>
         <td><label>Versión </label></td>
-     <?php if ($_POST['version_sist_oper']=='' ) { ?>
-    <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['so']; ?>"  required  ></label>< </td>
+        <?php if ($_POST['version_sist_oper']=='' ) { ?>
+        <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['so']; ?>"  required  ></label><font color="red">*</font></td>
      <?php } else {?>
      <td><label><input name="version_sist_oper" type="text" id="id_version_sist_oper" tabindex="1" size="30"  value="<?php echo $_POST['version_sist_oper']; ?>"  required ></label> </td>
    <?php } ?>
     </tr>
     <tr>
     
-    <?php if ( $_POST['licencia']==1 ) { 
-	   $checked = 'checked="checked" '; 
-       }else {   $checked = ' ';
-    }?>
+    <?php if ( $_POST['licencia']==1 )  
+	         $checked = 'checked="checked" '; 
+          else    $checked = ' ';
+    ?>
 	
     <form id="form1" name="form1" method="post" action="">
-    
-         <td ><input type="checkbox" name="licencia" id="licencia"  <?php echo $checked ?> onChange="palomeadoLic(this);" value="<?php echo $_POST['licencia'];?>"  /> <label for="licencia"></label>
-     
-        <label for="licencia"><strong>&nbsp;&nbsp;&nbsp;Licencia Permanente</strong></label></td>
+         <tr>
+         <td ><input type="checkbox" name="licencia" id="licencia"  <?php echo $checked ?> onChange="palomeadoLic(this);" value="<?php echo $_POST['licencia'];?>"  /><label for="licencia"></label><font color="red">*</font>
+         <label for="licencia"><strong>&nbsp;&nbsp;&nbsp;Licencia Permanente</strong></label></td>
          </tr>
          <tr>
          <td colspan="2">&nbsp;</td>
          
-       <?php if ( $_POST['licencia']==1 ) { ?>
-         <td><label for="licencia_ini">Inicia</label></td>
-         <td><label><input type="date" name="licencia_ini" id="licencia_ini"  value="<?php echo $_POST['licencia_ini']; ?>" disabled="disabled"/></label></td>
+          <?php if ( $_POST['licencia']==1 ) { ?>
+          <td><label for="licencia_ini">Inicia</label></td>
+          <td><label><input type="date" name="licencia_ini" id="licencia_ini" min="01-01-1985" max="31-12-2030" value="<?php //echo $_POST['licencia_ini']; ?>" disabled="disabled"/></label><font color="red">*</font></td>
           <td><label for="licencia_fin">Termina</label></td>
-          <td><label><input type="date" name="licencia_fin" id="licencia_fin" value="<?php echo $_POST['licencia_fin']; ?>" disabled="disabled"/></label></td>
-     <?php } else { ?>
-	      <td>  <label for="licencia_ini">Inicia</label></td>
-          <td>  <label><input type="date" name="licencia_ini" id="licencia_ini" min="01-01-1985" max="31-12-2030" value="<?php echo $_POST['licencia_ini']; ?>" /></label></td>
-          <td>  <label for="licencia_fin">Termina</label></td>
-          <td>  <label><input type="date" name="licencia_fin" id="licencia_fin" min="01-01-1985" max="31-12-2030" value="<?php echo $_POST['licencia_fin']; ?>" /></label></td>	
-      <?php } ?>
+          <td><label><input type="date" name="licencia_fin" id="licencia_fin" min="01-01-1985" max="31-12-2030" value="<?php //echo $_POST['licencia_fin']; ?>" disabled="disabled"/></label><font color="red">*</font></td>
+          <?php }else{ ?>
+	      <td><label for="licencia_ini">Inicia</label></td>
+          <td><label><input type="date" name="licencia_ini" id="licencia_ini"  value="<?php echo $_POST['licencia_ini']; ?>" /></label></td>
+          <td><label for="licencia_fin">Termina</label></td>
+          <td><label><input type="date" name="licencia_fin" id="licencia_fin" value="<?php echo $_POST['licencia_fin']; ?>"/></label></td>
+          <?php } ?>
+		  
       </form>
  </tr>
    <tr>  
@@ -851,24 +876,37 @@ if ($_POST['accion']=='editar'){
      </tr>
      <tr>
      <td  align="left" >Arquitectura</td>
-     <td ><?php $radial->radialarquitectura($_POST['arquitectura'])?></td>
+     <td ><?php $radial->radialarquitectura($_POST['arquitectura'])?><font color="red">*</font></td>
    </tr>
    <tr>
         <td colspan="2" align="left "><font color="blue">Servidor</font></td>
-        <td ><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font></td>
+        <td ><font color="blue"><?php $radial->radialservidor($_POST['servidor'])?></font><font color="red">*</font></td>
         <td colspan="1">&nbsp;</td>
         <td >Estado</td>
-        <td ><?php $radial->radialestado($_POST['estadobien'])?></td>
+        <td ><?php $radial->radialestado($_POST['estadobien'])?><font color="red">*</font></td>
    </tr>
    <tr> 
         <td>Tipo tarjeta de video</td>
-        <td><input name="tipotarjvideo" type="text" id="tipotarjvideo" tabindex="1" size="7" value="<?php echo $_POST['tipotarjvideo']; ?>"></td>
+        <td><input name="tipotarjvideo" type="text" id="tipotarjvideo" tabindex="1" size="7" value="<?php echo $_POST['tipotarjvideo']; ?>"><font color="red">*</font></td>
         <td>Modelo de tarjeta de video</td>
-        <td><input name="modelotarjvideo" type="text" id="modelotarjvideo" tabindex="1" size="15" value="<?php echo $_POST['modelotarjvideo']; ?>"></td>
+        <td><input name="modelotarjvideo" type="text" id="modelotarjvideo" tabindex="1" size="15" value="<?php echo $_POST['modelotarjvideo']; ?>"><font color="red">*</font></td>
         <td>Memoria de video [GB]</td>
-        <td><input name="memoriavideo" type="text" id="memoriavideo"  tabindex="1" size="7" value="<?php echo $_POST['memoriavideo']; ?>"></td>
+        <td><input name="memoriavideo" type="text" id="memoriavideo"  tabindex="1" size="7" value="<?php echo $_POST['memoriavideo']; ?>"><font color="red">*</font></td>
   </tr>
 </table>
+<br>
+<table class="formulario" style="width:100%">
+	<br>
+  <tr><legend align="center"><h3>Garantía/Mantenimiento</h3></legend></tr>
+      <br> 
+  <tr>   
+      <td><label>Mantenimiento</label>
+      <label><?php $combo->combomanten($_POST['garantiamanten'])?></label><font color="red">*</font></td>
+      
+  </tr>
+</table>
+
+
   <?php } ?>
   <table style="width:100%; align:center;">
    <br/>
@@ -884,13 +922,14 @@ if ($_POST['accion']=='editar'){
      </table>
 <br/>
 <br/>
-<input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>" />
-<input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>" />
-<input name="bn_id" type="hidden" value="<?php echo $_POST['bn_id']; ?>" />
-<input name="id_equipo" type="hidden" value="<?php echo $_POST['id_equipo']; ?>" />
-<input name="id_dispositivo" type="hidden" value="<?php echo $_POST['id_dispositivo']; ?>" />
+<input name="lab" type="hidden" value="<?php echo $_GET['lab']; ?>"/>
+<input name="mod" type="hidden" value="<?php echo $_GET['mod']; ?>"/>
+<input name="bn_id" type="hidden" value="<?php echo $_POST['bn_id']; ?>"/>
+<input name="id_equipo" type="hidden" value="<?php echo $_POST['id_equipo']; ?>"/>
+<input name="id_dispositivo" type="hidden" value="<?php echo $_POST['id_dispositivo']; ?>"/>
 <input name="div" type="hidden" value="<?php echo $_REQUEST['div']; ?>" />
-<!--<input name="bien" type="hidden" value="<?php //echo $_POST['bien']; ?>" />-->
+<input name="id_conf" type="hidden" value="<?php echo $_POST['id_configuracion']; ?>" />
+<input name="dispositivo_clave" type="hidden" value="<?php echo $_POST['dispositivo_clave']; ?>" />
 </form>
 
 <?php 

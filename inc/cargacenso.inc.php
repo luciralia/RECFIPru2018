@@ -171,7 +171,7 @@ print_r ($_GET);
 			ORDER BY cuenta DESC";
 	}
 	
-	
+	echo $query;
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>
@@ -660,7 +660,9 @@ if ( $_SESSION['tipo_usuario']==10 && $_SESSION['id_div'] ==""){
 			
             GROUP BY nombre_dispositivo,nombre_familia,familia_clave,estadobien,equipoaltorend,fecha_factura,l.nombre
 			ORDER BY cuenta DESC";
-	}      
+	}   
+     
+	echo $query;
 $datos = pg_query($con,$query);
 $inventario= pg_num_rows($datos); 
 ?>

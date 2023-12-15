@@ -1,11 +1,11 @@
 <?php
 
-require_once(dirname(__FILE__).'/../lib/adodb5/adodb-active-record.inc.php');
-require_once(dirname(__FILE__).'/class.conexion_db.php');
+//require_once(dirname(__FILE__).'/../lib/adodb5/adodb-active-record.inc.php');
+//require_once(dirname(__FILE__).'/class.conexion_db.php');
 require_once('../conexion.php');
  
-$db=conexion_db::getInstance();
- ADOdb_Active_Record::SetDatabaseAdapter($db);
+/*$db=conexion_db::getInstance();
+ ADOdb_Active_Record::SetDatabaseAdapter($db);*/
  session_start();
  
 
@@ -138,8 +138,7 @@ function getLaboratorio($idlab){
 					 else 
 					      $salida.= "<option value='" . $datosc['id_lab'] . "'>" . $datosc['laboratorio']. "</option>";
 						
-					}//Fin del while
-						
+					}//Fin del while	
 				//	return $salida;
 					$salida.="</select>";
 					

@@ -476,11 +476,12 @@ border-top: 2px solid #ffd324;
 border-bottom: 2px solid #ffd324;
 width: 200px;
 max-width: 450px;
-
 }
+
+
 #bgalerta{
 /*	content: "";*/
-	display: block;
+	display: none;
 	position: absolute;
 	left: 0;
 	top: 0;

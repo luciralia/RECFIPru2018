@@ -108,8 +108,8 @@ $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&mod=". $_GET['mod']  ."
 <?php
 } // fin de buscar
 ?>
-<br />
-<br />
+<br/>
+<br/>
   <!--<div class=formulario>
   <div class="block" id="necesidades_content">-->
   <table>
@@ -344,7 +344,10 @@ while ($lab_invent = pg_fetch_array($datos, NULL, PGSQL_ASSOC))
 { 
 
 //print_r ($lab_invent);
-    if (count($lab_invent > 0 )){?>
+ $inventario= pg_num_rows($datos); 
+	
+if ($inventario!=0 ){  
+    //if (count($lab_invent > 0 )){?>
 	 
 	
              <table class='material'>
@@ -610,20 +613,21 @@ if ($inventario!=0){?>
                        <input name="orden" type="hidden" value="<?php echo $_GET['orden']; ?>" />
                        <input name="bOrden" type="submit" value="ordenar" />
             </form>
+    <br>
 </td>
 
 </tr>
 
-<br >
-<br >
+<br>
+<br>
   <table>
 <?php
 
  }
 		else { ?>
-    <br \>
+    <br\>
        <legend align="center"><h3>No se encuentran coincidencias en el inventario de la división.</h3></legend>
-   <br \>
+   <br\>
  <?php  
     } //if ($inventario!=0){
 
@@ -637,8 +641,12 @@ if ($inventario!=0){?>
 		    {$etiqServidor='Si';}
 		 else 
 		    {$etiqServidor='No';} 
+            
+         $inventario= pg_num_rows($datos); 
+	
+	       if ($inventario!=0 ){      
 	      
-         if (count($lab_invent > 0 )){?>
+        // if (count($lab_invent > 0 )){?>
          
 		<table class='material'>
          

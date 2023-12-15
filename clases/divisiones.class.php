@@ -1,10 +1,10 @@
 <?php
-require_once(dirname(__FILE__).'/../lib/adodb5/adodb-active-record.inc.php');
-require_once(dirname(__FILE__).'/class.conexion_db.php');
+//require_once(dirname(__FILE__).'/../lib/adodb5/adodb-active-record.inc.php');
+//require_once(dirname(__FILE__).'/class.conexion_db.php');
 require_once('../conexion.php');
  
- $db=conexion_db::getInstance();
- ADOdb_Active_Record::SetDatabaseAdapter($db);
+ /*$db=conexion_db::getInstance();
+ ADOdb_Active_Record::SetDatabaseAdapter($db);*/
  
 /**
  * 
@@ -13,9 +13,9 @@ require_once('../conexion.php');
  * @brief Esta clase permite operar con la tabla de departamentos como un objeto.
  *
  */
- class departamentos extends ADOdb_Active_Record{
- 	
- 	var $_table = 'divisiones';
+ //class departamentos extends ADOdb_Active_Record{
+ class departamentos{ 	
+ 	//var $_table = 'divisiones';
 
 
 

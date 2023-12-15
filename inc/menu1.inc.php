@@ -4,7 +4,7 @@
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
 
- /*   echo 'SESSION en menu1.inc';
+  /* echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
 	
 	echo 'GET en menu1.inc';
@@ -53,7 +53,7 @@
  	      
           <ul>
            <?php 
-				if (isset($_GET['mod']) || isset($_GET['div'] ) ) {
+				if (isset($_GET['mod']) || isset($_GET['div'] )) {
 			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
 			?>
                <li><a href="../view/inicio.html.php?mod=invg&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">General</a></li> 
@@ -65,7 +65,7 @@
             <?php 
 				 }
 				
-			 if ($_SESSION['tipo_lab']!='e' && $_GET['lab']!=''  )	 {?>
+			 if ($_SESSION['tipo_lab']!='e' && $_GET['lab']!=''  )	 { ?>
              
                    <li><a href="../view/inicio.html.php?mod=invc&lab=<?php  echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?> ">Equipos de c&oacute;mputo</a></li>
                    
@@ -78,8 +78,8 @@
          <?php } ?> 
          
          <?php 
-				if ( $_GET['lab']!='' ){
-			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
+				//if ( $_GET['lab']!='' ){
+			     if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
 			?>
                  <li><a href="#">Software</a> 
 			     <ul>
@@ -245,5 +245,3 @@
  </ul>
  
 </div>
-
-
