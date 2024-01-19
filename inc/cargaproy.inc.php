@@ -4,10 +4,17 @@ require_once('../conexion.php');
 require_once('../clases/cotiza.class.php');
 require_once('../clases/laboratorios.class.php');
 require_once('../clases/proyectos.class.php');
+require_once('../clases/log.class.php');
+
+$logger=new Log();
+
+
+
 $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 $proy= new Proyecto();
 
+$logger->putLog(22,2);
 
 $query = "select p.*,op.organizacion as organizacion
 from proyectos p, organizaciones_proyectos op

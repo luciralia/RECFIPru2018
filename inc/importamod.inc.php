@@ -2,7 +2,12 @@
 require_once('../inc/sesion.inc.php');
 require_once('../conexion.php');
 require_once('../clases/importa.class.php');
-require_once('../clases/inventario.class.php');
+require_once('../clases/inventario.class.php');require_once('../clases/log.class.php');
+
+
+$logger=new Log();
+
+$logger->putLog(8,2);
 
 session_start(); 
 
@@ -82,7 +87,7 @@ function utf8_string_array_encode(&$array){
 
 
 <table width="600" cellspacing="20" cellpadding="20" border="0" class="principal">
-<form action="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>"  method="POST" enctype="multipart/form-data">
+<form action="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div"  method="POST" enctype="multipart/form-data">
  <tr>
    <td width="150" height="30" align="right">Subir archivo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
    <td width="400"><input type="file" name="archivo_txt" id='archivo'></td>
@@ -956,7 +961,7 @@ if($size > 0){
 		            $botonBien->exportaErrorBien();
 	
  }else {?>
-   <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></legend></div></div>
+   <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divE">Cerrar</a></legend></div></div>
  <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
 
 <?php }

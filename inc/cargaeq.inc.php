@@ -5,6 +5,9 @@ require_once('../conexion.php');
 require_once('../clases/cotiza.class.php');
 require_once('../clases/laboratorios.class.php');
 require_once('../clases/requerimientos.class.php');
+require_once('../clases/log.class.php');
+
+
 $obj_cotiza = new Cotiza();
 $lab = new laboratorios();
 $obj_req= new Requerimiento();
@@ -13,7 +16,9 @@ $combofunc = new Requerimiento();
 /*echo 'Valores en carga eq';
 	print_r($_POST); */
 
+$logger=new Log();
 
+$logger->putLog(21,2);
 
 if ($_SESSION['tipo_usuario']==9 && ($_GET['lab']!='' && $_GET['div']!='') ){
 

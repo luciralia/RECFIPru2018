@@ -77,8 +77,48 @@ header($texto);
        
    <br> <br>
    
+  
+	
+
+
+   
   <table class="material">
     <tr><legend align="center"><h3>Equipos de cómputo</h3></legend></tr>
+    <br>
+  
+   <tr>
+              <th width="15%" >Antigüedad</th>
+              
+              <th width="5%"  >Cantidad</th>
+    </tr>
+    </table>  
+    
+
+         <table class="material">
+            
+             <tr>
+                <th width="10%">Menor a 2 años</th>
+                <td width="20%" center><?php echo $censo->CantidadCp($_SESSION['id_div'],1,$_SESSION['tipo_usuario'])?></td>
+             </tr>
+           
+            <tr>
+                <th width="10%">Entre 2 y 3 años</th>
+                <td width="20%" center><?php echo $censo->CantidadCp($_SESSION['id_div'],2,$_SESSION['tipo_usuario'])?></td>
+            </tr>
+            <tr>
+                <th width="10%">Entre 4 y 5 años</th>
+                <td width="20%" center><?php echo $censo->CantidadCp($_SESSION['id_div'],3,$_SESSION['tipo_usuario'])?></td>
+             </tr>
+             <tr>
+                <th width="10%">Mayor a 6 años</th>
+                <td width="20%" center><?php echo $censo->CantidadCp($_SESSION['id_div'],4,$_SESSION['tipo_usuario'])?></td>
+             </tr>
+           
+            </table>
+ <br>
+	
+	<table class="material">
+    <tr><legend align="center"><h3>Equipos portátiles</h3></legend></tr>
     <br>
   
    <tr>
@@ -111,6 +151,7 @@ header($texto);
            
             </table>
  <br>
+	
   <table class="material">
            <tr><legend align="center"><h3>Servidores</h3></legend></tr>
     <br>

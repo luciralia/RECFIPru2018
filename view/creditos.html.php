@@ -1,6 +1,13 @@
 <?php 
 
 require_once('../inc/sesion.inc.php');
+require_once('../clases/log.class.php');
+
+
+
+$logger=new Log();
+
+$logger->putLog(6,2);
 
  ?>
 
@@ -39,6 +46,6 @@ require_once('../inc/sesion.inc.php');
  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
  <tr> <td align="right"><h5>Versión 2.0 del sistema</h5></td></tr>
- <tr> <td align="right"><h5>Última actualización  28 de Junio de 2022</h5></td></tr>
+ <tr> <td align="right"><h5>Última actualización  Diciembre de 2023</h5></td></tr>
  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <?php require('../inc/pie.inc.php'); ?>

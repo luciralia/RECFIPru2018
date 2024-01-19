@@ -19,7 +19,7 @@ $tiposerv="(em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 $tiposerv="em.tipo_serv IS TRUE";
 }
 
-$logger->putLog(19,2);
+$logger->putLog(4,2);
  ?>
 <div class="docs">
 <ul>

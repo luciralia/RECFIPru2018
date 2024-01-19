@@ -772,6 +772,7 @@ $strqueryd="UPDATE dispositivo SET   id_lab=%d, usuario_final_clave=%d, familia_
 licencia_ini='%s',licencia_fin='%s',garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
+
 	
 $queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
                           $_POST['id_tipo_ram'],$_POST['id_tecnologia'],$_POST['resguardo_no_empleado'],$_POST['nombre_resguardo'],
@@ -788,9 +789,9 @@ $queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_P
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,$licI,$licF,
                         
 						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);	
+
+
 }
-
-
 						  
 echo $queryud;
 //actualiza número de MAC
@@ -883,8 +884,12 @@ if (isset($tipoequipo)){
 	   require_once('configura_switch.inc.php');
 	  
 	}
+	//Agregar
+	 $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" .$_SESSION['id_div']; 
+echo $direccion;
+header($direccion);
+ 
 	
-		
 	}
 
 if( $_POST['accionear']=='Guardar'){ ?>

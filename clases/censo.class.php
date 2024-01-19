@@ -218,6 +218,7 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 	
     function CantidadP ($div,$tipo,$usu){
 		
+		
 		$query="SELECT COUNT (*) as cuenta
                 FROM dispositivo ec 
                 LEFT JOIN laboratorios l
@@ -237,17 +238,19 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 		if ($div!='' && ($usu==9 || $usu==10)){
 		switch ($tipo){
 		  case 1:
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) < 2
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) <= 2
                            AND dv.id_div=". $div ;
 			break;
  		  case 2:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 2 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<3))
-                           AND dv.id_div=". $div ;
+			    /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
+                           AND dv.id_div=". $div ;*/
+				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
+					       AND dv.id_div=". $div ;
 			break;
 			case 3:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 4 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<5))
+			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
                            AND dv.id_div=". $div ;
 			break;
 		    case 4: 
@@ -258,15 +261,15 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 		} elseif($div=='' && $usu==10){
 			switch ($tipo){
 		  case 1:
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))< 2" ;
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2" ;
 			break;
  		  case 2:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 2 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<3))";
+			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))>= 2 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))";
 			break;
 			case 3:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 4 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<5))" ;
+			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))>= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))" ;
 			break;
 		    case 4: 
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 6" ;
@@ -287,6 +290,86 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 			return $salidar;
 	}
 	
+	function CantidadCp ($div,$tipo,$usu){
+		
+		
+		
+		$query="SELECT COUNT (*) as cuenta
+                FROM dispositivo ec 
+                LEFT JOIN laboratorios l
+                ON ec.id_lab=l.id_lab
+                LEFT JOIN cat_familia cf
+                ON ec.familia_clave=cf.id_familia
+                LEFT JOIN cat_dispositivo cd
+                ON ec.dispositivo_clave=cd.dispositivo_clave
+                LEFT JOIN cat_marca cm
+                ON cm.id_marca=ec.id_marca
+                LEFT JOIN departamentos d
+                ON d.id_dep=l.id_dep
+				LEFT JOIN divisiones dv
+				ON dv.id_div=d.id_div
+                WHERE (ec.dispositivo_clave=3 or ec.dispositivo_clave=4) ";
+	
+		if ($div!='' && ($usu==9 || $usu==10)){
+		switch ($tipo){
+		  case 1:
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) <=2
+                           AND dv.id_div=". $div ;
+			break;
+ 		  case 2:
+			     /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
+                           AND dv.id_div=". $div ;*/
+				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
+					       AND dv.id_div=". $div ;
+			break;
+			case 3:
+			   /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=5))*/
+				 $query.= "AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
+                           AND dv.id_div=". $div ;
+			break;
+		    case 4: 
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 6
+                           AND dv.id_div=". $div ;
+			break;
+		}//fin switch
+		} elseif($div=='' && $usu==10){
+			switch ($tipo){
+		  case 1:
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2" ;
+			break;
+ 		  case 2:
+			      /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
+                           AND dv.id_div=". $div ;*/
+				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)";
+			break;
+			case 3:
+			    $query.= "     AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))" ;
+			break;
+		    case 4: 
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 6" ;
+			break;
+		}//fin switch
+			
+			
+		}
+		//echo $query;
+		$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
+			
+				while ($datos = pg_fetch_array($result,NULL,PGSQL_ASSOC))
+					{
+					$salidar = $datos['cuenta'] ;
+					}
+			if ($salidar == null) 
+				$salidar=0;
+			return $salidar;
+	}
+	
+	
 	function CantidadS ($div,$tipo,$usu){
 		$query="SELECT COUNT (*) AS cuenta
                 FROM dispositivo ec 
@@ -306,17 +389,19 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 	if ($div!='' && ($usu==9 || $usu==10)){
 		switch ($tipo){
 		  case 1:
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) < 2
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) <= 2
                            AND dv.id_div=". $div ;
 			break;
  		  case 2:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 2 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<3))
-                           AND dv.id_div=". $div ;
+			   /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
+                           AND dv.id_div=". $div ;*/
+				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
+					       AND dv.id_div=". $div ;
 			break;
 			case 3:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 4 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<5))
+			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
                            AND dv.id_div=". $div ;
 			break;
 		    case 4: 
@@ -327,15 +412,17 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 	} elseif($div=='' && $usu==10){
 			switch ($tipo){
 		  case 1:
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))< 2" ;
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2" ;
 			break;
  		  case 2:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 2 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<3))";
+			      /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
+                           AND dv.id_div=". $div ;*/
+				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)";
 			break;
 			case 3:
-			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 4 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<5))" ;
+			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))>= 4 
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))" ;
 			break;
 		    case 4: 
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 6" ;

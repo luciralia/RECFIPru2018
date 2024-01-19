@@ -3,6 +3,7 @@
 require_once('../inc/sesion.inc.php');
 require_once('../clases/laboratorios.class.php');
 
+
 $lab = new laboratorios();
  ?>
 <!--  <tr>

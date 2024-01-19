@@ -1,6 +1,11 @@
 <?php
 
 require_once('../conexion.php');
+require_once('../clases/log.class.php');
+
+$logger=new Log();
+
+$logger->putLog(CURL_HTTP_VERSION_2_0,2);
 
 //$query = "SELECT * FROM usuarios WHERE id_usuario =" . $_SESSION['id_usuario'];
 //echo 'En cargaced';

@@ -36,11 +36,11 @@
 <file name="editainventario.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
 <file name="importarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
 <file name="importarant.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137320000000" remote="132005137320000000" Dst="1" />
-<file name="creditos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133065243737711783" remote="133065244980000000" Dst="2" />
+<file name="creditos.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133501544655135618" remote="133501544690000000" Dst="0" />
 <file name="censoDGTIC.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132623697849706485" remote="132623703330000000" Dst="2" />
 <file name="censoDGTICC.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132968477484583325" remote="132969428070000000" Dst="2" />
 <file name="censoitipo.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133264949136280404" remote="133264949240000000" Dst="0" />
 <file name="censoedtipo.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263120188264169" remote="133264943170000000" Dst="0" />
 <file name="censomanto.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133258795000070292" remote="133264943300000000" Dst="0" />
-<file name="censoportatiles.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133247606525542405" remote="133264943460000000" Dst="0" />
+<file name="censoportatiles.html.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133495618690734158" remote="133500723800000000" Dst="0" />
 </dwsync>

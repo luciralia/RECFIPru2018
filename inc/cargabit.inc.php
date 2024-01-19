@@ -11,6 +11,8 @@ $lab = new laboratorios();
 $obj_req= new Requerimiento();
 $logger=new Log();
 
+$logger->putLog(3,2);
+
 
 if ($_GET['mod']=='serv'){
 $tiposerv="(em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";

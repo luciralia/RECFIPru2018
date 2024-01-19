@@ -10,7 +10,7 @@ require_once('../clases/log.class.php');
 
 $logger=new Log();
 
-$logger->putLog(7,2);
+$logger->putLog(20,2);
 
 
 /*
