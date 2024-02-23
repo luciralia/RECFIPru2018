@@ -158,54 +158,54 @@ if ($_SESSION['tipo_usuario']==9)
                 
                 <th width="15%">Servidores
                                 </th>
-                <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],8,1)?></td>
-                <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],8,2)?></td>
-                <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],8,3)?></td>
-                <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],8,4)?></td>
-                <td width="20%" center><?php echo $censo->CantidadC($_SESSION['id_div'],8,1)+
-				                                  $censo->CantidadC($_SESSION['id_div'],8,2)+
-												  $censo->CantidadC($_SESSION['id_div'],8,3)+
-	                                              $censo->CantidadC($_SESSION['id_div'],8,4)?></td>
+                <td width="20%" center><?php echo $censo->CantidadS($_SESSION['id_div'],8,1)?></td>
+                <td width="20%" center><?php echo $censo->CantidadS($_SESSION['id_div'],8,2)?></td>
+                <td width="20%" center><?php echo $censo->CantidadS($_SESSION['id_div'],8,3)?></td>
+                <td width="20%" center><?php echo $censo->CantidadS($_SESSION['id_div'],8,4)?></td>
+                <td width="20%" center><?php echo $censo->CantidadS($_SESSION['id_div'],8,1)+
+				                                  $censo->CantidadS($_SESSION['id_div'],8,2)+
+												  $censo->CantidadS($_SESSION['id_div'],8,3)+
+	                                              $censo->CantidadS($_SESSION['id_div'],8,4)?></td>
             </tr>
             
              <tr>
                 
                 <th width="15%">Total</th>
-                <td width="20%" center><?php echo $totalC1= $censo->CantidadC($_SESSION['id_div'],1,1)+
-				                                  $censo->CantidadC($_SESSION['id_div'],2,1)+
-												  $censo->CantidadC($_SESSION['id_div'],3,1)+
-	                                              $censo->CantidadC($_SESSION['id_div'],4,1)+
-												  $censo->CantidadC($_SESSION['id_div'],5,1)+
-                                                  $censo->CantidadC($_SESSION['id_div'],6,1)+
-	                                              $censo->CantidadC($_SESSION['id_div'],7,1)+
-	                                              $censo->CantidadC($_SESSION['id_div'],8,1)?></td>
+                <td width="20%" center><?php echo $totalC1= $censo->CantidadS($_SESSION['id_div'],1,1)+
+				                                  $censo->CantidadS($_SESSION['id_div'],2,1)+
+												  $censo->CantidadS($_SESSION['id_div'],3,1)+
+	                                              $censo->CantidadS($_SESSION['id_div'],4,1)+
+												  $censo->CantidadS($_SESSION['id_div'],5,1)+
+                                                  $censo->CantidadS($_SESSION['id_div'],6,1)+
+	                                              $censo->CantidadS($_SESSION['id_div'],7,1)+
+	                                              $censo->CantidadS($_SESSION['id_div'],8,1)?></td>
                                                           
-                <td width="20%" center><?php echo $totalC2= $censo->CantidadC($_SESSION['id_div'],1,2)+
-				                                  $censo->CantidadC($_SESSION['id_div'],2,2)+
-												  $censo->CantidadC($_SESSION['id_div'],3,2)+
-	                                              $censo->CantidadC($_SESSION['id_div'],4,2)+
-												  $censo->CantidadC($_SESSION['id_div'],5,2)+
-                                                  $censo->CantidadC($_SESSION['id_div'],6,2)+
-	                                              $censo->CantidadC($_SESSION['id_div'],7,2)+
-	                                              $censo->CantidadC($_SESSION['id_div'],8,2)?></td>
+                <td width="20%" center><?php echo $totalC2= $censo->CantidadS($_SESSION['id_div'],1,2)+
+				                                  $censo->CantidadS($_SESSION['id_div'],2,2)+
+												  $censo->CantidadS($_SESSION['id_div'],3,2)+
+	                                              $censo->CantidadS($_SESSION['id_div'],4,2)+
+												  $censo->CantidadS($_SESSION['id_div'],5,2)+
+                                                  $censo->CantidadS($_SESSION['id_div'],6,2)+
+	                                              $censo->CantidadS($_SESSION['id_div'],7,2)+
+	                                              $censo->CantidadS($_SESSION['id_div'],8,2)?></td>
 	                                              
-                <td width="20%" center><?php echo $totalC3= $censo->CantidadC($_SESSION['id_div'],1,3)+
-				                                  $censo->CantidadC($_SESSION['id_div'],2,3)+
-												  $censo->CantidadC($_SESSION['id_div'],3,3)+
-	                                              $censo->CantidadC($_SESSION['id_div'],4,3)+
-												  $censo->CantidadC($_SESSION['id_div'],5,3)+
-                                                  $censo->CantidadC($_SESSION['id_div'],6,3)+
-	                                              $censo->CantidadC($_SESSION['id_div'],7,3)+
-	                                              $censo->CantidadC($_SESSION['id_div'],8,3)?></td>
+                <td width="20%" center><?php echo $totalC3= $censo->CantidadS($_SESSION['id_div'],1,3)+
+				                                  $censo->CantidadS($_SESSION['id_div'],2,3)+
+												  $censo->CantidadS($_SESSION['id_div'],3,3)+
+	                                              $censo->CantidadS($_SESSION['id_div'],4,3)+
+												  $censo->CantidadS($_SESSION['id_div'],5,3)+
+                                                  $censo->CantidadS($_SESSION['id_div'],6,3)+
+	                                              $censo->CantidadS($_SESSION['id_div'],7,3)+
+	                                              $censo->CantidadS($_SESSION['id_div'],8,3)?></td>
 	                                              
-                <td width="20%" center><?php echo $totalC4= $censo->CantidadC($_SESSION['id_div'],1,4)+
-				                                  $censo->CantidadC($_SESSION['id_div'],2,4)+
-												  $censo->CantidadC($_SESSION['id_div'],3,4)+
-	                                              $censo->CantidadC($_SESSION['id_div'],4,4)+
-												  $censo->CantidadC($_SESSION['id_div'],5,4)+
-                                                  $censo->CantidadC($_SESSION['id_div'],6,4)+
-	                                              $censo->CantidadC($_SESSION['id_div'],7,4)+
-	                                              $censo->CantidadC($_SESSION['id_div'],8,4)?></td>
+                <td width="20%" center><?php echo $totalC4= $censo->CantidadS($_SESSION['id_div'],1,4)+
+				                                  $censo->CantidadS($_SESSION['id_div'],2,4)+
+												  $censo->CantidadS($_SESSION['id_div'],3,4)+
+	                                              $censo->CantidadS($_SESSION['id_div'],4,4)+
+												  $censo->CantidadS($_SESSION['id_div'],5,4)+
+                                                  $censo->CantidadS($_SESSION['id_div'],6,4)+
+	                                              $censo->CantidadS($_SESSION['id_div'],7,4)+
+	                                              $censo->CantidadS($_SESSION['id_div'],8,4)?></td>
                 
            
            

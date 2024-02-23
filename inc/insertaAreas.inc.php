@@ -90,7 +90,7 @@ $titulo='Importar Áreas';
 		   
 	 if (pg_num_rows($datostemp)>0) {*/
 			 
-		           $updatequery= "UPDATE laboratorios SET dir_postal='%s', id_edif=%d,
+		         /*  $updatequery= "UPDATE laboratorios SET dir_postal='%s', id_edif=%d,
 				                  detalle_ub='%s',tipo_lab='%s',carreras='%s',asignaturas='%s'
 			                      WHERE id_lab=".$datosdec[0];
 							  
@@ -102,31 +102,29 @@ $titulo='Importar Áreas';
 			        $repetido++; ?>
 					 <legend align="left"> <?php echo "Se insertó previamente el área con identificador" . $datosdec[0]; ?></legend> 
 			       
-		   <?php // } else { 
+		   <?php // } else { */
 	     
-	  
-/*
-							
-							 $strqueryd="INSERT INTO laboratorios (id_lab,id_dep, id_responsable,
-							                                       nombre,dir_postal,act_generales,
-																   carreras,asignaturas,id_edif,
-																   detalle_ub,capacidad,tipo_lab)
-                                          VALUES (%d,%d, %d,
-										         '%s','%s', %d,
-												 '%s','%s',%d,
-												 '%s','%s','%s')";
+	   $strqueryd="INSERT INTO laboratorios (id_lab,id_dep,id_responsable,
+							                nombre,dir_postal,act_generales,
+											carreras,asignaturas,id_edif,
+											detalle_ub,capacidad,tipo_lab)
+                   VALUES (%d,%d, %d,
+				   '%s','%s','%s',
+				   '%s','%s',%d,
+				   '%s','%s','%s')";
 				   
                             $queryid=sprintf($strqueryd, $datosdec[0],$datosdec[1],$datosdec[2],
 				                             $datosdec[3],$datosdec[4],$datosdec[5],
 											 $datosdec[6],$datosdec[7],$datosdec[8],
 											 $datosdec[9],$datosdec[10],$datosdec[11]);
 											  
-											// echo $queryid;
+											 echo $queryid;
                
-                           $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
+                            $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
 				
 			                 $importa++; // inserciones restantes
-	*/
+		
+	
 	      //      }
  
 	 } 

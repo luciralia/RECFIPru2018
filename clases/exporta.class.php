@@ -418,17 +418,76 @@ function DispXls(){
 		 while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
 		       //echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
 		       $this->datos[]=$datosr;
+		
+		
+	}
+	return $this->datos;
+	unset ($datos);
+
+	}
+	
+	function FaltanBienesXls($div){
+		
+		echo 'REcibe div',$div;
+		
+	$query="SELECT inv,tipo FROM faltantes WHERE tipo=1 AND div=". $div;
+		
+		echo $query;
+	
+	
+         $result = pg_query($query) or die('Hubo un error con la base de datos');
+		 while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
+		       //echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
+		       $this->datos[]=$datosr;
 		}
+	return $this->datos;
+	unset ($datos);
+
+	}
+	
+	function ActualizadosXls($div){
+		
+			echo 'REcibe div',$div;
+		
+	$query="SELECT inv,tipo FROM faltantes WHERE tipo=3 AND div=". $div;
+	echo $query;
+
+         $result = pg_query($query) or die('Hubo un error con la base de datos');
+		 while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
+		       //echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
+		       $this->datos[]=$datosr;
+		}
+	return $this->datos;
+	unset ($datos);
+
+	}
+	
+	
+    function FaltanRECFIXls($div){
+		
+			echo 'REcibe div',$div;
+		
+	$query="SELECT inv,tipo FROM faltantes WHERE tipo=2 AND div=". $div;
+	
+	echo $query;
+         $result = pg_query($query) or die('Hubo un error con la base de datos');
+		 while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
+		       //echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
+		       $this->datos[]=$datosr;
+	}
+	return $this->datos;
+	unset ($datos);
+
+	}		
 	
 	
     //Echo "</br>el valor de los datosdiv" . "    " . print_r($datosdiv) . "</br></br></br>";
 	//echo "</br>el valor de los datos en la clase" . "    " . print_r($datos). "</br></br></br>";
 
-	return $this->datos;
-	unset ($datos);
+	
 
 
-}
+
 
 }
 

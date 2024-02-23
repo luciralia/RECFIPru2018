@@ -457,7 +457,7 @@ if ($_POST['accion']=='editar'){
       <br> 
       <tr>
           <td><label>Familia</label></td>
-          <td><label><?php $combo->combofamilia($_POST['nombre_familia'])?></label><font color="red">*</font></td>
+          <td><label><?php $combo->combofamilia($_POST['nombre_familia'],$_POST['dispositivo_clave'] )?></label><font color="red">*</font></td>
           <td >&nbsp;</td>
           <td><label>Especificar</label></td>
      <?php

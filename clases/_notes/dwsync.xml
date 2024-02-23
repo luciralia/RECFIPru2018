@@ -18,8 +18,8 @@
 <file name="class.conexion_db.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130260189540000000" remote="131790351660000000" Dst="2" />
 <file name="cotiza.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427786680000000" remote="131790351660000000" Dst="2" />
 <file name="departamentos.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130260189540000000" remote="131790351660000000" Dst="2" />
-<file name="divisiones.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132838971055211512" remote="132924610300000000" Dst="1" />
-<file name="exporta.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133257186819294850" remote="133264943710000000" Dst="0" />
+<file name="divisiones.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133524995102374761" remote="133525037730000000" Dst="0" />
+<file name="exporta.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133525024021273310" remote="133525037600000000" Dst="0" />
 <file name="infra.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130427812540000000" remote="131790351660000000" Dst="2" />
 <file name="inventario.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133456771458115300" remote="133458451080000000" Dst="0" />
 <file name="laboratorios.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132035472090000000" remote="132035472090000000" Dst="1" />
@@ -29,5 +29,5 @@
 <file name="Working Copy of divisiones.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="130260258960000000" remote="131790351670000000" Dst="2" />
 <file name="importa.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132055194710000000" remote="132055194710000000" Dst="1" />
 <file name="importaOtra.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137350000000" remote="132005137350000000" Dst="1" />
-<file name="censo.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133500791054542370" remote="133500791670000000" Dst="0" />
+<file name="censo.class.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133511303570375046" remote="133511303620000000" Dst="0" />
 </dwsync>

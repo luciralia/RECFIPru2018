@@ -2,7 +2,8 @@
 require_once('../inc/sesion.inc.php');
 require_once('../conexion.php');
 require_once('../clases/importa.class.php');
-require_once('../clases/inventario.class.php');require_once('../clases/log.class.php');
+require_once('../clases/inventario.class.php');
+require_once('../clases/log.class.php');
 
 
 $logger=new Log();
@@ -87,7 +88,7 @@ function utf8_string_array_encode(&$array){
 
 
 <table width="600" cellspacing="20" cellpadding="20" border="0" class="principal">
-<form action="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div"  method="POST" enctype="multipart/form-data">
+<form action="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div?multipart/form-data">
  <tr>
    <td width="150" height="30" align="right">Subir archivo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
    <td width="400"><input type="file" name="archivo_txt" id='archivo'></td>
@@ -661,7 +662,7 @@ if($size > 0){
 			        $ultimo=$ultimo[0]+1;
 					
 	   if (isset($inventario) || isset($dispclave)){
-	         $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
+	       /*  $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
 	                                     columna6,columna7,columna8,columna9,columna10,
 	                                     columna11,columna12,columna13,columna14,columna15,
 										 columna16,columna17,columna18,columna19,columna20,
@@ -684,9 +685,10 @@ if($size > 0){
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
 							 $columna51 )";
 		
-		//echo $query;
-	    $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
-	   }
+		echo 'Query '. $query;
+		   
+	    $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); */
+		   echo 'Query '. $query;
 	    if (!$result) 
 				 $errorinserta++;
 		
@@ -961,8 +963,7 @@ if($size > 0){
 		            $botonBien->exportaErrorBien();
 	
  }else {?>
-   <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divE">Cerrar</a></legend></div></div>
- <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
+   <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><legend align="center"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divo "Tipo de archivo incorrecto"; ?></legend> -->      
 
 <?php }
    

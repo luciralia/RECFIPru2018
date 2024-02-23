@@ -56,7 +56,7 @@ function Cantidad($div,$equipo,$usu){
                  where d.dispositivo_clave=" .$equipo.
 				 " and d.usuario_final_clave= " .$usu ;
 	}
-	echo $query;
+//	echo $query;
 	 
 				$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
 			
@@ -69,7 +69,7 @@ function Cantidad($div,$equipo,$usu){
 
 	}
 	//Modificacions del Censo 2022
-	
+	/*SELECT count(*) AS cuenta FROM dispositivo d JOIN laboratorios l ON d.id_lab=l.id_lab JOIN departamentos dep on dep.id_dep=l.id_dep JOIN divisiones dv ON dv.id_div=dep.id_div JOIN cat_usuario_final cuf ON cuf.usuario_final_clave=d.usuario_final_clave WHERE dispositivo_clave between 1 and 8 considerar perfil de USAURIO FINAL*/
 function CantidadC($div,$coord,$perfil){
 	$query="SELECT  count(*) AS cuenta FROM dispositivo d
 	        JOIN laboratorios l
@@ -78,9 +78,11 @@ function CantidadC($div,$coord,$perfil){
 			on dep.id_dep=l.id_dep
 			JOIN divisiones dv
 			ON dv.id_div=dep.id_div
-			JOIN cat_usuario_final cuf
-			ON cuf.usuario_final_clave=d.usuario_final_clave
-			WHERE ";
+			WHERE 
+			dispositivo_clave BETWEEN 1 AND 8 AND
+            usuario_perfil BETWEEN 1 AND 4 AND
+			 estadobien <> 'DESUSO' AND
+			";
 	if ($perfil!=4)
           $query.="usuario_perfil=".$perfil. " AND ";
 	elseif($perfil=4)
@@ -169,7 +171,7 @@ function CantidadC($div,$coord,$perfil){
 	    break; 
 		 }//end switch
 	}
-	//echo $query;
+	// echo $query;
 	 
 				$result = pg_query($query) or die('Hubo un error con la base de datos en resp lab');
 			
@@ -233,7 +235,8 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
                 ON d.id_dep=l.id_dep
 				LEFT JOIN divisiones dv
 				ON dv.id_div=d.id_div
-                WHERE (ec.dispositivo_clave=1 or ec.dispositivo_clave=2) ";
+                WHERE (ec.dispositivo_clave=1 or ec.dispositivo_clave=2) 
+				AND estadobien <> 'DESUSO' ";
 	
 		if ($div!='' && ($usu==9 || $usu==10)){
 		switch ($tipo){
@@ -261,7 +264,7 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 		} elseif($div=='' && $usu==10){
 			switch ($tipo){
 		  case 1:
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2" ;
+			    $query.= " AND (EXTRACT(YEAR FROM current_date))<= 2" ;
 			break;
  		  case 2:
 			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))>= 2 
@@ -308,7 +311,8 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
                 ON d.id_dep=l.id_dep
 				LEFT JOIN divisiones dv
 				ON dv.id_div=d.id_div
-                WHERE (ec.dispositivo_clave=3 or ec.dispositivo_clave=4) ";
+                WHERE (ec.dispositivo_clave=3 or ec.dispositivo_clave=4) 
+				AND estadobien <> 'DESUSO' ";
 	
 		if ($div!='' && ($usu==9 || $usu==10)){
 		switch ($tipo){
@@ -385,11 +389,13 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
                 ON d.id_dep=l.id_dep
 				LEFT JOIN divisiones dv
 				ON dv.id_div=d.id_div
-                WHERE ec.dispositivo_clave=6 ";
+                WHERE ec.dispositivo_clave=6 
+				AND estadobien <> 'DESUSO' ";
 	if ($div!='' && ($usu==9 || $usu==10)){
 		switch ($tipo){
 		  case 1:
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) <= 2
+				           AND perfil_usuario=1 
                            AND dv.id_div=". $div ;
 			break;
  		  case 2:
@@ -397,35 +403,42 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
                            AND dv.id_div=". $div ;*/
 				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
+				           AND perfil_usuario=2
 					       AND dv.id_div=". $div ;
 			break;
 			case 3:
 			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
-                           AND dv.id_div=". $div ;
+                           AND perfil_usuario=3
+						   AND dv.id_div=". $div ;
 			break;
 		    case 4: 
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 6
-                           AND dv.id_div=". $div ;
+                           AND perfil_usuario=4
+						   AND dv.id_div=". $div ;
 			break;
 		}//fin switch
 	} elseif($div=='' && $usu==10){
 			switch ($tipo){
 		  case 1:
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2" ;
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2
+				 AND perfil_usuario=1" ;
 			break;
  		  case 2:
 			      /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
                            AND dv.id_div=". $div ;*/
-				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)";
+				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
+				  AND perfil_usuario=2";
 			break;
 			case 3:
 			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))>= 4 
-				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))" ;
+				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
+						   AND perfil_usuario=3" ;
 			break;
 		    case 4: 
-			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 6" ;
+			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 6
+				 AND perfil_usuario=4" ;
 			break;
 		}//fin switch
 	}	//fin del if

@@ -127,6 +127,29 @@ function cmbCotiza($idlab,$tipo_req)
 	$salida.="</select>";
 	echo $salida;
 	} 
+	 
+function cmbDiv($iddiv)
+	{
+						
+					$query="select * from divisiones order by nombre asc";
+					
+				//	echo $query;
+					$result = pg_query($query) or die('Hubo un error con la base de datos en divisiones');
+					
+					$salida='<select name="id_div" id="id_div">'; 
+					
+					while ($datosc = pg_fetch_array($result))
+						{
+				
+					$sele=($datosc['id_div']==$iddiv)?" selected='selected'":"";
+					$salida.= "<option value='" . $datosc['id_div'] . "'" .$sele. ">" . $datosc['nombre'] . "</option>";
+					
+						}
+				//	return $salida;
+					$salida.="</select>";
+					echo $salida;
+	}//final metodo	 
+	 
 
 } 
 	

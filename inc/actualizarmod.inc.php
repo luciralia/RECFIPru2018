@@ -4,7 +4,16 @@ require_once('../conexion.php');
 require_once('../clases/importa.class.php');
 require_once('../clases/inventario.class.php');
 
+require_once('../clases/log.class.php');
+
+
+
+
 session_start(); 
+
+$logger=new Log();
+
+$logger->putLog(9,2);
 
 $cuentaact=0;
 $errorbn=0;
@@ -879,7 +888,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 						$botonBien->exportaErrorBienAct();
 }else {?>
 
-  <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>">Cerrar</a></div></div>
+  <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divn<?php echo $_SESSION['id_div'];?>">Cerrar</a></div></div>
  <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
 
 <?php 

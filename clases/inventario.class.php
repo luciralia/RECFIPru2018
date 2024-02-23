@@ -1489,15 +1489,33 @@ function combosistemao($so)
 					
 	}//fin del metodo combo	sistema operativo
 	
-function combofamilia($familia)
+function combofamilia($familia,$disp)
 					{
-                 
+                     
+	                //ctalogos validos si es micro
+	
+	                if ($disp==1 || $disp==2 ){
 				   // echo $procesador;    
-				    $query="SELECT * FROM  cat_familia ORDER BY nombre_familia ASC";
-				     
-				
+				    $query="SELECT * FROM  cat_familia 
+                            WHERE (id_familia  BETWEEN 38 AND 40)
+                            OR (id_familia BETWEEN 27 AND  34)
+                            OR (id_familia BETWEEN 23 AND  24)
+                            ORDER BY id_familia ASC";
+					} else if ($disp==3 || $disp==4 ){
+					$query="SELECT * FROM  cat_familia 
+                            WHERE id_familia  BETWEEN 23 AND 34 ";
+						    
+				    } else if ($disp==6 ){ 
+						
+					$query="SELECT * FROM  cat_familia 
+                            WHERE id_familia BETWEEN 42 AND 48 ";	
+					}
+	                
+	                echo $query;
+	
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_familia');
 					
+	
 					$cambio='myFunctionFamilia()" ';
 					$salida='<select name="id_familia" id="id_familia" onchange="' .$cambio . '>' .
 					        '<option value="0" > Otra </option>'; 
