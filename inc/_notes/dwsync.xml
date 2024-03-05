@@ -215,10 +215,10 @@
 <file name="editainventarioant15nov2018.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
 <file name="insertaDeptos.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137280000000" remote="132005137280000000" Dst="1" />
 <file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137270000000" remote="132005137270000000" Dst="1" />
-<file name="actualizarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133288985038387859" remote="133307239860000000" Dst="0" />
+<file name="actualizarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133531928000222249" remote="133531928000000000" Dst="0" />
 <file name="buscarcambio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133317597599883798" remote="133317602560000000" Dst="0" />
 <file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464473628479921" remote="133464580840000000" Dst="0" />
-<file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133531821680000000" remote="133531821680000000" Dst="0" />
+<file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133531895662696461" remote="133531898120000000" Dst="0" />
 <file name="exportainvDGTyC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
 <file name="cargainventse.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
 <file name="exportacomparaRECFI.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132176369530000000" remote="132176369530000000" Dst="1" />

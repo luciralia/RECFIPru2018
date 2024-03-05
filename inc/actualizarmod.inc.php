@@ -115,7 +115,7 @@ function utf8_string_array_encode(&$array){
  <tr>
   <td width="800" height="30" colspan="2" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-     <input  type="submit" value="Actualizar">&nbsp;
+     <input type="submit" value="Actualizar2">&nbsp;
      <input type="reset" value="Cancelar">
    </td>
  </tr>
@@ -370,7 +370,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		     <legend align="left"><?php // echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 	  <?php } else{
 		  if(is_int($datosdec[17])) $columna18=1; else $columna18=2; 
-	  	  if ($datosdec[18]==NULL) { $columna19=0;?>
+	  	  if ($datosdec[18]==NULL) { $columna19=0; echo 'es la fecha';?>
 		     <legend align="left"> <?php echo 'La columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria..'; ?></legend>
       <?php } 
 		  if(!preg_match($regexFecha,$datosdec[18])) $columna19=2; else $columna19=3;
@@ -655,7 +655,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 			        $ultimo=$ultimo[0]+1;
 					
 	   if (isset($inventario) || isset($dispclave)){
-	         $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
+	        $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
 	                                     columna6,columna7,columna8,columna9,columna10,
 	                                     columna11,columna12,columna13,columna14,columna15,
 										 columna16,columna17,columna18,columna19,columna20,
@@ -678,13 +678,12 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 										 $columna46,$columna47,$columna48,$columna49,$columna50,
 							 $columna51 )";
 		
-		//echo $query;
+		echo $query;
 	    $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
 	   }
 	    if (!$result) 
 				 $errorinserta++;
-				 
-	         $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
+			$result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta2'); 
 			 
 			 
 	   	     $queryb="SELECT bn_id
@@ -888,9 +887,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 						$botonBien->exportaErrorBienAct();
 }else {?>
 
-  <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>Tipo de archivo incorrecto</p><div id="boton1"><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divn<?php echo $_SESSION['id_div'];?>">Cerrar</a></div></div>
- <!-- <legend align="center"><?php //echo "Tipo de archivo incorrecto"; ?></legend> -->      
-
+  <a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>"</a></div></div>
 <?php 
 
  }
