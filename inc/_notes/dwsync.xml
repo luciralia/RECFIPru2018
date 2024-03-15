@@ -233,7 +233,7 @@
 <file name="exportaxls_censoCATIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624744538121770" remote="132633256830000000" Dst="2" />
 <file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133301297453419564" remote="133301298090000000" Dst="0" />
 <file name="cargadocs.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133501539584352921" remote="133501539650000000" Dst="0" />
-<file name="cargaCensoDGTICC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133511287519155644" remote="133511287610000000" Dst="0" />
+<file name="cargaCensoDGTICC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133549215797014681" remote="133549215930000000" Dst="0" />
 <file name="exportaxls_censoedtipo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263267610000000" remote="133264941220000000" Dst="0" />
 <file name="cargacensoedtipo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263159579001187" remote="133264941290000000" Dst="0" />
 <file name="cargacensoitipo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263147083559750" remote="133264941430000000" Dst="0" />
@@ -243,4 +243,5 @@
 <file name="cargaCensomanto.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133258834471569980" remote="133264942450000000" Dst="0" />
 <file name="exportaxls_censoAntig.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133500720123778583" remote="133500720800000000" Dst="0" />
 <file name="configura_switch.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464454225595341" remote="133464581520000000" Dst="0" />
+<file name="exportaxls_censoCATICC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133308088400000000" remote="133549872040000000" Dst="0" />
 </dwsync>

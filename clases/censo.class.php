@@ -79,8 +79,6 @@ function CantidadC($div,$coord,$perfil){
 			JOIN divisiones dv
 			ON dv.id_div=dep.id_div
 			WHERE 
-			dispositivo_clave BETWEEN 1 AND 8 AND
-            usuario_perfil BETWEEN 1 AND 4 AND
 			 estadobien <> 'DESUSO' AND
 			";
 	if ($perfil!=4)
@@ -375,6 +373,7 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 	
 	
 	function CantidadS ($div,$tipo,$usu){
+		
 		$query="SELECT COUNT (*) AS cuenta
                 FROM dispositivo ec 
                 LEFT JOIN laboratorios l
@@ -391,11 +390,12 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 				ON dv.id_div=d.id_div
                 WHERE ec.dispositivo_clave=6 
 				AND estadobien <> 'DESUSO' ";
+		
 	if ($div!='' && ($usu==9 || $usu==10)){
 		switch ($tipo){
 		  case 1:
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) <= 2
-				           AND perfil_usuario=1 
+				           AND usuario_perfil=1 
                            AND dv.id_div=". $div ;
 			break;
  		  case 2:
@@ -403,18 +403,18 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
                            AND dv.id_div=". $div ;*/
 				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
-				           AND perfil_usuario=2
+				           AND usuario_perfil=2
 					       AND dv.id_div=". $div ;
 			break;
 			case 3:
 			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 4 
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
-                           AND perfil_usuario=3
+                           AND usuario_perfil=3
 						   AND dv.id_div=". $div ;
 			break;
 		    case 4: 
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) > 6
-                           AND perfil_usuario=4
+                           AND usuario_perfil=4
 						   AND dv.id_div=". $div ;
 			break;
 		}//fin switch
@@ -422,23 +422,23 @@ WHERE  (em.tipo_serv IS NULL OR em.tipo_serv IS FALSE) ";
 			switch ($tipo){
 		  case 1:
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)- EXTRACT(YEAR FROM fecha_factura))<= 2
-				 AND perfil_usuario=1" ;
+				 AND usuario_perfil=1" ;
 			break;
  		  case 2:
 			      /* $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)) >= 2 
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=3))
                            AND dv.id_div=". $div ;*/
 				  $query.="AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)=3)
-				  AND perfil_usuario=2";
+				  AND usuario_perfil=2";
 			break;
 			case 3:
 			    $query.= " AND ((EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))>= 4 
 				           AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura)<=6))
-						   AND perfil_usuario=3" ;
+						   AND usuario_perfil=3" ;
 			break;
 		    case 4: 
 			    $query.= " AND (EXTRACT(YEAR FROM current_date)-EXTRACT(YEAR FROM fecha_factura))> 6
-				 AND perfil_usuario=4" ;
+				 AND usuario_perfil=4" ;
 			break;
 		}//fin switch
 	}	//fin del if
