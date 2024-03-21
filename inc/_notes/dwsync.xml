@@ -100,7 +100,7 @@
 <file name="cargaacerca.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="131576680058063201" remote="131790350970000000" Dst="2" />
 <file name="cargabit.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133501547475688255" remote="133501547580000000" Dst="0" />
 <file name="cargaced.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133501546584401843" remote="133501546750000000" Dst="0" />
-<file name="cargacenso.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133505090322184575" remote="133505090720000000" Dst="0" />
+<file name="cargacenso.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133553518780658229" remote="133553519650000000" Dst="0" />
 <file name="cargacensotodo.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131560131123487281" remote="131790350970000000" Dst="2" />
 <file name="cargacensoV1.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="131559460133489163" remote="131790350970000000" Dst="2" />
 <file name="cargacot.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132990959032178830" remote="132991045750000000" Dst="2" />
@@ -217,7 +217,7 @@
 <file name="importamoderror.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137270000000" remote="132005137270000000" Dst="1" />
 <file name="actualizarmod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133531928000222249" remote="133531928000000000" Dst="0" />
 <file name="buscarcambio.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133317597599883798" remote="133317602560000000" Dst="0" />
-<file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464473628479921" remote="133464580840000000" Dst="0" />
+<file name="edicion.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133531871040028476" remote="133553496180000000" Dst="0" />
 <file name="importamod.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133531895662696461" remote="133531898120000000" Dst="0" />
 <file name="exportainvDGTyC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />
 <file name="cargainventse.inc" server="132.248.52.241//var/www/RECFIPru2018/" local="132005137230000000" remote="132005137230000000" Dst="1" />

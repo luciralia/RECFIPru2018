@@ -766,8 +766,8 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 				
 			 	
 				
-			  if ($datosdec[18]==0) 
-			      $datosdec[18]= date("Y-m-d", strtotime($datosdec[18]));
+			 // if ($datosdec[18]==0) 
+			    //  $datosdec[18]= date("Y-m-d", strtotime($datosdec[18]));
 			  if ($datosdec[47]==0) 
 			      $datosdec[47]= date("Y-m-d", strtotime($datosdec[47]));	  
               if ($datosdec[48]==0) 
@@ -855,6 +855,16 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		   } // else pg_num_rows($datostemp)>0 fin de la validación cuando si existe en BIENES INVENTARIO
 		   $cuenta++;
 		   $noo++;
+		   if ($datosdec[0]>=10 || $datosdec[0]<=18){
+		
+	               require_once('actualiza_periferico.inc.php');
+	  
+	}
+		 
+		 
+		 
+		 
+		 
 		}//fin de while para insertar datos en dispositivo 
 		
 		echo 'nunca'.$noimportado;
@@ -887,7 +897,7 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 						$botonBien->exportaErrorBienAct();
 }else {?>
 
-  <a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>"</a></div></div>
+  <a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divn</d></div></div>
 <?php 
 
  }

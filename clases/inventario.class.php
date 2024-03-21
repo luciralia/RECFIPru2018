@@ -1500,18 +1500,20 @@ function combofamilia($familia,$disp)
                             WHERE (id_familia  BETWEEN 38 AND 40)
                             OR (id_familia BETWEEN 27 AND  34)
                             OR (id_familia BETWEEN 23 AND  24)
-                            ORDER BY id_familia ASC";
+                            ORDER BY id_familia DESC";
 					} else if ($disp==3 || $disp==4 ){
 					$query="SELECT * FROM  cat_familia 
-                            WHERE id_familia  BETWEEN 23 AND 34 ";
+                            WHERE id_familia  BETWEEN 23 AND 34 
+							ORDER BY id_familia DESC ";
 						    
 				    } else if ($disp==6 ){ 
 						
 					$query="SELECT * FROM  cat_familia 
-                            WHERE id_familia BETWEEN 42 AND 48 ";	
+                            WHERE id_familia BETWEEN 42 AND 48
+							ORDER BY id_familia DESC";	
 					}
 	                
-	                echo $query;
+	               // echo $query;
 	
 					$result = @pg_query($query) or die('Hubo un error con la base de datos en cat_familia');
 					

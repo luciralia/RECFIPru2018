@@ -733,7 +733,7 @@ if (isset($_POST['licencia']))
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
+garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,dir_mac='%s'
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 $queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_POST['id_familia'],
@@ -750,7 +750,7 @@ $queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_P
                           $arregloTotal,$_POST['id_tec_com'],$_POST['tec_com_otro'],
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,
                         
-						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);		
+						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['dir_mac']);		
 	
 						  
 	
@@ -769,7 +769,7 @@ $strqueryd="UPDATE dispositivo SET   id_lab=%d, usuario_final_clave=%d, familia_
                                     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
                                     arreglo_total=%d,tec_com=%d,tec_com_otro='%s',
                                     sist_oper=%d,version_sist_oper='%s',licencia=%d,
-licencia_ini='%s',licencia_fin='%s',garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,tipo_impresora=%d,tipo_digitaliza=%d,dir_mac='%s'
+licencia_ini='%s',licencia_fin='%s',garantiamanten='%s',arquitectura='%s',estadobien='%s',servidor='%s',descextensa='%s',id_marca=%d,marca_esp='%s',tipotarjvideo='%s',modelotarjvideo='%s',memoriavideo='%s',anos_garantia='%s',id_mod=%d,dir_mac='%s'
 WHERE id_dispositivo=". $_POST['id_dispositivo'];
 	
 
@@ -788,7 +788,7 @@ $queryud=sprintf($strqueryd, $_POST['id_lab'], $_POST['usuario_final_clave'],$_P
                           $arregloTotal,$_POST['id_tec_com'],$_POST['tec_com_otro'],
                           $_POST['id_sist_oper'],$_POST['version_sist_oper'],$licencia,$licI,$licF,
                         
-						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['id_tipoi'],$_POST['id_digitaliza'],$_POST['dir_mac']);	
+						  $_POST['id_gar_man'],$_POST['arquitectura'],$_POST['estadobien'], $servidor,$_POST['descextensa'],                         $_POST['id_marca'],$_POST['marca_esp'],$_POST['tipotarjvideo'],$_POST['modelotarjvideo'],$_POST['memoriavideo'],$anos_garantia,$_POST['id_mod'],$_POST['dir_mac']);	
 
 
 }
@@ -879,9 +879,9 @@ if (isset($tipoequipo)){
 
        $result=pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR DATOS: ' . pg_last_error());
 	
-	if ($_POST['dispositivo_clave']==16){
+	if ( $_POST['dispositivo_clave']>=10 || $_POST['dispositivo_clave']<=18){
 		
-	   require_once('configura_switch.inc.php');
+	   require_once('configura_periferico.inc.php');
 	  
 	}
 	//Agregar
