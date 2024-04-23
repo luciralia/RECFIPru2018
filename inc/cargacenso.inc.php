@@ -1,4 +1,5 @@
 
+
 <?php
 session_start(); 
 require_once('../conexion.php');
@@ -3196,8 +3197,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
-            LEFT JOIN equipoc ec
-            ON ec.inventario=dp.inventario
+            
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -3214,8 +3214,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
-            LEFT JOIN equipoc ec
-            ON ec.inventario=dp.inventario
+           
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -3231,8 +3230,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
-            LEFT JOIN equipoc ec
-            ON ec.inventario=dp.inventario
+            
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -3249,8 +3247,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 	
 	$query="SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
-            LEFT JOIN equipoc ec
-            ON ec.inventario=dp.inventario
+            
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l
@@ -3266,8 +3263,7 @@ $cuenta=$cuenta+$lab_invent['cuenta'];
 
   $query= "SELECT COUNT (*) as cuenta,nombre_dispositivo,dp.estadobien,fecha_factura,l.nombre,dp.descextensa
             FROM dispositivo dp 
-            LEFT JOIN equipoc ec
-            ON ec.inventario=dp.inventario
+           
             LEFT JOIN cat_dispositivo cd
             ON dp.dispositivo_clave=cd.dispositivo_clave
             LEFT JOIN laboratorios l

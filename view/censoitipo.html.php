@@ -27,16 +27,15 @@ $div = new departamentos();
   </tr>
   
 <tr>
- <?php if ( $_GET['lab']==''){
+ <?php if ( $_GET['lab']==''){ ?>
 
-<td><div class="centrado"> <?php  require('../inc/cargacensoitipo.inc.php'); ?></div></td>
-<?php } else{ ?>
-
-<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-    
- <tr><td align="center"><h3> Este censo se obtiene únicamente a nivel Secretaría o División</h3></td> </tr>
-
+      <td><div class="centrado">
+	      <?php  require('../inc/cargacensoitipo.inc.php'); ?>
+	  </div></td>
+<?php } else { ?>
+       <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+       <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+       <tr><td align="center"><h3> Este censo se obtiene únicamente a nivel Secretaría o División</h3></td> </tr>
 
  <?php } ?>
  

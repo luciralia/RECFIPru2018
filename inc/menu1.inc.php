@@ -3,16 +3,13 @@
   
   <?php require_once('../clases/laboratorios.class.php');
         $labNom = new laboratorios();
-
-  /* echo 'SESSION en menu1.inc';
+/*
+   echo 'SESSION en menu1.inc';
 	print_r($_SESSION);	
 	
 	echo 'GET en menu1.inc';
 	print_r($_GET);	
-    
-   echo "REQUEST en menu1.inc";
-   print_r($_REQUEST);*/
-
+*/
 	
 	if ( $_SESSION['id_div']==NULL  )
 	       $_SESSION['id_div']=$_GET['div'];
@@ -33,19 +30,19 @@
              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }elseif (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) { ?>
               <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php // echo $_SESSION['id_div'];?>" class="actual">Inicio</a></li>-->
-              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div" class="actual">InicioSD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
           <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){   ?>
        	      <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php  //echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>-->
-             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div羠<?php  echo $_SESSION['id_div'];?>" class="actual" >InicioD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }	?>
         <?php  if ($_SESSION['tipo_usuario']!=10){   ?>
         <?php //$clase=($_GET['mod']=='ced')?'" class="actual"':$clase='"'; ?>
-          <li><a href="../view/inicio.html.php?mod=ced&lab㉰<?php echo $_GET['lab'];?>&divr<?php  echo $_SESSION['id_div'];?>"  >Cédula de Información</a></li>
+          <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  >Cédula de Información</a></li>
  	 <?php }	?>
 	<!-- Boton quejas -->
-	<!--<?php $clase=($_GET['mod']=='que')?'" class="actual"':$clase='"'; ?>
-	<li><a href="../view/inicio.html.php?mod=que&lab=<?php echo $_GET['lab'];?>" <?php echo $clase;?>Quejas y sugerencias</a></li> -->
+	<!--<?php //$clase=($_GET['mod']=='que')?'" class="actual"':$clase='"'; ?>
+	<li><a href="../view/inicio.html.php?mod=que&lab=<?php //echo $_GET['lab'];?>" <?php //echo $clase;?>Quejas y sugerencias</a></li> -->
                 <!-- Botón inventario -->
                 <?php $clase=($_GET['mod']=='inv' || $_GET['mod']=='invc' || $_GET['mod']=='invg' || $_GET['mod']=='imp' )?'"  class="actual"':$clase='"'; ?>
       
@@ -53,47 +50,39 @@
  	      
           <ul>
            <?php 
-				if (isset($_GET['mod']) || isset($_GET['div'] )) {
-			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
+				if (isset($_GET['mod']) || isset($_GET['div'] ) ) {
+					
+			       if ($_SESSION['tipo_usuario']==9){
 			?>
-               <li><a href="../view/inicio.html.php?mod=invg&labr<?php  echo $_GET['lab'];?>&div">General</a></li> 
+               <li><a href="../view/inicio.html.php?mod=invg&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">General</a></li> 
              <?php 
+				   }
 				 }
-			        else if (( $_GET['div']!='' || $_GET['lab']!='' ) && !isset($_GET['mod']) ){
-			?>
-             <li><a href="../view/inicio.html.php?mod=invg&labr<?php  echo $_GET['lab'];?>&div">**General</a></li>
-            <?php 
-				 }
+			       
 				
-			 if ($_SESSION['tipo_lab']!='e' && $_GET['lab']!=''  )	 { ?>
+			 if ($_SESSION['tipo_lab']!='e' && $_GET['lab']!=''  )	 {?>
              
-                   <li><a href="../view/inicio.html.php?mod=invc&labr<?php  echo $_GET['lab'];?>&div">Equipos de c&oacute;mputo</a></li>
+                   <li><a href="../view/inicio.html.php?mod=invc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipos de c&oacute;mputo</a></li>
                    
 			<?php } elseif ($_SESSION['tipo_lab']=='e'  && $_GET['lab']!=''  ) {?>
                 <!--<li><a href="../view/inicio.html.php?mod=inv&lab=<?php  //echo $_GET['lab'];?>">Equipos experimentales</a></li>-->
-                <li><a href="../view/inicio.html.php?mod=invc&labr<?php  echo $_GET['lab'];?>&divr<?php  echo $_SESSION['id_div'];?> ">Equipos de c&oacute;mputo</a></li>
+                <li><a href="../view/inicio.html.php?mod=invc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipos de c&oacute;mputo</a></li>
     	 <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
                   <!--  <li><a href="../view/inicio.html.php?mod=invear&lab=<?php // echo $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>">Equipos de Alto Rendimiento</a></li> -->
          <?php } ?> 
          
          <?php 
-				//if ( $_GET['lab']!='' ){
-			     if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
+				if ( $_GET['lab']!='' ){
+			     //if (isset($_GET['mod']) || ((isset($_GET['div'] ) ) && ( isset($_GET['lab'])) )){
 			?>
-                 <li><a href="#">Software</a> 
-			     <ul>
-                     <li><a href="../view/inicio.html.php?mod=soft_com&labr<?php echo $_GET['lab'];?>&divr<?php  echo $_SESSION['id_div'];?>">Comercial&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-				     <li><a href="../view/inicio.html.php?mod=soft_desar&lab">Desarrollo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
-                 </ul></li> 
-         <?php 
+               
+             <?php 
 				 }?>
-         <?php if ($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==1)	 {?>
-                    <li><a href="../view/inicio.html.php?mod=imp&lab">Importarl</a></li>
-         <?php } ?> 
          <?php if ($_SESSION['tipo_usuario']==9)	 {?>
-             <li><a href="../view/inicio.html.php?mod=act&labr<?php  echo $_GET['lab'];?>&divr<?php echo $_SESSION['id_div'];?>">Actualizar</a></li>       <?php   } ?> 
-     
+                    <li><a href="../view/inicio.html.php?mod=imp&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Importar</a></li>
+         <?php } ?> 
+         
        </ul>
        </li>
        
@@ -108,37 +97,37 @@
             <li><a href="#">Equipo C&oacute;mputo</a>    <!--Temporal Nivel 1--> 
                   <ul>
                     
-                     <li><a href="../view/inicio.html.php?mod=ceneceq&labr<?php echo $_GET['lab'];?>&div">Estado del Equipo</a></li>
-                     <li><a href="../view/inicio.html.php?mod=cenecso&lab">Sistema Operativo</a></li>
-                     <li><a href="../view/inicio.html.php?mod=cenecuf&labr<?php echo $_GET['lab'];?>&divr<?php  echo $_SESSION['id_div'];?>">Usuario Final</a>
+                     <li><a href="../view/inicio.html.php?mod=ceneceq&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Estado del Equipo</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenecso&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Sistema Operativo</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenecuf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Usuario Final</a>
                          <ul>
-                              <li><a href="../view/inicio.html.php?mod=cenecufb&labr<?php echo $_GET['lab'];?>&divr<?php  echo $_SESSION['id_div'];?>">Usuario de Bibliotecas</a> </li>
+                              <li><a href="../view/inicio.html.php?mod=cenecufb&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Usuario de Bibliotecas</a> </li>
                          </ul>
                       </li>
-                     <li><a href="../view/inicio.html.php?mod=cenecar&labr<?php echo $_GET['lab'];?>&divr<?php  echo $_SESSION['id_div'];?>">Equipo Alto Rendimiento</a></li>
-                     <li><a href="../view/inicio.html.php?mod=cenport&labr<?php echo $_GET['lab'];?>&div">Por antigüedad</a></li>
-                     <li><a href="../view/inicio.html.php?mod=cenmanto&lab">Mantenimiento</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenecar&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Alto Rendimiento</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenport&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Por antigüedad</a></li>
+                     <li><a href="../view/inicio.html.php?mod=cenmanto&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Mantenimiento</a></li>
                    </ul>
              </li>   <!-- Es fin del equipo de Cómputo--> 
             
             <li><a href="#">Impresoras</a> 
 			 <ul>
-                     <li><a href="../view/inicio.html.php?mod=ceni&lab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por ubicación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-				     <li><a href="../view/inicio.html.php?mod=cenitipo&lab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por tipo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
+                     <li><a href="../view/inicio.html.php?mod=ceni&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por ubicación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+				     <li><a href="../view/inicio.html.php?mod=cenitipo&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por tipo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
             </ul>
 			</li>
             <li><a href="#">Equipos de digitalización</a> 
 			 <ul>
-                     <li><a href="../view/inicio.html.php?mod=cened&lab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por ubicación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-				     <li><a href="../view/inicio.html.php?mod=cenedtipo&lab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por tipo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
+                     <li><a href="../view/inicio.html.php?mod=cened&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por ubicación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+				     <li><a href="../view/inicio.html.php?mod=cenedtipo&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por tipo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>  
             </ul>
 			</li>
-            <li><a href="../view/inicio.html.php?mod=cenert&lab">Equipo Redes y Telecomunicaciones</a></li>
+            <li><a href="../view/inicio.html.php?mod=cenert&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Equipo Redes y Telecomunicaciones</a></li>
             <?php if(($_SESSION['tipo_usuario']==10  || $_SESSION['tipo_usuario']==9) && ( $_GET['lab']=='')){
 			//&& ( $_GET['div']!=''  ) ){ 
 			?>
             <!--<li><a href="../view/inicio.html.php?mod=censo&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">CATIC</a></li>-->
-			<li><a href="../view/inicio.html.php?mod=censoC&lab">CATIC</a></li> 
+			<li><a href="../view/inicio.html.php?mod=censoC&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">CATIC</a></li> 
           <?php } ?>
          
          </ul>  <!--Fin de equipo de Cómputo-->
@@ -171,59 +160,17 @@
 				
 		?> 
 	  
-    <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-
-	<?php $clase=($_GET['mod']=='pry')?'" class="actual"':$clase='"'; ?>
-    <?php $actual=($_GET['mod']=='eq')? ' class="actual"':'';?>
-	  <li><a href="../view/inicio.html.php?mod=pryeb&lab"  <?php echo $clase;?>>Proyectos</a>
-	   </li> 
-             
-	<?php }?>
-	   
-	<?php $clase=($_GET['mod']=='eq')?'" class="actual"':$clase='"'; ?>
-	 <li><a href="../view/inicio.html.php?mod=eq&lab" <?php echo $clase;?>>Equipamiento</a></li>
-	
-	 
-   
-   <?php //if($_SESSION['tipo_usuario']==9){ ?>
-	<?php //$actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
-     <!-- <li><li><a href="../view/inicio.html.php?mod=cot&lab=<?php //echo  $_GET['lab'];?>&div=<?php // echo $_SESSION['id_div'];?>" <?php //echo $actual; ?>>Cotizaciones</a></li> -->
-<?php //}?>
-
-  
-        <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-        <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==3 ){ ?>
-        <?php $clase=($_GET['mod']=='serv' || $_GET['mod']=='mat' || $_GET['mod']=='mobi' || $_GET['mod']=='infr')?'" class="actual"':$clase='"'; ?>
-       <li><a href="#" <?php  echo $clase; ?>>Mantenimiento</a>
-         <ul>
-             <li><a href="../view/inicio.html.php?mod=serv&labr<?php echo $_GET['lab'];?>&div">Externo</a></li>
-             <?php if($_SESSION['tipo_usuario']==9){ ?>
-             <li><a href="../view/inicio.html.php?mod=mat&labr<?php echo  $_GET['lab'];?>&div">Interno (Componentes)</a></li>
-             <?php } ?>
-		 </ul>
-	  </li> 
-          <?php }?>
-  	
-	
-    <?php if($_SESSION['tipo_usuario']==9 ){ ?>   	
-	<?php if ($_GET['mod']=='servibf'||$_GET['mod']=='servibp') { $clase='" class="actual"'; } else {$clase='"';}?> 
-   <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
-	<ul>
-          <li><a href="../view/inicio.html.php?mod=servibf&labt<?php echo $_GET['lab'];?>&div">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
-            <li><a href="../view/inicio.html.php?mod=servibp&labr<?php echo $_GET['lab'];?>&div">Bit&aacute;cora de mantenimiento preventivo interno</a></li>
-    	</ul>
-	</li>
-	<?php }?>
+    
 	  
 	
  <?php //if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
            <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
-           <li><a href="../view/inicio.html.php?mod=doc&lab" <?php echo $actual; ?>>Documentos</a></li>
+           <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Documentos</a></li>
            <?php // }?>
    
  <?php if($_SESSION['tipo_usuario']==9  || $_SESSION['tipo_usuario']==10 ) { ?>
            <?php $actual=($_GET['mod']=='cred')? ' class="actual"':'';?>
-  <li><a href="../view/inicio.html.php?mod=cred&lab" <?php echo $actual; ?>>Créditos</a></li>
+  <li><a href="../view/inicio.html.php?mod=cred&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Créditos</a></li>
   <?php } ?>
     <!-- <li><a href="../view/inicio.html.php?mod=cred" <?php // echo $actual; ?>>Créditos</a></li>-->
     
@@ -234,13 +181,8 @@
            <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
      <?php $actual=($_GET['mod']=='ace')? ' class="actual"':'';?>
      
-    <!--<li><a href="../view/inicio.html.php?mod=ace&lab=<?php //echo $_GET['lab'];?>" <?php //echo $actual; ?>>Acerca de...</a></li>-->
     
-    <!--<li><a href="#">Documentos</a></li>
-      	
-   	<li><a href="#">Administración</a></li>-->
-    
-    <?php }?>
+   
    
  </ul>
  
