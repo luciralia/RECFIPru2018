@@ -595,20 +595,20 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
         <?php } else $columna49=3;
 		   }?>
            
-         <?php if ($datosdec[49]==NULL) { $columna50=0;?>
+         <?php if ($datosdec[64]==NULL) { $columna65=0;?>
 		       <legend align="left"> <?php echo 'La columna AX, <strong> id_edificio </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
 			<?php } else{?> 
-              <?php if (!preg_match("/^[0-9]+$/",$datosdec[49])){ $columna50=2;?>
+              <?php if (!preg_match("/^[0-9]+$/",$datosdec[64])){ $column65=2;?>
 		      <legend align="left"> <?php echo 'La columna AX, <strong> id_edificio </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>    
               
-               <?php } else $columna50=1; 
+               <?php } else $columna65=1; 
 			}?>  
                
-             <?php if ($datosdec[50]==NULL) { $columna51=0;?>
+             <?php if ($datosdec[65]==NULL) { $columna66=0;?>
 		      <legend align="left"> <?php echo 'La columna AY, <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria y numérica.'; ?></legend>        
              <?php }else{
 				 
-				 if (!preg_match("/^[0-9]+$/",$datosdec[50])){ $columna51=2;?>
+				 if (!preg_match("/^[0-9]+$/",$datosdec[65])){ $columna66=2;?>
 		      <legend align="left"> <?php echo 'La columna AX, <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>    
                <?php } else{ // que sea laboratorio de la div
 					 
@@ -616,17 +616,17 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
                                    JOIN departamentos d
                                    ON d.id_dep=l.id_dep
                                    WHERE id_div=".$_SESSION['id_div'].
-					               " AND l.id_lab=".$datosdec[50];
+					               " AND l.id_lab=".$datosdec[65];
 			        // echo $querylab;
 		              $existelab= pg_query($querylab) or die('Hubo un error con la base de datos');		
 			
 	    	          $cuantos=pg_num_rows($existelab);
 					  if ($cuantos==0){
-					      $columna51=3;
+					      $columna66=3;
 						  $sinlab++; ?>
 						  <legend align="left"> <?php echo 'El laboratorio  <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' no existe .'; ?></legend>    
 					<?php  }else{
-		               $columna51=1;
+		               $columna66=1;
 					   
 					  }
 				  }
@@ -675,8 +675,8 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 										 $columna31,$columna32,$columna33,$columna34,$columna35,
 										 $columna36,$columna37,$columna38,$columna39,$columna40,
 										 $columna41,$columna42,$columna43,NULL,$columna45,
-										 $columna46,$columna47,$columna48,$columna49,$columna50,
-							 $columna51 )";
+										 $columna46,$columna47,$columna48,$columna49,$columna65,
+							 $columna66 )";
 		
 		echo $query;
 	    $result=@pg_query($query) or die('ERROR AL INSERTAR en errorinserta'); 
@@ -759,10 +759,10 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
               $registroe= pg_query($querye) or die('ERROR ...');
               $equipoc= pg_fetch_array($registroe);
 			 
-			  if($datosdec[50]==0) // id id_lab=0
+			  if($datosdec[65]==0) // id id_lab=0
 			     $lab=$equipoc[0];
 			  else 	 
-			     $lab=$datosdec[50];
+			     $lab=$datosdec[65];
 				
 			 	
 				
@@ -776,21 +776,21 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		     // print_r($datosdec);
 		   	  $updatequery= "UPDATE dispositivo SET bn_id=%d,id_lab=%d,
 			  dispositivo_clave=%d,usuario_final_clave=%d,familia_clave=%d,
-			 tipo_ram_clave=%d,tecnologia_clave=%d,nombre_resguardo='%s',
-			 resguardo_no_empleado=%d,usuario_nombre='%s',usuario_ubicacion='%s',
-			 usuario_perfil=%d,usuario_sector=%d,serie='%s',
-			 marca_p='%s',no_factura='%s',anos_garantia='%s',
-			 inventario='%s',modelo_p='%s',proveedor_p='%s',
-             fecha_factura='%s',familia_especificar='%s',modelo_procesador='%s',
-			 cantidad_procesador='%s',nucleos_totales='%s',nucleos_gpu='%s',
-			 memoria_ram='%s',ram_especificar='%s',num_elementos_almac=%d,
-			 total_almac=%d,num_arreglos=%d,
-			 esquema_uno=%d,esquema_dos=%d,esquema_tres=%d,esquema_cuatro=%d,
-			 tec_uno=%d,tec_dos=%d,tec_tres=%d,tec_cuatro=%d,
-		     subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
-		     arreglo_total=%d,tec_com=%d, tec_com_otro='%s',
-		     sist_oper=%d, version_sist_oper='%s',
-		     licencia=%d,licencia_ini='%s',licencia_fin='%s',importa=%d
+			  tipo_ram_clave=%d,tecnologia_clave=%d,nombre_resguardo='%s',
+			  resguardo_no_empleado=%d,usuario_nombre='%s',usuario_ubicacion='%s',
+			  usuario_perfil=%d,usuario_sector=%d,serie='%s',
+			  marca_p='%s',no_factura='%s',anos_garantia='%s',
+			  inventario='%s',modelo_p='%s',proveedor_p='%s',
+              fecha_factura='%s',familia_especificar='%s',modelo_procesador='%s',
+			  cantidad_procesador='%s',nucleos_totales='%s',nucleos_gpu='%s',
+			  memoria_ram='%s',ram_especificar='%s',num_elementos_almac=%d,
+			  total_almac=%d,num_arreglos=%d,
+			  esquema_uno=%d,esquema_dos=%d,esquema_tres=%d,esquema_cuatro=%d,
+			  tec_uno=%d,tec_dos=%d,tec_tres=%d,tec_cuatro=%d,
+		      subtotal_uno=%d,subtotal_dos=%d,subtotal_tres=%d,subtotal_cuatro=%d,
+		      arreglo_total=%d,tec_com=%d, tec_com_otro='%s',
+		      sist_oper=%d, version_sist_oper='%s',
+		      licencia=%d,licencia_ini='%s',licencia_fin='%s',importa=%d
 			  WHERE inventario="."'".$datosdec[15]."'";
 				
 					//echo $updatequery;		  
@@ -855,14 +855,186 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 		   } // else pg_num_rows($datostemp)>0 fin de la validación cuando si existe en BIENES INVENTARIO
 		   $cuenta++;
 		   $noo++;
-		   if ($datosdec[0]>=10 || $datosdec[0]<=18){
+		//   if ($datosdec[0]>=10 || $datosdec[0]<=18){
 		
-	               require_once('actualiza_periferico.inc.php');
+	              // require('actualiza_periferico.inc.php');
+		 
+		 $queryd="SELECT id_dispositivo  FROM dispositivo WHERE inventario= '".$datosdec[15]. "' " ;
+         $registrod= pg_query($con,$queryd);
+         $id_disp= pg_fetch_array($registrod); 
+		 
+		 
+		 $id_disp=$id_disp[0];
+		 
+		
+		 
+		 if ( isset($id_disp) ) {
+		 
+		  if (($datosdec[0]==1 || $datosdec[0]==2 || $datosdec[0]==3 || $datosdec[0]==4 ||
+			 $datosdec[0]==5 || $datosdec[0]==6 || $datosdec[0]==7 ||$datosdec[0]==8 ||
+			 $datosdec[0]==17 ||$datosdec[0]==18 ||$datosdec[0]==19) )
+				 {
+
+                  //es equipo de cómputo 
+			  
+			     //Borrar y volver a insertar
+			   
+			    $query="DELETE FROM mac 
+			            WHERE id_dispositivo=".$id_disp;
+			    $queryu=sprintf($query,$id_disp);
+			   // echo 'consulta delete',$queryu;
+			    $dmac= pg_query($queryu);
+			  
+                 //Volver a insertar
+			   
+			         $mac1=$datosdec[62];
+			          //echo $mac1;
+				   
+				      $queryd="SELECT max(id_disp_mac) FROM mac";
+                      $registrod= pg_query($queryd) or die('Hubo un error con la base de datos');
+                      $umac= pg_fetch_array($registrod);
+	
+		              if ($umac[0]==0)
+						 $umac=1;
+			          else 
+			             $umac=$umac[0]+1;
+				   
+				   
+					   $querymac="INSERT INTO mac(id_disp_mac,id_dispositivo,mac) VALUES (%d,%d,'%s')";
+				       $queryidmac=sprintf($querymac,$umac,$id_disp,$mac1);	
+				   
+					  // echo 'Query  INSERTA mac1'. $queryidmac;
+			            $result=pg_query($queryidmac) or die('ERROR AL INSERTAR EN MAC: ' . pg_last_error());
+				        $mac2=$datosdec[63];
+			  
+			   	      if ($mac2!='0')
+						  {
+						
+						  $querymac="INSERT INTO mac(id_disp_mac,id_dispositivo,mac) VALUES (%d,%d,'%s')";
+				          $queryidmac=sprintf($querymac,$umac+1,$id_disp,$mac2);	
+						    //echo 'Query  INSERTA mac2'. $queryidmac;
+						  $result=pg_query($queryidmac) or die('ERROR AL INSERTAR EN MAC: ' . pg_last_error());
+						  }
+			  
+			  
+			  
+		    }else if ($datosdec[0]==10 ){
+			   
+			   //es impresora
+			    $query="UPDATE impresora SET id_dispositivo=%d,id_impresora=%d
+			            WHERE id_dispositivo=".$id_disp;
+			    $queryIm=sprintf($query,$id_disp,$datosdec[49]);
+			  
+			    $result=pg_query($queryIm) or die('ERROR AL Actualizar Impresora: ' . pg_last_error());
+			   
+			    
+			} else if ($datosdec[0]==13 ){
+			   
+			  // es digitalizador
+			   
+			   $query="UPDATE digitaliza SET id_dispositivo=%d,id_digitaliza=%d
+			            WHERE id_dispositivo=".$id_disp;
+			   $queryDg=sprintf($query,$id_disp,$datosdec[50]);
+			   
+			   $result=pg_query($queryDg) or die('ERROR AL Actualizar digitaliza: ' . pg_last_error());  
+			   
+		   }else if ($datosdec[0]==14 ){
+			   
+			  // es access point
+			   
+			   $query="UPDATE access SET id_dispositivo=%d,id_access=%d
+			            WHERE id_dispositivo=".$id_disp;
+			   $queryA=sprintf($query,$id_disp,$datosdec[51]);
+			    $result=pg_query($queryA) or die('ERROR AL Actualizar en access: ' . pg_last_error());
+			   
+			  //borrar red que difunde
+			  
+			     $query="DELETE FROM red_difunde 
+			            WHERE id_dispositivo=".$id_disp;
+			    $queryrd=sprintf($query,$id_disp);
+			     $result=pg_query($queryrd) or die('ERROR AL Borrar red_difunde: ' . pg_last_error());
+			  
+			 // Volver a insertar
+			  
+			   $queryd="SELECT max(id_red_dif) FROM red_difunde";
+                      $registrod= pg_query($queryd) or die('Hubo un error con la base de datos');
+                      $urd= pg_query($registrod);
+	
+		              if ($urd[0]==0)
+				         $urd=1;
+			          else 
+			             $urd=$urd[0]+1;
+				      $queryACr="INSERT INTO red_difunde(id_red_dif,id_dispositivo,id_tipo_red) VALUES (%d,%d,%d)";
+				         $queryidACr=sprintf($queryACr,$urd,$id_disp,$datosdec[52]);	
+				   
+					    //echo 'Query ERROR INSERTA ACCESS'. $queryidAC;
+			          $result=pg_query($queryidACr) or die('ERROR AL INSERTAR EN ACCESS: ' . pg_last_error());
+				   
+				      if ($datosdec[53]!=0)
+						  
+					  {   //inserta segunda red difunde, si existe
+						  
+						  $queryACr="INSERT INTO red_difunde(id_red_dif,id_dispositivo,id_tipo_red) VALUES (%d,%d,%d)";
+				          $queryidACr=sprintf($queryACr,$urd+1,$id_disp,$datosdec[53]);	
+						  $result=pg_query($queryidACr) or die('ERROR AL INSERTAR EN ACCESS: ' . pg_last_error());
+		   
+					  }
+					 
+                      
+			   
+			  
+			  
+			  
+			   
+		   }else if ($_POST['dispositivo_clave']==15 ){
+			   
+			  // es Firewall
+			   
+			   $query="UPDATE firewall SET id_dispositivo=%d,id_firewall=%d
+			            WHERE id_dispositivo=".$id_disp;
+			   
+			    $queryF=sprintf($query,$id_disp,$datosdec[52]);
+			    $result=pg_query($queryF) or die('ERROR AL Actualizar en firewall: ' . pg_last_error());
+			    
+			   
+		   }else if ($_POST['dispositivo_clave']==17 ){
+			   
+			  // es IDS
+			   
+			   $query="UPDATE ids SET id_dispositivo=%d,id_ids=%d
+			            WHERE id_dispositivo=".$id_disp;
+			   
+			    $queryids=sprintf($query,$id_disp,$datosdec[54]);
+			    $result=pg_query($queryids) or die('ERROR AL Actualizar en ids: ' . pg_last_error());
+			    
+			   
+		   }else if ($_POST['dispositivo_clave']==18 ){
+			   
+			  // es IpS
+			   
+			   $query="UPDATE ips SET id_dispositivo=%d,id_ips=%d
+			            WHERE id_dispositivo=".$id_disp;
+			   
+			   $queryips=sprintf($query,$id_disp,$datosdec[54]);
+			   $result=pg_query($queryips) or die('ERROR AL Actualizar en ips: ' . pg_last_error());
+			   
+			    
+		   } else if ($_POST['dispositivo_clave']==16 ){
+			   
+			  // es Switch
+			   
+			   $query="UPDATE switch SET id_dispositivo=%d,id_tipo_switch=%d,
+			          id_puerto=%d,id_chasis=%d
+			          WHERE id_dispositivo=".$id_disp;
+				      
+			    $querys=sprintf($query,$id_disp,$datosdec[55],
+								$datosdec[56],$datosdec[57]);
+			    $result=pg_query($querys) or die('ERROR AL Actualizar en switch: ' . pg_last_error());
+		   }
+			   
+
 	  
-	}
-		 
-		 
-		 
+	      }
 		 
 		 
 		}//fin de while para insertar datos en dispositivo 
@@ -895,16 +1067,13 @@ if((pathinfo(basename($file_upload),PATHINFO_EXTENSION)=='txt')){
 	
 			    if ($conteorrorbn >0 && $cuentaact!=0)
 						$botonBien->exportaErrorBienAct();
-}else {?>
-
-  <a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&divn</d></div></div>
-<?php 
-
+}else {
+		  
+  $direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']."&div=" . $_SESSION['id_div'];
+    echo $direccion;
+    header($direccion);
+ }
  }
 
-
-	
-} // existe>0
-
- //size >0
-		?>
+?>
+  

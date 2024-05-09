@@ -963,14 +963,13 @@ if($size > 0){
 	
  }else {?>
 		  
- <a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div'];?>v>
-
-<?php }
+ <a href="../view/inicio.html.php?mod=<?php echo $_GET['mod'];?>&div=<?php echo $_SESSION['id_div']; ?> >
+		  
+	<?php }
    
  }
  
  ?>
- 
    
 
 

@@ -477,14 +477,39 @@ function DispXls(){
 	}
 	return $this->datos;
 	unset ($datos);
+		
+	
 
-	}		
+	}	
 	
+	function rengReporteMac($inventario){
+		
+		$query="SELECT e.id_dispositivo,id_disp_mac,mac FROM dispositivo e
+		        LEFT JOIN mac m
+		        ON m.id_dispositivo=e.id_dispositivo
+		        WHERE inventario="."'".$inventario."'";
+	       
 	
+	     echo $query;
+		
+         $result = pg_query($query) or die('Hubo un error con la base de datos');
+		
+		 while ($datosrep = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
+		
+		      echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosrep) . "</br>";
+		       $this->datos[]=$datosrep;
+	}
+	return $this->datos;
+	unset ($datos);
+	
+	}
     //Echo "</br>el valor de los datosdiv" . "    " . print_r($datosdiv) . "</br></br></br>";
 	//echo "</br>el valor de los datos en la clase" . "    " . print_r($datos). "</br></br></br>";
 
+	//otros valres
 	
+	
+
 
 
 

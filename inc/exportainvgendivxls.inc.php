@@ -161,11 +161,11 @@ join divisiones div
 on div.id_div=d.id_div
 left join cat_modo_adq cma
 on e.id_mod=cma.id_mod
-join cat_usuario_final uf
+left join cat_usuario_final uf
 on uf.usuario_final_clave=e.usuario_final_clave
-join cat_usuario_perfil up
+left join cat_usuario_perfil up
 on up.id_usuario_perfil=e.usuario_perfil
-join cat_usuario_sector us
+left join cat_usuario_sector us
 on us.id_usuario_sector=e.usuario_sector
 
 left join cat_esquema cequ
@@ -227,11 +227,11 @@ join divisiones div
 on div.id_div=d.id_div
 left join cat_modo_adq cma
 on e.id_mod=cma.id_mod
-join cat_usuario_final uf
+left join cat_usuario_final uf
 on uf.usuario_final_clave=e.usuario_final_clave
-join cat_usuario_perfil up
+left join cat_usuario_perfil up
 on up.id_usuario_perfil=e.usuario_perfil
-join cat_usuario_sector us
+left join cat_usuario_sector us
 on us.id_usuario_sector=e.usuario_sector
 left join cat_esquema cequ
 on e.esquema_uno=cequ.id_esquema
@@ -290,11 +290,11 @@ join divisiones div
 on div.id_div=d.id_div
 left join cat_modo_adq cma
 on e.id_mod=cma.id_mod
-join cat_usuario_final uf
+left join cat_usuario_final uf
 on uf.usuario_final_clave=e.usuario_final_clave
-join cat_usuario_perfil up
+left join cat_usuario_perfil up
 on up.id_usuario_perfil=e.usuario_perfil
-join cat_usuario_sector us
+left join cat_usuario_sector us
 on us.id_usuario_sector=e.usuario_sector
 
 left join cat_esquema cequ

@@ -727,6 +727,8 @@ $valida=new importa();
       
        } //fin marcaerror
 
+	
+	
 function exportaErrorReg($noval){
 	//Exporta  errores de datos en las columnas  
 				$queryreg="SELECT ei.inventario FROM errorinserta ei
@@ -743,7 +745,7 @@ function exportaErrorReg($noval){
 		?>
         
          <br>
-           <legend align="left"> <h4><?php echo "Se intentó importar  " .$errorreg ." dispositivos que no cumplen con los requisitos. "  ?></h4></legend> 
+           <legend align="left"> <h4><?php echo "SE intentó importar  " .$errorreg ." dispositivos que no cumplen con los requisitos. "  ?></h4></legend> 
    
            <br>
                 <form action="../inc/erroresreg.inc.php" method="post" name="erroresreg" >
@@ -753,6 +755,8 @@ function exportaErrorReg($noval){
            <br>
 	<?php   
 	} //finaliza funcion exportaErrorReg
+	
+	
 	
 function exportaErrorRegAct(){
 	//Exporta  errores de datos en las columnas  

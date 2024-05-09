@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,6 +13,8 @@ require_once('../clases/inventario.class.php');
 $obj_xls=new Exportaxls(); // nueva linea
 $esquema=new inventario();
 $madq = new inventario();
+$exhibe_mac=new Exportaxls(); 	
+	
 
 /*  este for es para cargar los datos de los renglones*/
 //echo 'imprime la datos';
@@ -60,204 +63,143 @@ header($texto);
   
   
 <?php
+	
+	
+			/*$renglon_mac=$exhibe_mac->rengReporteMac($lab_invent['inventario']);
+			   
+			    foreach ($renglon_mac as $reng) {
+			      					
+					
+						echo "</br> CampoRep: ".$campo." valor: ".$valor."</br>";
+						$registro[$campo]=$valor;*/
+					
+					   
+			/*$mac1=$renglon_mac[0]['mac'];
+			$mac2=$renglon_mac[1]['mac'];  
+					
+					
+					echo 'imprime mac 1: ', $mac1;
+				    
+					echo 'imprime mac 2: ', $mac2;
+						
+					}*/
+	
+	
+	
 if (($_SESSION['tipo_usuario']==1 || $_SESSION['tipo_usuario']==9 ) && $_SESSION['id_div']!=''){
 	
-$query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
-cequ.nombre_esquema as esquemauno,
-         ceqd.nombre_esquema as esquemados, 
-         ceqt.nombre_esquema as esquematres,
-         ceqc.nombre_esquema as esquemacuatro,
-		 ctu.nombre_tecnologia as tecuno,
-		 ctd.nombre_tecnologia as tecdos,
-		 ctt.nombre_tecnologia as tectres,
-		 ctc.nombre_tecnologia as teccuatro,
+$query= "SELECT  e.*, 
          l.nombre as laboratorio, bi.*,* 
          FROM dispositivo e 
-         LEFT JOIN cat_dispositivo cd
-         ON e.dispositivo_clave=cd.dispositivo_clave
-         LEFT JOIN cat_familia cf
-         ON e.familia_clave=cf.id_familia
-         left join cat_tipo_ram ctr
-         on e.tipo_ram_clave=ctr.id_tipo_ram
-         left join cat_tecnologia ct
-         on e.tecnologia_clave=ct.id_tecnologia
-         left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-join departamentos d
-on d.id_dep=l.id_dep
-join divisiones div
-on div.id_div=d.id_div
-left join cat_modo_adq cma
-on e.id_mod=cma.id_mod
-join cat_usuario_final uf
-on uf.usuario_final_clave=e.usuario_final_clave
-join cat_usuario_perfil up
-on up.id_usuario_perfil=e.usuario_perfil
-join cat_usuario_sector us
-on us.id_usuario_sector=e.usuario_sector
-
-left join cat_esquema cequ
-on e.esquema_uno=cequ.id_esquema
-left join cat_esquema ceqd
-on e.esquema_dos=ceqd.id_esquema
-left join cat_esquema ceqt
-on e.esquema_tres=ceqt.id_esquema
-left join cat_esquema ceqc
-on e.esquema_tres=ceqc.id_esquema
-left join cat_tecnologia ctu
-on e.tec_uno=ctu.id_tecnologia
-left join cat_tecnologia ctd
-on e.tec_dos=ctd.id_tecnologia
-left join cat_tecnologia ctt
-on e.tec_tres=ctt.id_tecnologia
-left join cat_tecnologia ctc
-on e.tec_cuatro=ctc.id_tecnologia
-left join cat_tec_com ctcom
-on ctcom.id_tec_com=e.tec_com
-where div.id_div=" . $_SESSION['id_div'] .
-"
-and (cd.dispositivo_clave between 1 and 8)
-order by laboratorio" ;
+          JOIN cat_marca cm
+         ON cm.id_marca=e.id_marca
+         JOIN bienes_inventario bi
+         ON  e.bn_id = bi.bn_id
+         JOIN laboratorios l
+         ON  l.id_lab=e.id_lab
+         JOIN departamentos d
+         ON d.id_dep=l.id_dep
+         JOIN divisiones div
+         ON div.id_div=d.id_div
+		 LEFT JOIN mac m
+		 ON m.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN impresora i
+		 ON i.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN access ac
+		 ON ac.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN red_difunde rd
+		 ON rd.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN switch sw 
+		 ON sw.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN digitaliza dg
+		 ON dg.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN firewall fw
+		 ON e.id_dispositivo=fw.id_dispositivo
+		 LEFT JOIN ips 
+		 ON e.id_dispositivo=ips.id_dispositivo
+		 LEFT JOIN ids 
+		 ON e.id_dispositivo=ids.id_dispositivo
+         WHERE div.id_div=" . $_SESSION['id_div'] .
+         "
+          AND e.id_dispositivo>=2240
+         ORDER BY laboratorio" ;
 } elseif  ($_SESSION['tipo_usuario']==10  && $_SESSION['id_div']=='' ) {
 	
-$query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
-cequ.nombre_esquema as esquemauno,
-         ceqd.nombre_esquema as esquemados, 
-         ceqt.nombre_esquema as esquematres,
-         ceqc.nombre_esquema as esquemacuatro,
-		 ctu.nombre_tecnologia as tecuno,
-		 ctd.nombre_tecnologia as tecdos,
-		 ctt.nombre_tecnologia as tectres,
-		 ctc.nombre_tecnologia as teccuatro,
+$query= "SELECT  e.*, 
          l.nombre as laboratorio, bi.*,* 
          FROM dispositivo e 
-         LEFT JOIN cat_dispositivo cd
-         ON e.dispositivo_clave=cd.dispositivo_clave
-         LEFT JOIN cat_familia cf
-         ON e.familia_clave=cf.id_familia
-         left join cat_tipo_ram ctr
-         on e.tipo_ram_clave=ctr.id_tipo_ram
-         left join cat_tecnologia ct
-         on e.tecnologia_clave=ct.id_tecnologia
-         left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-join departamentos d
-on d.id_dep=l.id_dep
-join divisiones div
-on div.id_div=d.id_div
-left join cat_modo_adq cma
-on e.id_mod=cma.id_mod
-join cat_usuario_final uf
-on uf.usuario_final_clave=e.usuario_final_clave
-join cat_usuario_perfil up
-on up.id_usuario_perfil=e.usuario_perfil
-join cat_usuario_sector us
-on us.id_usuario_sector=e.usuario_sector
-left join cat_esquema cequ
-on e.esquema_uno=cequ.id_esquema
-left join cat_esquema ceqd
-on e.esquema_dos=ceqd.id_esquema
-left join cat_esquema ceqt
-on e.esquema_tres=ceqt.id_esquema
-left join cat_esquema ceqc
-on e.esquema_tres=ceqc.id_esquema
-left join cat_tecnologia ctu
-on e.tec_uno=ctu.id_tecnologia
-left join cat_tecnologia ctd
-on e.tec_dos=ctd.id_tecnologia
-left join cat_tecnologia ctt
-on e.tec_tres=ctt.id_tecnologia
-left join cat_tecnologia ctc
-on e.tec_cuatro=ctc.id_tecnologia
-left join cat_tec_com ctcom
-on ctcom.id_tec_com=e.tec_com
-and (cd.dispositivo_clave between 1 and 8)
-order by laboratorio" ;
+          JOIN cat_marca cm
+         ON cm.id_marca=e.id_marca
+         JOIN bienes_inventario bi
+         ON  e.bn_id = bi.bn_id
+         JOIN laboratorios l
+         ON  l.id_lab=e.id_lab
+         JOIN departamentos d
+         ON d.id_dep=l.id_dep
+         JOIN divisiones div
+         ON div.id_div=d.id_div
+		 LEFT JOIN mac m
+		 ON m.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN impresora i
+		 ON i.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN access ac
+		 ON ac.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN red_difunde rd
+		 ON rd.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN switch sw 
+		 ON sw.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN digitaliza dg
+		 ON dg.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN firewall fw
+		 ON e.id_dispositivo=fw.id_dispositivo
+		 LEFT JOIN ips 
+		 ON e.id_dispositivo=ips.id_dispositivo
+		 LEFT JOIN ids 
+		 ON e.id_dispositivo=ids.id_dispositivo
+		 
+         
+         ORDER BY laboratorio" ;
 }  elseif  ($_SESSION['tipo_usuario']==10  && $_SESSION['id_div']!='' ) {
 	
-	$query= "SELECT  e.*, ct.nombre_tecnologia as nomtec,
-cequ.nombre_esquema as esquemauno,
-         ceqd.nombre_esquema as esquemados, 
-         ceqt.nombre_esquema as esquematres,
-         ceqc.nombre_esquema as esquemacuatro,
-		 ctu.nombre_tecnologia as tecuno,
-		 ctd.nombre_tecnologia as tecdos,
-		 ctt.nombre_tecnologia as tectres,
-		 ctc.nombre_tecnologia as teccuatro,
+	$query= "SELECT  e.*, 
          l.nombre as laboratorio, bi.*,* 
          FROM dispositivo e 
-         LEFT JOIN cat_dispositivo cd
-         ON e.dispositivo_clave=cd.dispositivo_clave
-         LEFT JOIN cat_familia cf
-         ON e.familia_clave=cf.id_familia
-         left join cat_tipo_ram ctr
-         on e.tipo_ram_clave=ctr.id_tipo_ram
-         left join cat_tecnologia ct
-         on e.tecnologia_clave=ct.id_tecnologia
-         left join cat_sist_oper cso
-on  e.sist_oper=cso.id_sist_oper
-left join cat_marca cm
-on cm.id_marca=e.id_marca
-left join cat_memoria_ram cmr
-on e.id_mem_ram=cmr.id_mem_ram
-left join bienes_inventario bi
-on  e.bn_id = bi.bn_id
-join laboratorios l
-on  l.id_lab=e.id_lab
-join departamentos d
-on d.id_dep=l.id_dep
-join divisiones div
-on div.id_div=d.id_div
-left join cat_modo_adq cma
-on e.id_mod=cma.id_mod
-join cat_usuario_final uf
-on uf.usuario_final_clave=e.usuario_final_clave
-join cat_usuario_perfil up
-on up.id_usuario_perfil=e.usuario_perfil
-join cat_usuario_sector us
-on us.id_usuario_sector=e.usuario_sector
-
-left join cat_esquema cequ
-on e.esquema_uno=cequ.id_esquema
-left join cat_esquema ceqd
-on e.esquema_dos=ceqd.id_esquema
-left join cat_esquema ceqt
-on e.esquema_tres=ceqt.id_esquema
-left join cat_esquema ceqc
-on e.esquema_tres=ceqc.id_esquema
-left join cat_tecnologia ctu
-on e.tec_uno=ctu.id_tecnologia
-left join cat_tecnologia ctd
-on e.tec_dos=ctd.id_tecnologia
-left join cat_tecnologia ctt
-on e.tec_tres=ctt.id_tecnologia
-left join cat_tecnologia ctc
-on e.tec_cuatro=ctc.id_tecnologia
-left join cat_tec_com ctcom
-on ctcom.id_tec_com=e.tec_com
-where div.id_div=" . $_SESSION['id_div'] .
-"
-and (cd.dispositivo_clave between 1 and 8)
-order by laboratorio" ;
+          JOIN cat_marca cm
+         ON cm.id_marca=e.id_marca
+         JOIN bienes_inventario bi
+         ON  e.bn_id = bi.bn_id
+         JOIN laboratorios l
+         ON  l.id_lab=e.id_lab
+         JOIN departamentos d
+         ON d.id_dep=l.id_dep
+         JOIN divisiones div
+         ON div.id_div=d.id_div
+		 LEFT JOIN mac m
+		 ON m.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN impresora i
+		 ON i.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN access ac
+		 ON ac.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN red_difunde rd
+		 ON rd.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN switch sw 
+		 ON sw.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN digitaliza dg
+		 ON dg.id_dispositivo=e.id_dispositivo
+		 LEFT JOIN firewall fw
+		 ON e.id_dispositivo=fw.id_dispositivo
+		 LEFT JOIN ips 
+		 ON e.id_dispositivo=ips.id_dispositivo
+		 LEFT JOIN ids 
+		 ON e.id_dispositivo=ids.id_dispositivo
+         WHERE div.id_div=" . $_SESSION['id_div'] .
+         "
+        
+         ORDER BY laboratorio" ;
 }
  $datos = pg_query($con,$query);
  $inventario= pg_num_rows($datos); 
+
 ?>
 
 
@@ -267,257 +209,230 @@ order by laboratorio" ;
 
   <tr>
   
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
+  
       <th scope="col">dispositivo_clave</th>
-   <?php } else {  ?>
-      <th scope="col">Dispositivo</th>
-   <?php }
-      if ($_POST['enviar']=='DGTIC'){ ?> 
-     <th scope="col">usuario_final_clave</th>
-   <?php }  else { ?>
-     <th scope="col">Usuario Final</th>
-   <?php }
-      if ($_POST['enviar']=='DGTIC'){ ?> 
-    <th scope="col">familia_clave</th>
-   <?php } else { ?>
-    <th scope="col">Familia</th>
-   <?php }
-    if ($_POST['enviar']=='DGTIC'){ ?>
-    <th scope="col">tipo_ram_clave</th>
-   <?php } else {?>
-    <th scope="col">Tipo</th>
-   <?php }
-    if ($_POST['enviar']=='DGTIC'){ ?>
-    <th scope="col">tecnologia_clave</th>
-   <?php }  else {?> 
-    <th scope="col">Tecnología</th>
-   <?php }  ?> 
-    <th scope="col">No. Empleado</th>
-    <th scope="col">Nombre Resguardo</th>
-    <th scope="col">Nombre Usuario</th>
-    <th scope="col">Ubicación</th>
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-    <th scope="col">Usuario_perfil</th>
-   <?php } else { ?> 
-    <th scope="col">Perfil</th>
-   <?php }
-      if ($_POST['enviar']=='DGTIC'){ ?> 
-    <th scope="col">Usuario_sector</th>
-   <?php } else { ?> 
-      <th scope="col">Sector</th>
-   <?php }  ?> 
-    <th scope="col">No. Serie</th>
-    <th scope="col">Marca</th>
-    <th scope="col">No. Factura</th>
-    <th scope="col">Años de garantía</th>
-    <th scope="col">Inventario UNAM</th>
-    <th scope="col">Modelo</th>
-    <th scope="col">Proveedor</th>
-    <th scope="col">Fecha de Factura</th>
-    <th scope="col">Otra Familia</th>
-    <th scope="col">Modelo Procesador</th>
-    <th scope="col">Cantidad Procesador</th>
-    <th scope="col">Nucleos Totales</th>
-    <th scope="col">Cantidad de GPU</th>
-    <th scope="col">Memoria RAM [GB]</th>
-    <th scope="col">RAM Especificar</th>
-    <th scope="col">Número de elementos</th>
-    <th scope="col">Capacidad Total [GB]</th>
-    <th scope="col">Número de arreglos</th>
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?> 
-    <th scope="col">id_esquema_uno</th>
-   <?php } else { ?>  
-     <th scope="col">Esquema Uno</th>
-   <?php }
-    if ($_POST['enviar']=='DGTIC'){ ?>
-     <th scope="col">id_tec_uno</th>
-   <?php } else { ?> 
-     <th scope="col">Tecnología Uno</th>
-   <?php }  ?> 
-    <th scope="col">SubTotal Uno [GB]</th>
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?> 
-    <th scope="col">id_esquema_dos</th>
-   <?php }  else {?> 
-    <th scope="col">Esquema Dos</th>
-   <?php }
-      if ($_POST['enviar']=='DGTIC'){ ?> 
-    <th scope="col">id_tec_dos</th>
-   <?php } else { ?> 
-      <th scope="col">Tecnología Dos</th>
-    <?php }  ?> 
-    <th scope="col">SubTotal Dos [GB]</th>
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-    <th scope="col">id_esquema_tres</th>
-   <?php }  else {?> 
-    <th scope="col">Esquema Tres</th>
-   <?php }
-   if ($_POST['enviar']=='DGTIC'){ ?>
-    <th scope="col">id_tec_tres</th>
-   <?php } else {  ?>  
-    <th scope="col">Tecnología Tres</th>
-   <?php } ?> 
-    <th scope="col">SubTotal Tres [GB]</th>
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-    <th scope="col">id_esquema_cuatro</th>
-   <?php } else { ?> 
-    <th scope="col">Esquema Cuatro</th>
-    
-   <?php }
-     if ($_POST['enviar']=='DGTIC'){ ?> 
-     <th scope="col">id_tec_cuatro</th>
-   <?php } else { ?> 
-      <th scope="col">Tecnología Cuatro</th>
-   <?php } ?> 
-    <th scope="col">SubTotal Cuatro [GB]</th>
-    <th scope="col">Capacidad Total [GB]</th>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?> 
-      <th scope="col">id_tec_com</th>
-    <?php } else {  ?>
-      <th scope="col">Tecnología de Comunicación</th>
-     <?php } ?> 
-     <th scope="col">Tecnología de Comunicación otro</th>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-     <th scope="col">id_sistema_operativo</th>
-    <?php } else { ?>
-     <th scope="col">Sistema operativo</th>
-    <?php } ?> 
-    <th scope="col">Versión</th>
-    <th scope="col">Licencia</th>
-    <th scope="col">Inicia Licencia</th> 
-    <th scope="col">Fin Licencia</th>
-   
+      <th scope="col">usuario_final_clave</th>
+      <th scope="col">familia_clave</th>
+      <th scope="col">tipo_ram_clave</th>
+      <th scope="col">tecnologia_clave</th>
+	  <th scope="col">resguardo_nombre</th>
+      <th scope="col">resguardo_no_empleado</th>
+      <th scope="col">usuario_nombre</th>
+      <th scope="col">usuario_ubicación</th>
+      <th scope="col">usuario_perfil</th>
+      <th scope="col">usuario_sector</th>
+      <th scope="col">no_servicio</th>
+      <th scope="col">marca_p</th>
+      <th scope="col">no_factura</th>
+      <th scope="col">anios_garantía</th>
+      <th scope="col">inventario</th>
+      <th scope="col">modelo_p</th>
+      <th scope="col">proveedor_p</th>
+      <th scope="col">fecha_factura</th>
+      <th scope="col">familia_especificar</th>
+	  <th scope="col">modelo_procesador</th>
+      <th scope="col">cantidad_procesador</th>
+      <th scope="col">nucleos_totales</th>
+      <th scope="col">nucleos_GPU</th>
+      <th scope="col">memoria_RAM</th>
+      <th scope="col">RAM_especificar</th>
+      <th scope="col">num_elementos_almac</th>
+      <th scope="col">total_almac</th>
+      <th scope="col">num_arreglos</th>
+      <th scope="col">esquema_uno</th>
+      <th scope="col">esquema_dos</th>
+	  <th scope="col">esquema_tres</th>
+	  <th scope="col">esquema_cuatro</th>
+	  <th scope="col">tec_uno</th>
+	  <th scope="col">tec_dos</th>
+	  <th scope="col">tec_tres</th>
+	  <th scope="col">tec_cuatro</th>
+	  <th scope="col">subtotal_uno</th>
+	  <th scope="col">subtotal_dos</th>
+	  <th scope="col">subtotal_tres</th>
+	  <th scope="col">subtotal_cuatro</th>
+	  <th scope="col">arreglo_total</th>
+	  <th scope="col">tec_com</th>
+	  <th scope="col">tec_com_otro</th>
+	  <th scope="col">sist_oper</th>
+	  <th scope="col">version_sist_oper</th>
+	  <th scope="col">licencia</th>
+      <th scope="col">licencia_ini</th> 
+      <th scope="col">licencia_fin</th>
+      <th scope="col">tipo_impresora</th>
+	  <th scope="col">id_tipo_digitalizador</th>
+	  <th scope="col">id_tipo_access_point</th>
+	  <th scope="col">id_tipo_red1</th>
+	  <th scope="col">id_tipo_red2</th>
+	  <th scope="col">id_tipo_firewall</th>
+	  <th scope="col">id_ids</th>
+	  <th scope="col">id_ips</th>
+	  <th scope="col">id_tipo_switch</th>
+	  <th scope="col">id_puerto_switch</th>
+	  <th scope="col">chasis_switch</th>
+	  <th scope="col">estado_equipo</th>
+	  <th scope="col">id_mod</th>
+	  <th scope="col">mac1</th>
+	  <th scope="col">mac2</th>
+	  <th scope="col">id_edificio</th>
+	  <th scope="col">id_lab</th>
+	  
  </tr>
  
- <?php
+ 
+	
+		
+			
+	<?php
+	
+	
    while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
-		{ ?>
+		{ 
+	
+	
+	   if ( $lab_invent['dispositivo_clave']>=1 && $lab_invent['dispositivo_clave']<=8)
+		{
+	    $query="SELECT e.id_dispositivo,id_disp_mac,mac FROM dispositivo e
+		           LEFT JOIN mac m
+		           ON m.id_dispositivo=e.id_dispositivo
+		           WHERE inventario="."'".$lab_invent['inventario']."'";
+	       
+		   $result= pg_query($query) or die('Hubo un error con la base de datos');
+           $arreglo= pg_fetch_array($result);
+		   $cuenta= pg_num_rows($result);	
+		  	
+		   $id_disp_mac=$arreglo[1];
+			$mac1=$arreglo[2];
+		    $mac2=NULL;
+		 
+	       if ($cuenta==1)	{
+		
+		     $mac1=$arreglo[2];
+			 $mac2=NULL;
+				
+			} else if($cuenta==2) {
+		
+		     $id_mac=$id_disp_mac+1;
+		     $query="SELECT e.id_dispositivo,id_disp_mac,mac FROM dispositivo e
+		         LEFT JOIN mac m
+		         ON m.id_dispositivo=e.id_dispositivo
+		         WHERE id_disp_mac= ". $id_mac . "
+				 AND  inventario="."'".$lab_invent['inventario']."'";
+		     echo $query;
+	       
+		   $result= pg_query($query) or die('Hubo un error con la base de datos');
+           $arreglo= pg_fetch_array($result);
+		   $cuenta= pg_num_rows($result);	
+		
+		  $mac2=$arreglo[2];
+		  echo 'imprime mac',$mac2; 
+			 
+		   }
+				
+	   }
+	
+	?>
         
+	
+	 
 <table border="1">
+	
+	<?php if ($cuenta==1)	{ ?>
+		
   <tr>
   
-   <?php  if ($_POST['enviar']=='DGTIC'){ ?>
+   
       <td><?php echo $lab_invent['dispositivo_clave'];?></td>
-   <?php } else {  ?>
-     <td><?php echo $lab_invent['nombre_dispositivo'];?></td>
-   <?php }
-   if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['usuario_final_clave'];?></td>
-   <?php } else {  ?>
-     <td><?php echo $lab_invent['tipo_usuario'];?></td>
-   <?php }
-    if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['familia_clave'];?></td>
-   <?php } else { ?> 
-      <td><?php echo $lab_invent['nombre_familia'];?></td>
-   <?php }
-   if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['tipo_ram_clave'];?></td>
-   <?php }  else {?>
-      <td><?php echo $lab_invent['nombre_tipo_ram'];?></td>
-   <?php }
-    if ($_POST['enviar']=='DGTIC'){ ?>
       <td><?php echo $lab_invent['tecnologia_clave'];?></td>
-   <?php } else { ?> 
-    <td><?php echo $lab_invent['nomtec'];?></td>
-   <?php }  ?>
-    <td><?php echo $lab_invent['resguardo_no_empleado'];?></td>
-    <td><?php echo $lab_invent['nombre_resguardo'];?></td>
-    <td><?php echo $lab_invent['usuario_nombre'];?></td>
-    <td><?php echo $lab_invent['usuario_ubicacion'];?></td> 
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['usuario_perfil'];?></td> 
-    <?php } else { ?>
-       <td><?php echo $lab_invent['nombre_perfil'];?></td>
-    <?php }  ?>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
+      <td><?php echo $lab_invent['nombre_resguardo'];?></td>  
+      <td><?php echo $lab_invent['resguardo_no_empleado'];?></td>
+      <td><?php echo $lab_invent['usuario_nombre'];?></td>
+      <td><?php echo $lab_invent['usuario_ubicacion'];?></td> 
+      <td><?php echo $lab_invent['usuario_perfil'];?></td> 
       <td><?php echo $lab_invent['usuario_sector'];?></td> 
-    <?php } else { ?>
-      <td><?php echo $lab_invent['nombre_sector'];?></td>
-    <?php }  ?>
-    <td><?php echo $lab_invent['serie'];?></td>
-    <td><?php echo $lab_invent['marca_p'];?></td>
-    <td><?php echo $lab_invent['no_factura'];?></td>
-    <td><?php echo $lab_invent['anos_garantia'];?></td>
-    <td><?php echo $lab_invent['inventario'];?></td>
-    <td><?php echo $lab_invent['modelo_p'];?></td>
-    <td><?php echo $lab_invent['proveedor_p'];?></td>
-    <td><?php echo $lab_invent['fecha_factura'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['fecha_factura']));-->
-    <td><?php echo $lab_invent['familia_especificar'];?></td>
-    <td><?php echo $lab_invent['modelo_procesador'];?></td>
-    <td><?php echo $lab_invent['cantidad_procesador'];?></td>
-    <td><?php echo $lab_invent['nucleos_totales'];?></td>
-    <td><?php echo $lab_invent['nucleos_gpu'];?></td>
-    <td><?php echo $lab_invent['memoria_ram'];?></td>
-    <td><?php echo $lab_invent['ram_especificar'];?></td>
-    <td><?php echo $lab_invent['num_elementos_almac'];?></td>
-    <td><?php echo $lab_invent['total_almac'];?></td>
-    <td><?php echo $lab_invent['num_arreglos'];?></td>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['esquema_uno'];?></td>
-    <?php } else { ?>
-       <td><?php echo $lab_invent['esquemauno'];?></td>
-    <?php }  ?>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['tec_uno'];?></td>
-    <?php } else { ?>
-       <td><?php echo $lab_invent['tecuno'];?></td>
-    <?php }  ?>
-       <td><?php echo $lab_invent['subtotal_uno'];?></td>
-    <?php  if ($_POST['enviar']=='Con identificador'){ ?>
-       <td><?php echo $lab_invent['esquema_dos'];?></td>
-    <?php } else { ?>
-       <td><?php echo $lab_invent['esquemados'];?></td>
-    <?php }  ?>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-      <td><?php echo $lab_invent['tec_dos'];?></td>
-    <?php } else { ?>
-      <td><?php echo $lab_invent['tecdos'];?></td>
-    <?php }  ?>
-    <td><?php echo $lab_invent['subtotal_dos'];?></td>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
+      <td><?php echo $lab_invent['serie'];?></td>
+      <td><?php echo $lab_invent['marca_p'];?></td>
+      <td><?php echo $lab_invent['no_factura'];?></td>
+      <td><?php echo $lab_invent['anos_garantia'];?></td>
+      <td><?php echo $lab_invent['inventario'];?></td>
+      <td><?php echo $lab_invent['modelo_p'];?></td>
+      <td><?php echo $lab_invent['proveedor_p'];?></td>
+      <td><?php echo $lab_invent['fecha_factura'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['fecha_factura']));-->
+      <td><?php echo $lab_invent['familia_especificar'];?></td>
+      <td><?php echo $lab_invent['modelo_procesador'];?></td>
+      <td><?php echo $lab_invent['cantidad_procesador'];?></td>
+      <td><?php echo $lab_invent['nucleos_totales'];?></td>
+      <td><?php echo $lab_invent['nucleos_gpu'];?></td>
+      <td><?php echo $lab_invent['memoria_ram'];?></td>
+      <td><?php echo $lab_invent['ram_especificar'];?></td>
+      <td><?php echo $lab_invent['num_elementos_almac'];?></td>
+      <td><?php echo $lab_invent['total_almac'];?></td>
+      <td><?php echo $lab_invent['num_arreglos'];?></td>
+	  <td><?php echo $lab_invent['esquema_uno'];?></td>
+	  <td><?php echo $lab_invent['esquema_dos'];?></td>
       <td><?php echo $lab_invent['esquema_tres'];?></td>
-    <?php }  else {?>
-    <td><?php echo $lab_invent['esquematres'];?></td>
-    
-    <?php }
-	 if ($_POST['enviar']=='DGTIC'){ ?>
-      <td><?php echo $lab_invent['tec_tres'];?></td>
-    <?php }  else { ?>
-      <td><?php echo $lab_invent['tectres'];?></td>
-    <?php }  ?>
-    <td><?php echo $lab_invent['subtotal_tres'];?></td>
-    <?php if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['esquema_cuatro'];?></td>
-    <?php }  else { ?>
-    <td><?php echo $lab_invent['esquemacuatro'];?></td>
-    <?php }
-	if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['tec_cuatro'];?></td>
-    <?php } else { ?>
-       <td><?php echo $lab_invent['teccuatro'];?></td>
-    <?php }  ?>
-    <td><?php echo $lab_invent['subtotal_cuatro'];?></td>
-    <td><?php echo $lab_invent['arreglo_total'];?></td>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['id_tec_com'];?></td>
-    <?php } else { ?>
-    <td><?php echo $lab_invent['nombre_tec_com'];?></td>
-    <?php }  ?>
-    <td><?php echo $lab_invent['tec_com_otro'];?></td>
-    <?php  if ($_POST['enviar']=='DGTIC'){ ?>
-       <td><?php echo $lab_invent['sist_oper'];?></td>
-    <?php } else { ?>
-    <td><?php echo $lab_invent['nombre_so'];?></td>
-    <?php }  ?>
-    <td><?php echo $lab_invent['version_sist_oper'];?></td>
-    <td><?php echo $lab_invent['licencia'];?></td>
-    <td><?php echo $lab_invent['licencia_ini'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['licencia_ini']));-->
-    <td><?php echo $lab_invent['licencia_fin'];?></td>
-  
-  </tr>
+      <td><?php echo $lab_invent['esquema_cuatro'];?></td>
+	  <td><?php echo $lab_invent['tec_uno'];?></td>
+	  <td><?php echo $lab_invent['tec_dos'];?></td>
+	  <td><?php echo $lab_invent['tec_tres'];?></td>
+	  <td><?php echo $lab_invent['tec_cuatro'];?></td>
+	  <td><?php echo $lab_invent['subtotal_uno'];?></td>
+	  <td><?php echo $lab_invent['subtotal_dos'];?></td>
+	  <td><?php echo $lab_invent['subtotal_tres'];?></td>
+	  <td><?php echo $lab_invent['subtotal_cuatro'];?></td>
+	  <td><?php echo $lab_invent['arreglo_total'];?></td>
+	  <td><?php echo $lab_invent['tec_com'];?></td>
+	  <td><?php echo $lab_invent['tec_com_otro'];?></td>
+	  <td><?php echo $lab_invent['sist_oper'];?></td>
+	  <td><?php echo $lab_invent['version_sist_oper'];?></td>
+	  <td><?php echo $lab_invent['licencia'];?></td>
+	  <td><?php echo $lab_invent['licencia_ini'];?></td>
+	  <td><?php echo $lab_invent['licencia_fin'];?></td>
+	  <td><?php echo $lab_invent['id_impresora'];?></td>
+	  <td><?php echo $lab_invent['id_digitaliza'];?></td>
+	  <td><?php echo $lab_invent['id_access'];?></td>
+	  <td><?php echo $lab_invent['id_tipo_red'];?></td>
+	  <td><?php echo $lab_invent['id_tipo_red'];?></td>
+	  <td><?php echo $lab_invent['id_firewall'];?></td>
+	  <td><?php echo $lab_invent['id_ids'];?></td>
+	  <td><?php echo $lab_invent['id_ips'];?></td>
+	  <td><?php echo $lab_invent['id_tipo_switch'];?></td>
+	  <td><?php echo $lab_invent['id_puerto'];?></td>
+	  <td><?php echo $lab_invent['id_chasis'];?></td>
+	  <td><?php echo $lab_invent['estado_equipo'];?></td>
+	  <td><?php echo $lab_invent['id_mod'];?></td>
+	  <td><?php echo $mac1;?></td>
+	  <td><?php echo $mac2;?></td>  
+	  <td><?php echo $lab_invent['id_edif'];?></td>
+	  <td><?php echo $lab_invent['id_lab'];?></td>
+	 
+	  
+	</tr>
+	   <?php } else if($cuenta==2){ ?>
+		
+		
+		<tr>
+			
+		
+      <td><?php echo 'celda1'?></td>
+      <td><?php echo 'celda2'?></td>
+     
+		</tr>
+<?php	}
+	
+	?>
   
  
- <?php }  ?>
+  
+ 
+ 
+		
+		
+<?php	
+   } //fin de while ?>
 </table>
 
 
