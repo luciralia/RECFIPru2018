@@ -101,14 +101,12 @@ $query= "SELECT  e.*,
          ON d.id_dep=l.id_dep
          JOIN divisiones div
          ON div.id_div=d.id_div
-		 LEFT JOIN mac m
-		 ON m.id_dispositivo=e.id_dispositivo
+		
 		 LEFT JOIN impresora i
 		 ON i.id_dispositivo=e.id_dispositivo
 		 LEFT JOIN access ac
 		 ON ac.id_dispositivo=e.id_dispositivo
-		 LEFT JOIN red_difunde rd
-		 ON rd.id_dispositivo=e.id_dispositivo
+		 
 		 LEFT JOIN switch sw 
 		 ON sw.id_dispositivo=e.id_dispositivo
 		 LEFT JOIN digitaliza dg
@@ -288,7 +286,8 @@ $query= "SELECT  e.*,
 	
    while ($lab_invent = pg_fetch_array($datos, NULL,PGSQL_ASSOC)) 
 		{ 
-	
+	     $inventario= (string) $lab_invent['inventario'];
+	    // echo 'imprime inventario cadena',$inventario; 
 	
 	   if ( $lab_invent['dispositivo_clave']>=1 && $lab_invent['dispositivo_clave']<=8)
 		{
@@ -318,18 +317,57 @@ $query= "SELECT  e.*,
 		         ON m.id_dispositivo=e.id_dispositivo
 		         WHERE id_disp_mac= ". $id_mac . "
 				 AND  inventario="."'".$lab_invent['inventario']."'";
-		     echo $query;
+		    // echo $query;
 	       
 		   $result= pg_query($query) or die('Hubo un error con la base de datos');
            $arreglo= pg_fetch_array($result);
 		   $cuenta= pg_num_rows($result);	
 		
 		  $mac2=$arreglo[2];
-		  echo 'imprime mac',$mac2; 
+		  //echo 'imprime mac',$mac2; 
 			 
 		   }
 				
 	   }
+	   
+	   if ( $lab_invent['dispositivo_clave']==14)
+		   {
+	       $query="SELECT e.id_dispositivo,id_access,id_tipo_red FROM dispositivo e
+                   LEFT JOIN access a
+                   ON a.id_dispositivo=e.id_dispositivo
+                   LEFT JOIN red_difunde rd
+                   ON rd.id_dispositivo=e.id_dispositivo
+                   WHERE inventario="."'".$lab_invent['inventario']."'";
+	       
+		   $result= pg_query($query) or die('Hubo un error con la base de datos');
+           $arreglo= pg_fetch_array($result);
+		   $cuenta= pg_num_rows($result);	
+		  	
+		   $id_tipo_red=$arreglo[2];
+		   $red1=$arreglo[2];
+		   $red2=NULL;
+		 
+	       if ($cuenta==1)	{
+		     $red1=$arreglo[2];
+			 $red2=NULL;
+			} else if($cuenta==2) {
+		       $id_red=$id_tipo_red+1;
+		       $query="SELECT e.id_dispositivo,id_access,id_tipo_red FROM dispositivo e
+                   LEFT JOIN access a
+                   ON a.id_dispositivo=e.id_dispositivo
+                   LEFT JOIN red_difunde rd
+                   ON rd.id_dispositivo=e.id_dispositivo
+                   WHERE id_tipo_red= ". $id_red . "
+		           AND  inventario="."'".$lab_invent['inventario']."'";
+		    // echo $query;
+	       
+		      $result= pg_query($query) or die('Hubo un error con la base de datos');
+              $arreglo= pg_fetch_array($result);
+		      $cuenta= pg_num_rows($result);	
+		      $red2=$arreglo[2];
+		  //echo 'imprime mac',$mac2; 
+		   }
+		}
 	
 	?>
         
@@ -337,7 +375,7 @@ $query= "SELECT  e.*,
 	 
 <table border="1">
 	
-	<?php if ($cuenta==1)	{ ?>
+
 		
   <tr>
   
@@ -357,7 +395,7 @@ $query= "SELECT  e.*,
       <td><?php echo $lab_invent['marca_p'];?></td>
       <td><?php echo $lab_invent['no_factura'];?></td>
       <td><?php echo $lab_invent['anos_garantia'];?></td>
-      <td><?php echo $lab_invent['inventario'];?></td>
+      <td><?php echo $inventario;?></td>
       <td><?php echo $lab_invent['modelo_p'];?></td>
       <td><?php echo $lab_invent['proveedor_p'];?></td>
       <td><?php echo $lab_invent['fecha_factura'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['fecha_factura']));-->
@@ -394,8 +432,8 @@ $query= "SELECT  e.*,
 	  <td><?php echo $lab_invent['id_impresora'];?></td>
 	  <td><?php echo $lab_invent['id_digitaliza'];?></td>
 	  <td><?php echo $lab_invent['id_access'];?></td>
-	  <td><?php echo $lab_invent['id_tipo_red'];?></td>
-	  <td><?php echo $lab_invent['id_tipo_red'];?></td>
+	  <td><?php echo $red1;?></td>
+	  <td><?php echo $red2;?></td>
 	  <td><?php echo $lab_invent['id_firewall'];?></td>
 	  <td><?php echo $lab_invent['id_ids'];?></td>
 	  <td><?php echo $lab_invent['id_ips'];?></td>
@@ -411,27 +449,18 @@ $query= "SELECT  e.*,
 	 
 	  
 	</tr>
-	   <?php } else if($cuenta==2){ ?>
-		
-		
-		<tr>
-			
-		
-      <td><?php echo 'celda1'?></td>
-      <td><?php echo 'celda2'?></td>
-     
-		</tr>
-<?php	}
-	
-	?>
-  
+	   
  
   
  
  
 		
 		
-<?php	
+<?php
+	   $mac1=NULL;
+	    $mac2=NULL;
+	    $red1=NULL;
+	    $red2=NULL;
    } //fin de while ?>
 </table>
 

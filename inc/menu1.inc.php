@@ -136,7 +136,8 @@
     
     <?php 
 		 }
-	  }?>  
+	  }?>
+			
 <!-- MENU DE EQUIPOS DE ALTO RENDIMIENTO-->
   <?php  //if ($_SESSION['tipo_usuario']==9)	 {
     // $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>

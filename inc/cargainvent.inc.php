@@ -329,8 +329,9 @@ if ($_GET['mod']=='invg' ){
            <td>
            <br>
            <legend align="right">
-          <?php $action="../inc/exportainvDGTIC.inc.php";?>
-         
+            <?php  $action="../inc/exportainvDGTIC.inc.php";?>
+            <?php //$action="../inc/exporta_DGTIC.php";?>
+			   <?php $action="../inc/exportar_DGTIC.php";?>
               <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
 	          <input name="enviar" type="submit" value="DGTIC" />
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
