@@ -76,13 +76,9 @@ header($texto);
 					   
 			/*$mac1=$renglon_mac[0]['mac'];
 			$mac2=$renglon_mac[1]['mac'];  
-					
-					
-					echo 'imprime mac 1: ', $mac1;
-				    
-					echo 'imprime mac 2: ', $mac2;
-						
-					}*/
+				echo 'imprime mac 1: ', $mac1;
+				echo 'imprime mac 2: ', $mac2;
+				}*/
 	
 	
 	
@@ -118,9 +114,7 @@ $query= "SELECT  e.*,
 		 LEFT JOIN ids 
 		 ON e.id_dispositivo=ids.id_dispositivo
          WHERE div.id_div=" . $_SESSION['id_div'] .
-         "
-          AND e.id_dispositivo>=2240
-         ORDER BY laboratorio" ;
+         " ORDER BY laboratorio" ;
 } elseif  ($_SESSION['tipo_usuario']==10  && $_SESSION['id_div']=='' ) {
 	
 $query= "SELECT  e.*, 
@@ -154,9 +148,7 @@ $query= "SELECT  e.*,
 		 ON e.id_dispositivo=ips.id_dispositivo
 		 LEFT JOIN ids 
 		 ON e.id_dispositivo=ids.id_dispositivo
-		 
-         
-         ORDER BY laboratorio" ;
+		 ORDER BY laboratorio" ;
 }  elseif  ($_SESSION['tipo_usuario']==10  && $_SESSION['id_div']!='' ) {
 	
 	$query= "SELECT  e.*, 
@@ -191,22 +183,17 @@ $query= "SELECT  e.*,
 		 LEFT JOIN ids 
 		 ON e.id_dispositivo=ids.id_dispositivo
          WHERE div.id_div=" . $_SESSION['id_div'] .
-         "
-        
-         ORDER BY laboratorio" ;
+         " ORDER BY laboratorio" ;
 }
  $datos = pg_query($con,$query);
  $inventario= pg_num_rows($datos); 
 
 ?>
 
-
-
   
 <table border="1">
 
   <tr>
-  
   
       <th scope="col">dispositivo_clave</th>
       <th scope="col">usuario_final_clave</th>
@@ -370,17 +357,11 @@ $query= "SELECT  e.*,
 		}
 	
 	?>
-        
-	
+     
 	 
 <table border="1">
-	
-
-		
-  <tr>
-  
-   
-      <td><?php echo $lab_invent['dispositivo_clave'];?></td>
+ <tr>
+    <td><?php echo $lab_invent['dispositivo_clave'];?></td>
       <td><?php echo $lab_invent['usuario_final_clave'];?></td>
       <td><?php echo $lab_invent['familia_clave'];?></td>
       <td><?php echo $lab_invent['tipo_ram_clave'];?></td>
@@ -395,7 +376,7 @@ $query= "SELECT  e.*,
       <td><?php echo $lab_invent['marca_p'];?></td>
       <td><?php echo $lab_invent['no_factura'];?></td>
       <td><?php echo $lab_invent['anos_garantia'];?></td>
-      <td><?php echo $inventario;?></td>
+	  <td style='mso-number-format:"\@"'><?php echo $inventario;?></td>
       <td><?php echo $lab_invent['modelo_p'];?></td>
       <td><?php echo $lab_invent['proveedor_p'];?></td>
       <td><?php echo $lab_invent['fecha_factura'];?></td><!-- echo date("d-m-Y", strtotime($lab_invent['fecha_factura']));-->
@@ -446,18 +427,10 @@ $query= "SELECT  e.*,
 	  <td><?php echo $mac2;?></td>  
 	  <td><?php echo $lab_invent['id_edif'];?></td>
 	  <td><?php echo $lab_invent['id_lab'];?></td>
-	 
-	  
-	</tr>
-	   
- 
-  
- 
- 
-		
-		
+</tr>
+	
 <?php
-	   $mac1=NULL;
+	    $mac1=NULL;
 	    $mac2=NULL;
 	    $red1=NULL;
 	    $red2=NULL;

@@ -59,7 +59,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant .
+WHERE " .$tiposerv . $tipomant .
 " AND l.id_lab= ". $idlab. " ORDER BY fregistro DESC";
 		 
 	
@@ -91,7 +91,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant .
+WHERE " .$tiposerv . $tipomant .
 " AND dv.id_div= ".$_REQUEST['div'];
 	
 }else if ($tipou==10 && $iddiv!='') {
@@ -122,7 +122,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant .
+WHERE " .$tiposerv . $tipomant .
 " AND dv.id_div= ".$_REQUEST['div'];
 	
 }else if ($tipou==10 &&  $iddiv==NULL) {
@@ -153,7 +153,7 @@ JOIN divisiones dv
 ON dp.id_div = dv.id_div
 JOIN usuarios u
 ON l.id_responsable=u.id_usuario
-WHERE" .$tiposerv . $tipomant ; 
+WHERE " .$tiposerv . $tipomant ; 
 	
 }
 	
@@ -164,7 +164,7 @@ WHERE" .$tiposerv . $tipomant ;
 	else if ($mod=="eq"){
 
 				$query = "SELECT DISTINCT ne.id_nec, nomb_recurso,cant,ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,cto_unitario, ref ,ruta_evidencia
-				FROM necesidades_equipo ne,cat_recursos_equipo cre,nec_evid nev,evidencia e,laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				FROM necesidades_equipo_otra ne,cat_recursos_equipo cre,nec_evid nev,evidencia e,laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
 				WHERE ne.id_lab=l.id_lab 
 				AND cre.id_recurso=ne.id_recurso
 				AND nev.id_lab=ne.id_lab
@@ -328,7 +328,7 @@ WHERE e.id_lab=" . $idlab;
 	
 
 	
-	 //  echo "QUERY EN LA CLASE *******************************". $query;		
+	  echo "QUERY EN LA CLASE *******************************". $query;		
 		$result = pg_query($query) or die('Hubo un error con la base de datos');
 		while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
 		//echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
@@ -349,7 +349,7 @@ WHERE e.id_lab=" . $idlab;
 				if($div!=''){
 					
 				$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
-				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				FROM necesidades_equipo_otra ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
 				WHERE ne.id_lab=l.id_lab 
 				AND l.id_dep=de.id_dep 
 				AND de.id_div=dv.id_div 
@@ -358,7 +358,7 @@ WHERE e.id_lab=" . $idlab;
 				AND dv.id_div=" . $div . 
 				"ORDER BY id_nec DESC";
 		    }else if($div==''){$query = "SELECT DISTINCT id_nec, ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,                 cto_unitario, ref 
-				FROM necesidades_equipo ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				FROM necesidades_equipo_otra ne, laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
 				WHERE ne.id_lab=l.id_lab 
 				AND l.id_dep=de.id_dep 
 				AND de.id_div=dv.id_div 

@@ -291,7 +291,7 @@ if ($_GET['mod']=='invg' ){
    $inventario= pg_num_rows($datos); 
     if (($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 && $inventario!=0 )&& $_GET['lab']==NULL){ ?>
         <tr>
-        <td align="right">  <h3> Inventario por División</h3> </td>
+        <td align="right"> <h3> Inventario por División</h3> </td>
        
         </tr>
         <tr></tr>
@@ -329,11 +329,12 @@ if ($_GET['mod']=='invg' ){
            <td>
            <br>
            <legend align="right">
-            <?php  $action="../inc/exportainvDGTIC.inc.php";?>
+            <?php //$action="../inc/exportainvDGTIC.inc.php";?>
             <?php //$action="../inc/exporta_DGTIC.php";?>
-			   <?php $action="../inc/exportar_DGTIC.php";?>
+			<?php  $action="../inc/exportar_DGTIC.php";?>
+			<?php //$action="../inc/excelbf2.inc.php";?>   
               <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
-	          <input name="enviar" type="submit" value="DGTIC" />
+	          <input name="enviar" type="submit" value="DGTIC2" />
 	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
               </form>
               </legend>

@@ -8,14 +8,9 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 //header("Content-type: text/html");
 $texto='Content-Disposition: attachment;filename="bitacora_falla' . date("Ymd-His") . "_" . $_REQUEST['laboratorio'] . '.xls"';
 header($texto);
-
 echo 'consulta Excel'.$query;  
-
 print_r($_REQUEST);
 ?>
-
-
-
 
 <?php 
 echo '<?xml version="1.0"?>

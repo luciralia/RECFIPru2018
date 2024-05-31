@@ -126,7 +126,7 @@
 <file name="archivo.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132992695481839466" remote="132992698220000000" Dst="2" />
 <file name="factura.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133506849881833995" remote="133506886860000000" Dst="0" />
 <file name="insertaCatalogos.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133517080309413419" remote="133517085590000000" Dst="0" />
-<file name="actualiza_micros.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133529195755813022" remote="133529196120000000" Dst="0" />
+<file name="actualiza_micros.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133607924945871363" remote="133607930390000000" Dst="0" />
 <file name="exportaFaltantesBienes.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133525030593243770" remote="133525038740000000" Dst="0" />
 <file name="exportaFaltantesRECFI.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133525030236999402" remote="133525038820000000" Dst="0" />
 <file name="ActualizadosBienes.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133525030774518924" remote="133525038990000000" Dst="0" />

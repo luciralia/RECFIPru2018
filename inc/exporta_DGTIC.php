@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,13 +13,6 @@ $obj_xls=new Exportaxls(); // nueva linea
 $esquema=new inventario();
 $madq = new inventario();
 $exhibe_mac=new Exportaxls(); 	
-	
-
-/*  este for es para cargar los datos de los renglones*/
-//echo 'imprime la datos';
-//print_r ($_POST);
-
-
 
 date_default_timezone_set('America/Mexico_City');
 header('Content-type: application/x-msexcel'); 
@@ -52,270 +44,203 @@ $nombdiv= pg_fetch_array($registrodiv);
 	
 header($texto);
 ?>
-
-<table>
-   <tr>
-       <td align="center" ><h2>Inventario para DGTIC por cada División</h2></td>
-   </tr>
-  
-
-</table>
-  
-    <?php
-          echo '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>'; 
-      ?>
-<Workbook xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x2="urn:schemas-microsoft-com:office:excel2" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
- <x:ExcelWorkbook>
-  <x:ActiveSheet>0</x:ActiveSheet>
- </x:ExcelWorkbook>
- <o:DocumentProperties>
-  <o:Author>LUCIRALIA HERNANDEZ HERNANDEZ</o:Author>
-  <o:Created>2024-05-07T14:30:05Z</o:Created>
-  <o:LastSaved>2024-05-14T20:31:46Z</o:LastSaved>
- </o:DocumentProperties>
- <o:CustomDocumentProperties>
-  <o:ContentTypeId>0x01010070B2076F8ADCAA4D947248F6310A519A</o:ContentTypeId>
-  <o:Solution_x0020_ID>{15727DE6-F92D-4E46-ACB4-0E2C58B31A18}</o:Solution_x0020_ID>
- </o:CustomDocumentProperties>
+<?php
+     echo '<?xml version="1.0"?>
+     <?mso-application progid="Excel.Sheet"?>'; 
+ ?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>CPD_PRUEBA</Author>
+  <LastAuthor>CPD_PRUEBA</LastAuthor>
+  <Created>2024-05-07T14:30:05Z</Created>
+  <LastSaved>2024-05-28T19:40:57Z</LastSaved>
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <CustomDocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <ContentTypeId dt:dt="string">0x01010070B2076F8ADCAA4D947248F6310A519A</ContentTypeId>
+  <Solution_x0020_ID dt:dt="string">{15727DE6-F92D-4E46-ACB4-0E2C58B31A18}</Solution_x0020_ID>
+ </CustomDocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>15120</WindowHeight>
+  <WindowWidth>19440</WindowWidth>
+  <WindowTopX>32767</WindowTopX>
+  <WindowTopY>32767</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
  <Styles>
   <Style ss:ID="Default" ss:Name="Normal">
-   <ss:Alignment ss:Vertical="Bottom" />
-   <ss:Font ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="11" />
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Aptos Narrow" x:Family="Swiss" ss:Size="11"
+    ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
   </Style>
-  <Style ss:ID="S21">
-   <ss:Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Bold="1" ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="10" />
+  <Style ss:ID="s16">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="Aptos Narrow" x:Family="Swiss" ss:Color="#000000" ss:Bold="1"/>
   </Style>
-  <Style ss:ID="S22">
-   <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="10" />
+  <Style ss:ID="s17">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="Aptos Narrow" x:Family="Swiss" ss:Color="#000000"/>
   </Style>
-  <Style ss:ID="S23">
-   <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="10" />
-   <ss:NumberFormat ss:Format="MM/dd/yyyy" />
+  <Style ss:ID="s22">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="Aptos Narrow" x:Family="Swiss" ss:Color="#000000"/>
+   <NumberFormat ss:Format="@"/>
   </Style>
-  <Style ss:ID="S24">
-   <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="11" />
+  <Style ss:ID="s23">
+   <NumberFormat ss:Format="@"/>
   </Style>
-  <Style ss:ID="S25">
-   <ss:Alignment ss:Horizontal="Center" ss:Vertical="Bottom" ss:WrapText="1" />
-   <ss:Font ss:Bold="1" ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="18" />
+  <Style ss:ID="s24">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="Aptos Narrow" x:Family="Swiss" ss:Color="#000000" ss:Bold="1"/>
+   <NumberFormat ss:Format="@"/>
   </Style>
-  <Style ss:ID="S26">
-   <ss:Alignment ss:Horizontal="Center" ss:Vertical="Bottom" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Bold="1" ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="18" />
-  </Style>
-  <Style ss:ID="S27">
-   <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="10" />
-   <ss:NumberFormat ss:Format="@" />
-  </Style>
-  <Style ss:ID="S28">
-   <ss:Alignment ss:Vertical="Bottom" />
-   <ss:Font ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="11" />
-   <ss:NumberFormat ss:Format="@" />
-  </Style>
-  <Style ss:ID="S29">
-   <ss:Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1" />
-   <ss:Borders>
-    <ss:Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-    <ss:Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="1" />
-   </ss:Borders>
-   <ss:Font ss:Bold="1" ss:Color="#000000" ss:FontName="Aptos Narrow" ss:Size="10" />
-   <ss:NumberFormat ss:Format="@" />
+  <Style ss:ID="s25">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Font ss:FontName="Aptos Narrow" x:Family="Swiss" ss:Size="18"
+    ss:Color="#000000" ss:Bold="1"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Hoja1">
-  <ss:Names />
-  <ss:Table ss:DefaultRowHeight="15" ss:DefaultColumnWidth="67.5" ss:ExpandedRowCount="4" ss:ExpandedColumnCount="66">
-   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="96" />
-   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="97.5" />
-   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="78.75" />
-   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="88.5" />
-   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="90.75" />
-   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="72.75" />
-   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="87.75" />
-   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="89.25" />
-   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="82.5" />
-   <Column ss:Index="15" ss:AutoFitWidth="0" ss:Width="76.5" />
-   <Column ss:Index="16" ss:StyleID="S28" ss:Width="68.25" />
-   <Column ss:Index="20" ss:AutoFitWidth="0" ss:Width="98.25" />
-   <Column ss:Index="55" ss:AutoFitWidth="0" ss:Width="84.75" />
-   <Row ss:Index="1">
-    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="S25"><Data ss:Type="String">Inventario importación por cada División</Data>
-    </Cell>
+  <Table ss:ExpandedColumnCount="66" ss:ExpandedRowCount="4" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="60" ss:DefaultRowHeight="15">
+   <Column ss:AutoFitWidth="0" ss:Width="84"/>
+   <Column ss:AutoFitWidth="0" ss:Width="85.5"/>
+   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="69"/>
+   <Column ss:AutoFitWidth="0" ss:Width="77.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="79.5"/>
+   <Column ss:AutoFitWidth="0" ss:Width="63.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="76.5"/>
+   <Column ss:AutoFitWidth="0" ss:Width="78"/>
+   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="72"/>
+   <Column ss:Index="15" ss:AutoFitWidth="0" ss:Width="66.75"/>
+   <Column ss:StyleID="s23" ss:AutoFitWidth="0"/>
+   <Column ss:Index="20" ss:AutoFitWidth="0" ss:Width="86.25"/>
+   <Column ss:Index="55" ss:AutoFitWidth="0" ss:Width="74.25"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s25"><Data
+      ss:Type="String">Inventario importación por cada División</Data></Cell>
    </Row>
-   <Row ss:Index="2" ss:Height="42" />
-   <Row ss:Index="3" ss:Height="27">
-    <Cell ss:StyleID="S21"><Data ss:Type="String">dispositivo_clave</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">usuario_final_clave</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">familia_clave</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tipo_ram_clave</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tecnologia_clave</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">resguardo_nombre</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">resguardo_no_empleado</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">usuario_nombre</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">usuario_ubicación</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">usuario_perfil</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">usuario_sector</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">no_servicio</Data>
-    </Cell>
-	<Cell ss:StyleID="S21"><Data ss:Type="String">marca_p</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">no_factura</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">anios_garantía</Data>
-    </Cell>
-    <Cell ss:StyleID="S29"><Data ss:Type="String">inventario</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">modelo_p</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">proveedor_p</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">fecha_factura</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">familia_especificar</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">modelo_procesador</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">cantidad_procesador</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">nucleos_totales</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">nucleos_GPU</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">memoria_RAM</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">RAM_especificar</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">num_elementos_almac</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">total_almac</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">num_arreglos</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">esquema_uno</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">esquema_dos</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">esquema_tres</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">esquema_cuatro</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tec_uno</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tec_dos</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tec_tres</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tec_cuatro</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">subtotal_uno</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">subtotal_dos</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">subtotal_tres</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">subtotal_cuatro</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">arreglo_total</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tec_com</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tec_com_otro</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">sist_oper</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">version_sist_oper</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">licencia</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">licencia_ini</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">licencia_fin</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">tipo_impresora</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_tipo_digitalizador</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_tipo_access_point</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_tipo_red1</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_tipo_red2</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_tipo_firewall</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_ids</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_ips</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_tipo_switch</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_puerto_switch</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">chasis_switch</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">estado_equipo</Data>
-    </Cell>
-	<Cell ss:StyleID="S21"><Data ss:Type="String">id_mod</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">mac1</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">mac2</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_edificio</Data>
-    </Cell>
-    <Cell ss:StyleID="S21"><Data ss:Type="String">id_lab</Data>
-    </Cell>
+   <Row ss:AutoFitHeight="0" ss:Height="42"/>
+   <Row ss:Height="27">
+    <Cell ss:StyleID="s16"><Data ss:Type="String">dispositivo_clave</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">usuario_final_clave</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">familia_clave</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tipo_ram_clave</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tecnologia_clave</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">resguardo_nombre</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">resguardo_no_empleado</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">usuario_nombre</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">usuario_ubicación</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">usuario_perfil</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">usuario_sector</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">no_servicio</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">marca_p</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">no_factura</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">anios_garantía</Data></Cell>
+    <Cell ss:StyleID="s24"><Data ss:Type="String">inventario</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">modelo_p</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">proveedor_p</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">fecha_factura</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">familia_especificar</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">modelo_procesador</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">cantidad_procesador</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">nucleos_totales</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">nucleos_GPU</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">memoria_RAM</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">RAM_especificar</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">num_elementos_almac</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">total_almac</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">num_arreglos</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">esquema_uno</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">esquema_dos</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">esquema_tres</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">esquema_cuatro</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tec_uno</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tec_dos</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tec_tres</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tec_cuatro</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">subtotal_uno</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">subtotal_dos</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">subtotal_tres</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">subtotal_cuatro</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">arreglo_total</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tec_com</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tec_com_otro</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">sist_oper</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">version_sist_oper</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">licencia</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">licencia_ini</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">licencia_fin</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">tipo_impresora</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_tipo_digitalizador</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_tipo_access_point</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_tipo_red1</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_tipo_red2</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_tipo_firewall</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_ids</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_ips</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_tipo_switch</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_puerto_switch</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">chasis_switch</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">estado_equipo</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">mac1</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">mac2</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_mod</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_edificio</Data></Cell>
+    <Cell ss:StyleID="s16"><Data ss:Type="String">id_lab</Data></Cell>
    </Row>
 	 <?php  
 	  	
@@ -409,6 +334,7 @@ $query= "SELECT  e.*,
          "
          ORDER BY laboratorio" ;
 }
+	  echo $query;
  $datos = pg_query($con,$query);
  $inventario= pg_num_rows($datos); 
 
@@ -422,7 +348,7 @@ $query= "SELECT  e.*,
 	
 	    if ( $lab_invent['dispositivo_clave']>=1 && $lab_invent['dispositivo_clave']<=8)
 		{
-	       $query="SELECT e.id_dispositivo,id_disp_mac,red_acceso FROM dispositivo e
+	       $query="SELECT e.id_dispositivo,id_disp_mac,mac FROM dispositivo e
 		           LEFT JOIN mac m
 		           ON m.id_dispositivo=e.id_dispositivo
 		           WHERE inventario="."'".$lab_invent['inventario']."'";
@@ -454,7 +380,7 @@ $query= "SELECT  e.*,
 			 
 		   }
 	     }// fin de buscar mac
-		    if ( $lab_invent['dispositivo_clave']==14)
+		   if ( $lab_invent['dispositivo_clave']==14)
 		   {
 	       $query="SELECT e.id_dispositivo,id_access,id_tipo_red FROM dispositivo e
                    LEFT JOIN access a
@@ -494,104 +420,103 @@ $query= "SELECT  e.*,
 		}
 	  
 	         ?>
-	<Row ss:Index="4">
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['dispositivo_clave']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['usuario_final_clave']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['familia_clave']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tipo_ram_clave']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tecnologia_clave']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['nombre_resguardo']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['resguardo_no_empleado']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['usuario_nombre']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['usuario_ubicacion']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['usuario_perfil']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['usuario_sector']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['serie']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['marca_p']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['no_factura']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['anos_garantia']; ?>
-    <Cell ss:StyleID="S27" /> <?php echo $lab_invent['inventario']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['modelo_p']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['proveedor_p']; ?>
-    <Cell ss:StyleID="S23" /> <?php echo $lab_invent['fecha_factura']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['familia_especificar']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['modelo_procesador']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['cantidad_procesador']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['nucleos_totales']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['nucleos_gpu']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['memoria_ram']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['ram_especificar']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['num_elementos_almac']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['total_almac']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['num_arreglos']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['esquema_uno']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['esquema_dos']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['esquema_tres']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['esquema_cuatro']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tec_uno']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tec_dos']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tec_tres']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tec_cuatro']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['subtotal_uno']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['subtotal_dos']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['subtotal_tres']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['subtotal_cuatro']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['arreglo_total']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tec_com']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['tec_com_otro']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['sist_oper']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['version_sist_oper']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['licencia']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['licencia_ini']; ?>
-    <Cell ss:StyleID="S23" /> <?php echo $lab_invent['licencia_fin']; ?>
-    <Cell ss:StyleID="S23" /> <?php echo $lab_invent['id_impresora']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_digitaliza']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_access']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $red1; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $red2; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['id_firewall']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_ids']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_ips']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_tipo_switch']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_puerto']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_chasis']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['estado_equipo']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $lab_invent['id_mod']; ?>
-    <Cell ss:StyleID="S24" /> <?php echo $mac1;?>
-    <Cell ss:StyleID="S22" /> <?php echo $mac2;?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['id_edif']; ?>
-    <Cell ss:StyleID="S22" /> <?php echo $lab_invent['id_lab']; ?>
-   </Row>	
-	   </ss:Table>
+	  <Row>
+    <Cell><Data ss:Type="String">Valor de la celda 1</Data></Cell>
+    <Cell><Data ss:Type="String">Valor de la celda 2</Data></Cell>
+    <!-- Más celdas aquí si es necesario -->
+    </Row>
+	<Row ss:Height="27">
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['dispositivo_clave'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['usuario_final_clave'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['familia_clave'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tipo_ram_clave'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tecnologia_clave'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['resguardo_nombre'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['resguardo_no_empleado'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['usuario_nombre'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['usuario_ubicacion'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['usuario_perfil'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['usuario_sector'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['no_servicio'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['marca_p'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['no_factura'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['anios_garantia'];?></Data></Cell>
+    <Cell ss:StyleID="s22"><Data ss:Type="String"><?php echo $inventario;?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['modelo_p'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['proveedor_p'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['fecha_factura'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['familia_especificar'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['modelo_procesador'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['cantidad_procesador'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['nucleos_totales'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['nucleos_GPU'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['memoria_RAM'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['RAM_especificar'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['num_elementos_almac'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['total_almac'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['num_arreglos'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['esquema_uno'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['esquema_dos'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['esquema_tres'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['esquema_cuatro'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tec_uno'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tec_dos'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tec_tres'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tec_cuatro'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['subtotal_uno'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['subtotal_dos'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['subtotal_tres'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['subtotal_cuatro'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['arreglo_total'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tec_com'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tec_com_otro'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['sist_oper'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['version_sist_oper'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['licencia'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['licencia_ini'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['licencia_fin'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['tipo_impresora'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_tipo_digitalizador'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_tipo_access_point'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $red1;?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $red2;?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_tipo_firewall'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_ids'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_ips'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_tipo_switch'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_puerto_switch'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['chasis_switch'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['estado_equipo'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $mac1;?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $mac2;?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_mod'];?>#</Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_edificio'];?></Data></Cell>
+    <Cell ss:StyleID="s17"><Data ss:Type="String"><?php echo $lab_invent['id_lab'];?></Data></Cell>
+   </Row>
+	
 	<?php   
         $mac1=NULL;
 	    $mac2=NULL;
 	    $red1=NULL;
 	    $red2=NULL;
-  } 
+  } //fin del while
   ?>
-<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+</Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
    <PageSetup>
-    <Header x:Margin="0.3" />
-    <Footer x:Margin="0.3" />
-    <PageMargins x:Top="0.75" x:Bottom="0.75" x:Left="0.7" x:Right="0.7" />
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
-   <Print>
-    <PaperSizeIndex>9</PaperSizeIndex>
-    <HorizontalResolution>600</HorizontalResolution>
-    <VerticalResolution>600</VerticalResolution>
-   </Print>
-   <LeftColumnVisible>5</LeftColumnVisible>
+   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>3</ActiveRow>
-     <ActiveCol>17</ActiveCol>
-     <RangeSelection>R4C18</RangeSelection>
+     <ActiveRow>2</ActiveRow>
     </Pane>
    </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
   </WorksheetOptions>
  </Worksheet>
-</Workbook>	 
-	 
-  	
+</Workbook>
