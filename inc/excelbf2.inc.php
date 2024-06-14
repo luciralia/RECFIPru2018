@@ -6,6 +6,7 @@ $obj_bit=new Bitacora(); // nueva linea
 
 /*  este for es para cargar los datos de los renglones*/
 
+
 for ($i=1;$i<$_POST['j'];$i++){
 				
 				$checkbox='servicio'.$i;
@@ -41,14 +42,12 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 $texto='Content-Disposition: attachment;filename="bitacora_falla' . date("Ymd-His") . "_" . $renglon_bit[0]['laboratorio'] . '.xls"';
 header($texto);
 
- echo 'hola ', $query;  
+ //echo 'hola ', $query;  
 
 print_r($_REQUEST);
 
 
 ?>
-
-
 
 
 <?php 

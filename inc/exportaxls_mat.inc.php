@@ -15,7 +15,7 @@ $obj_cot=new Cotiza();
 	
 if ($_REQUEST['lab']!='') {
 	$tab='dispositivo';			
-	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'],$tab);
+	$renglon_xls=$obj_xls->tblXls($_REQUEST['lab'],$_REQUEST['mod'], $_SESSION['id_div'],$_SESSION['tipo_usuario']);
 				
 				foreach ($renglon_xls as $reng) {
 			        					
@@ -26,7 +26,7 @@ if ($_REQUEST['lab']!='') {
 				}
 }else if ($_REQUEST['div']!=''||$_REQUEST['div']=='' ) {
 	
-	 echo 'entra aqui';
+	// echo 'entra aqui';
 	$renglon_xls=$obj_xls->eqDivXls($_REQUEST['div']);
 	
 	foreach ($renglon_xls as $reng) {
@@ -37,6 +37,7 @@ if ($_REQUEST['lab']!='') {
 				
 				}
 	}
+	
 date_default_timezone_set('America/Mexico_City');
 header('Content-type: application/x-msexcel'); 
 header("Content-Type: application/vnd.ms-excel" );
@@ -55,13 +56,10 @@ $titulo='FacultadIngenieria';
 $texto='Content-Disposition: attachment;filename="requerimientos_mat_' . date("Ymd-His") . "_" . $titulo . '.xls"';
 }
 
-	
-
 header($texto);
-
 ?>
 
-
+	
 <table border="1">
   <tr>
     <th scope="col">Cantidad</th>
@@ -89,8 +87,7 @@ for($i=0;$i<count($renglon_xls);$i++){
     <td><?php echo $obj_cot->getCotiza($renglon_xls[$i]['id_cotizacion']); ?></td>
     <td><?php echo $renglon_xls[$i]['motivo']; ?></td>
     <td><?php echo $renglon_xls[$i]['justificacion']; ?></td>
-    
-  </tr>
+ </tr>
 
 <?php } ?>
 </table>

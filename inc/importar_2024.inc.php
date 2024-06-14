@@ -726,7 +726,7 @@ if($size > 0){
 			
 	 if ($error>0 ){
 		 
-	   $regvalido++;
+	  $regvalido++;
 	 
 	  if ($busca!=NULL){
 	
@@ -941,15 +941,13 @@ if($size > 0){
 			            $result=pg_query($queryidmac) or die('ERROR AL INSERTAR EN MAC: ' . pg_last_error());
 				        $mac2=$datosdec[63];
 			  
-			   	      if ($mac2!='0')
+			   	      if ($mac2!=NULL && $mac2!=0)
 						  {
-						
 						  $querymac="INSERT INTO mac(id_disp_mac,id_dispositivo,mac) VALUES (%d,%d,'%s')";
 				          $queryidmac=sprintf($querymac,$umac+1, $ultimo,$mac2);	
 						    //echo 'Query  INSERTA mac2'. $queryidmac;
 						  $result=pg_query($queryidmac) or die('ERROR AL INSERTAR EN MAC: ' . pg_last_error());
-						   
-					     }
+						 }
 				
 		   
 			   }//fin de MAC
@@ -1099,7 +1097,7 @@ if($size > 0){
 	 
 		fclose($fp);
 	    	
-	   /* echo 'novalido '.$novalido;		 
+	    echo 'novalido '.$novalido;		 
 		echo '$errorinserta'.$errorinserta;			 
 	    echo 'errorimp'.$errorimp;
 	    echo 'errorbien'.$errorbien;
@@ -1108,7 +1106,7 @@ if($size > 0){
 		echo 'importa'.$importa;
 		echo 'nunca'.$nunca;
 		echo 'preimporta',$preimpor;
-		$cuentaTotal=$cuenta-1;*/
+		$cuentaTotal=$cuenta-1;
 	       //falta revisar errores de lab
 	 
          if ($preimpor==0 && $importa!=0){	?>

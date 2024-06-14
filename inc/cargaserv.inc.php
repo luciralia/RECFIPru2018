@@ -202,15 +202,12 @@ WHERE " .$tiposerv . $tipomant ;
 
 ?>
 <?php //if (($_SESSION['permisos'][2]%3)==0){ ?><div id="botonblu" > 
-	
 	<a href="<?php echo $action1 . '&accion=nuevob';?>"><?php echo $texto_bot;?></a></div><?php }?>
-	
-	
 </div>	
 <?php //} else 
 	if  ($_SESSION['tipo_usuario']!=10)  { $logger->putLog(23,2);?>
-
-<div style="text-align: right"><?php //if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php echo $action1 . '&accion=nuevob';?>">Nueva solicitud</a></div><?php }?></div>	
+<!--
+<div style="text-align: right"><?php //if (($_SESSION['permisos'][2]%3)==0){ ?> <div id="botonblu" > <a href="<?php  // echo $action1 . '&accion=nuevob';?>">Nueva solicitud</a></div><?php }?></div>	-->
 <?php //}?>
 
 <div class="block" id="necesidades_content">    
@@ -267,6 +264,11 @@ $inventario= pg_num_rows($datos);
 if ($inventario!=0 ){ 
 	
 if($_GET['mod']=='servibf' || $_GET['mod']=='servibp'){ 
+	if (!isset($_POST[$checkbox])){
+	   ?>
+        <div id="resaltado">Debe seleccionar un dispositivo
+para generar la bitácora</div> 
+<?php } 
 $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc.php';
 	
 ?>
@@ -331,7 +333,7 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
        <?php $action="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div'] ."&mod=". $_GET['mod'] .'&orden='. $_REQUEST['orden'];?>
 <form action="<?php echo $action; ?>" method="post" name="req_mat_<?php echo $form=$serv_mant['id_lab'] ."_".$serv_mant['id_req'];?>">
 
-<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;} else { $colspan=7;}                    ?> 
+<?php if ($_REQUEST['mod']=='serv' ){ $colspan=6;} else { $colspan=7;}?> 
   <tr >
    <?php   if ( $_SESSION['tipo_usuario']!=10) { ?>
     <td style="text-align: right" colspan="<?php echo $colspan; ?>">
@@ -359,10 +361,8 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
   <td style="text-align: right">
 	
 	
-<?php	if ($_REQUEST['mod']=='servibf' ){ $destino="../inc/excelbf.inc.php";} else if ($_REQUEST['mod']=='servibp'){ $destino="../inc/excelbp.inc.php";
-																												}
-?>
-	
+<?php if ($_REQUEST['mod']=='servibf' ){ $destino="../inc/excelbf.inc.php";} else if ($_REQUEST['mod']=='servibp'){ $destino="../inc/excelbp.inc.php";}?>
+																												
 	<form action="<?php echo $destino; ?>" method="post">
   
 			  <?php
@@ -390,12 +390,9 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
 	     }
 		
     }else { ?>
-             
             <!--<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- 
-             <tr> <td align="center"> <h3>No existen necesidades* registradas.</h3> </td></tr>-->
-	  
-		<?php }
+            <tr> <td align="center"> <h3>No existen necesidades* registradas.</h3> </td></tr>-->
+	  <?php }
    ?>
 
 

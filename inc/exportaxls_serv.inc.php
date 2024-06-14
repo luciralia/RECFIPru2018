@@ -69,7 +69,7 @@ header($texto);
 for($i=0;$i<count($renglon_xls);$i++){
 ?>
   <tr>
-    <td><?php echo $renglon_xls[$i]['clave']; ?></td>
+    <td style='mso-number-format:"\@"'><?php echo $renglon_xls[$i]['clave']; ?></td>
     <td><?php echo $renglon_xls[$i]['bn_desc']; ?></td>
     <td><?php echo $renglon_xls[$i]['tipo']; ?></td>
     <td><?php echo $renglon_xls[$i]['falla']; ?></td>

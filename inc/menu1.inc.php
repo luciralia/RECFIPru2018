@@ -30,15 +30,15 @@
              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }elseif (($_GET['lab']=='' || $_SESSION['id_div']=='' ) ) { ?>
               <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php // echo $_SESSION['id_div'];?>" class="actual">Inicio</a></li>-->
-              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&div=<?php  echo $_SESSION['id_div']?>" class="actual">Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+              <li><a href="../view/inicio.html.php?mod=<?php echo $_GET['mod']?>&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">*Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
           <?php      
  	}elseif ($_GET['lab']!=''|| $_GET['div']!=''){   ?>
        	      <!--<li><a href="../view/inicio.html.php?mod=ced&div=<?php  //echo $_SESSION['id_div'];?>" class="actual" >Inicio</a></li>-->
-             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>" class="actual" >Inicio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+             <li><a href="../view/inicio.html.php?mod=<?php  echo  $_GET['mod'];?>&div=<?php  echo $_SESSION['id_div'];?>">Inicio*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         <?php }	?>
         <?php  if ($_SESSION['tipo_usuario']!=10){   ?>
         <?php //$clase=($_GET['mod']=='ced')?'" class="actual"':$clase='"'; ?>
-          <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>"  >Cédula de Información</a></li>
+          <li><a href="../view/inicio.html.php?mod=ced&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Cédula de Información</a></li>
  	 <?php }	?>
 	<!-- Boton quejas -->
 	<!--<?php //$clase=($_GET['mod']=='que')?'" class="actual"':$clase='"'; ?>
@@ -136,37 +136,6 @@
     <?php 
 		 }
 	  }?>  
-	  
-	  
-	
-
-  
-        <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10){ ?>
-        <?php if($_SESSION['tipo_usuario']==9 || $_SESSION['tipo_usuario']==10 || $_SESSION['tipo_usuario']==2 || $_SESSION['tipo_usuario']==3 ){ ?>
-        <?php $clase=($_GET['mod']=='serv' || $_GET['mod']=='mat' || $_GET['mod']=='mobi' || $_GET['mod']=='infr')?'" class="actual"':$clase='"'; ?>
-       <li><a href="#" <?php  echo $clase; ?>>Mantenimiento</a>
-         <ul>
-             <li><a href="../view/inicio.html.php?mod=serv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Externo</a></li>
-             <?php if($_SESSION['tipo_usuario']==9){ ?>
-             <li><a href="../view/inicio.html.php?mod=mat&lab=<?php echo  $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Interno (Componentes)</a></li>
-             <?php } ?>
-		 </ul>
-	  </li> 
-	  
-          <?php }
-																			   }?>
-	  
-	  
-	  <?php if($_SESSION['tipo_usuario']==9 ){ ?>   	
-	<?php if ($_GET['mod']=='servibf'||$_GET['mod']=='servibp') { $clase='" class="actual"'; } else {$clase='"';}?> 
-   <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
-	<ul>
-          <li><a href="../view/inicio.html.php?mod=servibf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
-            <li><a href="../view/inicio.html.php?mod=servibp&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Bit&aacute;cora de mantenimiento preventivo interno</a></li>
-    	</ul>
-	</li>
-	<?php }?>
-	  
 <!-- MENU DE EQUIPOS DE ALTO RENDIMIENTO-->
   <?php  //if ($_SESSION['tipo_usuario']==9)	 {
     // $clase=($_GET['mod']=='invear' )?'" class="actual"':$clase='"'; ?>
@@ -191,17 +160,43 @@
 				
 		?> 
 	  
+	  <!-- Boton manteniemiento -->
     
+        <?php $clase=($_GET['mod']=='serv' || $_GET['mod']=='mat' || $_GET['mod']=='mobi' || $_GET['mod']=='infr')?'" class="actual"':$clase='"'; ?>
+        <li><a href="#" <?php echo $clase; ?>>Mantenimiento</a>
+         <ul>
+          <li><a href="../view/inicio.html.php?mod=serv&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Externo</a></li>
+          <li><a href="../view/inicio.html.php?mod=mat&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Interno (Material)</a></li>
+			</ul>	
+			
+			
+<!-- Boton Bitacora --> 	
+	<?php if ($_GET['mod']=='servibf'||$_GET['mod']=='servibp') { $clase='" class="actual"'; } else {$clase='"';}?> 
+    <li><a href="#" <?php echo $clase; ?>>Bit&aacute;coras</a>
+	
+    	<ul>
+            <!--<li><a href="../view/inicio.html.php?mod=bit&lab=<?php echo $_GET['lab'];?>">Bit&aacute;cora de uso</a></li>	-->
+            <li><a href="../view/inicio.html.php?mod=servibf&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Bit&aacute;cora de falla y mantenimiento correctivo interno</a></li>
+            <li><a href="../view/inicio.html.php?mod=servibp&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Bit&aacute;cora de mantenimiento preventivo interno</a></li>
+    	</ul>
+	</li>			
 	  
+	  
+<!-- Botón cotizaciones-->
+   <?php if($_SESSION['tipo_usuario']==9){ ?>
+	<?php $actual=($_GET['mod']=='cot')? ' class="actual"':'';?>
+    <li><a href="../view/inicio.html.php?mod=cot&lab=<?php echo $_GET['lab'];?>&div=<?php echo $_SESSION['id_div'];?>">Cotizaciones</a></li>
+<?php }?>
+    
 	
  <?php //if($_SESSION['tipo_usuario']!=8 && $_SESSION['tipo_usuario']!=10 ){ ?>
            <?php $actual=($_GET['mod']=='doc')? ' class="actual"':'';?>
-           <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Documentos</a></li>
+           <li><a href="../view/inicio.html.php?mod=doc&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Documentos</a></li>
            <?php // }?>
    
  <?php if($_SESSION['tipo_usuario']==9  || $_SESSION['tipo_usuario']==10 ) { ?>
            <?php $actual=($_GET['mod']=='cred')? ' class="actual"':'';?>
-  <li><a href="../view/inicio.html.php?mod=cred&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>" <?php echo $actual; ?>>Créditos</a></li>
+  <li><a href="../view/inicio.html.php?mod=cred&lab=<?php echo $_GET['lab'];?>&div=<?php  echo $_SESSION['id_div'];?>">Créditos</a></li>
   <?php } ?>
     <!-- <li><a href="../view/inicio.html.php?mod=cred" <?php // echo $actual; ?>>Créditos</a></li>-->
     

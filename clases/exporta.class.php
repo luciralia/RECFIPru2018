@@ -43,7 +43,7 @@ l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division,
 u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, 
 em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, 
 e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, 
-em.supervisor as supervisor, em.detecto as detecto
+em.supervisor as supervisor, em.detecto as detecto,inventario
 FROM eventos_mantenimiento em
 JOIN  bitacora b
 ON em.id_bitacora = b.id_bitacora 
@@ -75,7 +75,7 @@ l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division,
 u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, 
 em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, 
 e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, 
-em.supervisor as supervisor, em.detecto as detecto
+em.supervisor as supervisor, em.detecto as detecto,inventario
 FROM eventos_mantenimiento em
 JOIN  bitacora b
 ON em.id_bitacora = b.id_bitacora 
@@ -106,7 +106,7 @@ l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division,
 u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, 
 em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, 
 e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, 
-em.supervisor as supervisor, em.detecto as detecto
+em.supervisor as supervisor, em.detecto as detecto,inventario
 FROM eventos_mantenimiento em
 JOIN  bitacora b
 ON em.id_bitacora = b.id_bitacora 
@@ -137,7 +137,7 @@ l.nombre AS laboratorio, dp.nombre AS departamento, dv.nombre AS division,
 u.nombre AS RL_Nombre, u.a_paterno AS RL_apaterno, u.a_materno AS RL_amaterno, 
 em.id_cotizacion as id_cotizacion, em.ok as sitio, em.tipo_serv, 
 e.bn_id as bn_id, em.semestre as semestre, em.actividad as actividad, 
-em.supervisor as supervisor, em.detecto as detecto
+em.supervisor as supervisor, em.detecto as detecto,inventario
 FROM eventos_mantenimiento em
 JOIN  bitacora b
 ON em.id_bitacora = b.id_bitacora 
@@ -164,7 +164,7 @@ WHERE " .$tiposerv . $tipomant ;
 	else if ($mod=="eq"){
 
 				$query = "SELECT DISTINCT ne.id_nec, nomb_recurso,cant,ne.id_lab AS id_lab, cant, ne.descripcion, prioridad AS id_prio, cpn.descripcion AS plazo,                cpn.id AS id_plazo, l.nombre AS laboratorio, de.nombre AS departamento, dv.nombre AS division, cto_unitario AS costo,                 act_generales AS actividades, cjn.descripcion AS motivo, cjn.id AS num_just, impacto AS justificacion, id_cotizacion,cto_unitario, ref ,ruta_evidencia
-				FROM necesidades_equipo_otra ne,cat_recursos_equipo cre,nec_evid nev,evidencia e,laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn 
+				FROM necesidades_equipo_otra ne,cat_recursos_equipo cre,nec_evid nev,evidencia e,laboratorios l, divisiones dv, departamentos de, cat_plazo_nec cpn, cat_juztificacion_nec cjn,inventario 
 				WHERE ne.id_lab=l.id_lab 
 				AND cre.id_recurso=ne.id_recurso
 				AND nev.id_lab=ne.id_lab
@@ -181,7 +181,7 @@ WHERE " .$tiposerv . $tipomant ;
 	else if ($mod=="pryeb"){
 
 				$query = "SELECT DISTINCT l.id_lab, l.nombre as nom_area,p.id_proy,ne.id_lab AS id_lab, nombre_proy,objetivo_general,objetivo_especifico,descripcion_proy,
-                beneficio,fecha,ruta_evidencia_a,cantalum,cantprof,cantinvest
+                beneficio,fecha,ruta_evidencia_a,cantalum,cantprof,cantinvest,inventario
                 FROM proy p
                 LEFT JOIN proyecto_nec pn
                 ON p.id_proy=pn.id_proy
@@ -247,7 +247,7 @@ WHERE dv.id_div=*/
      }
 
    else if ($mod=="mat"){
-				$query = "SELECT DISTINCT rm.id_req AS id_req, rm.id_lab AS id_lab,cant, rm.descripcion AS descripcion, rm.unidad_medida AS                 medida, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, dp.nombre AS departamento, di.nombre AS                 division, cto_unitario AS costo, act_generales AS actividades, cjnm.descripcion AS motivo, cjnm.id AS num_just, impacto AS justificacion, rm.id_cotizacion AS id_cotizacion, rm.ref AS ref
+				$query = "SELECT DISTINCT rm.id_req AS id_req, rm.id_lab AS id_lab,cant, rm.descripcion AS descripcion, rm.unidad_medida AS                 medida, cpn.descripcion AS plazo, cpn.id AS id_plazo, l.nombre AS laboratorio, dp.nombre AS departamento, di.nombre AS                 division, cto_unitario AS costo, act_generales AS actividades, cjnm.descripcion AS motivo, cjnm.id AS num_just, impacto AS justificacion, rm.id_cotizacion AS id_cotizacion, rm.ref AS ref,inventario
 				FROM req_mat rm, laboratorios l, divisiones di, departamentos dp, cat_plazo_nec cpn, cat_just_mat cjnm 
 				WHERE rm.id_lab=l.id_lab 
 				AND l.id_dep=dp.id_dep 
@@ -267,7 +267,7 @@ WHERE dv.id_div=*/
 		 ctu.nombre_tecnologia as tecuno,
 		 ctd.nombre_tecnologia as tecdos,
 		 ctt.nombre_tecnologia as tectres,
-		 ctc.nombre_tecnologia as teccuatro,
+		 ctc.nombre_tecnologia as teccuatro,inventario,
          l.nombre as laboratorio, bi.*,*  FROM dispositivo e 
          LEFT JOIN cat_dispositivo cd
          ON e.dispositivo_clave=cd.dispositivo_clave
@@ -326,9 +326,7 @@ WHERE e.id_lab=" . $idlab;
 		
 	}
 	
-
-	
-	  echo "QUERY EN LA CLASE *******************************". $query;		
+	 // echo "QUERY EN LA CLASE *******************************". $query;		
 		$result = pg_query($query) or die('Hubo un error con la base de datos');
 		while ($datosr = pg_fetch_array($result, NULL, PGSQL_ASSOC))	{
 		//echo "</br>el valor de los datosdiv dentro del whileAHORA" . "    " . print_r($datosr) . "</br>";
