@@ -55,9 +55,29 @@ class Bitacora{
 								$j=1;
 								while ($datosc = pg_fetch_array($result, NULL, PGSQL_ASSOC))
 								{ 
-								$nombrechk="servicio".$j;
-							
-							        $salida.='<tr>
+								$nombrechk="servicio".$j;?>
+<script>
+function validarFormulario() {
+    var checkboxes = document.querySelectorAll('input[name^="servicio"]');
+    var isChecked = false;
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            isChecked = true;
+            break;
+        }
+    }
+    console.log('Hola');
+    if (!isChecked) {
+        alert("Seleccionar al menos un dispositivo para generar el reporte.");
+        return false; // Evita que el formulario se envíe
+    }
+    
+    return true; // Permite el envío del formulario
+}
+</script>
+	
+<?php                               $salida.='<tr>
 							        <td>'. $datosc['clave']. '</td>
 							        <td>' . $datosc['bn_desc'] .'</td>
 							        <td>' . $datosc['tipo'] .'</td>

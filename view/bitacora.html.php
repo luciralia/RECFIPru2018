@@ -21,7 +21,6 @@ $lab = new laboratorios();
     <td align="center"><?php echo $lab->getLaboratorio($_GET['lab']);?></td>
   </tr>
 
-
 <tr>
 <td><div class="centrado"> <?php if (!isset($_GET['lab']) || $_GET['lab']==""){} else {require('../inc/bitacora.inc.php');} ?></div></td>
 </tr>

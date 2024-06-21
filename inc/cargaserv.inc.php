@@ -188,6 +188,7 @@ ON l.id_responsable=u.id_usuario
 WHERE " .$tiposerv . $tipomant ;
 }
 //echo 'En cargaserv '.$query; 
+ 
 ?>
 
 <?php $action1="../view/inicio.html.php?lab=". $_GET['lab'] ."&div=". $_REQUEST['div']. "&mod=". $_GET['mod'] .'&orden='. $_GET['orden'];?>
@@ -266,15 +267,17 @@ if ($inventario!=0 ){
 if($_GET['mod']=='servibf' || $_GET['mod']=='servibp'){ 
 	if (!isset($_POST[$checkbox])){
 	   ?>
+<!--<br>
         <div id="resaltado">Debe seleccionar un dispositivo
-para generar la bitácora</div> 
+para generar la bitácora</div> -->
+
 <?php } 
 $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc.php';
 	
 ?>
    <br />
   <form action="<?php echo $action; ?>" method="post" name="servbit" >
-	<input name="enviar" type="submit" value="Generar bitácora" />
+	<input name="enviar" type="submit" value="Generar bitácora" onclick="return validarFormulario();">
 	<?php
 	$obj_bit->tblServ($_GET['lab'],$_GET['mod'],$_REQUEST['div'],$_SESSION['tipo_usuario'] );
 	?>
@@ -283,7 +286,6 @@ $action=($_GET['mod']=='servibf')?'../inc/excelbf2.inc.php':'../inc/excelbp2.inc
 <?php  }
  } 
  ?>
-
 
 <?php
 
@@ -343,7 +345,7 @@ if($_GET['mod']=='serv' || $_GET['mod']=='servi'){  //If para que haga la tabla 
   <td style="text-align: right">
   <?php //if (($_SESSION['permisos'][2]%3)==0  ){ ?>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	<?php  if ($_REQUEST['mod']!='servibf' && $_REQUEST['mod']!='servibp' && $_SESSION['tipo_usuario']!=10){ ?>
+	<?php  if ($_REQUEST['mod']!='servibf1' && $_REQUEST['mod']!='servibp1' && $_SESSION['tipo_usuario']!=10){ ?>
   		<input name="accion" type="submit" value="editar" />
   	<?php }?>
   <?php //} ?>

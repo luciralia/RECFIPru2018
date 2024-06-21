@@ -474,8 +474,17 @@ if ($_GET['mod']=='invg' ){
  if (($inventario==0 ) && $bandera1==0 ) { ?>
 <br>
 <br>
-<legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
-
+ <legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
+<?php $estado == 'visible'; 
+?>
+       <div id="bgalerta"></div>
+	   <br>
+	   <br>
+	   <br>
+	   <div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>No existen dispositivos registrados</p><div id="boton1"><a href="../view/inicio.html.php?mod=invg&lab=<?php echo $_GET['lab'];?>&div=<?php $_GET['div'];?>">Cerrar</a>
+        </div>
+        </div>
+	  
 <?php
 }
 
@@ -788,19 +797,27 @@ if ($inventario!=0) { ?>
      <?php } elseif ($_GET['mod']=='invc' ) {// if(inventario ==0 )?> 
                 <br/>
                 <br/>
+	
+	<?php if ($estado == 'visible') {
+?>
+       <div id="bgalerta"></div><div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>El nombre de usuario o contraseña son incorrectos</p><div id="boton1"><a href="./?usr=<?php
+    echo $rusuario;
+?>">Cerrar</a>
+        </div>
+        </div>
+	<?php      
+            }//fin if equipoc	para boton de editar	
+	?>
                 <tr>  
                   <td align="center">
                   <h3> No existen dispositivos registrados. </h3>
                   </td>
                   </tr>
  
-             <?php } 
-	       ?>
-	           
-     <tr>  
+             <?php }   ?>
+	 <tr>  
      
      <td align="center"> 
- 
 
 <br>
 <br>
@@ -1037,7 +1054,8 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
   if (($inventario==0 ) && $bandera1==0 ) { ?>
 <br>
 <br>
-<legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
+	
+		 <legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
 
 <?php
 }
@@ -1400,6 +1418,7 @@ echo $query;*/
  if (($inventario==0 ) && $bandera1==0 ) { ?>
 <br>
 <br>
+	
 <legend align="center"><h3>No existen dispositivos registrados.</h3></legend>
 
 <?php

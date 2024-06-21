@@ -7,7 +7,7 @@ require_once('../inc/encabezado.inc.php');
 
 ?>
   <tr>
-  <td><?php require_once('../inc/menu1.inc.php'); ?>      &nbsp;</td>
+  <td><?php require_once('../inc/menu1.inc.php'); ?> &nbsp;</td>
   </tr>
    <tr>
     <td><?php 
