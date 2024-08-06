@@ -85,14 +85,14 @@ function cmbJustMat($idjust)
 	
 	function cmbJustEq($idjust)
 					{
-
+                     echo $idjust;
 				        
 				        $query="Select * from cat_juztificacion_nec order by id";
 				        //echo $query ."</br>". $id_cot . "</br>" . $lab;
 				
 					$result = @pg_query($query) or die('Hubo un error con la base de datos');
 					
-					$salida='<select name="id_just" id="id_just">'; 
+					$salida='<select name="id_just" id="id_just" onchange="cargajust(this.value);">'; 
 					
 					while ($datosc = pg_fetch_array($result))
 						{
@@ -107,7 +107,7 @@ function cmbJustMat($idjust)
 					             }
 					
 						}
-				//	return $salida;
+				   //return $salida;
 					$salida.="</select>";
 					echo $salida;
 					} 

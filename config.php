@@ -7,14 +7,14 @@
  * 
  */
  define('TITULO','RECFI v');
- define('VERSION', '0.9.0.9');
-// define('db_server','132.248.52.241');
+ define('VERSION', '0.9.0.4.8');
+//define('db_server','132.248.52.241');
  define('db_server','localhost');
  define('db_name', 'recfi_pru2018');
-
  define('db_user', 'sieldi_user');
  define('db_password','s13ld1');
  define('db_type','postgres');
  define('FECHA_INVENT','20 de Agosto de 2018');
  date_default_timezone_set("America/Mexico_City");
+ 
 ?>

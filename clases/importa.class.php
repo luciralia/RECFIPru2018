@@ -1,459 +1,917 @@
 <?php
+
+require_once('../inc/sesion.inc.php');
 require_once('../conexion.php');
-//session_start(); 
+
+//require_once('../inc/sesion.inc.php');
 
 class importa{
-	function importaError(){
 	
-	 $queryerror="SELECT * FROM errorinserta WHERE 
-	                columna1=0 OR columna2=0 OR columna3=0 OR columna4=0 OR columna5=0 
-					OR columna6=1 OR columna7=1 OR columna8=1 OR columna9=1 OR columna10=1
-					OR columna11=1  OR columna13=1 OR columna14=1 OR columna15=1
-					OR columna16=1 OR columna17=1 OR columna18=1 OR columna19=1 
-					OR columna21=1 OR columna22=1 OR columna23=1 OR columna24=1 OR columna25=1
-				    OR columna27=1 OR columna29=1 OR columna30=1
-					OR columna31=1 OR columna32=1 OR columna33=1 OR columna34=1 OR columna35=1
-					OR columna36=1 OR columna37=1 OR columna38=1 OR columna39=1 OR columna40=1
-					OR columna41=1 OR columna42=1 OR columna43=1 OR columna45=1
-					OR columna46=1 OR columna47=1 OR columna48=1 OR columna49=1 OR columna50=1 OR columna51=1";
-			//echo $queryerror;			
-					
-        $result=pg_query($con, $queryerror);
+function valida_dispositivo($val){
+	/* if ( ! is_int ( $val) )
+            $val=0;*/
+	
+	$querybet="SELECT * FROM cat_dispositivo
+	           WHERE dispositivo_clave=".$val;
+	
+    $result = pg_query($querybet) or die('Hubo un error con la base de datos');
+	$valido= pg_num_rows($result);
+    return $valido;
+}
+
+function valida_usu_final($val){
+   if ( ! is_int ( $val) )
+            $val=0;
+
+
+
+	$querybet="SELECT *  FROM cat_usuario_final
+	           WHERE usuario_final_clave=".$val;
+	//echo $querybet;
+    $result = pg_query($querybet) or die('Hubo un error con la base de datos');
+	$valido= pg_num_rows($result);
+    return $valido;
+
+}
+
+function valida_familia($val){
+    /* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_familia
+	           WHERE id_familia=".$val;
+    $result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+}
+function valida_ram($val){
+ /* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_tipo_ram
+	           WHERE id_tipo_ram=".$val;
+    $result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+}
+
+function valida_tec($val){
+    /* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_tecnologia
+	            WHERE id_tecnologia=".$val;
+	
+    $result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+}
+function valida_usu_perfil($val){
+	/* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_usuario_perfil
+	            WHERE id_usuario_perfil=".$val;
+	$result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+	
+}
+function valida_usu_sector($val){
+	/* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_usuario_sector
+	            WHERE id_usuario_sector=".$val;
+	$result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+	
+}
+function valida_tec_com($val){
+	/* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_tec_com
+	            WHERE id_tec_com=".$val;
+	$result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+	
+}
+function valida_sistoper($val){
+	/* if ( ! is_int ( $val) )
+            $val=0;*/
+	$querybet="SELECT * FROM cat_sistema_operativo
+	            WHERE id_so=".$val;
+	$result = pg_query($querybet) or die('Error en tabla  ...');
+	$valido= pg_num_rows($result);
+    return $valido;
+	
+}
+
+
+function respaldo ($datos,$estado){ 
+   
+    $queryd="SELECT max(id_dispositivo) FROM dispositivobackup";
+                    $registrod= pg_query($queryd) or die('ERROR ...'); ;
+                    $ultimo= pg_fetch_array($registrod);
+	
+		      if ($ultimo[0]==0)
+				    $ultimo=1;//inicializando la tabla dispositivo
+			  else 
+			        $ultimo=$ultimo[0]+1;
+   
+ $queryd="INSERT INTO dispositivobackup (id_dispositivo,id_lab,
+              dispositivo_clave,usuario_final_clave,familia_clave,
+              tipo_ram_clave,tecnologia_clave,nombre_resguardo,resguardo_no_empleado,
+              usuario_nombre,usuario_ubicacion,usuario_perfil, 
+              usuario_sector,serie,marca_p, 
+              no_factura,anos_garantia,inventario, 
+              modelo_p,proveedor_p,fecha_factura,
+              familia_especificar,modelo_procesador,cantidad_procesador,
+              nucleos_totales,nucleos_gpu, memoria_ram,
+              ram_especificar, num_elementos_almac,
+              total_almac,num_arreglos,esquema_uno,
+              esquema_dos,esquema_tres, esquema_cuatro, 
+              tec_uno,tec_dos,tec_tres,tec_cuatro,
+              subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro,
+              arreglo_total,tec_com,tec_com_otro, 
+              sist_oper,version_sist_oper,
+              licencia,licencia_ini,licencia_fin,fecha,
+			  id_edif,importa)
+
+		      VALUES (%d,'%s',
+		           '%s','%s','%s',
+				   '%s','%s','%s','%s',
+				   '%s','%s','%s', 
+				   '%s','%s','%s', 
+				   '%s','%s','%s', 
+				   '%s','%s','%s',
+				   '%s','%s','%s',	
+				   '%s','%s','%s', 
+				   '%s','%s',   
+				   '%s','%s','%s',  
+				   '%s','%s','%s',  
+				   '%s','%s','%s','%s', 
+				   '%s','%s','%s','%s', 
+				   '%s','%s','%s',  
+				   '%s','%s',      
+				   '%s','%s','%s','%s', 
+				   '%s',%d )";
+				   
+                 $queryid=sprintf($queryd,$ultimo,$datos[50], 
+                 $datos[0],$datos[1],$datos[2], 
+				 $datos[3],$datos[4],$datos[5],$datos[6] ,
+                 $datos[7],$datos[8],$datos[9], 
+				 $datos[10],$datos[11],$datos[12], 
+				 $datos[13],$datos[14],$datos[15], 
+                 $datos[16],$datos[17],$datos[18], 
+			     $datos[19],$datos[20],$datos[21], 
+			     $datos[22],$datos[23],$datos[24], 
+                 $datos[25],$datos[26],
+			     $datos[27],$datos[28],$datos[29],
+			     $datos[30],$datos[31],$datos[32], 
+			     $datos[33],$datos[34],$datos[35],$datos[36], 
+				 $datos[37],$datos[38],$datos[39],$datos[40], 
+                 $datos[41],$datos[42],$datos[43], 
+			     $datos[44],$datos[45], 
+			     $datos[46],$datos[47],$datos[48],date('Y-m-d H:i:s'), 
+				 $datos[49],$estado);
+               
+                $result=pg_query($queryid) or die('ERROR AL INSERTAR EN DISPOSITIVOBackup: ' . pg_last_error());
+
+
+}
+
+public function marcaError($datosdec,$noo){ 
+require_once('../clases/inventario.class.php');
+require_once('../clases/importa.class.php');
+
+
+$verifica = new inventario(); 
+$valida=new importa();
+
+      //muestra errores y verifica valor en catálogo
+	     
+		  //$marca->marcaError($datos);
+		  //catálogos
+		  //echo 'reg';
+		// echo $row_datos[0];
 		
 		
-		while ($disperror = pg_fetch_array($result, NULL,PGSQL_ASSOC)) 
-		{ 
-		//print_r($disperror);
-		    if ($disperror['columna1']==0) { ?>
-		       <tr><td> <?php echo 'Faltó ingresar columna A clave_dispositivo de la tupla: '.$disperror['tupla']; ?></td></tr>
-     <?php  }else if ($disperror['columna2']==0){ ?>
-		       <tr><td> <?php  echo 'Faltó ingresar columna B usuario_final_clave de la tupla: '.$disperror['tupla'];?></td></tr>	
-	 <?php  }else if ($disperror['columna3']==0) { ?>
-		       <tr><td> <?php echo 'Faltó ingresar columna C familia_clave de la tupla: '.$disperror['tupla'];	?></td></tr>		
-	 <?php  }else if ($disperror['columna4']==0) { ?>
-		       <tr><td> <?php echo 'Faltó ingresar columna D tipo_ram_clave de la tupla: '.$disperror['tupla']; ?></td></tr>		
-	 <?php  }else if ($disperror['columna5']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna E tecnologia_clave de la tupla: '.$disperror['tupla']; ?></td></tr>				
-	 <?php  }else if ($disperror['columna6']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna F resguardo_nombre de la tupla: '.$disperror['tupla']; ?></td></tr>				
-	 <?php  }else if ($disperror['columna7']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna G resguardo_no_empleado de la tupla: '.$disperror['tupla']; ?></td></tr>		     <?php  }else if ($disperror['columna8']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna H usuario_nombre de la tupla: '.$disperror['tupla']; ?></td></tr>	
-     <?php  }else if ($disperror['columna9']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna I usuario_ubicación de la tupla: '.$disperror['tupla']; ?></td></tr>	      <?php  }else if ($disperror['columna10']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna J usuario_perfil de la tupla: '.$disperror['tupla']; ?></td></tr>	      <?php  }else if ($disperror['columna11']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna K usuario_sector de la tupla: '.$disperror['tupla']; ?></td></tr>	      <?php  }else if ($disperror['columna13']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna M marca_p de la tupla: '.$disperror['tupla']; ?></td></tr>	  	    	      <?php  }else if ($disperror['columna14']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna N no_factura de la tupla: '.$disperror['tupla']; ?></td></tr>	
-      <?php  }else if ($disperror['columna15']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna O años garantía de la tupla: '.$disperror['tupla']; ?></td></tr> 
-      <?php  }else if ($disperror['columna16']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna P inventario de la tupla: '.$disperror['tupla']; ?></td></tr>      
-	  <?php  }else if ($disperror['columna17']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna Q modelo_p de la tupla: '.$disperror['tupla']; ?></td></tr> 
-      <?php  }else if ($disperror['columna18']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna R proveedor_p de la tupla: '.$disperror['tupla']; ?></td></tr>      
-	  <?php  }else if ($disperror['columna19']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna S fecha_factura de la tupla: '.$disperror['tupla']; ?></td></tr> 
-      <?php  }else if ($disperror['columna21']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna U modelo_procesador de la tupla: '.$disperror['tupla']; ?></td></tr>      <?php  }else if ($disperror['columna22']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna V cantidad_procesador de la tupla: '.$disperror['tupla']; ?></td></tr>      <?php  }else if ($disperror['columna23']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna W nucleos_totales de la tupla: '.$disperror['tupla']; ?></td></tr> 
-      <?php  }else if ($disperror['columna24']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna X nucleos_GPU de la tupla: '.$disperror['tupla']; ?></td></tr>      
-	  <?php  }else if ($disperror['columna25']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna Y memoria_RAM de la tupla: '.$disperror['tupla']; ?></td></tr>
-      <?php  }else if ($disperror['columna26']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AA num_elementos_almac de la tupla: '.$disperror['tupla']; ?></td></tr>      <?php  }else if ($disperror['columna28']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AC num_arreglos de la tupla: '.$disperror['tupla']; ?></td></tr>      <?php  }else if ($disperror['columna29']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AD esquema_uno de la tupla: '.$disperror['tupla']; ?></td></tr>   
-      <?php  }else if ($disperror['columna30']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AE esquema_dos de la tupla: '.$disperror['tupla']; ?></td></tr>            <?php  }else if ($disperror['columna31']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AF esquema_tres de la tupla: '.$disperror['tupla']; ?></td></tr>
-      <?php  }else if ($disperror['columna32']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AG esquema_cuatro de la tupla: '.$disperror['tupla']; ?></td></tr>            <?php  }else if ($disperror['columna33']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AH tec_uno de la tupla: '.$disperror['tupla']; ?></td></tr>
-      <?php  }else if ($disperror['columna34']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AI tec_dos de la tupla: '.$disperror['tupla']; ?></td></tr>  
-      <?php  }else if ($disperror['columna35']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AJ tec_tres de la tupla: '.$disperror['tupla']; ?></td></tr>   
-      <?php  }else if ($disperror['columna36']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AK tec_cuatro de la tupla: '.$disperror['tupla']; ?></td></tr>              <?php  }else if ($disperror['columna37']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AL subtotal_uno de la tupla: '.$disperror['tupla']; ?></td></tr>             <?php  }else if ($disperror['columna38']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AM subtotal_dos de la tupla: '.$disperror['tupla']; ?></td></tr>  
-      <?php  }else if ($disperror['columna39']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AN subtotal_tres de la tupla: '.$disperror['tupla']; ?></td></tr>             <?php  }else if ($disperror['columna40']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AO subtotal_cuatro de la tupla: '.$disperror['tupla']; ?></td></tr>
-      <?php  }else if ($disperror['columna41']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AP arreglo_total de la tupla: '.$disperror['tupla']; ?></td></tr>             <?php  }else if ($disperror['columna42']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AQ tec_com de la tupla: '.$disperror['tupla']; ?></td></tr>  
-      <?php  }else if ($disperror['columna44']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AS sist_oper de la tupla: '.$disperror['tupla']; ?></td></tr>      
-	  <?php  }else if ($disperror['columna45']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AT version_sist_oper de la tupla: '.$disperror['tupla']; ?></td></tr>
-      <?php  }else if ($disperror['columna46']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AU licencia de la tupla: '.$disperror['tupla']; ?></td></tr>      
-	  <?php  }else if ($disperror['columna47']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AV licencia_ini de la tupla: '.$disperror['tupla']; ?></td></tr>            <?php  }else if ($disperror['columna48']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AW licencia_fin de la tupla: '.$disperror['tupla']; ?></td></tr>      <?php  }else if ($disperror['columna49']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AX id_edificio de la tupla: '.$disperror['tupla']; ?></td></tr>      <?php  }else if ($disperror['columna50']==0) {?>
-		      <tr><td> <?php echo 'Faltó ingresar columna AY id_lab de la tupla: '.$disperror['tupla']; ?></td></tr>          
-	  <?php 
+		 
+	 $columna1=1; $columna2=1; $columna3=1;$columna4=1; $columna5=1;
+	 $columna10=1; $columna11=1; $columna43=1; $columna45=1; $columna46=1;
+		 
+     $regexFecha = '/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/';
+    echo'Valores de entrada marca error';
+     print_r($datosdec);
+		 
+          $inventario=$datosdec[15];
+		  $dispclave=$datosdec[0];
+		  
+        $verifica->verificaTipoEquipo($datosdec[0]);
+        if ($datosdec[0]==NULL) { $columna1=$columna1*2;
+		        $dispclave=0;
+				
+				?>
+	           <legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>
+     <?php } else {
+	    if(!preg_match("/^[0-9]+$/",$datosdec[0])) { $columna1=$columna1*4;
+		$dispclave=0;?>
+	<legend align="left"><?php echo 'La columna A,  <strong> clave_dispositivo </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend><?php  } else {
+	//detectar si es identificador valido
+	
+	$valida->valida_dispositivo($datosdec[0]);
+	if( $valida>0 && $verifica==1)
+	   $columna1=$columna1*3;
+	  else {
+	   $columna1=$columna1*6; ?>
+       <legend align="left"><?php  echo 'La columna A,  <strong>  clave_dispositivo </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+       
+<?php	  }
+	 }
+	 }
+      
+	 if ($datosdec[1]==NULL) { $columna2=$columna2*2;?>
+		      <legend align="left"><?php echo 'La columna B, <strong> usuario_final_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria y numérica.';?></legend>     	
+	 <?php  }else{ 
+	    if(!preg_match("/^[0-9]+$/",$datosdec[1])){ $columna2=$columna2*4;
+		// echo 'es caracter';?>
+	<legend align="left"><?php  echo 'La columna B,  <strong>  usuario_final_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend>
+      <?php } 
+		 //detectar si es identificador valido
+	
+	 $valida->valida_usu_final($datosdec[1]);
+	if( $valida>0 && $verifica==1)
+	   $columna2=$columna2*3;
+	  else {
+	    $columna2=$columna2*=6; ?>
+		<legend align="left"><?php  echo 'La columna B,  <strong> usuario_final_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+	 }
+   if ($datosdec[2]==NULL) {$columna3=$columna3*2;
+ 
+         ?> 
+		     <legend align="left"><?php echo 'La columna C, <strong> familia_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria y numérica.';	?></legend>
+	 <?php } else{
+        if(!preg_match("/^[0-9]+$/",$datosdec[2])) { $columna3=$columna3*4;?>
+	<legend align="left"><?php echo 'La columna C,  <strong> familia_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend>
+      <?php }else{
+		 //detectar si es identificador valido
+	
+	$valida->valida_familia($datosdec[2]);
+	if( $valida>0 && $verifica==1)
+	    $columna3=$columna3*3;
+	 else {
+	    $columna3=$columna3*6; 
+		?>
+		<legend align="left"><?php  echo 'La columna C,  <strong> familia_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+	  }
+	 }
+
+	if ($datosdec[3]==NULL) { $columna4=$columna4*2;?>
+		<legend align="left"><?php echo 'La columna D, <strong> tipo_ram_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>
+	 <?php } else {?>
+     <?php if (!preg_match("/^[0-9]+$/",$datosdec[3]))  { $columna4=$columna4*4;?>
+		     <legend align="left"><?php echo 'La columna D, <strong> tipo_ram_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend>	
+	 <?php } else {
+		 //detectar si es identificador valido
+	
+	 $valida->valida_ram($datosdec[3]);
+	if( $valida>0 && $verifica==1)
+	    $columna4=$columna4*3;
+	else { $columna3=$columna3*6;?>
+	   <legend align="left"><?php  echo 'La columna D,  <strong> tipo_ram_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+	 }
+	 }
+	
+   if ($datosdec[4]==NULL) { 
+	            $columna5=$columna5*2;?>
+			 <legend align="left"><?php echo 'La columna E, <strong> tecnologia_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>
+	 <?php } else { ?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[4])) { 
+	           $columna5=$columna5*4;?>
+		      <legend align="left"><?php echo 'La columna E, <strong> tecnologia_clave </strong>del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend>			
+	 <?php } else {
+		 //detectar si es identificador valido
+	
+	 $valida->valida_tec($datosdec[4]);
+	if( $valida>0 && $verifica==1)
+	    $columna5=$columna5*3;
+	  else {
+	    $columna5=$columna5*6; ?>
+		<legend align="left"><?php  echo 'La columna E,  <strong> tecnologia_clave </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+	 }
+	 }
+    
+     if ($datosdec[5]==NULL) {
+		       $columna6=0;?>
+		       <legend align="left"><?php echo 'La columna F, <strong> resguardo_nombre </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria.'; ?></legend>	
+      <?php   } elseif(is_int($datosdec[5])) $columna6=1; else $columna6=2;   
+	      			
+	if ($datosdec[6]==NULL) { $columna7=0;?>
+		      <legend align="left"><?php echo 'La columna G, <strong> resguardo_no_empleado </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria.'; ?></legend>	     
+	  <?php } else{
+	 if(!preg_match("/^[0-9]+$/",$datosdec[6])) {$columna7=1; ?>
+				  <legend align="left"><?php echo 'La columna G, <strong> resguardo_no_empleado  </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser númerica'; ?></legend>
+				<?php   } else $columna7=2; 
+	 }
+      if ($datosdec[7]==NULL) { $columna8=0;?>
+		      <legend align="left"><?php echo 'La columna H, <strong> usuario_nombre </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria.'; ?></legend>
+     <?php } else {
+		 if(!preg_match("/^[0-9]+$/",$datosdec[7])) {$columna8=2; ?>
+				  <!--<legend align="left"><?php // echo 'La columna H, <strong> usuario_nombre  </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser cadena de caracteres.'; ?></legend>-->
+				<?php   } else $columna8=1; 
+	 }
+	  if ($datosdec[8]==NULL) {$columna9=0;?>
+		     <legend align="left"><?php echo 'La columna I, <strong> usuario_ubicación </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria.'; ?></legend>
+            <?php } else {
+			if(is_int($datosdec[8])) $columna9=1; else $columna9=2; 
 			}
-		
-	   
-		}//fin de while $disperro
+	 if($datosdec[9]==NULL) { $columna10=$columna10*2;?>
+		     <legend align="left"><?php echo 'La columna J, <strong> usuario_perfil </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria.'; ?></legend>      
+			  <?php } else {?>
+             <?php  if(!preg_match("/^[0-9]+$/",$datosdec[9])) { $columna10=$columna10*4;?>
+		      <legend align="left"><?php echo 'La columna J, <strong> usuario_perfil </strong>del renglón correpondiente al no.inventario  '.$datosdec[15] .' debe ser numérica, revisar catálogo correspondiente.'; ?></legend>   <?php } else{//detectar si es identificador valido
+	 $valida->valida_usu_perfil($datosdec[9]);	  
+	 if($valida>0 )
+	   $columna10=$columna10*3;
+	  else {
+	    $columna10=$columna10*6; ?>
+		<legend align="left"><?php  echo 'La columna J,  <strong> usuario_perfil </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+     }
+	 }
+		if ($datosdec[10]==NULL) { $columna11=$columna11*2;?>
+		       <legend align="left"><?php echo 'La columna K, <strong> usuario_sector </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' es obligatoria y numérica.'; ?></legend>	      
+			  <?php }else{?>
+               <?php if (!preg_match("/^[0-9]+$/",$datosdec[10])) { $columna11=$columna11*4; ?>
+		     <legend align="left"><?php echo 'La columna K, <strong> usuario_sector </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica, revisar catálogo correspondiente.'; ?></legend>   <?php } else{
+			  if($valida->valida_usu_sector($datosdec[10])>0)
+	   $columna11=$columna11*3;
+	  else {
+	    $columna11=$columna11*6; ?>
+		<legend align="left"><?php  echo 'La columna K,  <strong> usuario_sector </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+  }
+}?> 
 
-}//fin funcion
-/*
-           function buscaBien($inventario,$clave_disp,$iddiv){
-	
-	                //Traer el último valor en dispositivo
-			       $queryd="SELECT max(id_dispositivo) FROM dispositivo";
-                   $registrod= @pg_query($con,$queryd);
-                   $ultimo=@pg_fetch_array($registrod);
-	
-		           if ($ultimo[0]==0)
-				       $ultimo=1;//inicializando la tabla dispositivouno
-			       else 
-			           $ultimo=$ultimo[0]+1;
-					
-		           //Buscar en bienes 
-			 
-			       $queryb="SELECT bn_id
-							  FROM bienes
-			                  WHERE bn_clave=" .$inventario .
-							  " OR bn_anterior=" .$inventario;
-			        //echo $queryb;
-			 				  
-			       $registrob= @pg_query($con,$queryb);
-                   $bienes= @pg_fetch_array($registrob);
-			  
-			       if(@pg_num_rows($registrob)==0){
-				  
-			            $queryre="SELECT max(id_error) FROM registroerror";
-                        $registrore= @pg_query($con,$queryre);
-                        $ultimoerror= @pg_fetch_array($registrore);
-	
-		                if ($ultimoerror[0]==0)
-				             $ultimoerror=1;//inicializando la tabla dispositivouno
-			            else 
-			                 $ultimoerror=$ultimoerror[0]+1;	  
-             
-			            $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
-			                        VALUES (%d,'%s',%d,'%s',%d,'%s')";
-						   
-			            $queryerror=sprintf($querybien,$ultimoerror,$inventario,$clave_disp,date('Y-m-d H:i:s'),                        $iddiv,'b' );			 
-			            $registroerror= @pg_query($con,$queryerror);
-			   
-			            if ($registroerror) 
-                               $conterrorbn=$conterrorbn+1;
-			            else
-				               $contexitobn=$contexitobn+1;
+  <?php if ($datosdec[11]==NULL) { $columna12=0;?>
+		     <legend align="left"><?php //echo 'La columna L, <strong> no servicio </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+			<?php }  ?>
+            
+		   <?php if ($datosdec[12]==NULL) { $columna13=0;?>
+		     <legend align="left"><?php echo 'La columna M, <strong> marca_p </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+			<?php } else{
+			      if(preg_match("/^[0-9]+$/",$datosdec[12])) {$columna13=2; ?>
+				  <legend align="left"><?php echo 'La columna M, <strong> marca_p </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es cadena de caracteres.'; ?></legend>
+				<?php   } else $columna13=1; 
+			}
+			if ($datosdec[13]==NULL) { $columna14=0; ?>
+		      <legend align="left"><?php // echo 'La columna N, <strong> no_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php }  elseif(is_int($datosdec[13])) $columna14=1; else $columna14=2; 
+	  
+	  if ($datosdec[14]==NULL) { $columna15=0;?>
+		      <legend align="left"><?php echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php }else {
+		  if(!preg_match("/^[0-9]+$/",$datosdec[14])){$columna15=1; ?>
+		  <legend align="left"><?php // echo 'La columna O, <strong> años garantía </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser númerica.'; ?></legend>
+		<?php   }
+		  else 
+		  $columna15=2; 
+	 
+	  }
+	  if ($datosdec[15]==NULL) { $columna16=0;?>
+		     <legend align="left"><?php echo 'La columna P, <strong> inventario </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+	  <?php } else{
+	  if(is_int($datosdec[15])) $columna16=1; else $columna16=2; 
+	  }
+	  if ($datosdec[16]==NULL) { $columna17=0;?>
+		     <legend align="left"><?php echo 'La columna Q, <strong> modelo_p </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php } else{
+	  if(is_int($datosdec[16])) $columna17=1; else $columna17=2;
+	  }
+	  
+	  if ($datosdec[17]==NULL) {$columna18=0;?>
+		     <legend align="left"><?php // echo 'La columna R, <strong> proveedor_p </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
+	  <?php } else{
+		  if(is_int($datosdec[17])) $columna18=1; else $columna18=2; 
+	  	  if ($datosdec[18]==NULL) { $columna19=0;?>
+		     <legend align="left"> <?php echo 'La columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria..'; ?></legend>
+      <?php } 
+		  if(!preg_match($regexFecha,$datosdec[18])) $columna19=2; else $columna19=3;
+	  }
 
-                  } // if(pg_num_rows($registrob)==0)
-
-           } // finaliza funcion buscaBien
-
-function importaInventario($inventario,$clave_disp,$iddiv,$idLab){
-
-//Traer el último valor en dispositivo
-			       $queryd="SELECT max(id_dispositivo) FROM dispositivo";
-                   $registrod= @pg_query($con,$queryd);
-                   $ultimo=@pg_fetch_array($registrod);
-	
-		           if ($ultimo[0]==0)
-				       $ultimo=1;//inicializando la tabla dispositivouno
-			       else 
-			           $ultimo=$ultimo[0]+1;
-					
-		           //Buscar en bienes 
-			 
-			       $queryb="SELECT bn_id
-							  FROM bienes
-			                  WHERE bn_clave=" .$inventario .
-							  " OR bn_anterior=" .$inventario;
-			        //echo $queryb;
-			 				  
-			       $registrob= @pg_query($con,$queryb);
-                   $bienes= @pg_fetch_array($registrob);
-			  
-			       if(@pg_num_rows($registrob)==0){
-				  
-			            $queryre="SELECT max(id_error) FROM registroerror";
-                        $registrore= @pg_query($con,$queryre);
-                        $ultimoerror= @pg_fetch_array($registrore);
-	
-		                if ($ultimoerror[0]==0)
-				             $ultimoerror=1;//inicializando la tabla dispositivouno
-			            else 
-			                 $ultimoerror=$ultimoerror[0]+1;	  
-             
-			            $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
-			                        VALUES (%d,'%s',%d,'%s',%d,'%s')";
-						   
-			            $queryerror=sprintf($querybien,$ultimoerror,$inventario,$clave_disp,date('Y-m-d H:i:s'),                        $iddiv,'b' );			 
-			            $registroerror= @pg_query($con,$queryerror);
-			   
-			            if ($registroerror) 
-                               $conterrorbn=$conterrorbn+1;
-			            else
-				               $contexitobn=$contexitobn+1;
-
-                  } // if(pg_num_rows($registrob)==0)
-
-
-			  $querye="SELECT id_lab,velocidad,cache,tipotarjvideo,modelotarjvideo,
-			                   memoriavideo,equipoaltorend,accesorios,garantiamanten,arquitectura,
-							   estadobien,servidor,descextensa 
-							   FROM equipoc
-			                   WHERE inventario=". $inventario;
-							  
-              $registroe= @pg_query($con,$querye);
-              $equipoc= @pg_fetch_array($registroe);
-			 
-			  if($idLab==0) // id id_lab=0
-			     $lab=$equipoc[0];
-			  else 	 
-			     $lab=$idLab;
-				
-			 
-			   $query="SELECT * FROM dispositivotemp"; 
-		
-		       $datos = @pg_query($con,$query);	
-			   
-			   $disp= @pg_fetch_array($datos);
-			   
-			  //buscar información de los catalogos de marca y memoria ram
-			   $querym="SELECT id_marca 
-						FROM cat_marca
-			            WHERE descmarca="."'".$disp['marca_p']."'";
-							  
-              $registrom= @pg_query($con,$querym);
-              $marca= @pg_fetch_array($registrom);
-			  
-			   $querymr="SELECT id_mem_ram 
-						 FROM cat_memoria_ram
-			             WHERE cantidad_ram="."'".$disp['memoria_ram']."'";
-							  
-              $registromr= @pg_query($con,$querymr);
-              $ram= @pg_fetch_array($registromr);		  
-		         
-		      if ($ram[0]==NULL)
-				  $ram=0;
-			  else 
-			      $ram=$ram[0];	  
-
-              $queryd="SELECT detalle_ub 
-							  FROM laboratorios
-			                  WHERE id_lab=" . $idLab;
-							  
-              $registrod= @pg_query($con,$queryd);
-              $detalle= @pg_fetch_array($registrod);	
-
-              //$updatequery= "UPDATE laboratorios SET detalle_ubcomp= '%s'
-			    //              WHERE id_lab=" .$idLab;
-			   
-			 // $queryu=sprintf($updatequery, $detalle[0]|| ' ' || $usu_ubica ); 
-			   
-             // $result=@pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR laboratorios');
-              
-              if ($bienes[0]!=NULL ){
-			        echo 'ent5ra a insettar dispsotivo';
-					 
-                     $strqueryd="INSERT INTO dispositivo (id_dispositivo,bn_id,id_lab,--3
-                     dispositivo_clave,usuario_final_clave,familia_clave,--6
-                     tipo_ram_clave,tecnologia_clave,nombre_resguardo,resguardo_no_empleado,--10
-                     usuario_nombre,usuario_ubicacion,usuario_perfil, --13
-                     usuario_sector,serie,marca_p, --16
-                     no_factura,anos_garantia,inventario, --19
-                     modelo_p,proveedor_p,fecha_factura,--22
-                     familia_especificar,modelo_procesador,cantidad_procesador,--25
-                     nucleos_totales,nucleos_gpu, memoria_ram,--28
-                     ram_especificar, num_elementos_almac,--30
-                     total_almac,num_arreglos,esquema_uno, --33
-                     esquema_dos,esquema_tres, esquema_cuatro, --36
-                     tec_uno,tec_dos,tec_tres,tec_cuatro, --40
-                     subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro, --44
-                     arreglo_total,tec_com,tec_com_otro, --47
-                     sist_oper,version_sist_oper, --49
-                     licencia,licencia_ini,licencia_fin,fecha, --53
-			         velocidad,memcache,tipotarjvideo , --56
-                     modelotarjvideo,memoriavideo,equipoaltorend, --59
-                     accesorios,garantiamanten,arquitectura , --62
-                     estadobien,servidor,descextensa , --65
-                     id_marca , marca, marca_esp, --68
-                     id_mem_ram)--idmod
-
-		             VALUES (%d,%d,%d,  --id_disp 3
-		                     %d,%d,%d,  --disp_clave 6
-				             %d,%d,'%s',%d,--tiporam_clave 10
-				            '%s','%s',%d,    --usuario_nombre 13
-				             %d,'%s','%s',   --suario_sector 16
-				            '%s','%s','%s',  --nofactura 19
-				            '%s','%s','%s',  --modelo_p 22
-				            '%s','%s','%s',  --familia_espec 25
-				            '%s','%s','%s',  --nucleos_totales 28
-				            '%s',%d,   --ram_espec 30
-				             %d,%d,%d,  --total_almac 33
-				             %d,%d,%d,  --esquema_dos  36
-				             %d,%d,%d,%d,   --tec_uno  40
-				             %d,%d,%d,%d,   --subtotal 44
-				             %d,%d,'%s',    --arreglo_total 47
-				             %d,'%s',      --sist_oper 49
-				             %d,'%s','%s','%s', --licencia 53
-				            '%s','%s','%s',     --velodidad 56 
-				            '%s','%s','%s',     --modelotarj 59
-				            '%s','%s','%s',     --accesorios 62
-				            '%s','%s','%s',     --estadobin 65
-				             %d,'%s','%s',      --idmarca 68
-				             %d )";//%d
-				   
-                     $queryid=sprintf($strqueryd,$ultimo,$bienes[0],$lab, //3
-                     $disp['dispositivo_clave'],$disp['usuario_final_clave'],$disp['familia_clave'], //6
-				     $disp['tipo_ram_clave'], $disp['tecnologia_clave'],$disp['nombre_resguardo'], $disp['resguardo_no_empleado'],//10
-                     $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuarioperfil'], //13
-				     $disp['usuario_sector'], $disp['serie'], $disp['marca_p'], //16
-				     $disp['no_factura'], $disp['anos_garantia'], $disp['inventario'], //19
-                     $disp['modelo_p'], $disp['proveedor_p'],date("Y-m-d", strtotime($disp['fecha_factura'])), //22
-			         $disp['familia_especificar'], $disp['modelo_procesador'], $disp['cantidad_procesador'], //25
-			         $disp['nucleos_totales'], $disp['nucleos_gpu'], $disp['memoria_ram'], //28
-                     $disp['ram_especificar'], $disp['num_elementos_almac'], //30 
-			         $disp['total_almac'], $disp['num_arreglos'], $disp['esquema_uno'], //33
-			         $disp['esquema_dos'], $disp['esquema_tres'], $disp['esquema_cuatro'], //36
-			         $disp['tec_uno'], $disp['tec_dos'], $disp['tec_tres'], $disp['tec_cuatro'], //40
-				     $disp['subtotal_uno'], $disp['subtotal_dos'], $disp['subtotal_tres'], $disp['subtotal_cuatro'], //44
-                     $disp['arreglo_total'], $disp['tec_com'], $disp['tec_com_otro'], //47
-			         $disp['sist_oper'], $disp['version_sist_oper'], //49
-			         $disp['licencia'], date("Y-m-d", strtotime($disp['licencia_ini'])),date("Y-m-d",
-				          strtotime($disp['licencia_fin'])),date('Y-m-d'), //53
-				     $equipoc[1],$equipoc[2],$equipoc[3], //56
-				     $equipoc[4],$equipoc[5],$equipoc[6], //59
-                     $equipoc[7],$equipoc[8],$equipoc[9], //62
-				     $equipoc[10],$equipoc[11],$equipoc[12], //65
-                     $marca[0],$disp['marca'],'', //68
-                     $ram[0]);//,$disp['id_mod']
-               
-                     $result= @pg_query($con,$queryid) or die('ERROR AL INSERTAR EN DISPOSITIVO: ' . pg_last_error());
-				    // echo 'query que inserta';
-                    // echo $strqueryd;
-			
-				 
-				    if (!$result) 
-                          echo "Ocurrió un error.\n";
-                     else 
- 		                  $cuentatotal=$cuentatotal+1;
+         if ($datosdec[18]==NULL) { $columna19=0;?>
+    
+		     <legend align="left"><?php echo 'El formato de fecha de la columna S, <strong> fecha_factura </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
+      <?php } ?>
+      
+	  <?php if ($datosdec[20]==NULL) { $columna21=0;?>
+		     <legend align="left"><?php echo 'La columna U, <strong> modelo_procesador </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>     
+               <?php } else{
+				   if(is_int($datosdec[20])) $columna21=1; else $columna21=2; 
+			   }?>
+      
+       <?php if ($datosdec[21]==NULL) { $columna22=0;?>
+		      <legend align="left"> <?php echo 'La columna V, <strong> cantidad_procesador </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend> 
+                <?php }else{ ?>
+                
+               <?php if (!preg_match("/^[0-9]+$/",$datosdec[21])) { $columna22=2;?>
+		     <legend align="left"> <?php echo 'La columna V, <strong> cantidad_procesador </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+                <?php } else $columna22=1;
+				}?> 
+                
+                <?php if ($datosdec[22]==NULL) { $columna23=0;?>
+		     <legend align="left"> <?php echo 'La columna W, <strong> nucleos_totales </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+            <?php } else{?>
+            
+              <?php if (!preg_match("/^[0-9]+$/",$datosdec[22]))  { $columna23=2;?>
+		     <legend align="left"> <?php echo 'La columna W, <strong> nucleos_totales </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php }  else $columna23=1;
+			}?>
+      
+      <?php if ($datosdec[23]==NULL) { $columna24=0;?>
+		      <legend align="left"><?php echo 'La columna X, <strong> nucleos_GPU </strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+	  <?php } else { if (!preg_match("/^[0-9]+$/",$datosdec[23]))  { $columna24=2;?>
+		     <legend align="left"><?php echo 'La columna X, <strong> nucleos_GPU </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica'; ?></legend>
+	  <?php } else $columna24=1;
+	  }?>
+      
+      <?php if ($datosdec[24]==NULL) { $columna25=0;?>
+		      <legend align="left"><?php echo 'La columna Y, <strong> memoria_RAM </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php  } else{
+	  if(is_int($datosdec[24])) $columna25=1; else $columna25=2; 
+	  
+      //if (!preg_match("/^[0-9]+$/",$datosdec[24])) { ?>
+		     <legend align="left"> <?php //echo 'La columna Y, <strong> memoria_RAM </strong> del renglón correpondiente al no.inventario  '.$disperror['inventario'].' debe ser numérica'; ?></legend>
+      <?php //  } ?>
+      <?php //if ($datosdec[25]==NULL) { $columna25=0;?>
+		     <legend align="left"><?php //echo 'La columna Z, <strong> ram_especificar</strong>del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
+	  <?php //}  elseif(is_int($datosdec[17])) $columna25=1; else $columna25=2; 
+	  }
+      if ($datosdec[26]==NULL) { $columna27=0;?>
+		      <legend align="left"><?php echo 'La columna AA, <strong> num_elementos_almac </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php }else{
+	     if(is_int($datosdec[26])) $columna27=1; else $columna27=2; 
+	  }
+     
+       if (!preg_match("/^[0-9]+$/",$datosdec[27])){ $columna28=2;?>
+		      <legend align="left"> <?php // echo 'La columna AB, <strong> total_almac </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php }  else $columna28=1; ?>
+      
+      <?php if ($datosdec[28]==NULL) { $columna29=0;?>
+		       <legend align="left"><?php echo 'La columna AC, <strong> num_arreglos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php } else{
+      
+         if (!preg_match("/^[0-9]+$/",$datosdec[28])){ $columna29=2;?>
+		  <legend align="left"><?php echo 'La columna AC, <strong> num_arreglos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php } else $columna29=1;
+      }
+      if ($datosdec[29]==NULL) { $columna30=0;?>
+		      <legend align="left"><?php echo 'La columna AD, <strong> esquema_uno </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria y numérica.'; ?></legend>
+      <?php } else{ ?>
+      
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[29])){ $columna30=2;?>
+		     <legend align="left"><?php echo 'La columna AD, <strong> esquema_uno </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php }  else $columna30=1; 
+	  }?>
+      
+      <?php if ($datosdec[30]==NULL) { $columna31=0;?>
+		      <legend align="left"><?php echo 'La columna AE, <strong> esquema_dos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria y numérica.'; ?></legend>
+	   <?php } else{
+		   if (!preg_match("/^[0-9]+$/",$datosdec[30])){ $columna31=2;?>
+		      <legend align="left"> <?php echo 'La columna AE, <strong> esquema_dos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>         
+	   <?php } else $columna31=1; 
+	   }?>
+       
+       <?php if ($datosdec[31]==NULL) { $columna32=0;?>
+		      <legend align="left"> <?php echo 'La columna AF, <strong> esquema_tres </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria y numérica.'; ?></legend>
+      <?php } else {?>
+     <?php if (!preg_match("/^[0-9]+$/",$datosdec[31])){ $columna32=2;?>
+		      <legend align="left">  <?php echo 'La columna AF, <strong> esquema_tres </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php } else $columna32=1;
+	  }?>
+      
+      <?php if ($datosdec[32]==NULL) { $columna33=0;?>
+		      <legend align="left"><?php echo 'La columna AG, <strong> esquema_cuatro </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria y numérica.'; ?></legend>           
+	 <?php } else {
+      if (!preg_match("/^[0-9]+$/",$datosdec[32])){ $columna33=2;?>
+		     <legend align="left"> <?php echo 'La columna AG, <strong> esquema_cuatro </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+	 <?php } else $columna33=1; 
+	 }?>
+     <?php if ($datosdec[33]==NULL) { $columna34=0;?>
+		     <legend align="left"><?php echo 'La columna AH, <strong> tec_uno </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php  } else {if (!preg_match("/^[0-9]+$/",$datosdec[33])){ $columna34=2;?>
+		       <legend align="left"> <?php echo 'La columna AH, <strong> tec_uno </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend> 
+      <?php  } else $columna34=1;
+	  }?>
+      <?php if ($datosdec[34]==NULL) { $columna35=0;?>
+		      <legend align="left"> <?php echo 'La columna AI, <strong> tec_dos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php } ?>
+    <?php if (!preg_match("/^[0-9]+$/",$datosdec[34])){ $columna35=2;?>
+		    <legend align="left"> <?php echo 'La columna AI, <strong> tec_dos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php } else $columna35=1; ?>
+      <?php if ($datosdec[35]==NULL) { $columna36=0;?>
+		     <legend align="left">  <?php echo 'La columna AJ, <strong> tec_tres </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend> 
+      <?php }  ?>
+       <?php if (!preg_match("/^[0-9]+$/",$datosdec[35])){ $columna36=2;?>
+		      <legend align="left"> <?php echo 'La columna AJ, <strong> tec_tres </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>   
+      <?php } else $columna36=1; ?> 
+      <?php if ($datosdec[36]==NULL) { $columna37=0;?>
+		     <legend align="left"><?php echo 'La columna AK, <strong> tec_cuatro </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+	<?php  } ?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[36])){ $columna37=2;?>
+		      <legend align="left">  <?php echo 'La columna AK, <strong> tec_cuatro </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>              
+	<?php  } else $columna37=1; ?>
+        <?php if ($datosdec[37]==NULL) { $columna38=0;?>
+		      <legend align="left"> <?php echo 'La columna AL, <strong> subtotal_uno </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+                   <?php }  ?>
+         <?php if (!preg_match("/^[0-9]+$/",$datosdec[37])){ $columna38=2;?>
+		     <legend align="left"> <?php echo 'La columna AL, <strong> subtotal_uno </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>             
+			 <?php } else $columna38=1; ?>      
+         <?php if ($datosdec[38]==NULL) { $columna39=0;?>
+		      <legend align="left"> <?php echo 'La columna AM, <strong> subtotal_dos </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php  } ?>
+        <?php if (!preg_match("/^[0-9]+$/",$datosdec[38])){ $columna39=2;?>
+		      <legend align="left"> <?php echo 'La columna AM, <strong> subtotal_dos </strong> ddel renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php  } else $columna39=1; ?> 
+      
+      <?php if ($datosdec[39]==NULL) { $columna40=0;?>
+		       <legend align="left"> <?php echo 'La columna AN, <strong> subtotal_tres </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>            <?php   } ?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[39])){ $columna40=2;?>
+		     <legend align="left"><?php echo 'La columna AN, <strong> subtotal_tres </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>          
+        <?php   } else $columna40=1; ?> 
                      
-				    // actualiza bit de importación
-				
-		            $updatequery= "UPDATE dispositivo SET importa=1
-			                        WHERE inventario="."'".$disp['inventario']."'";
-					  
-			        $queryu=sprintf($updatequery, $disp['inventario'] ); 
-			   
-                    $result=@pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivo'); 
+	  <?php if ($datosdec[40]==NULL) { $columna41=0;?>
+		      <legend align="left"> <?php echo 'La columna AO, <strong> subtotal_cuatro </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php } ?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[40])){ $columna41=2;?>
+		      <legend align="left"> <?php echo 'La columna AO, <strong> subtotal_cuatro </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+      <?php } else $columna41=1; ?>
+      <?php if ($datosdec[41]==NULL) { $columna42=0;?>
+		  <legend align="left"> <?php echo 'La columna AP, <strong> arreglo_total </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>          <?php  } ?>
+       <?php if (!preg_match("/^[0-9]+$/",$datosdec[41])){ $columna42=2;?>
+		     <legend align="left"> <?php echo 'La columna AP, <strong> arreglo_total </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>            
+         <?php  }else $columna42=1; ?>  
+                      
+       <?php if ($datosdec[42]==NULL) { $columna43=0;?>
+		     <legend align="left"> <?php echo 'La columna AQ, <strong> tec_com </strong>  del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend> 
+        <?php } else { ?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[42])){ $columna43=$columna43*4;?>
+		     <legend align="left"> <?php echo 'La columna AQ, <strong> tec_com </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica, revisar el catálogo correspondiente.'; ?></legend><?php } else {
+			  //detectar si es identificador valido
+			  $valida->valida_tec_com($datosdec[42]);	  
+	          if($valida>0 && $verifica==1)
+	         
+	               $columna43=$columna43*3;
+	          else {
+	            $columna43=$columna43*6; ?>
+		<legend align="left"><?php  echo 'La columna AQ, <strong> tec_com </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  } 
+	      }
+		}?> 
+         
+      
+       <?php if ($datosdec[44]==NULL) { $columna45=0;?>
+		       <legend align="left"> <?php echo 'La columna AS, <strong> sist_oper </strong> del renglón correpondiente al no.inventario  '.$disperror['inventario'].' es obligatoria.'; ?></legend> 
+         <?php }else{
+		 if (!preg_match("/^[0-9]+$/",$datosdec[44])){ $columna45=$columna45*4?>
+		     <legend align="left"><?php echo 'La columna AS, <strong> sist_oper </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica, revisar el catálogo correspondiente.'; ?></legend> <?php } else {
+				  //detectar si es identificador valido
+				  $valida->valida_sistoper($datosdec[42]);	  
+	          if($valida>0 && $verifica==1)
+                    $columna45=$columna45*3;
+	           else {
+	             $columna45=$columna45*6; ?>
+		<legend align="left"><?php  echo 'La columna AS, <strong> sist_oper </strong> del renglón correpondiente al no.inventario  '.$datosdec[15] .' no es valor válido, revisar catálogo correspondiente.'; ?></legend>
+	<?php  }
+		 }
+		 }
+	?> 
+                    
+      <?php if ($datosdec[45]==NULL) {$columna46=0;?>
+		     <legend align="left"> <?php echo 'La columna AT, <strong> version_sist_oper </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+      <?php } else{
+	   if(is_int($datosdec[45])) $columna46=$columna46*8; else $columna46=$columna46*5;
+	  
+	     }
+		 
+        if ($datosdec[46]==NULL) { $columna47=0;?>
+		      <legend align="left"><?php echo 'La columna AU, <strong> licencia </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+	  <?php } else { ?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[46])){ $columna47=2;?>
+		     <legend align="left"> <?php echo 'La columna AU, <strong> licencia </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>
+			 <?php } else $columna47=1; 
+	  }?>
+       <?php if ($datosdec[47]==NULL) { $columna48=0;?>
+		      <legend align="left"><?php echo 'La columna AV, <strong> licencia_ini </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>            
+	  <?php } else {?>
+      <?php if (!preg_match("/^[0-9]+$/",$datosdec[47])){ $columna48=2;?>
+		     <legend align="left"> <?php //echo 'El formato de fecha de la columna AV, <strong> licencia_ini </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
+      <?php }  else $columna48=1; 
+	  }?>
+      
+      <?php if ($datosdec[48]==NULL) { $columna49=0;?>
+		      <legend align="left">  <?php echo 'La columna AW, <strong> licencia_fin </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>
+        <?php } else{
+		if(!preg_match($regexFecha,$datosdec[48])) { $columna49=2; ?>
+        
+		     <legend align="left"><?php //echo 'El formato de fecha de la columna AW, <strong> licencia_fin </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es incorrecto.'; ?></legend>
+        <?php } else $columna49=3;
+		   }?>
+           
+         <?php if ($datosdec[49]==NULL) { $columna50=0;?>
+		       <legend align="left"> <?php echo 'La columna AX, <strong> id_edificio </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria.'; ?></legend>  
+			<?php } else{?> 
+              <?php if (!preg_match("/^[0-9]+$/",$datosdec[49])){ $columna50=2;?>
+		      <legend align="left"> <?php echo 'La columna AX, <strong> id_edificio </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>    
               
-			
-				   	//Llenar tabla respaldoDispositivo
-				
-			  $queryd="SELECT max(id_dispositivo) FROM dispositivorespaldo";
-              $registrod= @pg_query($con,$queryd);
-              $ultimoreg= @pg_fetch_array($registrod);
-	
-		      if ($ultimoreg[0]==0)
-				    $ultimoreg=1;//inicializando la tabla dispositivouno
-			  else 
-			        $ultimoreg=$ultimoreg[0]+1;
-				
-			  $strqueryd="INSERT INTO dispositivorespaldo (id_dispositivo,bn_id,id_lab,--3
-              dispositivo_clave,usuario_final_clave,familia_clave,--6
-              tipo_ram_clave,tecnologia_clave,nombre_resguardo,resguardo_no_empleado,--10
-              usuario_nombre,usuario_ubicacion,usuario_perfil, --13
-              usuario_sector,serie,marca_p, --16
-              no_factura,anos_garantia,inventario, --19
-              modelo_p,proveedor_p,fecha_factura,--22
-              familia_especificar,modelo_procesador,cantidad_procesador,--25
-              nucleos_totales,nucleos_gpu, memoria_ram,--28
-              ram_especificar, num_elementos_almac,--30
-              total_almac,num_arreglos,esquema_uno, --33
-              esquema_dos,esquema_tres, esquema_cuatro, --36
-              tec_uno,tec_dos,tec_tres,tec_cuatro, --40
-              subtotal_uno,subtotal_dos,subtotal_tres,subtotal_cuatro, --44
-              arreglo_total,tec_com,tec_com_otro, --47
-              sist_oper,version_sist_oper, --49
-              licencia,licencia_ini,licencia_fin,fecha, --53
-			  velocidad,memcache,tipotarjvideo , --56
-              modelotarjvideo,memoriavideo,equipoaltorend, --59
-              accesorios,garantiamanten,arquitectura , --62
-              estadobien,servidor,descextensa , --65
-              id_marca , marca, marca_esp, --68
-              id_mem_ram)--idmod
-
-		      VALUES (%d,%d,%d,--id_disp 3
-		              %d,%d,%d,--disp_clave 6
-				      %d,%d,'%s',%d,--tiporam_clave 10
-				     '%s','%s',%d, --usuario_nombre 13
-				      %d,'%s','%s', --suario_sector 16
-				     '%s','%s','%s', --nofactura 19
-				     '%s','%s','%s',--modelo_p 22
-				     '%s','%s','%s',	--familia_espec 25
-				     '%s','%s','%s', --nucleos_totales 28
-				     '%s',%d,   --ram_espec 30
-				      %d,%d,%d,  --total_almac 33
-				      %d,%d,%d,  --esquema_dos  36
-				      %d,%d,%d,%d, --tec_uno  40
-				      %d,%d,%d,%d, --subtotal 44
-				      %d,%d,'%s',  --arreglo_total 47
-				      %d,'%s',      --sist_oper 49
-				      %d,'%s','%s','%s', --licencia 53
-				     '%s','%s','%s', --velodidad 56 
-				     '%s','%s','%s', --modelotarj 59
-				     '%s','%s','%s',  --accesorios 62
-				     '%s','%s','%s',  --estadobin 65
-				      %d,'%s','%s', --idmarca 68
-				      %d)";//%d
-				   
-                 $queryid=sprintf($strqueryd,$ultimoreg,$bienes[0],$lab, //3
-                 $disp['dispositivo_clave'],$disp['usuario_final_clave'],$disp['familia_clave'], //6
-				 $disp['tipo_ram_clave'], $disp['tecnologia_clave'],$disp['nombre_resguardo'], $disp['resguardo_no_empleado'] ,//10
-                 $disp['usuario_nombre'],$disp['usuario_ubicacion'], $disp['usuarioperfil'], //13
-				 $disp['usuario_sector'], $disp['serie'], $disp['marca_p'], //16
-				 $disp['no_factura'], $disp['anos_garantia'], $disp['inventario'], //19
-                 $disp['modelo_p'], $disp['proveedor_p'],date("Y-m-d", strtotime($disp['fecha_factura'])), //22
-			     $disp['familia_especificar'], $disp['modelo_procesador'], $disp['cantidad_procesador'], //25
-			     $disp['nucleos_totales'], $disp['nucleos_gpu'], $disp['memoria_ram'], //28
-                 $disp['ram_especificar'], $disp['num_elementos_almac'], //30 
-			     $disp['total_almac'], $disp['num_arreglos'], $disp['esquema_uno'], //33
-			     $disp['esquema_dos'], $disp['esquema_tres'], $disp['esquema_cuatro'], //36
-			     $disp['tec_uno'], $disp['tec_dos'], $disp['tec_tres'], $disp['tec_cuatro'], //40
-				 $disp['subtotal_uno'], $disp['subtotal_dos'], $disp['subtotal_tres'], $disp['subtotal_cuatro'], //44
-                 $disp['arreglo_total'], $disp['tec_com'], $disp['tec_com_otro'], //47
-			     $disp['sist_oper'], $disp['version_sist_oper'], //49
-			     $disp['licencia'], date("Y-m-d", strtotime($disp['licencia_ini'])),date("Y-m-d",
-				 strtotime($disp['licencia_fin'])),date('Y-m-d'), //53
-				 $equipoc[1],$equipoc[2],$equipoc[3], //56
-				 $equipoc[4],$equipoc[5],$equipoc[6], //59
-                 $equipoc[7],$equipoc[8],$equipoc[9], //62
-				 $equipoc[10],$equipoc[11],$equipoc[12], //65
-                 $marca[0],$disp['marca'],'', //68
-                 $ram[0]);//,$disp['id_mod']
+               <?php } else $columna50=1; 
+			}?>  
                
-                 $result=@pg_query($con,$queryid) or die('ERROR AL INSERTAR EN dispositivorespaldo: ');	
-				
-				 $updatequery= "UPDATE dispositivorespaldo SET importa=1
-			                    WHERE inventario="."'".$disp['inventario']."'";
-					  
-			     $queryu=sprintf($updatequery, $disp['inventario'] ); 
-			   
-                 $result=@pg_query($con,$queryu) or die('ERROR AL ACTUALIZAR dispositivorespaldo'); 
-				
-			  }//valores que estan en bienes
+             <?php if ($datosdec[50]==NULL) { $columna51=0;?>
+		      <legend align="left"> <?php echo 'La columna AY, <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' es obligatoria y numérica.'; ?></legend>        
+             <?php }else{
+				 
+				 if (!preg_match("/^[0-9]+$/",$datosdec[50])){ $columna51=2;?>
+		      <legend align="left"> <?php echo 'La columna AX, <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' debe ser numérica.'; ?></legend>    
+               <?php } else{ // que sea laboratorio de la div
+				      $querylab="SELECT * FROM laboratorios l
+                                   JOIN departamentos d
+                                   ON d.id_dep=l.id_dep
+                                   WHERE id_div=".$_SESSION['id_div'].
+					               " AND l.id_lab=".$datosdec[50];
+			         // echo $querylab;
+		              $existelab= pg_query($querylab) or die('Hubo un error con la base de datos');		
+			
+	    	          $cuantos=pg_num_rows($existelab);
+					  if ($cuantos==0){
+					      $columna51=3;
+						  $sinlab++; ?>
+						  <legend align="left"> <?php echo 'El laboratorio  <strong> id_lab </strong> del renglón correpondiente al no.inventario  '.$datosdec[15].' no existe .'; ?></legend>    
+					<?php  }else{
+		               $columna51=1;
+					   
+					  }
+				  }
+			
+			 }
+			 
+			
+	   $busca=buscaBienes($datosdec); // si no  lo encuentra lo registra en errores
+		//echo 'buscabien', $busca;	
 		
-    } // finaliza clase importainventario
-*/
+		if ($busca==NULL)
+		    $bnid=0;
+		else 	
+		    $bnid=$busca;
+		
+			
+          //Traer el último valor en errorinserta
+			        $queryd="SELECT max(id_error) FROM errorinserta";
+                   // $registrod= pg_query($con,$queryd);
+				    $registrod= pg_query($queryd) or die('Hubo un error con la base de datosdec');
+                    $ultimo= pg_fetch_array($registrod);
+	
+		      if ($ultimo[0]==0)
+				    $ultimo=1;//inicializando la tabla dispositivouno
+			  else 
+			        $ultimo=$ultimo[0]+1;
+					
+	   if (isset($inventario) || isset($dispclave)){
+	         $query= "INSERT INTO errorinserta(id_error,tupla,inventario,bnid,dispositivo_clave,columna1,columna2,columna3,columna4,columna5,
+	                                     columna6,columna7,columna8,columna9,columna10,
+	                                     columna11,columna12,columna13,columna14,columna15,
+										 columna16,columna17,columna18,columna19,columna20,
+										 columna21,columna22,columna23,columna24,columna25,
+										 columna26,columna27,columna28,columna29,columna30,
+										 columna31,columna32,columna33,columna34,columna35,
+										 columna36,columna37,columna38,columna39,columna40,
+										 columna41,columna42,columna43,columna44,columna45,
+										 columna46,columna47,columna48,columna49,columna50,
+										 columna51) VALUES 
+										 ($ultimo,$noo,'$inventario',$bnid,$dispclave,$columna1,$columna2,$columna3,$columna4,$columna5,
+										 $columna6,$columna7,$columna8,$columna9,$columna10,
+	                                     $columna11,NULL,$columna13,$columna14,$columna15,
+										 $columna16,$columna17,$columna18,$columna19,NULL,
+										 $columna21,$columna22,$columna23,$columna24,$columna25,
+										 NULL,$columna27,NULL,$columna29,$columna30,
+										 $columna31,$columna32,$columna33,$columna34,$columna35,
+										 $columna36,$columna37,$columna38,$columna39,$columna40,
+										 $columna41,$columna42,$columna43,NULL,$columna45,
+										 $columna46,$columna47,$columna48,$columna49,$columna50,
+							             $columna51 )";
+		
+		//echo $query;
+	   // 
+	  
+	  //
+	  try {
+			 $result=@pg_query($query); 
+	   $resulta =@pg_fetch_assoc($result);
+  
+        } catch (Exception $e) {
+        /* Podemos finalizar la ejecución con un mensaje o mostrar HTML con él */
+           die('Error modificando producto: ' .  $e->getMessage());
+       }
+		  
+	   echo 'consulta'. $query;
+       //$r = pg_fetch_array($resulta);
+		//$result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);*/
+		 
 
+	   }
+	    if (!$resulta) 
+				 $errorinserta++; 
+		//$this->tupla[]=$datosdec;	 
+      
+       } //fin marcaerror
 
+function exportaErrorReg($noval){
+	//Exporta  errores de datos en las columnas  
+				$queryreg="SELECT ei.inventario FROM errorinserta ei
+                     JOIN registroerror re
+                     ON ei.inventario=re.inventario
+                     WHERE tipoerror='r'
+					 AND date(fecharegistro)= current_date
+					 AND bnid!=0
+					 AND id_div=" . $_SESSION['id_div'];
+				//AND bnid!=0	 
+	    $result = pg_query($queryreg) or die('Hubo un error con la base de datos');
+	    $errorreg= pg_num_rows($result); 
+		//echo $queryreg;	
+		?>
+        
+         <br>
+           <legend align="left"> <h4><?php echo "Se intentó importar  " .$errorreg ." dispositivos que no cumplen con los requisitos. "  ?></h4></legend> 
+   
+           <br>
+                <form action="../inc/erroresreg.inc.php" method="post" name="erroresreg" >
+	               <legend align="left"><input name="enviar" type="submit" value="Exportar a Excel" />
+                   <input name="tipo" type="hidden" value="erroresreg" /></legend>
+	            </form>
+           <br>
+	<?php   
+	} //finaliza funcion exportaErrorReg
+	
+function exportaErrorRegAct(){
+	//Exporta  errores de datos en las columnas  
+		
+					 
+			$queryreg="SELECT ei.inventario FROM errorinserta ei
+                     JOIN registroerror re
+                     ON ei.inventario=re.inventario
+                     WHERE tipoerror='ra'
+					 AND date(fecharegistro)= current_date
+					 AND bnid!=0
+					 AND id_div=" . $_SESSION['id_div'];
+					 
+	    $result = pg_query($queryreg) or die('Hubo un error con la base de datos');
+	    $errorreg= pg_num_rows($result); 	
+		
+		?>
+        
+         <br>
+           <legend align="left"> <h4><?php echo "Se intentó actualizar  " . $errorreg ." dispositivos que no cumplen con los requisitos. " ?></h4></legend> 
+   
+           <br>
+                <form action="../inc/erroresreg.inc.php" method="post" name="actreg" >
+	               <legend align="left">
+                    <input name="enviar" type="submit" value="Exportar a Excel" />
+                    <input name="tipo" type="hidden" value="actreg" /></legend>
+	            </form>
+           <br>
+	<?php   
+	} //finaliza funcion exportaErrorReg	
 
-}//finaliza clase importa
+function exportaErrorBien(){
+	//Exporta  errores de datos si no existen en bienes inventario  
+	
+		$querybien="SELECT ei.inventario FROM errorinserta ei
+                     JOIN registroerror re
+                     ON ei.inventario=re.inventario
+                     WHERE tipoerror='b'
+					 AND date(fecharegistro)= current_date
+		             AND id_div=" . $_SESSION['id_div'];
+		//echo $queryreg;			 
+	    $result = pg_query($querybien) or die('Hubo un error con la base de datos');
+	    $errorbien= pg_num_rows($result); 	
+	?>
+   
+	      <br> 
+           <legend align="left"> <h4><?php echo "Se intentó registrar  " . $errorbien ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend>
+          <br>
+	       <form action="../inc/erroresbn.inc.php" method="post" name="erroresbn" >
+	                 <legend align="left"><input name="enviar" type="submit" value="Exportar a Excel" />
+                     <input name="tipo" type="hidden" value="erroresbn" />
+                     </legend>
+	          </form>
+          <br>
+	<?php   
+	 
+	} //finaliza funcion exportaErrorBien
+	
+function exportaErrorBienAct(){
+	//Exporta  errores de datos si no existen en bienes inventario  
+	
+		$queryreg="SELECT ei.inventario FROM errorinserta ei
+                   JOIN registroerror re
+                   ON ei.inventario=re.inventario
+                   WHERE tipoerror='ba'
+				   AND date(fecharegistro)= current_date
+				   AND id_div=" . $_SESSION['id_div'];
+					 
+	    $result = pg_query($queryreg) or die('Hubo un error con la base de datos');
+	    $errorreg= pg_num_rows($result); 	
+		echo $queryreg;
+	?>
+   
+	      <br> 
+           <legend align="left"> <h4><?php echo "Se intentó actualizar  " . $errorreg ." dispositivos que no se encuentran en el inventario de la facultad." ?></h4> </legend>
+          <br>
+	       <form action="../inc/erroresbn.inc.php" method="post" name="actbn" >
+	                 <legend align="left"><input name="enviar" type="submit" value="Exportar a Excel" />
+                     <input name="tipo" type="hidden" value="actbn" /></legend>
+	          </form>
+          <br>
+	<?php   
+	 
+	} //finaliza funcion exportaErrorBien
+	
+function &buscaBienes($datosdec){
+	
+		//echo 'valores en buscabienes'. $invent;
+	          
+		     // Buscar en bienes 
+			 
+			 $queryb="SELECT bn_id
+							  FROM bienes
+			                  WHERE bn_clave="."'".$datosdec[15]."'" . "
+							  OR bn_anterior="."'".$datosdec[15]."'";
+			// echo $queryb;
+			 			  
+			  $registrob= @pg_query($queryb) or die('ERROR  en errorinserta'); 
+              $bienes= pg_fetch_array($registrob);
+			  $ebien=$bienes[0];
+			
+			  if(pg_num_rows($registrob)==0 ){
+				  
+			        $queryre="SELECT max(id_error) FROM registroerror";
+                    $registrore= pg_query($queryre) or die('Error en tabla  registroerror'); 
+                    $ultimoerror= pg_fetch_array($registrore);
+	
+		             if ($ultimoerror[0]==0)
+				         $ultimoerror=1;//inicializando la tabla dispositivo
+			         else 
+			             $ultimoerror=$ultimoerror[0]+1;	  
+             
+			        $querybien="INSERT INTO  registroerror                              (id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			               VALUES (%d,'%s',%d,'%s',%d,'%s')";
+						   
+			          $queryerror=sprintf($querybien,$ultimoerror,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'b' );			 
+			           $registroerror= @pg_query($queryerror) or die('ERROR AL INSERTAR en registroerror');
+			   
+			        $conterrorbn=$conterrorbn+1;
+			 
+			  }//fin if
+		  
+			return $ebien;
+        }//fin función buscaBienes
+	
+function errorReg(){
+	 $queryd="SELECT max(id_error) FROM registroerror";
+                    $registrod= pg_query($queryd) or die('Hubo un error con la base de datos');
+                    $ultimo= pg_fetch_array($registrod);
+	
+		         if ($ultimo[0]==0)
+				    $ultimo=1;
+			     else 
+			        $ultimo=$ultimo[0]+1;
+		   
+		          $querybien="INSERT INTO registroerror(id_error,inventario,clave_dispositivo,fecharegistro,id_div,tipoerror)
+			                         VALUES (%d,'%s',%d,'%s',%d,'%s')";
+						   
+			      $queryerror=sprintf($querybien,$ultimo,$datosdec[15],$datosdec[0],date('Y-m-d H:i:s'),$_SESSION['id_div'],'r' );
+			   			 
+			      $registroerror= pg_query($queryerror)or die('Hubo un error con la base de datos');
+		
+	}
+	
+function utf8_string_array_encode(&$array){
+    $func = function(&$value,&$key){
+        if(is_string($value))
+            $value = utf8_encode($value);
+         
+        if(is_string($key))
+            $key = utf8_encode($key);
+        
+        if(is_array($value))
+            utf8_string_array_encode($value);
+        
+    };
+    array_walk($array,$func);
+    return $array;
+   } //fin de busca bienes
 
-?>
+	}		  
+			?>

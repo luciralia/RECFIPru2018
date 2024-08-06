@@ -11,7 +11,9 @@ require_once('../conexion.php');
 
 <p>procesaced</p>
 <p>&nbsp;</p>
-<?php print_r($_POST); ?>
+<?php 
+//echo 'entrando a procesaced';
+//print_r($_SESSION); ?>
 
 <!-- /* Guarda datos de registro nuevo */-->
 <?php if($_POST['accionc']=='Guardar'){ ?>

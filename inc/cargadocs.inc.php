@@ -22,7 +22,8 @@ $tiposerv="em.tipo_serv IS TRUE";
 $logger->putLog(19,2);
  ?>
 <div class="docs">
-<ul><li><a href="../documentos/guia_rapida_RECFIV0909.pdf" title="Guía Rápida" target="_blank">Guía rápida del RECFI versión 0.9.0.9</a></li>
+<ul>
+  <!--<li><a href="../documentos/guia_rapida_RECFIV0909.pdf" title="Guía Rápida" target="_blank">Guía rápida del RECFI versión 0.9.0.9</a></li>-->
    <br /><br />
   <ul><li><a href="../documentos/GuiaImportacionV0909.pdf" title="Guía Rápida" target="_blank">Guía de importación RECFI versión 0.9.0.9</a></li>
    <br /><br />

@@ -8,17 +8,19 @@ $logger=new Log();
 
 $login=$_POST['login'];
 $password=md5($_POST['pwd']);
-
-
-//consulta Datos del usuario
-/*
-$query = "SELECT * FROM usuarios 
-          WHERE usuario = '" . $login . "' AND  password='" . $password."'";*/
-		  
-$query = "SELECT * FROM usuarios U
+  
+/*$query = "SELECT * FROM usuarios U
           FULL OUTER JOIN divisiones d
           ON u.id_usuario=d.id_cac
           WHERE usuario = '" . $login . "' AND  password='" . $password."'";
+		  
+		  $query ="select  id_usuario,dv.id_div as dvdiv,d.id_div as div,d.id_dep as dep, tipo_usuario from usuarios u */
+	$query ="select * from usuarios u  
+full outer join departamentos d
+on d.id_dep=u.id_dep
+full join divisiones dv
+on dv.id_cac=u.id_usuario 
+where usuario= '" . $login . "' AND  password='" . $password."'";
 		  
 		  		  
 //$query = sprintf("SELECT * FROM usuarios WHERE usuario = '%s' AND pass='%s'", trim($_POST['usuario']), trim($_POST['pwd']));
@@ -31,11 +33,10 @@ $nreng = pg_num_rows($datos);
 
 
 if ($nreng==1){
-	  
 $datos=pg_query($con, $query);		  
 $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
 foreach ($usuario as $campo => $valor) {
-        //echo "\$usuario[$campo] => $valor.\n" . "</br>";
+    //echo "\$usuario[$campo] => $valor.\n" . "</br>";
 	$_SESSION[$campo]=$valor;
 		}
 
@@ -49,6 +50,36 @@ $usuariop = pg_fetch_array($datosp, NULL, PGSQL_ASSOC);
 foreach ($usuariop as $campo => $valor) {
 $_SESSION['permisos'][$campo]=$valor;
 //    echo "\$usuariop[$campo] => $valor.\n" . "</br>";
+}
+
+//si usurio es tipo_usuario=1 obtener que depto y div
+
+if ($usuario['tipo_usuario']==1){
+	
+	//obtener el departamento 
+	
+   $querydepto="SELECT DISTINCT l.id_dep from laboratorios l
+                JOIN usuarios u
+				ON l.id_responsable=u.id_usuario
+                where l.id_responsable=" .$usuario['id_usuario'];
+   $datosdepto=pg_query($con,$querydepto);
+
+   $depto = pg_fetch_array($datosdepto);
+   $_SESSION['id_dep']=$depto[0];
+   
+   //obtener division
+   $querydiv="SELECT DISTINCT dv.id_div from laboratorios l 
+               JOIN departamentos d
+               ON l.id_dep=d.id_dep
+               JOIN divisiones dv
+               ON dv.id_div=d.id_div
+               JOIN usuarios u
+		       ON l.id_responsable=u.id_usuario
+               WHERE l.id_responsable=" .$usuario['id_usuario'];
+   $datosdiv=pg_query($con,$querydiv);
+
+   $div = pg_fetch_array($datosdiv);
+   $_SESSION['id_div']=$div[0];
 }
 
 

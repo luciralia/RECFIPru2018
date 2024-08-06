@@ -42,20 +42,20 @@ return $salidac;
 
 
 function getDivision($iddiv){
-            
-			if ($iddiv==NULL||$iddiv==0)
+	
+			if ($iddiv==NULL||$iddiv==0 ||$iddiv=='')
 			
-			$salidac="Ninguno"; 
+			$salidac="Facultad de Ingeniería"; 
 			
 			 else {
 			
 			$query="Select * from divisiones where id_div=" . $iddiv;
 			
-				$result_cot = pg_query($query) or die('Hubo un error con la base de datos en lab con id_lab');
+				$result_div = pg_query($query) or die('Hubo un error con la base de datos en lab con id_lab');
 				
 				// echo "solicitud a laboratorios.class: "; print_r($_GET);
 				 
-				while ($datosc = pg_fetch_array($result_cot))
+				while ($datosc = pg_fetch_array($result_div))
 					{
 					$salidac = $datosc['nombre'];
 					//$_SESSION['tipo_lab']=$datosc['tipo_lab'];
@@ -65,7 +65,29 @@ function getDivision($iddiv){
 			return $salidac;
 	}
 
-
+function getDepartamento($iddep){
+            
+			if ($iddep==NULL||$iddep==0)
+			
+			$salidac="Ninguno"; 
+			
+			 else {
+			
+			$query="Select * from departamentos where id_dep=" . $iddep;
+			
+				$result_dep = pg_query($query) or die('Hubo un error con la base de datos en lab con id_lab');
+				
+				// echo "solicitud a laboratorios.class: "; print_r($_GET);
+				 
+				while ($datosc = pg_fetch_array($result_dep))
+					{
+					$salidac = $datosc['nombre'];
+					//$_SESSION['tipo_lab']=$datosc['tipo_lab'];
+					}
+				}
+			
+			return $salidac;
+	}
 
 
 

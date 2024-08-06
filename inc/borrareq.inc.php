@@ -1,4 +1,5 @@
 <?php 
+ob_start( );
 session_start();
 require_once('../conexion.php');
 ?>
@@ -33,18 +34,33 @@ require_once('../conexion.php');
 
 $strquery="delete from necesidades_equipo where id_nec=%d and id_lab=%d";
 $queryd=sprintf($strquery,$_POST['id_nec'],$_POST['id_lab']);
-$result=pg_query($con,$queryd) or die('ERROR AL BORRAR DATOS: ' . pg_last_error());
+$result=pg_query($con,$queryd) or die('ERROR AL BORRARR DATOS: ' . pg_last_error());
 
-$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
-echo $direccion . "</br>";
-echo $queryd;
-header($direccion);
-} 
+//$direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'];
+//echo $direccion . "</br>";
+//echo $queryd;
+//header($direccion);?>
+
+<script type="text/javascript">var dir=<?php echo $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=';?> 
+location.replace(dir); </script>
+
+<?php } 
 
 	} else {
 		echo "No borrar";	
-		$direccion='location: ../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&orden='. $_REQUEST['orden'];
-		header($direccion);
-		echo $direccion;
-}
-?>
+		//$direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab'] . '&orden='. $_REQUEST['orden'];
+		//header($direccion);
+		//echo $direccion;
+		//echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";?>
+        <script type="text/javascript">var dir=<?php echo $direccion='../view/inicio.html.php?mod=' . $_REQUEST['mod'] . '&lab=' . $_REQUEST['lab']. '&orden='. $_REQUEST['orden'];?> 
+location.replace(dir); </script>
+    
+<?php
+	}
+/* if($result)
+                     {
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=$direccion;\">";
+
+}*/?>
+				
+

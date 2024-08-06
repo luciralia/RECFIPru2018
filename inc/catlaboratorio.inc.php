@@ -6,6 +6,22 @@
 <?php
 session_start(); 
 require_once('../conexion.php'); 
+	if ($_SESSION['id_div']==NULL)
+     {
+		  //echo 'entra y cambia';
+		  $query = "SELECT * FROM usuarios U
+          JOIN divisiones d
+          ON u.id_usuario=d.id_cac
+          WHERE id_usuario = " . $_SESSION['id_usuario'];
+		  $datos=pg_query($query) or die('Error en base de datos');
+
+          $usuario = pg_fetch_array($datos, NULL, PGSQL_ASSOC);
+          foreach ($usuario as $campo => $valor) {
+               $_SESSION[$campo]=$valor;
+		}
+ 
+	 }
+
 
 header("Pargma:public");
 header("Expires:0");

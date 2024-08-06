@@ -5,15 +5,13 @@
 
 require_once('../conexion.php');
 
-
   echo $division['id_div'];
 	 
-    if ($_SESSION['tipo_usuario']==10){
 
-       $query="SELECT id_div,nombre FROM divisiones";
+			   $query="SELECT id_div,nombre FROM divisiones where id_div!=16";
+			   
        $datos = pg_query($con,$query);
-      }
-// Des0pliega menú para el usuario
+      // Des0pliega menú para el usuario
        if ($_SESSION['tipo_usuario']==10){
 
        echo '<li><a href="#" >División...</a>
@@ -34,11 +32,11 @@ require_once('../conexion.php');
 ?>
  <?php 
 		if ($_SESSION['id_div']!='' && $_SESSION['mod']!='')
-                $_SESSION['id_div']=''; 
+               /* $_SESSION['id_div']=''; */
+			   echo 'cambia';
 		else 		
-		        $_SESSION['id_div']=$_REQUEST['div'];
-	  //echo 'la div en cargadiv';
-	  //echo  $_SESSION['id_div'];
+		        $_SESSION['id_div']=$division['id_div'];
+	 
 	?>
     
     
