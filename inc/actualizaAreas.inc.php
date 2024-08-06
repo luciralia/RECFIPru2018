@@ -55,8 +55,6 @@ $titulo='Actualizar Áreas';
 </form>
 </table>
 
-
-
 <?php 
 
   $file_upload = $_FILES["archivo_txt"]["name"];
@@ -74,78 +72,76 @@ $titulo='Actualizar Áreas';
    
      // Procesamos linea a linea el archivo CSV y 
      // lo insertamos en la base de datos
-
+	 
+	  $queryre="SELECT max(id_lab) FROM laboratorios";
+      $registrore= pg_query($queryre) or die('Error en tabla  laboratorios'); 
+      $ultimo= pg_fetch_array($registrore);
+	  $ult=$ultimo[0];
+	 
+	 
+	
 	 ?>
-      <table>
+      
       <?php 
      while($datos = fgetcsv ($fp, 1000, "\t")){
 		  $cuenta++;
 		  $datosdec=utf8_string_array_encode($datos); 
-		  
-	     /* $querytemp="SELECT * FROM laboratorios WHERE 
-		              id_lab=".$datosdec[0];
+		 /* if ($datosdec[0]<>NULL){
+		  $querytemp="SELECT * FROM laboratorios WHERE 
+		              id_lab= ".$datosdec[0];
 					  					  
 		  $datostemp = pg_query($querytemp);
-		   
-	 if (pg_num_rows($datostemp)>0) {*/
-			 
-		           $updatequery= "UPDATE laboratorios SET dir_postal='%s', id_edif=%d,
-				                  detalle_ub='%s',tipo_lab='%s',carreras='%s',asignaturas='%s'
+		  }*/
+		 
+	 //if (pg_num_rows($datostemp)>0) {
+		if ($datosdec[0]<>NULL){	 
+		           $updatequery= "UPDATE laboratorios SET nombre='%s',dir_postal='%s', id_edif=%d,
+				                  detalle_ub='%s',tipo_lab='%s',carreras='%s',asignaturas='%s',id_dep='%s'
 			                      WHERE id_lab=".$datosdec[0];
 							  
-			        $queryu=sprintf($updatequery,$datosdec[2],$datosdec[3], $datosdec[4],$datosdec[5],$datosdec[6],$datosdec[7]); 
-					
-					echo $queryu;
-					
-			        $result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios '); 
+			        $queryu=sprintf($updatequery,$datosdec[1],$datosdec[2],$datosdec[3], $datosdec[4],$datosdec[5],$datosdec[6],$datosdec[7],$datosdec[8]); 
+			 //echo $queryu;
+					$result=pg_query($queryu) or die('ERROR AL ACTUALIZAR laboratorios '); 
 			        $repetido++; ?>
-					 <legend align="left"> <?php echo "Se insertó previamente el área con identificador" . $datosdec[0]; ?></legend> 
-			       
-		   <?php // } else { 
-	     
-	  
-/*
-							
-							 $strqueryd="INSERT INTO laboratorios (id_lab,id_dep, id_responsable,
-							                                       nombre,dir_postal,act_generales,
-																   carreras,asignaturas,id_edif,
-																   detalle_ub,capacidad,tipo_lab)
-                                          VALUES (%d,%d, %d,
-										         '%s','%s', %d,
-												 '%s','%s',%d,
-												 '%s','%s','%s')";
-				   
-                            $queryid=sprintf($strqueryd, $datosdec[0],$datosdec[1],$datosdec[2],
-				                             $datosdec[3],$datosdec[4],$datosdec[5],
-											 $datosdec[6],$datosdec[7],$datosdec[8],
-											 $datosdec[9],$datosdec[10],$datosdec[11]);
+					 <legend align="left"><?php echo "Se actualizó la siguiente área con identificador" .$datosdec[0]; ?></legend> 
+			
+		<?php }  else { 
+		   
+		   $ult=$ult+1;	
+			
+		   //echo 'Último'.$ult;	
+	       
+	       $strqueryd="INSERT INTO laboratorios (id_lab,nombre,dir_postal,
+		                                        id_edif,detalle_ub,tipo_lab,
+												carreraS,asignaturaS,id_dep,
+												act_generales,id_responsable)
+						VALUES (%d,'%s','%s',
+								%d,'%s','%s',
+								'%s','%s',%d,
+								%d,%d)";
+		   $queryid=sprintf($strqueryd,$ult,$datosdec[1],$datosdec[2],
+				             $datosdec[3],$datosdec[4],$datosdec[5],
+							 $datosdec[6],$datosdec[7],$datosdec[8],
+							 7,202);
 											  
-											// echo $queryid;
+			//echo $queryid;
                
-                           $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
-				
-			                 $importa++; // inserciones restantes
-	*/
-	      //      }
- 
-	 } 
+            $result=pg_query($queryid) or die('ERROR AL INSERTAR EN AREA: ' . pg_last_error());
+		    $importa++; // inserciones restantes
+	
+	       }   
+	 }
+
+	 
 	 fclose($fp);
 	 ?>
-		
+		<legend align="left"> <h3><?php echo "Se actualizaron: " . $repetido .  " áreas."; ?></legend> 
+		<legend align="left"> <h3><?php echo "Se importaron: " . $importa.  " áreas."; ?></legend> 	
+<?php
+  
+ }
+
+        require('../inc/pie.inc.php');
+ 
+  ?>
 	
-	      <legend align="left"> <h3><?php echo "Se actualizaron " . $repetido .  " áreas."; ?></legend> 
-<?php
-  }
- ?>
- 
-     
-</div></td>          
-</tr>
-
-<?php
-
- require('../inc/pie.inc.php');
- 
-  ?>      
-             
-

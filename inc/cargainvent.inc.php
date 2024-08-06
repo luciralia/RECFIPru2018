@@ -67,7 +67,7 @@ if ($_GET['mod']=='invg' ){
 
 	echo "<input name='lab' type='hidden' value='". $_GET['lab']."' /> \n";
 	echo "<input name='div' type='hidden' value='". $_SESSION['id_div']."' /> \n";
-	echo "<input name='mod' type='hidden' value='".$_GET['mod']."' /> \n"; ?>
+	echo "<input name='mod' type='hidden' value='". $_GET['mod']."' /> \n"; ?>
    
 <input name="bOrden" type="submit" value="ordenar" />
 
@@ -300,27 +300,36 @@ if ($_GET['mod']=='invg' ){
          <tr>
         <td><legend align="right"><h4>Exportar a Excel</h4></legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <br>
-        <legend align="right">
-          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+			
+          <legend align="right">
+          <?php // $action="../inc/exportainvgendivxls.inc.php";?>
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendividen" >
+             <!--<form action=<?php // echo $action; ?> method="post" name="expgendividen" >
 	          <input name="enviar" type="submit" value="Con identificador" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
+	          <input name="mod" type="hidden" value="<?php // echo $_GET['mod'] ?>" />
+              </form>-->
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
             </tr> 
             
            <tr>
            <td>
+			    <!-- <form action=<?php // echo $action; ?> method="post" name="expgendiv" >
+	          <input name="enviar" type="submit" value="Con identificador" />
+	          <input name="mod" type="hidden" value="<?php  //echo $_GET['mod'] ?>" />
+              <input name="lab" type="hidden" value="<?php //echo $_GET['lab'] ?>" />
+		      <input name="div" type="hidden" value="<?php //echo $_REQUEST['div'] ?>" />	
+			  <input name="tipou" type="hidden" value="<?php //echo $_SESSION['tipo_usuario'] ?>" />		  
+              </form>-->
             
            <legend align="right">
-          <?php $action="../inc/exportainvgendivxls.inc.php";?>
+          <?php //$action="../inc/exportainvgendivxls.inc.php";?>
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendivnomb" >
+             <!-- <form action=<?php //echo $action; ?> method="post" name="expgendivnomb" >
 	          <input name="enviar" type="submit" value="Con nombre" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              </form>
+	          <input name="mod" type="hidden" value="<?php //echo $_GET['mod'] ?>" />
+              </form>-->
+			   
               </legend>
             </td>
             </tr> 
@@ -329,13 +338,16 @@ if ($_GET['mod']=='invg' ){
            <td>
            <br>
            <legend align="right">
-            <?php //$action="../inc/exportainvDGTIC.inc.php";?>
+            <?php $action="../inc/exportainvDGTIC.inc.php";?>
             <?php //$action="../inc/exporta_DGTIC.php";?>
-			<?php  $action="../inc/exportar_DGTIC.php";?>
+			<?php  //$action="../inc/exportar_DGTIC.php";?>
 			<?php //$action="../inc/excelbf2.inc.php";?>   
               <form action=<?php  echo $action; ?> method="post" name="expDGTIC" >
-	          <input name="enviar" type="submit" value="DGTIC2" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
+	          <input name="enviar" type="submit" value="DGTIC" />
+	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" 
+			  <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
+		      <input name="div" type="hidden" value="<?php echo $_REQUEST['div'] ?>" />	
+			  <input name="tipou" type="hidden" value="<?php echo $_SESSION['tipo_usuario'] ?>" />
               </form>
               </legend>
             </td>
@@ -481,236 +493,7 @@ if ($_GET['mod']=='invg' ){
 	   <br>
 	   <br>
 	   <br>
-	   <div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>No existen dispositivos registrados</p><div id="boton1"><a href="../view/inicio.html.php?mod=invg&lab=<?php echo $_GET['lab'];?>&div=<?php $_GET['div'];?>">Cerrar</a>
-        </div>
-        </div>
-	  
-<?php
-}
-
-}// fin del inventario general
-else if ($_GET['mod']=='invc' )
-
-{ 
-
-if ( $_SESSION['id_div']==NULL)
-	     $_SESSION['id_div']=$_REQUEST['div'];
-		 
-		 
-	if($_GET['lab']!=NULL ){
-    if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
-	 // confifurar para REVISAR SWITCH, IMPRESORAS, etc
-	    $tabla="dispositivo";
-		
-		/*select *
-                 from dispositivo e 
-
-                 left join cat_dispositivo cd
-                 on e.dispositivo_clave=cd.dispositivo_clave
-                 left join cat_familia cf
-                 on e.familia_clave=cf.id_familia
-                 left join cat_tipo_ram ctr
-                 on e.tipo_ram_clave=ctr.id_tipo_ram
-                 left join cat_tecnologia ct
-                 on e.tecnologia_clave=ct.id_tecnologia
-                 left join cat_sist_oper cso
-                 on  e.sist_oper=cso.id_sist_oper
-				 left join cat_usuario_final cuf
-			     on cuf.usuario_final_clave=e.usuario_final_clave
-                 left join cat_marca cm
-                 on cm.id_marca=e.id_marca
-                 left join cat_memoria_ram cmr
-                 on e.id_mem_ram=cmr.id_mem_ram
-                 left join bienes_inventario bi
-                 on  e.bn_id = bi.bn_id
-		 left join switch sw
-                 on sw.id_dispositivo=e.id_dispositivo
-                 left join cat_switch cw
-                 on sw.id_tipo_switch=cw.id_switch
-                 left join laboratorios l
-                 on  l.id_lab=e.id_lab
-                 where e.id_lab=572
-
-		
-		*/
-		
-		$query= "select e.*, l.nombre as laboratorio,bi.*,*, e.id_dispositivo
-                 from " . $tabla . " e 
-
-                 left join cat_dispositivo cd
-                 on e.dispositivo_clave=cd.dispositivo_clave
-                 left join cat_familia cf
-                 on e.familia_clave=cf.id_familia
-                 left join cat_tipo_ram ctr
-                 on e.tipo_ram_clave=ctr.id_tipo_ram
-                 left join cat_tecnologia ct
-                 on e.tecnologia_clave=ct.id_tecnologia
-                 left join cat_sist_oper cso
-                 on  e.sist_oper=cso.id_sist_oper
-				 left join cat_usuario_final cuf
-			     on cuf.usuario_final_clave=e.usuario_final_clave
-                 left join cat_marca cm
-                 on cm.id_marca=e.id_marca
-                 left join cat_memoria_ram cmr
-                 on e.id_mem_ram=cmr.id_mem_ram
-                 left join bienes_inventario bi
-                 on  e.bn_id = bi.bn_id
-				 left join config_switch cs
-                 on cs.id_dispositivo=e.id_dispositivo
-                 left join cat_switch csw 
-                 on csw.id_switch=cs.id_switch
-                 left join cat_puerto cp
-                 on cp.id_puerto=cs.id_puerto
-                 left join laboratorios l
-                 on  l.id_lab=e.id_lab
-                 where e.id_lab=";}
-                 elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
-                        {$tabla="dispositivo";
-						
-			             $query= "select  e.*, l.nombre as laboratorio, bi.*, e.id_dispositivo 
-                          from " . $tabla . " e 
-
-                          left join cat_dispositivo cd
-                          on e.dispositivo_clave=cd.dispositivo_clave
-                          left join cat_familia cf
-                          on e.familia_clave=cf.id_familia
-                          left join cat_tipo_ram ctr
-                          on e.tipo_ram_clave=ctr.id_tipo_ram
-                          left join cat_tecnologia ct
-                          on e.tecnologia_clave=ct.id_tecnologia
-                          left join cat_sist_oper cso
-                          on  e.sist_oper=cso.id_sist_oper
-						  left join cat_usuario_final cuf
-			              on cuf.usuario_final_clave=e.usuario_final_clave
-                          left join cat_marca cm
-                          on cm.id_marca=e.id_marca
-                          left join cat_memoria_ram cmr
-                          on e.id_mem_ram=cmr.id_mem_ram
-                          left join bienes_inventario bi
-                          on  e.bn_id = bi.bn_id
-						  left join config_switch cs
-                 on cs.id_dispositivo=e.id_dispositivo
-                 left join cat_switch csw 
-                 on csw.id_switch=cs.id_switch
-                 left join cat_puerto cp
-                 on cp.id_puerto=cs.id_puerto
-                          left join laboratorios l
-                          on  l.id_lab=e.id_lab
-                          where e.id_lab=";}
-                        else 
-                             { $tabla="equipo";
-			                   $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                               from " . $tabla . " e 
-
-                               left join bienes_inventario bi
-                               on  e.bn_id = bi.bn_id
-                               join laboratorios l
-                               on  l.id_lab=e.id_lab
-                               where e.id_lab=";} 
-
-              switch ($_GET['orden']){
- 			  case "descripcion":
-			     $query.= $_GET['lab'] . " ORDER BY bi.bn_desc ASC";
-			  break;
- 			  case "clave":
-			     $query.= $_GET['lab'] . " ORDER BY bi.bn_clave ASC";
-			  break;
-			  case "marca":
-			     $query.= $_GET['lab'] . " ORDER BY bi.bn_marca ASC";
-			  break;
- 			  default:
-			     $query.= $_GET['lab'] . " ORDER BY e.fecha DESC";
-	    	  break;
-			
-        } // fin de switch
-  
-      }else{
-	     if ($_SESSION['tipo_lab']!='e' && $_GET['mod']=='invc' ){
-	         $tabla="dispositivo";
-		     $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                      from " . $tabla . " e 
-
-                      left join cat_dispositivo cd
-                      on e.dispositivo_clave=cd.dispositivo_clave
-                      left join cat_familia cf
-                      on e.familia_clave=cf.id_familia
-                      left join cat_tipo_ram ctr
-                      on e.tipo_ram_clave=ctr.id_tipo_ram
-                      left join cat_tecnologia ct
-                      on e.tecnologia_clave=ct.id_tecnologia
-                      left join cat_sist_oper cso
-                      on  e.sist_oper=cso.id_sist_oper
-					  left join cat_usuario_final cuf
-			          on cuf.usuario_final_clave=e.usuario_final_clave
-                      left join cat_marca cm
-                      on cm.id_marca=e.id_marca
-                      left join cat_memoria_ram cmr
-                      on e.id_mem_ram=cmr.id_mem_ram
-                      left join bienes_inventario bi
-                      on  e.bn_id = bi.bn_id
-                      left join laboratorios l
-                      on  l.id_lab=e.id_lab
-                      left join departamentos dp
-                      on dp.id_dep=l.id_dep
-                      where id_div=";}
-                          elseif ($_SESSION['tipo_lab']=='e' && $_GET['mod']=='invc' )
-                                 {$tabla= "dispositivo";
-			                      $query= "select  e.*, l.nombre as laboratorio, bi.*,* 
-                                           from " . $tabla . " e 
-
-                                           left join cat_dispositivo cd
-                                           on e.dispositivo_clave=cd.dispositivo_clave
-                                           left join cat_familia cf
-                                           on e.familia_clave=cf.id_familia
-                                           left join cat_tipo_ram ctr
-                                           on e.tipo_ram_clave=ctr.id_tipo_ram
-                                           left join cat_tecnologia ct
-                                           on e.tecnologia_clave=ct.id_tecnologia
-										   left join cat_usuario_final cuf
-			                               on cuf.usuario_final_clave=e.usuario_final_clave
-                                           left join cat_sist_oper cso
-                                           on  e.sist_oper=cso.id_sist_oper
-                                           left join cat_marca cm
-                                           on cm.id_marca=e.id_marca
-                                           left join cat_memoria_ram cmr
-                                           on e.id_mem_ram=cmr.id_mem_ram
-                                           left join bienes_inventario bi
-                                           on  e.bn_id = bi.bn_id
-                                           left join laboratorios l
-                                           on  l.id_lab=e.id_lab
-                                           left join departamentos dp
-                                            on dp.id_dep=l.id_dep
-                                           where id_div=";}
-                               
-
-                    switch ($_GET['orden']){
- 			        case "descripcion":
-			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_desc ASC";
-			        break;
- 			        case "clave":
-			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_clave ASC";
-			        break;
-			        case "marca":
-			                $query.= $_SESSION['id_div'] . " ORDER BY bi.bn_marca ASC";
-			        break;
- 			        default:
-			                $query.= $_SESSION['id_div'] . " ORDER BY e.fecha DESC";
-	    	        break;
-			
-        } // fin de switch
-	
-}
-
-$datos = pg_query($con,$query);
-	
-$inventario= pg_num_rows($datos); //lHH
- 
-//echo $query;
-	
-if ($inventario!=0) { ?>
-   
-<?php $action1="../view/inicio.html.php?lab=".$_GET['lab'] ."&mod=". $_GET['mod']."&div=". $_SESSION['id_div'].'&orden='. $_GET['orden'];?>
-<!-- <form action="<?php echo $action1; ?>" method="post" name="fbusqueda">
+	   <div id="advertencia" style="box-shadow: 10px 10px 30px #000000;"><p>No existen dispositivos registrados</p><div id="boton1"><a href="../view/inicio.html.php?mod=invg&lab" method="post" name="fbusqueda">
 <p style="text-align: right"> <input name="accion" type="submit" value="buscar" id="botonblu"/>
 </form>-->
 
@@ -768,13 +551,9 @@ if ($inventario!=0) { ?>
               <br>
               <legend align="right">
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
-	          <input name="enviar" type="submit" value="Con identificador" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
-		      <input name="div" type="hidden" value="<?php echo $_REQUEST['div'] ?>" />	
-			  <input name="tipou" type="hidden" value="<?php echo $_SESSION['tipo_usuario'] ?>" />		  
-              </form>
+            
+				  
+				  
               </legend>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              </td>
             </tr> 
@@ -783,13 +562,13 @@ if ($inventario!=0) { ?>
               
               <legend align="right">
          
-              <form action=<?php  echo $action; ?> method="post" name="expgendiv" >
+             <!--<form action=<?php  //echo $action; ?> method="post" name="expgendiv" >
 	          <input name="enviar" type="submit" value="Con nombre" />
-	          <input name="mod" type="hidden" value="<?php echo $_GET['mod'] ?>" />
-              <input name="lab" type="hidden" value="<?php echo $_GET['lab'] ?>" />
-			  <input name="div" type="hidden" value="<?php echo $_REQUEST['div'] ?>" />	
-			  <input name="tipou" type="hidden" value="<?php echo $_SESSION['tipo_usuario'] ?>" />		  
-              </form>
+	          <input name="mod" type="hidden" value="<?php //echo $_GET['mod'] ?>" />
+              <input name="lab" type="hidden" value="<?php //echo $_GET['lab'] ?>" />
+			  <input name="div" type="hidden" value="<?php //echo $_REQUEST['div'] ?>" />	
+			  <input name="tipou" type="hidden" value="<?php //echo $_SESSION['tipo_usuario'] ?>" />		  
+              </form>-->
               </legend>
             </td>
            </tr>
@@ -917,8 +696,7 @@ if (isset($_GET['lab']) && isset($_GET['mod']))
                   <td width="20%" scope="col"><?php echo $lab_invent['nombre_familia'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['cantidad_procesador'];?></td>
                   <td width="20%" scope="col"><?php echo $lab_invent['nucleos_gpu'];?></td>
-                  
-                 
+                    
          </tr>
          
          <?php     

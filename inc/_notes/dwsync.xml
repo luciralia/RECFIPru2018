@@ -231,7 +231,7 @@
 <file name="importaraltorend.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132289481090103332" remote="132289481140000000" Dst="1" />
 <file name="cargaCensoDGTIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624764809620892" remote="132633255440000000" Dst="2" />
 <file name="exportaxls_censoCATIC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="132624744538121770" remote="132633256830000000" Dst="2" />
-<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133597603428468625" remote="133597603520000000" Dst="0" />
+<file name="menu1.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133597603520000000" remote="133597603520000000" Dst="0" />
 <file name="cargadocs.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133597516162580728" remote="133597518230000000" Dst="0" />
 <file name="cargaCensoDGTICC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133549215797014681" remote="133549215930000000" Dst="0" />
 <file name="exportaxls_censoedtipo.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133263267610000000" remote="133264941220000000" Dst="0" />
@@ -244,4 +244,5 @@
 <file name="exportaxls_censoAntig.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133500720123778583" remote="133500720800000000" Dst="0" />
 <file name="configura_switch.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133464454225595341" remote="133464581520000000" Dst="0" />
 <file name="exportaxls_censoCATICC.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133308088400000000" remote="133549872040000000" Dst="0" />
+<file name="actualizaAreas.inc.php" server="132.248.52.241//var/www/RECFIPru2018/" local="133671042960670863" remote="133674457670000000" Dst="0" />
 </dwsync>
